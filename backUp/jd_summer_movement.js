@@ -4,14 +4,14 @@
 ===================quantumultx================
 [task_local]
 #燃动夏季
-7 0,6-23/2 * * * jd_summer_movement.js, tag=燃动夏季, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+7 3,15 * * * jd_summer_movement.js, tag=燃动夏季, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 =====================Loon================
 [Script]
-cron "7 0,6-23/2 * * *" script-path=jd_summer_movement.js, tag=燃动夏季
+cron "7 3,15 * * *" script-path=jd_summer_movement.js, tag=燃动夏季
 ====================Surge================
-燃动夏季 = type=cron,cronexp="7 0,6-23/2 * * *",wake-system=1,timeout=3600,script-path=jd_summer_movement.js
+燃动夏季 = type=cron,cronexp="7 3,15 * * *",wake-system=1,timeout=3600,script-path=jd_summer_movement.js
 ============小火箭=========
-燃动夏季 = type=cron,script-path=jd_summer_movement.js, cronexpr="7 0,6-23/2 * * *", timeout=3600, enable=true
+燃动夏季 = type=cron,script-path=jd_summer_movement.js, cronexpr="2 3,15 * * *", timeout=3600, enable=true
 */
 const $ = new Env('燃动夏季');
 const notify = $.isNode() ? require('./sendNotify') : '';
