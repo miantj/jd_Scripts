@@ -3,7 +3,7 @@
 ============Quantumultx===============
 [task_local]
 #汪汪乐园每日任务
-0 0 9 * * * https://x.js, tag=汪汪乐园每日任务, img-url=https://x.png, enabled=true
+10 9 * * * jd_joy_park_task.js, tag=汪汪乐园每日任务, img-url=https://x.png, enabled=true
 */
 const $ = new Env('汪汪乐园每日任务');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

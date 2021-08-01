@@ -1,3 +1,6 @@
+/*
+20 3 * * * jd_jddj_fruit.js, tag=京东到家果园 
+*/
 let isNotify = true;//是否通知,仅限nodejs
 let ckPath = './jdCookie.js';//ck路径,环境变量:JDDJ_CKPATH
 const $ = new API("jd_jddj_fruit");
