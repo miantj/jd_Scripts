@@ -1,6 +1,6 @@
 /*
 惊喜牧场
-5 1 * * * jd_jxmc.js
+15 2,12,22  * * * jd_jxmc.js
 */
 // prettier-ignore
 !function (t, r) { "object" == typeof exports ? module.exports = exports = r() : "function" == typeof define && define.amd ? define([], r) : t.CryptoJS = r() }(this, function () {
