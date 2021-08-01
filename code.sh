@@ -11,7 +11,6 @@ env_name=(
   DREAM_FACTORY_SHARE_CODES
   DDFACTORY_SHARECODES
   JDZZ_SHARECODES
-  JDJOY_SHARECODES
   JXNC_SHARECODES
   BOOKSHOP_SHARECODES
   JD_CASH_SHARECODES
@@ -26,7 +25,6 @@ var_name=(
   ForOtherDreamFactory
   ForOtherJdFactory
   ForOtherJdzz
-  ForOtherJoy
   ForOtherJxnc
   ForOtherBookShop
   ForOtherCash
@@ -36,19 +34,18 @@ var_name=(
 )
 
 name_js=(
-  chinnkarahoi_jd_scripts_jd_fruit
-  chinnkarahoi_jd_scripts_jd_pet
-  chinnkarahoi_jd_scripts_jd_plantBean
-  chinnkarahoi_jd_scripts_jd_dreamFactory
-  chinnkarahoi_jd_scripts_jd_jdfactory
-  chinnkarahoi_jd_scripts_jd_jdzz
-  chinnkarahoi_jd_scripts_jd_crazy_joy
-  chinnkarahoi_jd_scripts_jd_jxnc
-  chinnkarahoi_jd_scripts_jd_bookshop
-  chinnkarahoi_jd_scripts_jd_cash
-  chinnkarahoi_jd_scripts_jd_sgmh
-  chinnkarahoi_jd_scripts_jd_cfd
-  chinnkarahoi_jd_scripts_jd_health
+  6dylan6_jdpro_jd_fruit
+  6dylan6_jdpro_jd_pet
+  6dylan6_jdpro_jd_plantBean
+  6dylan6_jdpro_jd_dreamFactory
+  6dylan6_jdpro_jd_jdfactory
+  6dylan6_jdpro_jd_jdzz
+  6dylan6_jdpro_jd_jxnc
+  6dylan6_jdpro_jd_bookshop
+  6dylan6_jdpro_jd_cash
+  6dylan6_jdpro_jd_sgmh
+  6dylan6_jdpro_jd_cfd
+  6dylan6_jdpro_jd_health
 )
 
 name_config=(
@@ -58,7 +55,6 @@ name_config=(
   DreamFactory
   JdFactory
   Jdzz
-  Joy
   Jxnc
   BookShop
   Cash
@@ -74,7 +70,6 @@ name_chinese=(
   京喜工厂
   东东工厂
   京东赚赚
-  crazyJoy任务
   京喜农场
   口袋书店
   签到领现金
