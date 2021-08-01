@@ -1276,6 +1276,15 @@ function requireConfig() {
     //Node.js用户请在jdCookie.js处填写京东ck;
     const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
     //const jdFruitShareCodes = $.isNode() ? require('./jdFruitShareCodes.js') : '';
+    if ($.isNode()) {
+      if (process.env.FRUITSHARECODES) {
+        if (process.env.FRUITSHARECODES.indexOf('\n') > -1) {
+          shareCodes = process.env.FRUITSHARECODES.split('\n');
+        } else {
+          shareCodes = process.env.FRUITSHARECODES.split('&');
+        }
+      }
+    }
     //IOS等用户直接用NobyDa的jd cookie
     if ($.isNode()) {
       Object.keys(jdCookieNode).forEach((item) => {
