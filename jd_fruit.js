@@ -1275,7 +1275,7 @@ function requireConfig() {
     notify = $.isNode() ? require('./sendNotify') : '';
     //Node.js用户请在jdCookie.js处填写京东ck;
     const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-    const jdFruitShareCodes = $.isNode() ? require('./jdFruitShareCodes.js') : '';
+    //const jdFruitShareCodes = $.isNode() ? require('./jdFruitShareCodes.js') : '';
     //IOS等用户直接用NobyDa的jd cookie
     if ($.isNode()) {
       Object.keys(jdCookieNode).forEach((item) => {
@@ -1290,9 +1290,9 @@ function requireConfig() {
     console.log(`共${cookiesArr.length}个京东账号\n`)
     $.shareCodesArr = [];
     if ($.isNode()) {
-      Object.keys(jdFruitShareCodes).forEach((item) => {
-        if (jdFruitShareCodes[item]) {
-          $.shareCodesArr.push(jdFruitShareCodes[item])
+      Object.keys(shareCodes).forEach((item) => {
+        if (shareCodes[item]) {
+          $.shareCodesArr.push(shareCodes[item])
         }
       })
     } else {
