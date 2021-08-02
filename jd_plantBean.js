@@ -34,7 +34,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
-                   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
+    '',               //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
  //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
  ]
 let allMessage = ``;
