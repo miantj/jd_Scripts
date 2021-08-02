@@ -9,13 +9,13 @@ env_name=(
   PETSHARECODES
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
-  DDFACTORY_SHARECODES
+#  DDFACTORY_SHARECODES
   JDZZ_SHARECODES
-  JXNC_SHARECODES
+# JXNC_SHARECODES
   BOOKSHOP_SHARECODES
   JD_CASH_SHARECODES
   JDSGMH_SHARECODES
-  JDCFD_SHARECODES
+#  JDCFD_SHARECODES
   JDHEALTH_SHARECODES
 )
 var_name=(
@@ -23,13 +23,13 @@ var_name=(
   ForOtherPet
   ForOtherBean
   ForOtherDreamFactory
-  ForOtherJdFactory
+#  ForOtherJdFactory
   ForOtherJdzz
-  ForOtherJxnc
+#  ForOtherJxnc
   ForOtherBookShop
   ForOtherCash
   ForOtherSgmh
-  ForOtherCfd
+#  ForOtherCfd
   ForOtherHealth
 )
 
@@ -38,13 +38,13 @@ name_js=(
   6dylan6_jdpro_jd_pet
   6dylan6_jdpro_jd_plantBean
   6dylan6_jdpro_jd_dreamFactory
-  6dylan6_jdpro_jd_jdfactory
+#  6dylan6_jdpro_jd_jdfactory
   6dylan6_jdpro_jd_jdzz
-  6dylan6_jdpro_jd_jxnc
+#  6dylan6_jdpro_jd_jxnc
   6dylan6_jdpro_jd_bookshop
   6dylan6_jdpro_jd_cash
   6dylan6_jdpro_jd_sgmh
-  6dylan6_jdpro_jd_cfd
+#  6dylan6_jdpro_jd_cfd
   6dylan6_jdpro_jd_health
 )
 
@@ -53,13 +53,13 @@ name_config=(
   Pet
   Bean
   DreamFactory
-  JdFactory
+#  JdFactory
   Jdzz
-  Jxnc
+#  Jxnc
   BookShop
   Cash
   Sgmh
-  Cfd
+#  Cfd
   Health
 )
 
@@ -68,13 +68,13 @@ name_chinese=(
   东东萌宠
   京东种豆得豆
   京喜工厂
-  东东工厂
+#  东东工厂
   京东赚赚
-  京喜农场
+#  京喜农场
   口袋书店
   签到领现金
   闪购盲盒
-  京喜财富岛
+#  京喜财富岛
   东东健康社区
 )
 
