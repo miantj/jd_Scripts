@@ -25,8 +25,8 @@ const HelpAuthorFlag = false;//是否助力作者SH  true 助力，false 不助�
 
 // 热气球接客 每次运行接客次数
 let serviceNum = 10;// 每次运行接客次数
-if ($.isNode() && process.env.gua_wealth_island_serviceNum) {
-  serviceNum = Number(process.env.gua_wealth_island_serviceNum);
+if ($.isNode() && process.env.jd_cfd_serviceNum) {
+  serviceNum = Number(process.env.jd_cfd_serviceNum);
 }
 
 let cookiesArr = [], cookie = '';
@@ -99,6 +99,8 @@ async function run() {
     await buildList()
     // 签到 邀请奖励
     await sign()
+    // 签到-小程序
+    await signs()
     // 捡垃圾
     await pickshell(1)
     // 热气球接客
@@ -345,22 +347,62 @@ async function sign(){
     $.logErr(e);
   }
 }
+// 签到-小程序
+async function signs(){
+  try{
+    // 签到-小程序
+    await $.wait(2000)
+    $.Aggrtask = await taskGet(`story/GetTakeAggrPages`, '_cfd_t,bizCode,dwEnv,ptag,source,strZone', '&ptag=')
+    if($.Aggrtask && $.Aggrtask.Data && $.Aggrtask.Data.Sign){
+      if($.Aggrtask.Data.Sign.dwTodayStatus == 0) {
+        console.log('\n签到-小程序')
+        let flag = false
+        let ddwCoin = 0
+        let ddwMoney = 0
+        let dwPrizeType = 0
+        let strPrizePool = 0
+        let dwPrizeLv = 0
+        for(i of $.Aggrtask.Data.Sign.SignList){
+          if(i.dwStatus == 0){
+            flag = true
+            ddwCoin = i.ddwCoin || 0
+            ddwMoney = i.ddwMoney || 0
+            dwPrizeType = i.dwPrizeType || 0
+            strPrizePool = i.strPrizePool || 0
+            dwPrizeLv = i.dwBingoLevel || 0
+            break;
+          }
+        }
+        if(flag){
+          let additional = `&ptag=&ddwCoin=${ddwCoin}&ddwMoney=${ddwMoney}&dwPrizeType=${dwPrizeType}&strPrizePool${strPrizePool && '='+strPrizePool ||''}&dwPrizeLv=${dwPrizeLv}`
+          let stk= `_cfd_t,bizCode,ddwCoin,ddwMoney,dwEnv,dwPrizeLv,dwPrizeType,ptag,source,strPrizePool,strZone`
+          let res = await taskGet(`story/RewardSigns`, stk, additional)
+          await printRes(res, '签到-小程序')
+        }
+      }
+    }
+  }catch (e) {
+    $.logErr(e);
+  }
+}
 // 捡垃圾
 async function pickshell(num = 1){
   return new Promise(async (resolve) => {
     try{
       console.log(`\n捡垃圾`)
-      // pickshell dwType 1珍珠 2海螺 3大海螺  4海星
+      // pickshell dwType 1珍珠 2海螺 3大海螺  4海星 5小贝壳 6扇贝
       for(i=1;num--;i++){
         await $.wait(2000)
         $.queryshell = await taskGet(`story/queryshell`, '_cfd_t,bizCode,dwEnv,ptag,source,strZone', `&ptag=`)
-        let c = 4
+        let c = 6
         for(i=1;c--;i++){
           let o = 1
           let name = '珍珠'
           if(i == 2) name = '海螺'
           if(i == 3) name = '大海螺'
           if(i == 4) name = '海星'
+          if(i == 5) name = '小贝壳'
+          if(i == 6) name = '扇贝'
           do{
             console.log(`去捡${name}第${o}次`)
             o++;
@@ -622,7 +664,7 @@ async function UserTask(){
           await $.wait(1000)
         }
         if(item.dateType == 2){
-          if(item.awardStatus === 2 && item.completedTimes < item.targetTimes && [1,2,3,4].includes(item.orderId)){
+          if(item.completedTimes < item.targetTimes && [1,2,3,4].includes(item.orderId)){
             if(item.taskName.indexOf('捡贝壳') >-1 || item.taskName.indexOf('赚京币任务') >-1) continue
             let b = (item.targetTimes-item.completedTimes)
             for(i=1;b--;i++){
@@ -738,6 +780,7 @@ function taskGet(type, stk, additional){
 }
 function getGetRequest(type, stk='', additional='') {
   let url = ``;
+  let dwEnv = 3;
   if(type == 'user/ComposeGameState'){
     url = `https://m.jingxi.com/jxbfd/${type}?__t=${Date.now()}&strZone=jxbfd&dwFirst=1&_=${Date.now()}&sceneval=2`
   }else if(type == 'user/RealTmReport'){
@@ -745,6 +788,9 @@ function getGetRequest(type, stk='', additional='') {
   }else{
     let stks = ''
     if(stk) stks = `&_stk=${stk}`
+    if(type == 'story/GetTakeAggrPages' || type == 'story/RewardSigns') dwEnv = 6
+    if(type == 'story/GetTakeAggrPages') type = 'story/GetTakeAggrPage'
+    if(type == 'story/RewardSigns') type = 'story/RewardSign'
     if(type == 'GetUserTaskStatusList' || type == 'Award' || type == 'Award1' || type == 'DoTask' || type == 'DoTask1'){
       let bizCode = 'jxbfd'
       if(type == 'Award1'){
@@ -754,11 +800,11 @@ function getGetRequest(type, stk='', additional='') {
         bizCode = 'jxbfddch'
         type = 'DoTask'
       }
-      url = `https://m.jingxi.com/newtasksys/newtasksys_front/${type}?strZone=jxbfd&bizCode=${bizCode}&source=jxbfd&dwEnv=3&_cfd_t=${Date.now()}${additional}${stks}&_ste=1&_=${Date.now()}&sceneval=2&g_login_type=1`
+      url = `https://m.jingxi.com/newtasksys/newtasksys_front/${type}?strZone=jxbfd&bizCode=${bizCode}&source=jxbfd&dwEnv=${dwEnv}&_cfd_t=${Date.now()}${additional}${stks}&_ste=1&_=${Date.now()}&sceneval=2&g_login_type=1`
     }else if(type == 'user/ComposeGameAddProcess' || type == 'user/ComposeGameAward'){
       url = `https://m.jingxi.com/jxbfd/${type}?strZone=jxbfd&__t=${Date.now()}${additional}${stks}&_=${Date.now()}&sceneval=2`;
     }else{
-      url = `https://m.jingxi.com/jxbfd/${type}?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=7&_cfd_t=${Date.now()}&ptag=${additional}${stks}&_=${Date.now()}&sceneval=2`;
+      url = `https://m.jingxi.com/jxbfd/${type}?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=${dwEnv}&_cfd_t=${Date.now()}&ptag=${additional}${stks}&_=${Date.now()}&sceneval=2`;
     }
     url += `&h5st=${decrypt(Date.now(), stk, '', url)}`;
   }
