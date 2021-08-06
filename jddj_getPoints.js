@@ -16,6 +16,9 @@ const $ = new API("jddj_getPoints");
 let ckPath = './jdCookie.js';//ck路径,环境变量:JDDJ_CKPATH
 let cookies = [];
 let thiscookie = '', deviceid = '', nickname = '';
+let lat = '30.' + Math.round(Math.random() * (99999 - 10000) + 10000);
+let lng = '114.' + Math.round(Math.random() * (99999 - 10000) + 10000);
+let cityid = Math.round(Math.random() * (1500 - 1000) + 1000);
 !(async () => {
     if (cookies.length == 0) {
         if ($.env.isNode) {
@@ -65,16 +68,16 @@ let thiscookie = '', deviceid = '', nickname = '';
 async function getPoints() {
     return new Promise(async resolve => {
         try {
-            let option = urlTask('https://daojia.jd.com/client?_jdrandom=' + Math.round(new Date()), 'functionId=plantBeans%2FgetWater&isNeedDealError=true&method=POST&body=%7B%22activityId%22%3A%2223e4a58bca00bef%22%7D&lat=&lng=&lat_pos=&lng_pos=&city_id=&channel=ios&platform=6.6.0&platCode=h5&appVersion=6.6.0&appName=paidaojia&deviceModel=appmodel&traceId=' + deviceid + Math.round(new Date()) + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '');
+            let option = urlTask('https://daojia.jd.com/client', 'lat=' + lat + '&lng=' + lng + '&lat_pos=' + lat + '&lng_pos=' + lng + '&city_id=1381&deviceToken=' + deviceid + '&deviceId=' + deviceid + '&channel=wx_xcx&mpChannel=wx_xcx&platform=5.0.0&platCode=mini&appVersion=5.0.0&appName=paidaojia&deviceModel=appmodel&xcxVersion=8.10.1&isNeedDealError=true&business=undefined&functionId=plantBeans%2FgetWater&method=POST&body=%7B%22activityId%22%3A%2224226e4f763c4e1%22%7D');
 
             $.http.post(option).then(async response => {
                 let data = JSON.parse(response.body);
                 //console.log(data);
                 if (data.code == 0) {
                     console.log('\n【收水车水滴】:' + data.msg + '->当前收取:' + data.result.addWater + ',当前剩余:' + data.result.water + ',当日累计:' + data.result.dailyWater);
-                    if (data.result.water >= 100) {
-                        await watering();
-                    }
+                    // if (data.result.water >= 100) {
+                    //     await watering();
+                    // }
                 } else {
                     console.log('\n【收水车水滴】:cookie失效!');
                 }
@@ -122,27 +125,24 @@ async function watering() {
 async function userinfo() {
     return new Promise(async resolve => {
         try {
-            let option = urlTask('https://daojia.jd.com/client?_jdrandom=' + Math.round(new Date()) + '&platCode=H5&appName=paidaojia&channel=&appVersion=8.7.6&jdDevice=&functionId=mine%2FgetUserAccountInfo&body=%7B%22refPageSource%22:%22%22,%22fromSource%22:2,%22pageSource%22:%22myinfo%22,%22ref%22:%22%22,%22ctp%22:%22myinfo%22%7D&jda=&traceId=' + deviceid + Math.round(new Date()) + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '', '')
-
+            let option = urlTask('https://daojia.jd.com/client?channel=wx_xcx&platform=5.0.0&platCode=mini&mpChannel=wx_xcx&appVersion=8.10.5&xcxVersion=8.10.1&appName=paidaojia&functionId=mine%2FgetUserAccountInfo&isForbiddenDialog=false&isNeedDealError=false&isNeedDealLogin=false&body=%7B%22cityId%22%3A' + cityid + '%2C%22fromSource%22%3A%225%22%7D&afsImg=&lat_pos=' + lat + '&lng_pos=' + lng + '&lat=' + lat + '&lng=' + lng + '&city_id=' + cityid + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '&deviceModel=appmodel&business=&traceId=' + deviceid + '1628044517506&channelCode=', '');
             $.http.get(option).then(response => {
+                //console.log(response.body);
                 let data = JSON.parse(response.body);
                 if (data.code == 0) {
                     try {
                         nickname = data.result.userInfo.userBaseInfo.nickName;
                         console.log("●●●" + nickname + "●●●");
-                    } catch (error) {
-                        console.log("●●●昵称获取失败●●●");
-                    }
+                    } catch (error) { nickname = '昵称获取失败' }
                 }
-                resolve();
-            })
-
+                else nickname = '昵称获取失败';
+            });
+            resolve();
 
         } catch (error) {
             console.log('\n【个人信息】:' + error);
             resolve();
         }
-
     })
 }
 
@@ -185,7 +185,7 @@ async function taskLoginUrl(deviceid, thiscookie) {
                             ckstr = response.headers[key].toString();
                         }
                     }
-                    ckstr += 'deviceid_pdj_jd=' + deviceid;
+                    ckstr += ';deviceid_pdj_jd=' + deviceid;
                 }
             });
             resolve(ckstr);

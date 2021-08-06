@@ -91,7 +91,7 @@ async function jdPlantBean() {
     if ($.plantBeanIndexResult && $.plantBeanIndexResult.code === '0' && $.plantBeanIndexResult.data) {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl
       $.myPlantUuid = getParam(shareUrl, 'plantUuid')
-      console.log( `\n【京东账号${ $.index }（${ $.nickName||$.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
+      console.log( `\n【京东账号${ $.index }（${$.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
       roundList = $.plantBeanIndexResult.data.roundList;
       currentRoundId = roundList[1].roundId;//本期的roundId
       lastRoundId = roundList[0].roundId;//上期的roundId
