@@ -8,14 +8,14 @@ Some Functions Modified From https://github.com/Zero-S1/JD_tools/blob/master/JD_
 =================QuantumultX==============
 [task_local]
 #东东超市
-31 */2  * * * jd_superMarket.js, tag=东东超市
+31 0-23/2  * * * jd_superMarket.js, tag=东东超市
 ===========Loon===============
 [Script]
-cron "31 */2  * * *" script-path=jd_superMarket.js,tag=东东超市
+cron "31 0-23/2  * * *" script-path=jd_superMarket.js,tag=东东超市
 =======Surge===========
-东东超市 = type=cron,cronexp="31 */2  * * *",wake-system=1,timeout=3600,script-path=jd_superMarket.js
+东东超市 = type=cron,cronexp="31 0-23/2  * * *",wake-system=1,timeout=3600,script-path=jd_superMarket.js
 ==============小火箭=============
-东东超市 = type=cron,script-path=jd_superMarket.js, cronexpr="31 */2  * * *", timeout=3600, enable=true
+东东超市 = type=cron,script-path=jd_superMarket.js, cronexpr="31 0-23/2  * * *", timeout=3600, enable=true
 */
 const $ = new Env('东东超市');
 //Node.js用户请在jdCookie.js处填写京东ck;
