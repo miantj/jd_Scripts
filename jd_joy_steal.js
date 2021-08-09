@@ -10,19 +10,19 @@ IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 ==========Quantumult X==========
 [task_local]
 #宠汪汪偷好友积分与狗粮
-10 13 * * * jd_joy_steal.js, tag=宠汪汪偷好友积分与狗粮, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
+15 10 * * * jd_joy_steal.js, tag=宠汪汪偷好友积分与狗粮, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
 =======Loon========
 [Script]
-cron "10 13 * * *" script-path=jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
+cron "15 10 * * *" script-path=jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
 ========Surge==========
-宠汪汪偷好友积分与狗粮 = type=cron,cronexp="10 13 * * *",wake-system=1,timeout=3600,script-path=jd_joy_steal.js
+宠汪汪偷好友积分与狗粮 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=3600,script-path=jd_joy_steal.js
 =======小火箭=====
-宠汪汪偷好友积分与狗粮 = type=cron,script-path=jd_joy_steal.js, cronexpr="10 13 * * *", timeout=3600, enable=true
+宠汪汪偷好友积分与狗粮 = type=cron,script-path=jd_joy_steal.js, cronexpr="15 10 * * *", timeout=3600, enable=true
 */
 const $ = new Env('宠汪汪偷好友积分与狗粮');
 const zooFaker = require('./JDJRValidator_Pure');
-$.get = zooFaker.injectToRequest($.get.bind($));
-$.post = zooFaker.injectToRequest($.post.bind($));
+$.get = zooFaker.injectToRequest2($.get.bind($));
+$.post = zooFaker.injectToRequest2($.post.bind($));
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -110,7 +110,9 @@ async function jdJoySteal() {
     $.helpFeedStatus = null;
     message += `【京东账号${$.index}】${$.nickName}\n`;
     await enterRoom()
+    await $.wait(2000)
     await getFriends();//查询是否有好友
+    await $.wait(2000)
     await getCoinChanges();//查询喂食好友和偷好友积分是否已达上限
     if ($.getFriendsData && $.getFriendsData.success) {
       if (!$.getFriendsData.datas) {
