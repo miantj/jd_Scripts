@@ -171,11 +171,11 @@ async function getLottery(){
     try{
         const result = JSON.parse(data)
         if(logs)$.log(data)
-        if(result.data.bizCode == 0 && result.data.result.userAwardsCacheDto.jBeanAwardVo.prizeName){
+        if(result.data.bizCode == 0 && result.data.result.lotteryReturnCode == 0){
            console.log("\n获得"+result.data.result.userAwardsCacheDto.jBeanAwardVo.prizeName+"\n")
    await $.wait(4000)
         }else{
-           $.log(result.data.bizMsg+"\n")
+           $.log("啥也没有\n")
         }
         }catch(e) {
           $.logErr(e, response);
