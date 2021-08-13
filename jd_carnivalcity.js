@@ -538,7 +538,9 @@ async function doHelp() {
     if (!item) continue;
     const helpRes = await toHelp(item.trim());
     if (typeof helpRes === 'object') {
-      if (helpRes.data.status === 5) {
+      if (helpRes.data.status === 6) {
+        console.log(`该助力码[${item}]助力成功`);
+      }else if (helpRes.data.status === 5) {
         console.log(`助力机会已耗尽，跳出助力`);
         break;
       }else if (helpRes.data.status === 4){
@@ -579,7 +581,7 @@ function toHelp(code = "68f3d4e1-1893-40a2-a089-accdbfeaa31b") {
           //console.log(`助力结果:${data}`);
           data = JSON.parse(data);
           if (data && data['code'] === 200) {
-            if (data['data']['status'] === 6) console.log(`助力成功\n`)
+            //if (data['data']['status'] === 6) console.log(`助力成功\n`)
             if (data['data']['jdNums']) $.beans += data['data']['jdNums'];
           }
         }
