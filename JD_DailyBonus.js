@@ -30,7 +30,7 @@ var out = 0; //接口超时退出, 用于可能发生的网络不稳定, 0则关
 var $nobyda = nobyda();
 
 const Faker = require('./JDSignValidator')
-const zooFaker = require('./JDJRValidator_Sign')
+const zooFaker = require('./JDJRValidator_Pure')
 let fp = '', eid = ''
 
 $nobyda.get = zooFaker.injectToRequest2($nobyda.get.bind($nobyda), 'channelSign')
