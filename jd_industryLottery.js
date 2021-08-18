@@ -1,6 +1,6 @@
 /*
 京东工业品抽奖
-10 7 17,18 8 * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_industryLottery.js
+10 1 * 8 * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_industryLottery.js
  */
 const $ = new Env('京东工业品抽奖');
 const notify = $.isNode() ? require('./sendNotify') : '';
