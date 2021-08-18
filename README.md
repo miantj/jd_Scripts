@@ -1,5 +1,5 @@
-### 请不要把我仓库京东脚本用在淘宝、咸鱼、拼多多等平台进行商业谋利，请认真阅读[README特别说明](https://github.com/zhaozhanzhan/jd_docker/blob/master/README.md#特别说明)，谢谢配合。否则我会删库跑路`(原作者已跑路)`。
-##### 2021.02.27日更新，目前通知多账号内容放到一块通知(即：多账号只推送一次)，如账号过多导致通知失败的（原因：账号多通知内容太大），自行多分容器部署。
+### 请不要把我仓库京东脚本用在淘宝、咸鱼、拼多多等平台进行商业谋利，请认真阅读特别说明)，谢谢配合。否则我会删库跑路`(原作者已跑路)`。
+##### 2021.08.10日更新。
 
 ## 特别声明: 
 
@@ -21,26 +21,13 @@
 > **您使用或者复制了本仓库且本人制作的任何脚本，则视为`已接受`此声明，请仔细阅读** 
 
 
-## 邀请码互助
-
-
-- [邀请码使用规范](https://github.com/zhaozhanzhan/jd_docker/blob/master/githubAction.md#互助码类环境变量)(仅限云端)
 
 ## 使用方法
-
+青龙拉库
+ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|code.sh"
 ### 1. Docker
 
-- [部署方法](https://github.com/zhaozhanzhan/jd_docker/blob/master/docker/README.md)
-
-- [环境变量集合](https://github.com/zhaozhanzhan/jd_docker/blob/master/githubAction.md)
- 
 - 获取京东cookie教程可参考：
   
-  + [浏览器获取京东cookie教程](https://github.com/zhaozhanzhan/jd_docker/blob/master/backUp/GetJdCookie.md)
-    
-  + [插件获取京东cookie教程](https://github.com/zhaozhanzhan/jd_docker/blob/master/backUp/GetJdCookie2.md)
     
   + 京东APP扫码获取cookie(执行`node getJDCookie.js`即可)
-
-## 通知频道 [https://t.me/jd_script](https://t.me/jd_script)
-## 讨论组 [https://t.me/jd_scripts_talk](https://t.me/jd_scripts_talk)
