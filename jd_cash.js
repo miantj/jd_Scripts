@@ -27,7 +27,7 @@ let cookiesArr = [], cookie = '', message;
 let helpAuthor = false;
 const randomCount = $.isNode() ? 5 : 5;
 let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
-const inviteCodes = ['']
+const inviteCodes = ['-q6wuXkWvnmgJeZoH_up']
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
