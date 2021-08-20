@@ -1,6 +1,6 @@
 /*
 #开学充电站
-30 1 * * * jd_kxcdz.js, tag= 开学充电站
+40 1 20-31 * * jd_kxcdz.js, tag= 开学充电站
 */
 const $ = new Env('开学充电站')
 const notify = $.isNode() ?require('./sendNotify') : '';
