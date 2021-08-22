@@ -1,7 +1,9 @@
 /*
+update_time 20210822
 店铺签到，各类店铺签到，有新的店铺直接添加token即可
 搬运cui521大佬脚本，请勿外传！！！
-2 0 * * * jd_dpsign.js
+由LAzysheep更新
+cron 30 0,22 * * * jd_dpsign.js, tag=店铺签到
 */
 const $ = new Env('店铺签到');
 
@@ -19,29 +21,23 @@ let num=0
 let shopname=''
 
 const token=[
-  
-"B5DE18AEF869FCE64DDBAE0E780999E8",//每日，10豆；2天，20豆；3天，20豆；5天，50豆；7天，100豆；
-"0449F8BA3A67FF95A8BB427969F7AC55",//每日，2豆；3天，50豆；5天，80豆；7天，100豆；
-"8F8DBD110615E78C41D30A9102EA989D",//每日，10豆；7天，100豆；
-"0E70AA30DBE7748B9DDACE4F3B2606B2",//7天，20豆；15天，50豆；
-"DC51F315CDE7A08EBB40DB8447A9A660",//5天，10豆；10天，20豆；
-"E0A9FBBDFE7385A82F42C8137FB09565",//5天，50豆；
-"E9E4861F0B12E5E483C949C818E3EAB8",//每日，1豆；10天，20豆；20天，50豆；
-"E5562C0ACC340B5EA9473F81FDD37D8B",//3天，100豆；
-"B15DA6980AB30F248CD8930BB4815B68",//7天，100豆；
-"5572934BA114ADB477C1A8F8FE07F2B1",//每日，6豆；3天，50豆；
-"517AD3C83C8D5EE281BB808BFF283C17",//每日，2积分；28天，280积分，100豆；
-"8176F3AE8FA4ACF8CCF57B36C16F4631",//3天，15豆；5天，25豆；
-"37A3DF45210F92B2694C320D2E718B04",//7天，70豆；
-"419EA534F344B41A0D40E351F8DA8AA7",//7天，20豆；15天，40豆；
-"285E0F8505751426E506D8B4ECC7BDC2",//每日，4豆；12天，50豆；
-"ACD7EB42FB65AF1A447AEB329235DE04",//每日，3豆；15天，100豆；
-"2075567CC6ED0F30EAFFCF901F6C486D",//每日，2豆；10天，100豆；
-"A133DE5D8D1A5A612F49CBE1D9BCE7AA",//每日，2豆；20天，5元e卡；
-"83E9B38C310EB5D26657977EF8FECA0F",//7天，20积分；15天，30豆；
-"7DE1E4B12326576BF7C5D347CC909451",//每日，10豆；7天，100豆；
-"513B43DB672C8C7B0D975DB75328A131",//每日，5豆；26天，88豆；
 
+'020E4A5B75AE493CDF3020628CA72FDE',//3天，10豆；5天，20豆；7天，35豆；
+'ACD7EB42FB65AF1A447AEB329235DE04',//每日，3豆；15天，100豆；
+'5BB2C6C6332AD842011240152F7550EB',//每日，6豆；7天，100豆；
+'6C6B2702DDAAEDEBE5E68E41B6264CF6',//每日，5豆；7天，200积分；
+'CDC56C42F64CA34677E5894F28AF4871',//每日，100分；1天，200分、2豆；2天，1000分、25-3券；
+'2075567CC6ED0F30EAFFCF901F6C486D',//每日，2豆；10天，100豆；
+'CAF5BA5BF6B8317E282FCBF9F5C00B0E',//每日，2豆；5天，10豆；10天，20豆；15天，25豆；
+'A133DE5D8D1A5A612F49CBE1D9BCE7AA',//每日，2豆；20天，5元e卡；
+'E9E4861F0B12E5E483C949C818E3EAB8',//每日，1豆；10天，20豆；20天，50豆；
+'8FD67D1FD193B5C19C277B7406106EDD',//每日，5豆；7天，100分、50豆；
+'A9F558F6789D649FEB6436A51D7A6059',//每日，10豆；3天，20分；7天100豆；
+'83E9B38C310EB5D26657977EF8FECA0F',//7天，20积分；15天，30豆；
+'7DE1E4B12326576BF7C5D347CC909451',//每日，10豆；7天，100豆；
+'513B43DB672C8C7B0D975DB75328A131',//每日，5豆；26天，88豆；
+'9BABD41E5674FD5791963D5366BEC634',//每日，1豆；5天，10豆；21天，100豆;
+'EFFD0BF4069A8B6882A55FB07ACDA60F',//10天，30豆；20天，60豆；30天，100豆;
 
 ]
 //IOS等用户直接用NobyDa的jd cookie
@@ -71,9 +67,8 @@ if ($.isNode()) {
   
 	$.TokenLists = []
   
-	//$.innerTokenList = await getStoreTokee('http://www.z1988.com/tools/shareCodes/jd_babel_diy_zeus.php');
-	
-	$.innerTokenList = token
+        $.innerTokenList = await getStoreTokee('https://zy.kejiwanjia.com/jd_dpqiandao.php');
+        //$.innerTokenList = token
 	
 	$.TokenLists.push(...$.TokenList,...$.innerTokenList);
 
@@ -312,7 +307,7 @@ function taskUrl(token,venderId) {
 async function showMsg() {
   if ($.isNode()) {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
-    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n${message}`);
+    //await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n${message}`);
   }
 }
 
