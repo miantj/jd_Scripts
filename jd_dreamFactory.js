@@ -34,7 +34,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //通知级别 1=生产完毕可兑换通知;2=可兑换通知+生产超时通知+兑换超时通知;3=可兑换通知+生产超时通知+兑换超时通知+未选择商品生产通知(前提：已开通京喜工厂活动);默认第2种通知
 let notifyLevel = $.isNode() ? process.env.JXGC_NOTIFY_LEVEL || 2 : 2;
 const randomCount = $.isNode() ? 20 : 5;
-let tuanActiveId = ``, hasSend = false;
+let tuanActiveId = `lMyfPsinFTKYVnxWDGRAtQ==`, hasSend = false;
 const jxOpenUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqsd.jd.com/pingou/dream_factory/index.html%22%20%7D`;
 let cookiesArr = [], cookie = '', message = '', allMessage = '';
 const inviteCodes = ['xbgGWs_u7muGA8jWxg9KlA=='];
@@ -103,7 +103,7 @@ if ($.isNode()) {
             await $.wait(1000);
           }
         }
-        if ($.canHelp) await joinLeaderTuan();//参团
+        //if ($.canHelp) await joinLeaderTuan();//参团
       }
     }
   }
@@ -165,12 +165,17 @@ function getActiveId(url = 'https://wqsd.jd.com/pingou/dream_factory/index.html'
                 const start = item.start;
                 const end = item.end;
                 const link = item.link;
-                if (new Date(item.end).getTime() > Date.now()) {
+                if ((new Date(item.start).getTime() <= Date.now()) && (new Date(item.end).getTime() > Date.now())) {
                   if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
                     console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}`);
                     tuanActiveId = link.match(/activeId=(.*),/)[1];
                     break
                   }
+                } else if ((new Date(item.start).getTime() > Date.now()) && (new Date(item.end).getTime() > Date.now())) {
+                  if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
+                    console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}\n团ID还未开始`);
+                    tuanActiveId = '';
+                  }				  
                 } else {
                   if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
                     console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}\n团ID已过期`);
