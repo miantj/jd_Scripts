@@ -1,7 +1,7 @@
 /**
  * 蚊子腿豆子，24号应该可以参与瓜分
  * 活动到24号。一天可以跑2次
-cron 5 6,8 12-24 8 *  jd_decompression.js
+ * cron  5 6,8 12-24 8 *
  */
 const $ = new Env('热血心跳,狂解压');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -9,8 +9,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [];
 $.activityID = 'dz2107100008586804';
 $.shopid = '1000085868';
-const inCode= [''];
-$.shareUuid = getRandomArrayElements(inCode,1)[0];
+$.shareUuid = '';
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -87,49 +86,43 @@ async function main() {
         console.log(`获取活动详情失败`);return;
     }
     console.log(`获取活动详情成功`);
-    //console.log(`助力码：${$.activityData.actorUuid}`);
-    await doTask();
-    await $.wait(3000);
-    await takePostRequest('activityContent');
-    let score = $.activityData.score;
-    console.log(`可投票次数：`+score);
-    let scoreFlag = false;
-    $.canScore = true;
-    for (let i = 0; i < score && $.canScore; i++) {
-        scoreFlag = true;
-        console.log(`进行第${i+1}次投票`);
-        await takePostRequest('insxintiao');
-        await $.wait(1500);
-    }
-    if(scoreFlag){
-        await $.wait(1000);
-        await takePostRequest('activityContent');
-        await $.wait(1000);
-    }
-    let score2 = $.activityData.score2;
-    console.log(`可扭蛋次数：`+score2);
-    if(score2 > 0){
-        await takePostRequest('drawContent');
-        await $.wait(1000);
-    }
-    for (let i = 0; i < score2; i++) {
-        console.log(`进行第${i+1}次扭蛋`);
-        await takePostRequest('draw');
-        await $.wait(1500);
-    }
-    if($.shareUuid === '' || $.shareUuid === ''){
-        $.shareUuid = $.activityData.actorUuid;
-    }
-}
-function getRandomArrayElements(arr, count) {
-    var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
-    while (i-- > min) {
-        index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
-    }
-    return shuffled.slice(min);
+    // console.log(`助力码：${$.activityData.actorUuid}`);
+    // await doTask();
+    // await $.wait(3000);
+    // await takePostRequest('activityContent');
+    // await $.wait(2000);
+    await takePostRequest('guafen');
+    //let score = $.activityData.score;
+    //console.log(`可投票次数：`+score);
+    //let scoreFlag = false;
+    //$.canScore = true;
+    //let aa = 0;
+    // for (let i = 0; i < score && $.canScore && aa < 40; i++) {
+    //     scoreFlag = true;
+    //     console.log(`进行第${i+1}次投票`);
+    //     await takePostRequest('insxintiao');
+    //     await $.wait(1500);
+    //     aa++;
+    // }
+    // if(scoreFlag){
+    //     await $.wait(1000);
+    //     await takePostRequest('activityContent');
+    //     await $.wait(1000);
+    // }
+    // let score2 = $.activityData.score2;
+    // console.log(`可扭蛋次数：`+score2);
+    // if(score2 > 0){
+    //     await takePostRequest('drawContent');
+    //     await $.wait(1000);
+    // }
+    // for (let i = 0; i < score2; i++) {
+    //     console.log(`进行第${i+1}次扭蛋`);
+    //     await takePostRequest('draw');
+    //     await $.wait(1500);
+    // }
+    // if($.shareUuid === '4efc89e0a5604304bd9414c21312ab0d'){
+    //     $.shareUuid = $.activityData.actorUuid;
+    // }
 }
 
 async function doTask(){
@@ -217,6 +210,10 @@ async function takePostRequest(type){
             url= 'https://lzdz1-isv.isvjcloud.com/dingzhi/taskact/common/drawContent';
             body = `activityId=dz2107100008586804&pin=${encodeURIComponent($.pin)}`;
             break;
+        case 'guafen':
+            url= 'https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/guafen';
+            body = `activityId=dz2107100008586804&pin=${encodeURIComponent($.pin)}&playerId=8`;
+            break;
         default:
             console.log(`错误${type}`);
     }
@@ -244,6 +241,7 @@ function dealReturn(type, data) {
         console.log(`执行任务异常`);
         console.log(data);
         $.runFalag = false;
+        $.canScore = false;
     }
     switch (type) {
         case 'getMyPing':
@@ -296,6 +294,12 @@ function dealReturn(type, data) {
             console.log(JSON.stringify(data))
             break;
         case 'getSimpleActInfoVo':
+            console.log(JSON.stringify(data))
+            break;
+        case 'guafen':
+            if (data.result === true && data.count === 0) {
+                console.log(`瓜分获得：${data.data.beans || '0'}`)
+            }
             console.log(JSON.stringify(data))
             break;
         default:
