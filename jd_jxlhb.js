@@ -20,7 +20,7 @@ const $ = new Env('京喜领88元红包');
 const notify = $.isNode() ? require('./sendNotify') : {};
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : {};
 let cookiesArr = [], cookie = '';
-let UA, UAInfo = {}
+let UA, UAInfo = {}, codeInfo = {}
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -31,7 +31,7 @@ if ($.isNode()) {
 }
 $.packetIdArr = [];
 $.activeId = '489177';
-const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
+const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
 
 
 !(async () => {
@@ -80,16 +80,21 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
     cookie = cookiesArr[i];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
-    $.max = false;
     UA = UAInfo[$.UserName]
-    for (let code of $.packetIdArr) {
-      if (!code) continue;
-      if ($.UserName === code['userName']) continue;
-      console.log(`【${$.UserName}】去助力【${code['userName']}】邀请码：${code['strUserPin']}`);
-      await enrollFriend(code['strUserPin']);
-      await $.wait(2000);
-      if ($.max) continue
-      if (!$.canHelp) break
+    for (let j = 0; j < $.packetIdArr.length && $.canHelp; j++) {
+      console.log(`【${$.UserName}】去助力【${$.packetIdArr[j].userName}}】邀请码：${$.packetIdArr[j].strUserPin}`);
+      if ($.UserName === $.packetIdArr[j].userName) {
+        console.log(`助力失败：不能助力自己`)
+        continue
+      }
+      $.max = false;
+      await enrollFriend($.packetIdArr[j].strUserPin);
+      await $.wait(5000);
+      if ($.max) {
+        $.packetIdArr.splice(j, 1)
+        j--
+        continue
+      }
     }
     //if ($.canHelp) {
       //console.log(`\n【${$.UserName}】有剩余助力机会，开始助力作者\n`)
@@ -110,10 +115,11 @@ const BASE_URL = 'https://wq.jd.com/cubeactive/steprewardv3'
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     UA = UAInfo[$.UserName]
     for (let grade of $.grades) {
-      if (!$.packetIdArr[i]) continue;
+      if (!codeInfo[$.UserName]) continue;
       console.log(`\n【${$.UserName}】去拆第${grade}个红包`);
-      await openRedPack($.packetIdArr[i]['strUserPin'], grade);
-      await $.wait(2000);
+      await openRedPack(codeInfo[$.UserName], grade);
+      if (!$.canOpenGrade) break
+      await $.wait(15000);
     }
   }
 })()
@@ -188,6 +194,9 @@ function getUserInfo() {
                 })
               }
             }
+            if (data.Data.strUserPin) {
+              codeInfo[$.UserName] = data.Data.strUserPin
+            }			
           } else {
             console.log(`获取助力码失败：${data.sErrMsg}\n`);
           }
@@ -226,7 +235,7 @@ function enrollFriend(strPin) {
               console.log(`温馨提示：如提示助力火爆，可尝试寻找京东客服`);
             }
             if (data.iRet === 2013) $.max = true;
-            console.log(`助力失败:${data.sErrMsg}\n`);
+            console.log(`助力失败：${data.sErrMsg}\n`);
           }
         }
       } catch (e) {
@@ -314,14 +323,15 @@ function taskurl(function_path, body = '', stk) {
     url += '&_stk=' + encodeURIComponent(stk)
   }
   return {
-    'url': url,
-    'headers': {
-    'Host': 'wq.jd.com',
-    'Cookie': cookie,
-    'accept': "*/*",
-    'user-agent': UA,
-    'accept-language': 'zh-cn',
-    'referer': `https://wqactive.jd.com/cube/front/activePublish/step_reward/${$.activeId}.html?aid=${$.activeId}`
+    url: url,
+    headers: {
+      'Host': 'm.jingxi.com',
+      'Cookie': cookie,
+      'Accept': "*/*",
+      'Accept-Encoding': 'gzip, deflate, br',
+      'User-Agent': UA,
+      'Accept-Language': 'zh-cn',
+      'Referer': `https://act.jingxi.com/cube/front/activePublish/step_reward/${$.activeId}.html`
     }
   }
 }
