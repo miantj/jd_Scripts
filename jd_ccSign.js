@@ -79,7 +79,7 @@ async function getCouponConfig() {
   let body = escape(JSON.stringify({"childActivityUrl":"openapp.jdmobile://virtual?params={\"category\":\"jump\",\"des\":\"couponCenter\"}","incentiveShowTimes":0,"monitorRefer":"","monitorSource":"ccresource_android_index_config","pageClickKey":"Coupons_GetCenter","rewardShowTimes":0,"sourceFrom":"1"}))
   let uuid = randomString(16)
   let sign = await getSign(functionId, decodeURIComponent(body), uuid)
-  let url = `${JD_API_HOST}?functionId=${functionId}&build=89743&client=android&clientVersion=10.1.2&uuid=${uuid}&${sign}`
+  let url = `${JD_API_HOST}?functionId=${functionId}&client=android&clientVersion=10.1.2&uuid=${uuid}&${sign}`
   return new Promise(async resolve => {
     $.post(taskUrl(url, body), async (err, resp, data) => {
       try {
@@ -102,8 +102,9 @@ async function getCouponConfig() {
               if (data.result.couponConfig.signNewDomain.roundData.ynSign === '1') {
                 console.log(`签到失败：今日已签到~`)
               } else {
+                let pin = await getsecretPin($.UserName)
                 functionId = `ccSignInNew`
-                body = escape(JSON.stringify({"childActivityUrl":"openapp.jdmobile://virtual?params={\"category\":\"jump\",\"des\":\"couponCenter\"}","monitorRefer":"appClient","monitorSource":"cc_sign_android_index_config","pageClickKey":"Coupons_GetCenter"}))
+                body = escape(JSON.stringify({"childActivityUrl":"openapp.jdmobile://virtual?params={\"category\":\"jump\",\"des\":\"couponCenter\"}","monitorRefer":"appClient","monitorSource":"cc_sign_android_index_config","pageClickKey":"Coupons_GetCenter","pin":pin}))
               }
             }
             if (functionId && body) await ccSign(functionId, body)
@@ -120,9 +121,7 @@ async function getCouponConfig() {
 async function ccSign(functionId, body) {
   let uuid = randomString(16)
   let sign = await getSign(functionId, decodeURIComponent(body), uuid)
-  let clientVersion = '9.2.2', build = '89568'
-  if (functionId === 'ccSignInNecklace') clientVersion = '10.1.2', build = '89743'
-  let url = `${JD_API_HOST}?functionId=${functionId}&build=${build}&client=android&clientVersion=${clientVersion}&uuid=${uuid}&${sign}`
+  let url = `${JD_API_HOST}?functionId=${functionId}&client=android&clientVersion=10.1.2&uuid=${uuid}&${sign}`
   return new Promise(async resolve => {
     $.post(taskUrl(url, body), async (err, resp, data) => {
       try {
@@ -149,18 +148,12 @@ async function ccSign(functionId, body) {
 }
 function getSign(functionid, body, uuid) {
   return new Promise(async resolve => {
-    let clientVersion
-    if (functionid === 'ccSignInNew') {
-      clientVersion = '9.2.2'
-    } else {
-      clientVersion = '10.1.2'
-    }
     let data = {
       "functionId":functionid,
       "body":body,
       "uuid":uuid,
       "client":"android",
-      "clientVersion":clientVersion
+      "clientVersion":"10.1.2"
     }
     let options = {
       url: `https://jdsign.cf/ddo`,
@@ -234,7 +227,7 @@ function taskUrl(url, body) {
     headers: {
       "Host": "api.m.jd.com",
       "Connection": "keep-alive",
-      "User-Agent": "okhttp/3.12.1;jdmall;android;version/9.2.2;build/89568;screen/1440x2560;os/7.1.2;network/wifi",
+      "User-Agent": "okhttp/3.12.1;jdmall;android;version/10.1.2;build/89743;screen/1080x2030;os/9;network/wifi;",
       "Accept": "*/*",
       "Referer": "https://h5.m.jd.com/rn/42yjy8na6pFsq1cx9MJQ5aTgu3kX/index.html",
       "Accept-Encoding": "gzip, deflate",
