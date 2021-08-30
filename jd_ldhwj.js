@@ -1,6 +1,14 @@
 /*
+[task_local]
 #来电好物季
 10 1 * * * jd_ldhwj.js, tag= 来电好物季
+================Loon==============
+[Script]
+cron "10 3,15 * * *" script-path= jd_ldhwj.js,tag= 来电好物季
+===============Surge=================
+来电好物季 = type=cron,cronexp="10 1 * * *",wake-system=1,timeout=3600,script-path= jd_ldhwj.js
+============小火箭=========
+来电好物季 = type=cron,script-path= jd_ldhwj.js, cronexpr="10 1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('来电好物季')
 const notify = $.isNode() ?require('./sendNotify') : '';
@@ -175,7 +183,7 @@ async function getLottery(){
            console.log("\n获得"+result.data.result.userAwardsCacheDto.jBeanAwardVo.prizeName+"\n")
    await $.wait(4000)
         }else{
-           $.log("啥也没有\n")
+           $.log("恭喜你，抽中了0豆豆\n")
         }
         }catch(e) {
           $.logErr(e, response);
