@@ -19,7 +19,7 @@ function randomString(e) {
     n += t.charAt(Math.floor(Math.random() * a));
   return n
 }
-$.InviteList = []
+$.InviteList = ['59A2F2F4C622A86CB2A9F9C3D02EEE0A08E9544829CC910EE8ED0ED3E70C1D30']
 $.innerInviteList = [];
 const HelpAuthorFlag = false;//是否助力  true 助力，false 不助力
 

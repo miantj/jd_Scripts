@@ -31,7 +31,7 @@ let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, n
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
    //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  ''
+  '1f5ada1a6d5641e4a251987eb376122a@821e7f29cac24cff9362ce2805d849e5@261c12bb3c064581b4e6e7d40571f151'
 ]
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
