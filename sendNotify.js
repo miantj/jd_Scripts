@@ -1,5 +1,5 @@
 /*
- Last Modified time: 2021-4-3 16:00:54
+ Last Modified time: 2021-9-6 16:00:54
  */
 /**
  * sendNotify 推送通知功能
@@ -667,7 +667,7 @@ function pushPlusNotify(text, desp) {
         topic: `${PUSH_PLUS_USER}`
       };
       const options = {
-        url: `http://www.pushplus.plus/send`,
+        url: `http://pushplus.hxtrip.com/send`,
         body: JSON.stringify(body),
         headers: {
           'Content-Type': ' application/json'
