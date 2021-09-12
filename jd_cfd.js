@@ -717,9 +717,9 @@ async function UserTask(){
             if(res.data.prizeInfo){
               res.data.prizeInfo = $.toObj(res.data.prizeInfo)
             }
-            if(res.data.prizeInfo.ddwCoin || res.data.prizeInfo.ddwMoney){
-              console.log(`${item.taskName} 领取奖励:${res.data.prizeInfo.ddwCoin && res.data.prizeInfo.ddwCoin+'金币' || ''} ${res.data.prizeInfo.ddwMoney && res.data.prizeInfo.ddwMoney+'财富' || ''}`)
-            }else{
+            if(res.data.prizeInfo.ddwCoin || res.data.prizeInfo.ddwMoney || res.data.prizeInfo.strPrizeName){
+              console.log(`${item.taskName} 领取奖励:${res.data.prizeInfo.ddwCoin && ' '+res.data.prizeInfo.ddwCoin+'金币' || ''}${res.data.prizeInfo.ddwMoney && ' '+res.data.prizeInfo.ddwMoney+'财富' || ''}${res.data.prizeInfo.strPrizeName && ' '+res.data.prizeInfo.strPrizeName+'红包' || ''}`)
+           }else{
               console.log(`${item.taskName} 领取奖励:`, JSON.stringify(res))
             }
           }else{
@@ -728,7 +728,7 @@ async function UserTask(){
           await $.wait(1000)
         }
         if(item.dateType == 2){
-          if(item.completedTimes < item.targetTimes && ![3,6,7,8,9,10].includes(item.orderId)){
+          if(item.completedTimes < item.targetTimes && ![6,7,8,9,10].includes(item.orderId)){
             if(item.taskName.indexOf('捡贝壳') >-1 || item.taskName.indexOf('赚京币任务') >-1) continue
             let b = (item.targetTimes-item.completedTimes)
             for(i=1;b--;i++){
@@ -741,8 +741,8 @@ async function UserTask(){
               if(res.data.prizeInfo){
                 res.data.prizeInfo = $.toObj(res.data.prizeInfo)
               }
-              if(res.data.prizeInfo.ddwCoin || res.data.prizeInfo.ddwMoney){
-                console.log(`${item.taskName} 领取奖励:${res.data.prizeInfo.ddwCoin && res.data.prizeInfo.ddwCoin+'金币' || ''} ${res.data.prizeInfo.ddwMoney && res.data.prizeInfo.ddwMoney+'财富' || ''}`)
+              if(res.data.prizeInfo.ddwCoin || res.data.prizeInfo.ddwMoney || res.data.prizeInfo.strPrizeName){
+                console.log(`${item.taskName} 领取奖励:${res.data.prizeInfo.ddwCoin && ' '+res.data.prizeInfo.ddwCoin+'金币' || ''}${res.data.prizeInfo.ddwMoney && ' '+res.data.prizeInfo.ddwMoney+'财富' || ''}${res.data.prizeInfo.strPrizeName && ' '+res.data.prizeInfo.strPrizeName+'红包' || ''}`)
               }else{
                 console.log(`${item.taskName} 领取奖励:`, JSON.stringify(res))
               }
