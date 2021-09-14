@@ -152,7 +152,6 @@ async function jdBeanHome() {
     do {
       await $.wait(2000)
       await beanTaskList(2)
-    } while (!$.doneState)
       num++
     } while (!$.doneState && num < 5)		
     await $.wait(2000)
