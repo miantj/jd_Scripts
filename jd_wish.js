@@ -5,14 +5,14 @@
 ===============Quantumultx===============
 [task_local]
 #众筹许愿池
-35 0,2 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js, tag=众筹许愿池, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+40 0,2 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js, tag=众筹许愿池, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 ================Loon==============
 [Script]
-cron "35 0,2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js,tag=众筹许愿池
+cron "40 0,2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js,tag=众筹许愿池
 ===============Surge=================
-众筹许愿池 = type=cron,cronexp="35 0,2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js
+众筹许愿池 = type=cron,cronexp="40 0,2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js
 ============小火箭=========
-众筹许愿池 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js, cronexpr="35 0,2 * * *", timeout=3600, enable=true
+众筹许愿池 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_wish.js, cronexpr="40 0,2 * * *", timeout=3600, enable=true
  */
 const $ = new Env('众筹许愿池');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -22,7 +22,9 @@ let message = '', allMessage = '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-let appId = '1E1NXxq0';
+let appIdArr = ['1E1NXxq0', '1ElBTx6o', '1ElJYxqY'];
+let appNameArr = ['众筹许愿池', '企有此礼', '芯意制造盒'];
+let appId, appName;
 $.shareCode = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -55,28 +57,47 @@ if ($.isNode()) {
         }
         continue
       }
-      await jd_wish();
+      for (let j = 0; j < appIdArr.length; j++) {
+        appId = appIdArr[j]
+        appName = appNameArr[j]
+        console.log(`\n开始第${j + 1}个活动：${appName}\n`)
+        await jd_wish();
+      }
     }
   }
+  let res = []
+  //if (!res) {
+   // $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/wish.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
+    //await $.wait(1000)
+    //res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/wish.json')
+  //}
+  $.shareCode = [...$.shareCode, ...(res || [])]
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.canHelp = true
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       console.log(`开始内部助力\n`)
-      for (let j = 0; j < $.shareCode.length && $.canHelp; j++) {
-        console.log(`${$.UserName} 去助力 ${$.shareCode[j].use} 的助力码 ${$.shareCode[j].code}`)
-        if ($.UserName == $.shareCode[j].use) {
-          console.log(`不能助力自己\n`)
-          continue
-        }
-        $.delcode = false
-        await harmony_collectScore({"appId":appId,"taskToken":$.shareCode[j].code,"actionType":"0","taskId":"6"})
-        await $.wait(2000)
-        if ($.delcode) {
-          $.shareCode.splice(j, 1)
-          j--
-          continue
+      for (let v = 0; v < appIdArr.length; v++) {
+        $.canHelp = true
+        appId = appIdArr[v]
+        appName = appNameArr[v]
+        console.log(`开始助力第${v + 1}个活动：${appName}\n`)
+        for (let j = 0; j < $.shareCode.length && $.canHelp; j++) {
+          if ($.shareCode[j].appId === appId) {
+            console.log(`${$.UserName} 去助力 ${$.shareCode[j].use} 的助力码 ${$.shareCode[j].code}`)
+            if ($.UserName == $.shareCode[j].use) {
+              console.log(`不能助力自己\n`)
+              continue
+            }
+            $.delcode = false
+            await harmony_collectScore({"appId":appId,"taskToken":$.shareCode[j].code,"actionType":"0","taskId":"6"})
+            await $.wait(2000)
+            if ($.delcode) {
+              $.shareCode.splice(j, 1)
+              j--
+              continue
+            }
+          }
         }
       }
     }
@@ -98,12 +119,13 @@ async function jd_wish() {
     await $.wait(2000)
 
     if (forNum === 0) {
-      console.log(`\n没有抽奖机会\n`)
+      console.log(`没有抽奖机会\n`)
     } else {
-      console.log(`\n可以抽奖${forNum}次，去抽奖\n`)
+      console.log(`可以抽奖${forNum}次，去抽奖\n`)
     }
 
-    for (let j = 0; j < forNum; j++) {
+    $.canLottery = true
+    for (let j = 0; j < forNum && $.canLottery; j++) {
       await interact_template_getLotteryResult()
       await $.wait(2000)
     }
@@ -127,7 +149,7 @@ async function healthyDay_getHomeData(type = true) {
               for (let key of Object.keys(data.data.result.taskVos).reverse()) {
                 let vo = data.data.result.taskVos[key]
                 if (vo.status !== 2) {
-                  if (vo.taskType === 13) {
+                  if (vo.taskType === 13 || vo.taskType === 12) {
                     console.log(`签到`)
                     await harmony_collectScore({"appId":appId,"taskToken":vo.simpleRecordInfoVo.taskToken,"taskId":vo.taskId,"actionType":"0"}, vo.taskType)
                   } else if (vo.taskType === 1) {
@@ -161,10 +183,11 @@ async function healthyDay_getHomeData(type = true) {
                       }
                     }
                   } else if (vo.taskType === 14) {
-                    console.log(`【京东账号${$.index}（${$.UserName}）的众筹许愿池好友互助码】${vo.assistTaskDetailVo.taskToken}\n`)
+                    console.log(`【京东账号${$.index}（${$.UserName}）的${appName}好友互助码】${vo.assistTaskDetailVo.taskToken}\n`)
                     if (vo.times !== vo.maxTimes) {
                       $.shareCode.push({
                         "code": vo.assistTaskDetailVo.taskToken,
+                        "appId": appId,
                         "use": $.UserName
                       })
                     }
@@ -233,11 +256,18 @@ function interact_template_getLotteryResult() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            let userAwardsCacheDto = data.data.result.userAwardsCacheDto
-            if (userAwardsCacheDto && userAwardsCacheDto.type === 2) {
-              console.log(`抽中：${userAwardsCacheDto.jBeanAwardVo.quantity}${userAwardsCacheDto.jBeanAwardVo.ext}`)
+            let userAwardsCacheDto = data && data.data && data.data.result && data.data.result.userAwardsCacheDto
+            if (userAwardsCacheDto) {
+              if (userAwardsCacheDto.type === 2) {
+                console.log(`抽中：${userAwardsCacheDto.jBeanAwardVo.quantity}${userAwardsCacheDto.jBeanAwardVo.ext}`)
+              } else if (userAwardsCacheDto.type === 0) {
+                console.log(`很遗憾未中奖~`)
+              } else {
+                console.log(JSON.stringify(data))
+              }
             } else {
-              console.log(JSON.stringify(data))
+              $.canLottery = false
+              console.log(`此活动已黑，无法抽奖\n`)
             }
           }
         }
@@ -266,6 +296,39 @@ function taskUrl(function_id, body = {}) {
       "Accept-Encoding": "gzip, deflate, br"
     }
   }
+}
+
+function getAuthorShareCode(url) {
+  return new Promise(async resolve => {
+    const options = {
+      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }
+    };
+    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+      const tunnel = require("tunnel");
+      const agent = {
+        https: tunnel.httpsOverHttp({
+          proxy: {
+            host: process.env.TG_PROXY_HOST,
+            port: process.env.TG_PROXY_PORT * 1
+          }
+        })
+      }
+      Object.assign(options, { agent })
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        resolve(JSON.parse(data))
+      } catch (e) {
+        // $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+    await $.wait(10000)
+    resolve();
+  })
 }
 
 function TotalBean() {
