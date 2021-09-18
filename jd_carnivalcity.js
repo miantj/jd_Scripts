@@ -122,8 +122,8 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
 async function JD818() {
   try {
     await indexInfo();//获取任务
-    await supportList();//助力情况
-    await getHelp();//获取邀请码
+    //await supportList();//助力情况
+    //await getHelp();//获取邀请码
     if ($.blockAccount) return
     // await indexInfo(true);//获取任务
     await doHotProducttask();//做热销产品任务
