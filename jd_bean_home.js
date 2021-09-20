@@ -232,7 +232,7 @@ async function beanTaskList(type) {
                         await $.wait(2000)
                         await beanDoTask({"actionType": 1, "taskToken": `${taskList.taskToken}`}, vo.taskType)
                         if (vo.taskType === 9 || vo.taskType === 8) {
-                          await $.wait(3000)
+                          await $.wait(vo.waitDuration * 1000 || 5000)
                           await beanDoTask({"actionType": 0, "taskToken": `${taskList.taskToken}`}, vo.taskType)
                         }
                       }
