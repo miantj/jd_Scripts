@@ -1,13 +1,13 @@
 /**
- * 蚊子腿豆子，24号应该可以参与瓜分
- * 活动到24号。一天可以跑2次
- * cron  5 6,8 12-24 8 *
+ * 蚊子腿豆子，活动时间:9.21-10.16 10月16号应该可以参与瓜分
+ * 第一个号会给作者助力，其他号会给第一个号助力，活动期间貌似只有一次助力机会
+5 6,18 1-16,21-30 9,10 * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_decompression.js
  */
 const $ = new Env('热血心跳,狂解压');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [];
-$.activityID = 'dz2107100008586804';
+$.activityID = 'dz2109100009716201';
 $.shopid = '1000085868';
 $.shareUuid = '';
 if ($.isNode()) {
@@ -23,6 +23,15 @@ if ($.isNode()) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
         return;
     }
+    let res = [];
+    //try{res = await getAuthorShareCode('https://raw.githubusercontent.com/lsh26/share_code/main/decompression.json');}catch (e) {}
+    //if(!res){
+        //try{res = await getAuthorShareCode('https://gitee.com/star267/share-code/raw/master/decompression.json');}catch (e) {}
+        //if(!res){res = [];}
+    //}
+    if(res.length > 0){
+        $.shareUuid = getRandomArrayElements(res,1)[0];
+    }
     for (let i = 0; i < cookiesArr.length; i++) {
         await getUA();
         $.index = i + 1;
@@ -30,8 +39,8 @@ if ($.isNode()) {
         $.oldcookie = cookiesArr[i];
         $.isLogin = true;
         $.nickName = '';
-        await TotalBean();
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+        await TotalBean();
         console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
         if (!$.isLogin) {
             $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -41,19 +50,11 @@ if ($.isNode()) {
             continue
         }
         await main();
+        console.log(`防止黑IP，等待30秒`);
+        await $.wait(30000);
     }
 })().catch((e) => {$.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')}).finally(() => {$.done();});
 
-async function getUA(){
-    $.UA = `jdapp;iPhone;10.0.10;14.3;${randomString(40)};network/wifi;model/iPhone12,1;addressid/3364463029;appBuild/167764;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`
-}
-function randomString(e) {
-    e = e || 32;
-    let t = "abcdef0123456789", a = t.length, n = "";
-    for (i = 0; i < e; i++)
-        n += t.charAt(Math.floor(Math.random() * a));
-    return n
-}
 
 async function main() {
     $.token = ``;
@@ -61,68 +62,65 @@ async function main() {
     if($.token === ``){
         console.log(`获取token失败`);return;
     }
-    console.log(`token:${$.token}`);
-    await $.wait(1000);
+    console.log(`获取token成功`)
     await getActCk();
-    await $.wait(1000);
     $.pin = '';
     await takePostRequest('getMyPing');
-    console.log($.pin);
     if($.pin === ``){
         $.hotFlag = true;
         console.log(`获取pin失败,该账号可能是黑号`);return;
     }
-    await $.wait(1000);
     await getUserInfo();
-    await $.wait(1000);
     $.cookie=$.cookie + `AUTH_C_USER=${$.pin}`
     await accessLogWithAD();
     $.cookie=$.cookie + `AUTH_C_USER=${$.pin}`
     console.log(`初始化`);
-    await $.wait(1000);
     $.activityData = {};
     await takePostRequest('activityContent');
     if(JSON.stringify($.activityData) === `{}`){
         console.log(`获取活动详情失败`);return;
     }
     console.log(`获取活动详情成功`);
-    // console.log(`助力码：${$.activityData.actorUuid}`);
-    // await doTask();
-    // await $.wait(3000);
-    // await takePostRequest('activityContent');
-    // await $.wait(2000);
-    await takePostRequest('guafen');
-    //let score = $.activityData.score;
-    //console.log(`可投票次数：`+score);
-    //let scoreFlag = false;
-    //$.canScore = true;
-    //let aa = 0;
-    // for (let i = 0; i < score && $.canScore && aa < 40; i++) {
-    //     scoreFlag = true;
-    //     console.log(`进行第${i+1}次投票`);
-    //     await takePostRequest('insxintiao');
-    //     await $.wait(1500);
-    //     aa++;
-    // }
-    // if(scoreFlag){
-    //     await $.wait(1000);
-    //     await takePostRequest('activityContent');
-    //     await $.wait(1000);
-    // }
-    // let score2 = $.activityData.score2;
-    // console.log(`可扭蛋次数：`+score2);
-    // if(score2 > 0){
-    //     await takePostRequest('drawContent');
-    //     await $.wait(1000);
-    // }
-    // for (let i = 0; i < score2; i++) {
-    //     console.log(`进行第${i+1}次扭蛋`);
-    //     await takePostRequest('draw');
-    //     await $.wait(1500);
-    // }
-    // if($.shareUuid === '4efc89e0a5604304bd9414c21312ab0d'){
-    //     $.shareUuid = $.activityData.actorUuid;
-    // }
+    console.log(`助力码：${$.activityData.actorUuid}`);
+    await doTask();
+    await $.wait(3000);
+    await takePostRequest('activityContent');
+    await $.wait(2000);
+    //await takePostRequest('guafen');
+    let score = $.activityData.score;
+    console.log(`可投票次数：`+score);
+    let scoreFlag = false;
+    $.canScore = true;
+    let aa = 0;
+    for (let i = 0; i < score && $.canScore && aa < 40; i++) {
+        scoreFlag = true;
+        console.log(`进行第${i+1}次投票`);
+        await takePostRequest('insxintiao');
+        await $.wait(1500);
+        aa++;
+    }
+    if(scoreFlag){
+        await $.wait(1000);
+        await takePostRequest('activityContent');
+        await $.wait(1000);
+    }
+    let score2 = $.activityData.score2;
+    console.log(`可扭蛋次数：`+score2);
+    if(score2 > 0){
+        await takePostRequest('drawContent');
+        await $.wait(1000);
+    }
+    $.score2Flag = true;
+    $.score2Time = 0;
+    for (let i = 0; i < score2 && $.score2Flag && $.score2Time< 10; i++) {
+        console.log(`进行第${i+1}次扭蛋`);
+        await takePostRequest('draw');
+        await $.wait(1500);
+        $.score2Time++;
+    }
+    if($.index === '1'){
+        $.shareUuid = $.activityData.actorUuid;
+    }
 }
 
 async function doTask(){
@@ -181,6 +179,15 @@ async function doTask(){
             await $.wait(1000);
         }
     }
+    if(!$.activityData.zhiboStatus){
+        console.log(`去观看直播`);
+        $.taskType=10;
+        $.taskValue=10;
+        await takePostRequest('saveTask');
+        await $.wait(1000);
+    }else{
+        console.log(`已观看直播`);
+    }
 }
 async function takePostRequest(type){
     let url = '';
@@ -200,7 +207,7 @@ async function takePostRequest(type){
             break;
         case 'insxintiao':
             url= 'https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/insxintiao';
-            body = `pin=${encodeURIComponent($.pin)}&activityId=${$.activityID}&playerId=8`;
+            body = `pin=${encodeURIComponent($.pin)}&activityId=${$.activityID}&playerId=15`;
             break;
         case 'draw':
             url= 'https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/draw';
@@ -208,11 +215,11 @@ async function takePostRequest(type){
             break;
         case 'drawContent':
             url= 'https://lzdz1-isv.isvjcloud.com/dingzhi/taskact/common/drawContent';
-            body = `activityId=dz2107100008586804&pin=${encodeURIComponent($.pin)}`;
+            body = `activityId=dz2109100009716201&pin=${encodeURIComponent($.pin)}`;
             break;
         case 'guafen':
             url= 'https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/guafen';
-            body = `activityId=dz2107100008586804&pin=${encodeURIComponent($.pin)}&playerId=8`;
+            body = `activityId=dz2109100009716201&pin=${encodeURIComponent($.pin)}&playerId=8`;
             break;
         default:
             console.log(`错误${type}`);
@@ -263,17 +270,17 @@ function dealReturn(type, data) {
             if (data.result === true && data.count === 0) {
                 console.log(`执行成功,获得京豆：${data.data.beans || 0}`);
             } else {
-                //console.log(JSON.stringify(data))
+                console.log(JSON.stringify(data))
             }
-            console.log(JSON.stringify(data))
+            //console.log(JSON.stringify(data))
             break;
         case 'insxintiao':
             if (data.result === true && data.count === 0) {
-
+                console.log(`投票成功`);
             }else{
                 $.canScore = false;
             }
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
             break;
         case 'draw':
             if (data.result === true && data.count === 0) {
@@ -286,6 +293,7 @@ function dealReturn(type, data) {
                     console.log(`获得其他`);
                 }
             } else {
+                $.score2Flag = false;
                 //console.log(JSON.stringify(data))
             }
             console.log(JSON.stringify(data))
@@ -318,7 +326,7 @@ function getPostRequest(url,body) {
         'Origin':'https://lzdz1-isv.isvjcloud.com',
         'user-agent': $.UA,
         'Connection':'keep-alive',
-        'Referer': `https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/activity/dz2107100008586804?activityId=dz2107100008586804`,
+        'Referer': `https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/activity/dz2109100009716201?activityId=dz2109100009716201`,
         'Cookie': $.cookie,
     }
 
@@ -378,10 +386,10 @@ function accessLogWithAD() {
             'Origin':'https://lzdz1-isv.isvjcloud.com',
             'user-agent': $.UA,
             'Connection':'keep-alive',
-            'Referer': `https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/activity/dz2107100008586804?activityId=dz2107100008586804`,
+            'Referer': `https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/activity/dz2109100009716201?activityId=dz2109100009716201`,
             'Cookie': $.cookie,
         },
-        body:`venderId=${$.shopid}&code=99&pin=${encodeURIComponent($.pin)}&activityId=${$.activityID}&pageUrl=https%3A%2F%2Flzdz1-isv.isvjcloud.com%2Fdingzhi%2Fvivo%2Fiqoojieyapa%2Factivity%2F492728%3FactivityId%3Ddz2107100008586804%26shareUuid%3D%26adsource%3Dnull%26shareuserid4minipg%3D${encodeURIComponent($.pin)}%26shopid%3D1000085868%26lng%3D121.330619%26lat%3D31.292002%26sid%3Db1f8c732fcae5db1c375c5f51e92287w%26un_area%3D2_2826_51942_0&subType=app&adSource=null`
+        body:`venderId=${$.shopid}&code=99&pin=${encodeURIComponent($.pin)}&activityId=${$.activityID}&pageUrl=https%3A%2F%2Flzdz1-isv.isvjcloud.com%2Fdingzhi%2Fvivo%2Fiqoojieyapa%2Factivity%2F492728%3FactivityId%3Ddz2109100009716201%26shareUuid%3D%26adsource%3Dnull%26shareuserid4minipg%3D${encodeURIComponent($.pin)}%26shopid%3D1000085868%26lng%3D121.330619%26lat%3D31.292002%26sid%3Db1f8c732fcae5db1c375c5f51e92287w%26un_area%3D2_2826_51942_0&subType=app&adSource=null`
     }
     return new Promise(resolve => {
         $.post(config, (err, resp, data) => {
@@ -411,7 +419,7 @@ function accessLogWithAD() {
 }
 function getActCk() {
     let config = {
-        url: `https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/activity/dz2107100008586804`,
+        url: `https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/activity/dz2109100009716201`,
         headers: {
             'Host': 'lzdz1-isv.isvjcloud.com',
             'Accept': 'application/json',
@@ -519,6 +527,63 @@ function TotalBean() {
                 resolve();
             }
         })
+    })
+}
+async function getUA(){
+    $.UA = `jdapp;iPhone;10.0.10;14.3;${randomString(40)};network/wifi;model/iPhone12,1;addressid/3364463029;appBuild/167764;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`
+}
+function randomString(e) {
+    e = e || 32;
+    let t = "abcdef0123456789", a = t.length, n = "";
+    for (i = 0; i < e; i++)
+        n += t.charAt(Math.floor(Math.random() * a));
+    return n
+}
+function getRandomArrayElements(arr, count) {
+    var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+    while (i-- > min) {
+        index = Math.floor((i + 1) * Math.random());
+        temp = shuffled[index];
+        shuffled[index] = shuffled[i];
+        shuffled[i] = temp;
+    }
+    return shuffled.slice(min);
+}
+function getAuthorShareCode(url) {
+    return new Promise(async resolve => {
+        const options = {
+            "url": `${url}`,
+            "timeout": 10000,
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+            }
+        };
+        if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+            const tunnel = require("tunnel");
+            const agent = {
+                https: tunnel.httpsOverHttp({
+                    proxy: {
+                        host: process.env.TG_PROXY_HOST,
+                        port: process.env.TG_PROXY_PORT * 1
+                    }
+                })
+            }
+            Object.assign(options, { agent })
+        }
+        $.get(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                } else {
+                    if (data) data = JSON.parse(data)
+                }
+            } catch (e) {
+                // $.logErr(e, resp)
+            } finally {
+                resolve(data || []);
+            }
+        })
+        await $.wait(10000)
+        resolve();
     })
 }
 function Env(t,e){"undefined"!=typeof process&&JSON.stringify(process.env).indexOf("GITHUB")>-1&&process.exit(0);class s{constructor(t){this.env=t}send(t,e="GET"){t="string"==typeof t?{url:t}:t;let s=this.get;return"POST"===e&&(s=this.post),new Promise((e,i)=>{s.call(this,t,(t,s,r)=>{t?i(t):e(s)})})}get(t){return this.send.call(this.env,t)}post(t){return this.send.call(this.env,t,"POST")}}return new class{constructor(t,e){this.name=t,this.http=new s(this),this.data=null,this.dataFile="box.dat",this.logs=[],this.isMute=!1,this.isNeedRewrite=!1,this.logSeparator="\n",this.startTime=(new Date).getTime(),Object.assign(this,e),this.log("",`🔔${this.name}, 开始!`)}isNode(){return"undefined"!=typeof module&&!!module.exports}isQuanX(){return"undefined"!=typeof $task}isSurge(){return"undefined"!=typeof $httpClient&&"undefined"==typeof $loon}isLoon(){return"undefined"!=typeof $loon}toObj(t,e=null){try{return JSON.parse(t)}catch{return e}}toStr(t,e=null){try{return JSON.stringify(t)}catch{return e}}getjson(t,e){let s=e;const i=this.getdata(t);if(i)try{s=JSON.parse(this.getdata(t))}catch{}return s}setjson(t,e){try{return this.setdata(JSON.stringify(t),e)}catch{return!1}}getScript(t){return new Promise(e=>{this.get({url:t},(t,s,i)=>e(i))})}runScript(t,e){return new Promise(s=>{let i=this.getdata("@chavy_boxjs_userCfgs.httpapi");i=i?i.replace(/\n/g,"").trim():i;let r=this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout");r=r?1*r:20,r=e&&e.timeout?e.timeout:r;const[o,h]=i.split("@"),n={url:`http://${h}/v1/scripting/evaluate`,body:{script_text:t,mock_type:"cron",timeout:r},headers:{"X-Key":o,Accept:"*/*"}};this.post(n,(t,e,i)=>s(i))}).catch(t=>this.logErr(t))}loaddata(){if(!this.isNode())return{};{this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e);if(!s&&!i)return{};{const i=s?t:e;try{return JSON.parse(this.fs.readFileSync(i))}catch(t){return{}}}}}writedata(){if(this.isNode()){this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e),r=JSON.stringify(this.data);s?this.fs.writeFileSync(t,r):i?this.fs.writeFileSync(e,r):this.fs.writeFileSync(t,r)}}lodash_get(t,e,s){const i=e.replace(/\[(\d+)\]/g,".$1").split(".");let r=t;for(const t of i)if(r=Object(r)[t],void 0===r)return s;return r}lodash_set(t,e,s){return Object(t)!==t?t:(Array.isArray(e)||(e=e.toString().match(/[^.[\]]+/g)||[]),e.slice(0,-1).reduce((t,s,i)=>Object(t[s])===t[s]?t[s]:t[s]=Math.abs(e[i+1])>>0==+e[i+1]?[]:{},t)[e[e.length-1]]=s,t)}getdata(t){let e=this.getval(t);if(/^@/.test(t)){const[,s,i]=/^@(.*?)\.(.*?)$/.exec(t),r=s?this.getval(s):"";if(r)try{const t=JSON.parse(r);e=t?this.lodash_get(t,i,""):e}catch(t){e=""}}return e}setdata(t,e){let s=!1;if(/^@/.test(e)){const[,i,r]=/^@(.*?)\.(.*?)$/.exec(e),o=this.getval(i),h=i?"null"===o?null:o||"{}":"{}";try{const e=JSON.parse(h);this.lodash_set(e,r,t),s=this.setval(JSON.stringify(e),i)}catch(e){const o={};this.lodash_set(o,r,t),s=this.setval(JSON.stringify(o),i)}}else s=this.setval(t,e);return s}getval(t){return this.isSurge()||this.isLoon()?$persistentStore.read(t):this.isQuanX()?$prefs.valueForKey(t):this.isNode()?(this.data=this.loaddata(),this.data[t]):this.data&&this.data[t]||null}setval(t,e){return this.isSurge()||this.isLoon()?$persistentStore.write(t,e):this.isQuanX()?$prefs.setValueForKey(t,e):this.isNode()?(this.data=this.loaddata(),this.data[e]=t,this.writedata(),!0):this.data&&this.data[e]||null}initGotEnv(t){this.got=this.got?this.got:require("got"),this.cktough=this.cktough?this.cktough:require("tough-cookie"),this.ckjar=this.ckjar?this.ckjar:new this.cktough.CookieJar,t&&(t.headers=t.headers?t.headers:{},void 0===t.headers.Cookie&&void 0===t.cookieJar&&(t.cookieJar=this.ckjar))}get(t,e=(()=>{})){t.headers&&(delete t.headers["Content-Type"],delete t.headers["Content-Length"]),this.isSurge()||this.isLoon()?(this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.get(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)})):this.isQuanX()?(this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t))):this.isNode()&&(this.initGotEnv(t),this.got(t).on("redirect",(t,e)=>{try{if(t.headers["set-cookie"]){const s=t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();s&&this.ckjar.setCookieSync(s,null),e.cookieJar=this.ckjar}}catch(t){this.logErr(t)}}).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{const{message:s,response:i}=t;e(s,i,i&&i.body)}))}post(t,e=(()=>{})){if(t.body&&t.headers&&!t.headers["Content-Type"]&&(t.headers["Content-Type"]="application/x-www-form-urlencoded"),t.headers&&delete t.headers["Content-Length"],this.isSurge()||this.isLoon())this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.post(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)});else if(this.isQuanX())t.method="POST",this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t));else if(this.isNode()){this.initGotEnv(t);const{url:s,...i}=t;this.got.post(s,i).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{const{message:s,response:i}=t;e(s,i,i&&i.body)})}}time(t,e=null){const s=e?new Date(e):new Date;let i={"M+":s.getMonth()+1,"d+":s.getDate(),"H+":s.getHours(),"m+":s.getMinutes(),"s+":s.getSeconds(),"q+":Math.floor((s.getMonth()+3)/3),S:s.getMilliseconds()};/(y+)/.test(t)&&(t=t.replace(RegExp.$1,(s.getFullYear()+"").substr(4-RegExp.$1.length)));for(let e in i)new RegExp("("+e+")").test(t)&&(t=t.replace(RegExp.$1,1==RegExp.$1.length?i[e]:("00"+i[e]).substr((""+i[e]).length)));return t}msg(e=t,s="",i="",r){const o=t=>{if(!t)return t;if("string"==typeof t)return this.isLoon()?t:this.isQuanX()?{"open-url":t}:this.isSurge()?{url:t}:void 0;if("object"==typeof t){if(this.isLoon()){let e=t.openUrl||t.url||t["open-url"],s=t.mediaUrl||t["media-url"];return{openUrl:e,mediaUrl:s}}if(this.isQuanX()){let e=t["open-url"]||t.url||t.openUrl,s=t["media-url"]||t.mediaUrl;return{"open-url":e,"media-url":s}}if(this.isSurge()){let e=t.url||t.openUrl||t["open-url"];return{url:e}}}};if(this.isMute||(this.isSurge()||this.isLoon()?$notification.post(e,s,i,o(r)):this.isQuanX()&&$notify(e,s,i,o(r))),!this.isMuteLog){let t=["","==============📣系统通知📣=============="];t.push(e),s&&t.push(s),i&&t.push(i),console.log(t.join("\n")),this.logs=this.logs.concat(t)}}log(...t){t.length>0&&(this.logs=[...this.logs,...t]),console.log(t.join(this.logSeparator))}logErr(t,e){const s=!this.isSurge()&&!this.isQuanX()&&!this.isLoon();s?this.log("",`❗️${this.name}, 错误!`,t.stack):this.log("",`❗️${this.name}, 错误!`,t)}wait(t){return new Promise(e=>setTimeout(e,t))}done(t={}){const e=(new Date).getTime(),s=(e-this.startTime)/1e3;this.log("",`🔔${this.name}, 结束! 🕛 ${s} 秒`),this.log(),(this.isSurge()||this.isQuanX()||this.isLoon())&&$done(t)}}(t,e)}
