@@ -15,8 +15,8 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //惊喜APP的UA。领取助力任务奖励需要惊喜APP的UA,环境变量：JX_USER_AGENT，有能力的可以填上自己的UA
 const JXUserAgent =  $.isNode() ? (process.env.JX_USER_AGENT ? process.env.JX_USER_AGENT : ``):``;
-$.inviteCodeList = [];
-$.inviteCodeList_hb = [];
+$.inviteCodeList = ['g_eiitD1h9-a-PX-GytKiGrfw77E3iG0LpMlIb2JHca9nKlzxZS4IVVJEJ9MP3aXjJaSuyLOMVMMHJs0jf5gOQ'];
+$.inviteCodeList_hb = ['g_eiitD1h9-a-PX-GytKiCP4Y59In6jxprR7viqVfh92JkC-06nV2ixJH_oNOGwV46K4JK0NDTw4acSWm6EEFNLogvQq51yZlt4o1CELt0hvwSA-FS2XcWb6YOXnsO0b'];
 let cookiesArr = [];
 $.appId = 10028;
 $.helpCkList = [];
