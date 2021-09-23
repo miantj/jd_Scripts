@@ -11,6 +11,7 @@
  */
 //sendNotify Pro增加的变量请移步https://github.com/ccwav/QLScript 查看.
 const querystring = require('querystring');
+const exec = require('child_process').exec;
 const $ = new Env();
 const timeout = 15000; //超时时间(单位毫秒)
 
@@ -119,11 +120,12 @@ let boolneedUpdate = false;
 let strCustom = "";
 let strCustomArr = [];
 let strCustomTempArr = [];
-
+let Notify_CKTask = "";
 async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ccwav Mod') {
 	console.log(`开始发送通知...`);
 	try {
 		//Reset 变量
+
 		UseGroup2 = false;
 		strTitle = "";
 		GOBOT_URL = '';
@@ -146,6 +148,8 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 		IGOT_PUSH_KEY = '';
 		PUSH_PLUS_TOKEN = '';
 		PUSH_PLUS_USER = '';
+		Notify_CKTask = "";
+
 		//变量开关
 		var Use_serverNotify = true;
 		var Use_pushPlusNotify = true;
@@ -172,18 +176,25 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 		if (process.env.NOTIFY_NOLOGINSUCCESS) {
 			Notify_NoLoginSuccess = process.env.NOTIFY_NOLOGINSUCCESS;
 		}
+		if (process.env.NOTIFY_CKTASK) {
+			Notify_CKTask = process.env.NOTIFY_CKTASK;
+		}
 
 		if (text.indexOf("忘了种植") != -1) {
 			console.log(`东东农场没有种植，不推送`);
 			return;
 		}
-		if (Notify_NoCKFalse == "true") {
-			if (text.indexOf("cookie已失效") != -1) {
-				console.log(`cookie已失效，不推送`);
-				return;
+
+		if (text.indexOf("cookie已失效") != -1 || desp.indexOf("重新登录获取") != -1 || text == "Ninja 运行通知") {
+
+			if (Notify_CKTask) {
+				console.log("触发CK脚本，开始执行....");
+				Notify_CKTask = "task " + Notify_CKTask + " now";
+				await exec(Notify_CKTask, function (error, stdout, stderr) {
+					console.log(error, stdout, stderr)
+				});
 			}
-			if (desp.indexOf("重新登录获取") != -1) {
-				console.log(`cookie已失效，不推送`);
+			if (Notify_NoCKFalse == "true" && text != "Ninja 运行通知") {
 				return;
 			}
 		}
@@ -258,7 +269,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 			strCustomTempArr = [];
 			for (var Tempj in strCustomArr) {
 				strCustomTempArr = strCustomArr[Tempj].split("&");
-				if (strCustomTempArr.length > 1) {					
+				if (strCustomTempArr.length > 1) {
 					if (text == strCustomTempArr[0]) {
 						console.log("检测到自定义设定,开始执行配置...");
 						if (strCustomTempArr[1] == "组2") {
@@ -321,12 +332,12 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 									break;
 								}
 							}
-							
+
 						}
 					}
 				}
 
-			}			
+			}
 		}
 
 		if (UseGroup2) {
@@ -505,25 +516,29 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 				for (let i = 0; i < envs.length; i++) {
 					cookie = envs[i].value;
 					$.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-					$.nickName = ""
-						$.Remark = envs[i].remarks || '';
-					$.FoundnickName = ""
-						$.FoundPin = ""
-						//判断有没有Remark，没有搞个屁，有的继续
-						if ($.Remark) {
-							//先查找缓存文件中有没有这个账号，有的话直接读取别名
-							if (envs[i].status == 0) {
-								if (TempCK) {
-									for (let j = 0; j < TempCK.length; j++) {
-										if (TempCK[j].pt_pin == $.UserName) {
-											$.FoundPin = TempCK[j].pt_pin;
-											$.nickName = TempCK[j].nickName;
-										}
+					$.nickName = "";
+					$.Remark = envs[i].remarks || '';
+					$.FoundnickName = "";
+					$.FoundPin = "";
+					//判断有没有Remark，没有搞个屁，有的继续
+					if ($.Remark) {
+						//先查找缓存文件中有没有这个账号，有的话直接读取别名
+						if (envs[i].status == 0) {
+							if (TempCK) {
+								for (let j = 0; j < TempCK.length; j++) {
+									if (TempCK[j].pt_pin == $.UserName) {
+										$.FoundPin = TempCK[j].pt_pin;
+										$.nickName = TempCK[j].nickName;
 									}
 								}
-								if (!$.FoundPin) {
-									//缓存文件中有没有这个账号，调用京东接口获取别名,并更新缓存文件
-									await GetnickName();
+							}
+							if (!$.FoundPin) {
+								//缓存文件中有没有这个账号，调用京东接口获取别名,并更新缓存文件
+								await GetnickName();
+								if (!$.nickName) {
+									await GetnickName2();
+								}
+								if ($.nickName) {
 									console.log("好像是新账号，从接口获取别名" + $.nickName);
 									tempAddCK = {
 										"pt_pin": $.UserName,
@@ -534,24 +549,32 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 									boolneedUpdate = true;
 								}
 							}
+						}
 
-							$.nickName = $.nickName || $.UserName;
-							//这是为了处理ninjia的remark格式
-							$.Remark = $.Remark.replace("remark=", "");
-							$.Remark = $.Remark.replace(";", "");
-							//开始替换内容中的名字
-							if (ShowRemarkType == "2") {
-								$.Remark = $.nickName + "(" + $.Remark + ")";
-							}
-							if (ShowRemarkType == "4") {
-								$.Remark = $.nickName + "(" + $.Remark + ")";
-							}
+						$.nickName = $.nickName || $.UserName;
+						//这是为了处理ninjia的remark格式
+						$.Remark = $.Remark.replace("remark=", "");
+						$.Remark = $.Remark.replace(";", "");
+						//开始替换内容中的名字
+						if (ShowRemarkType == "2") {
+							$.Remark = $.nickName + "(" + $.Remark + ")";
+						}
+						if (ShowRemarkType == "4") {
+							$.Remark = $.UserName + "(" + $.Remark + ")";
+						}
+						try {
 							//加个空格，因为有些通知账号前没有空格很丑-_-!!!
 							text = text.replace(new RegExp(`${$.UserName}|${$.nickName}`, 'gm'), " " + $.Remark);
 							desp = desp.replace(new RegExp(`${$.UserName}|${$.nickName}`, 'gm'), " " + $.Remark);
-							//console.log($.nickName+$.Remark);
-
+						} catch (err) {
+							console.log("替换出错了");
+							console.log("Debug Name1 :" + $.UserName);
+							console.log("Debug Name2 :" + $.nickName);
+							console.log("Debug Remark :" + $.Remark);
 						}
+						//console.log($.nickName+$.Remark);
+
+					}
 
 				}
 
@@ -1176,6 +1199,49 @@ function GetnickName() {
 			}
 		})
 	})
+}
+
+function GetnickName2() {
+	return new Promise(async(resolve) => {
+		const options = {
+			url: `https://wxapp.m.jd.com/kwxhome/myJd/home.json?&useGuideModule=0&bizId=&brandId=&fromType=wxapp&timestamp=${Date.now()}`,
+			headers: {
+				Cookie: cookie,
+				'content-type': `application/x-www-form-urlencoded`,
+				Connection: `keep-alive`,
+				'Accept-Encoding': `gzip,compress,br,deflate`,
+				Referer: `https://servicewechat.com/wxa5bf5ee667d91626/161/page-frame.html`,
+				Host: `wxapp.m.jd.com`,
+				'User-Agent': `Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.10(0x18000a2a) NetType/WIFI Language/zh_CN`,
+			},
+		};
+		$.post(options, (err, resp, data) => {
+			try {
+				if (err) {
+					$.logErr(err);
+				} else {
+					if (data) {
+						data = JSON.parse(data);
+						if (!data.user) {
+							$.isLogin = false; //cookie过期
+							return;
+						}
+						const userInfo = data.user;
+						if (userInfo) {
+							$.nickName = userInfo.unickName;
+						}
+					} else {
+						$.log('京东服务器返回空数据');
+					}
+				}
+			} catch (e) {
+				$.logErr(e);
+			}
+			finally {
+				resolve();
+			}
+		});
+	});
 }
 
 module.exports = {
