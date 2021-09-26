@@ -40,7 +40,7 @@ let allMessage = '';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  let res = await getAuthorShareCode('')
+  let res = await getAuthorShareCode()
   //if (!res) {
     //$.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/connoisseur.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
     //await $.wait(1000)
@@ -414,10 +414,10 @@ async function getshareCode() {
             data = JSON.parse(data)
             for (let key of Object.keys(data.floorList)) {
               let vo = data.floorList[key]
-              if (vo.boardParams && (vo.boardParams.taskCode === "2gWnJADG8JXMpp1WXiNHgSy4xUSv" || vo.boardParams.taskCode === "26KhtkXmoaj6f37bE43W5kF8a9EL" || vo.boardParams.taskCode === "bWE8RTJm5XnooFr4wwdDM5EYcKP")) {
+              if (vo.boardParams && (vo.boardParams.taskCode === "2gWnJADG8JXMpp1WXiNHgSy4xUSv" || vo.boardParams.taskCode === "26KhtkXmoaj6f37bE43W5kF8a9EL" || vo.boardParams.taskCode === "bWE8RTJm5XnooFr4wwdDM5EYcKP" || vo.boardParams.taskCode === "Hys8nCmAaqKmv1G3Y3a5LJEk36Y")) {
                 await getTaskInfo("1", vo.boardParams.projectCode, vo.boardParams.taskCode)
                 await $.wait(2000)
-              if (vo.boardParams && (vo.boardParams.taskCode === "2gWnJADG8JXMpp1WXiNHgSy4xUSv" || vo.boardParams.taskCode === "26KhtkXmoaj6f37bE43W5kF8a9EL" || vo.boardParams.taskCode === "bWE8RTJm5XnooFr4wwdDM5EYcKP" || vo.boardParams.taskCode === "Hys8nCmAaqKmv1G3Y3a5LJEk36Y")) {
+              } else if (vo.boardParams && vo.boardParams.taskCode === "3PX8SPeYoQMgo1aJBZYVkeC7QzD3") {
                 $.projectCode = vo.boardParams.projectCode
                 $.taskCode = vo.boardParams.taskCode
               }

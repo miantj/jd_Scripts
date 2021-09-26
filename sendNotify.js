@@ -125,7 +125,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 	console.log(`开始发送通知...`);
 	try {
 		//Reset 变量
-
+		console.log("通知标题: "+text);
 		UseGroup2 = false;
 		strTitle = "";
 		GOBOT_URL = '';
@@ -219,6 +219,9 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By cc
 			} else {
 				strTitle = "东东萌宠";
 			}
+		}
+		if (text.indexOf("汪汪乐园养joy") != -1) {			
+			strTitle = "汪汪乐园养joy";			
 		}
 
 		if (text == "京喜工厂") {
@@ -1228,7 +1231,7 @@ function GetnickName2() {
 						}
 						const userInfo = data.user;
 						if (userInfo) {
-							$.nickName = userInfo.unickName;
+							$.nickName = userInfo.petName;
 						}
 					} else {
 						$.log('京东服务器返回空数据');
