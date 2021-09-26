@@ -31,7 +31,7 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://ddsj-dz.isvjcloud.com/dd-api';
 let allMessage = '';
-$.shareCodes = [{"use":"酷奔赶不上","taskToken":"T020uPh3Rx8e8VfKJxz3kfQDCjRVmIaV5kRrbA","code":"uDYMCVSCNkgu5F5x-fxPXwoQNYq2dX21JbSVdgJNxqE","num":0}]
+$.shareCodes = []
 let tokenInfo = {}, hotInfo = {}
 !(async () => {
   if (!cookiesArr[0]) {
