@@ -44,6 +44,7 @@ let allMessage = '';
   //   await $.wait(1000)
   //   $.authorCode = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_updateCash.json') || []
   // }
+  $.shareCodesList = []
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -64,6 +65,23 @@ let allMessage = '';
       }
       uuid = randomString(40)
       await jdMofang()
+    }
+  }
+  if ($.shareCodesList && $.shareCodesList.length > 1) {
+    console.log(`\n==========开始账号内互助==========\n`);
+    for (let j = 0; j < cookiesArr.length; j++) {
+      cookie = cookiesArr[j];
+      $.index = j + 1;
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+      $.itemId = $.shareCodesList[$.index];
+      if (j == cookiesArr.length - 1) {
+        console.log(`账号${$.UserName} 去助力 账号1`)
+        await doInteractiveAssignment('help', $.projectId, 'acexinpin0823', $.encryptAssignmentId, $.shareCodesList[0], '1')
+      } else {
+        console.log(`账号${$.UserName} 去助力 账号${$.index + 1}`)
+        await doInteractiveAssignment('help', $.projectId, 'acexinpin0823', $.encryptAssignmentId, $.itemId, '1')
+        await $.wait(1000)
+      }
     }
   }
 })()
@@ -91,6 +109,7 @@ async function getInteractionHomeInfo() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data)
+            $.projectId = data.result.taskConfig.projectId
             await queryInteractiveInfo(data.result.taskConfig.projectId, "acexinpin0823")
           }
         }
@@ -112,6 +131,7 @@ async function queryInteractiveInfo(encryptProjectId, sourceCode) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data)
+            $.encryptAssignmentId = data.assignmentList[1].encryptAssignmentId
             for (let key of Object.keys(data.assignmentList)) {
               let vo = data.assignmentList[key]
               if (vo.ext.extraType === "sign1") {
@@ -123,7 +143,16 @@ async function queryInteractiveInfo(encryptProjectId, sourceCode) {
                 } else {
                   console.log(`签到失败：今日已签到`)
                 }
-              } else if (vo.ext.extraType !== "assistTaskDetail" && vo.ext.extraType !== "brandMemberList") {
+              } else if (vo.ext.extraType !== "brandMemberList") {
+                if(vo.ext.extraType === 'assistTaskDetail') {
+                  if (vo.completionCnt) {
+                    console.log('助力已满')
+                  }else{
+                    $.shareCodesList.push(vo.ext.assistTaskDetail.itemId)
+                    console.log('助力码:',vo.ext.assistTaskDetail.itemId)
+                  }
+                  continue
+                }
                 console.log(`去做【${vo.assignmentName}】`)
                 if (vo.completionCnt < vo.assignmentTimesLimit) {
                   $.type = vo.rewards[0].rewardType
@@ -204,6 +233,8 @@ function doInteractiveAssignment(extraType, encryptProjectId, sourceCode, encryp
                 $.complete = true
                 console.log(`完成成功：获得${data.rewardsInfo.successRewards[$.type].quantityDetails[0].quantity}${data.rewardsInfo.successRewards[$.type].quantityDetails[0].rewardName}`)
               }
+            } else if (extraType === "help") {
+              console.log('助力结果:',data)
             }
           }
         }
