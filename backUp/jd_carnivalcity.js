@@ -1,6 +1,6 @@
 /*
 京东手机狂欢城活动
-活动时间: 2021-8-9至2021-8-28
+活动时间: 2021-9-16至2021-10-1
 活动入口：暂无 [活动地址](https://carnivalcity.m.jd.com)
 往期奖励：
 a、第1名可获得实物手机一部
@@ -10,14 +10,14 @@ c、 每日第10001-30000名可获得20个京豆
 ===================quantumultx================
 [task_local]
 #京东手机狂欢城
-0 0-18/6 * * * gua_carnivalcity.js, tag=京东手机狂欢城, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+1 0-18/6 * * * jd_carnivalcity.js, tag=京东手机狂欢城, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 =====================Loon================
 [Script]
-cron "0 0-18/6 * * *" script-path=gua_carnivalcity.js, tag=京东手机狂欢城
+cron "1 0-18/6 * * *" script-path=jd_carnivalcity.js, tag=京东手机狂欢城
 ====================Surge================
-京东手机狂欢城 = type=cron,cronexp=0 0-18/6 * * *,wake-system=1,timeout=3600,script-path=gua_carnivalcity.js
+京东手机狂欢城 = type=cron,cronexp=1 0-18/6 * * *,wake-system=1,timeout=3600,script-path=jd_carnivalcity.js
 ============小火箭=========
-5G狂欢城 = type=cron,script-path=gua_carnivalcity.js, cronexpr="0 0,6,12,18 * * *", timeout=3600, enable=true
+5G狂欢城 = type=cron,script-path=jd_carnivalcity.js, cronexpr="1 0,6,12,18 * * *", timeout=3600, enable=true
 */
 const $ = new Env('京东手机狂欢城');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -28,6 +28,8 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 let cookiesArr = [], cookie = '', message = '', allMessage = '';
 
+let gua_carnivalcity_draw = "false"
+gua_carnivalcity_draw = $.isNode() ? (process.env.gua_carnivalcity_draw ? process.env.gua_carnivalcity_draw : `${gua_carnivalcity_draw}`) : ($.getdata('gua_carnivalcity_draw') ? $.getdata('gua_carnivalcity_draw') : `${gua_carnivalcity_draw}`);
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -41,7 +43,7 @@ if ($.isNode()) {
 let inviteCodes = [];
 $.shareCodesArr = [];
 const JD_API_HOST = 'https://api.m.jd.com/api';
-const activeEndTime = '2021/08/28 00:00:00+08:00';//活动结束时间
+const activeEndTime = '2021/10/02 00:00:00+08:00';//活动结束时间
 let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 !(async () => {
   if (!cookiesArr[0]) {
@@ -55,7 +57,7 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
     if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`);
     return
   }
-  await updateShareCodesCDN();
+  // await updateShareCodesCDN();
   // await requireConfig();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -74,34 +76,35 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
       message = '';
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       getUA()
-      await shareCodesFormat();
+      // await shareCodesFormat();
       await JD818();
     }
   }
-  for (let i = 0; i < cookiesArr.length; i++) {
-    if (cookiesArr[i]) {
-      cookie = cookiesArr[i];
-      $.canHelp = true;//能否助力
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-      if ((cookiesArr && cookiesArr.length >= 1) && $.canHelp) {
-        console.log(`\n先自己账号内部相互邀请助力\n`);
-        for (let item of $.temp) {
-          console.log(`\n${$.UserName} 去参助力 ${item}`);
-          const helpRes = await toHelp(item.trim());
-          if (helpRes.data.status === 5) {
-            console.log(`助力机会已耗尽，跳出助力`);
-            $.canHelp = false;
-            break;
+  if($.temp.length > 0){
+    for (let i = 0; i < cookiesArr.length; i++) {
+      if (cookiesArr[i]) {
+        cookie = cookiesArr[i];
+        $.canHelp = true;//能否助力
+        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+        if ((cookiesArr && cookiesArr.length >= 1) && $.canHelp) {
+          console.log(`\n先自己账号内部相互邀请助力\n`);
+          for (let item of $.temp) {
+            console.log(`\n${$.UserName} 去参助力 ${item}`);
+            const helpRes = await toHelp(item.trim());
+            if (helpRes.data.status === 5) {
+              console.log(`助力机会已耗尽，跳出助力`);
+              $.canHelp = false;
+              break;
+            }
           }
         }
-      }
-      if ($.canHelp) {
-        console.log(`\n\n如果有剩余助力机会，则给作者以及随机码助力`)
-        await doHelp();
+        if ($.canHelp) {
+          console.log(`\n\n如果有剩余助力机会，则给作者以及随机码助力`)
+          await doHelp();
+        }
       }
     }
   }
-  // console.log(JSON.stringify($.temp))
   if (allMessage) {
     if ($.isNode()) {
       await notify.sendNotify($.name, allMessage, { url: "https://carnivalcity.m.jd.com" });
@@ -119,13 +122,14 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
 async function JD818() {
   try {
     await indexInfo();//获取任务
-    await supportList();//助力情况
-    await getHelp();//获取邀请码
+    //await supportList();//助力情况
+    //await getHelp();//获取邀请码
     if ($.blockAccount) return
-    //await indexInfo(true);//获取任务
+    // await indexInfo(true);//获取任务
     await doHotProducttask();//做热销产品任务
     await doBrandTask();//做品牌手机任务
     await doBrowseshopTask();//逛好货街，做任务
+    if ($.blockAccount) return
     // await doHelp();
     await myRank();//领取往期排名奖励
     await getListRank();
@@ -141,6 +145,7 @@ async function doHotProducttask() {
   $.hotProductList = $.hotProductList.filter(v => !!v && v['status'] === "1");
   if ($.hotProductList && $.hotProductList.length) console.log(`开始 【浏览热销手机产品】任务,需等待6秒`)
   for (let item of $.hotProductList) {
+    if ($.blockAccount) break
     await doBrowse(item['id'], "", "hot", "browse", "browseHotSku");
     await $.wait(1000 * 6);
     if ($.browseId) {
@@ -166,6 +171,7 @@ function doBrowse(id = "", brandId = "", taskMark = "hot", type = "browse", logM
             $.browseId = data['data']['browseId'] || "";
           } else {
             console.log(`doBrowse异常`);
+            if (data.code && (data.code === 1002 || data.code === 1001)) $.blockAccount = true;
           }
         }
       } catch (e) {
@@ -191,6 +197,8 @@ function getBrowsePrize(browseId, brandId = '') {
           data = JSON.parse(data);
           if (data && data['code'] === 200) {
             if (data['data']['jingBean']) $.beans += data['data']['jingBean'];
+          }else{
+            if (data.code && (data.code === 1002 || data.code === 1001)) $.blockAccount = true;
           }
         }
       } catch (e) {
@@ -229,6 +237,7 @@ function followShop(browseId, brandId = '') {
 
 async function doBrandTask() {
   for (let brand of $.brandList) {
+    if ($.blockAccount) break
     await brandTaskInfo(brand['brandId']);
   }
 }
@@ -342,6 +351,7 @@ async function doBrowseshopTask() {
   $.browseshopList = $.browseshopList.filter(v => !!v && v['status'] === "6");
   if ($.browseshopList && $.browseshopList.length) console.log(`\n开始 【逛好货街，做任务】，需等待10秒`)
   for (let shop of $.browseshopList) {
+    if ($.blockAccount) break
     await doBrowse(shop['id'], "", "browseShop", "browse", "browseShop");
     await $.wait(10000);
     if ($.browseId) {
@@ -368,6 +378,7 @@ function indexInfo(flag = false) {
             $.browseshopList = data['data']['browseshopList'];
           } else {
             console.log(`异常：${JSON.stringify(data)}`)
+            if (data.code && (data.code === 1002 || data.code === 1001)) $.blockAccount = true;
           }
         }
       } catch (e) {
@@ -422,7 +433,7 @@ function lottery() {
               $.msg($.name, '', `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${data.data.prizeName}\n兑换地址：${url}`, { 'open-url': url });
               if ($.isNode()) await notify.sendNotify($.name, `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${data.data.prizeName}\n兑换地址：${url}`);
             } else {
-              console.log(`积分抽奖结果:${data['data']['prizeName']}}`);
+              console.log(`积分抽奖结果:${data['data']['prizeName']}`);
             }
           }
         }
@@ -493,7 +504,7 @@ function myRank() {
                   }
                   await $.wait(500);
                 } else if (data.data[i].status === '3') {
-                  console.log(`${data.data[i]['date']}日 【${data.data[i]['prizeName']}】往期京豆奖励已领取~`)
+                  console.log(`${data.data[i]['date']}日 名次:${data.data[i]['rank']} 【${data.data[i]['prizeName']}】往期京豆奖励已领取~`)
                 } else {
                   console.log(`${data.data[i]['date']}日 【${data.data[i]['status']}】往期京豆奖励，今日争取进入前30000名哦~`)
                 }
@@ -568,7 +579,7 @@ async function doHelp() {
   }
 }
 //助力API
-function toHelp(code = "68f3d4e1-1893-40a2-a089-accdbfeaa31b") {
+function toHelp(code = "ddd345fb-57bb-4ece-968b-7bf4c92be7cc") {
   return new Promise(resolve => {
     const body = {"shareId":`${code}`};
     const options = taskPostUrl('/khc/task/doSupport', body)
@@ -578,10 +589,10 @@ function toHelp(code = "68f3d4e1-1893-40a2-a089-accdbfeaa31b") {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          //console.log(`助力结果:${data}`);
+          // console.log(`助力结果:${data}`);
           data = JSON.parse(data);
           if (data && data['code'] === 200) {
-            //if (data['data']['status'] === 6) console.log(`助力成功\n`)
+            // if (data['data']['status'] === 6) console.log(`助力成功\n`)
             if (data['data']['jdNums']) $.beans += data['data']['jdNums'];
           }
         }
@@ -610,7 +621,7 @@ function getHelp() {
             $.temp.push(data.data.shareId);
           } else {
             console.log(`获取邀请码失败：${JSON.stringify(data)}`);
-            if (data.code === 1002 || data.code === 1001) $.blockAccount = true;
+            if (data.code && (data.code === 1002 || data.code === 1001)) $.blockAccount = true;
           }
         }
       } catch (e) {
@@ -668,7 +679,7 @@ function getListIntegral() {
             $.integralCount = data.data.integralNum || 0;//累计活动积分
             message += `累计获得积分：${$.integralCount}\n`;
             console.log(`开始抽奖，当前积分可抽奖${parseInt($.integralCount / 50)}次\n`);
-            for (let i = 0; i < parseInt($.integralCount / 50); i ++) {
+            for (let i = 0; i < parseInt($.integralCount / 50) && gua_carnivalcity_draw+"" === "true"; i ++) {
               await lottery();
               await $.wait(500);
             }
@@ -737,6 +748,29 @@ function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/smiek2221/update
   })
 }
 
+function readShareCode() {
+  console.log(`开始`)
+  return new Promise(async resolve => {
+    $.get({url: `https://jd.smiek.tk/info_carnivalcity`, 'timeout': 20000}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+    await $.wait(20000);
+    resolve()
+  })
+}
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
@@ -748,9 +782,40 @@ function shareCodesFormat() {
       // console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex] && inviteCodes[tempIndex].split('@') || [];
-      //if ($.updatePkActivityIdRes && $.updatePkActivityIdRes.length) $.newShareCodes = [...$.updatePkActivityIdRes, ...$.newShareCodes];
+      if ($.updatePkActivityIdRes && $.updatePkActivityIdRes.length) $.newShareCodes = [...$.updatePkActivityIdRes, ...$.newShareCodes];
     }
+    //const readShareCodeRes = await readShareCode();
+    //if (readShareCodeRes && readShareCodeRes.code === 200) {
+      //$.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
+    //}
+    // console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
+  })
+}
+function requireConfig() {
+  return new Promise(resolve => {
+    console.log(`开始获取${$.name}配置文件\n`);
+    let shareCodes = [];
+    if ($.isNode()) {
+      if (process.env.JD818_SHARECODES) {
+        if (process.env.JD818_SHARECODES.indexOf('\n') > -1) {
+          shareCodes = process.env.JD818_SHARECODES.split('\n');
+        } else {
+          shareCodes = process.env.JD818_SHARECODES.split('&');
+        }
+      }
+    }
+    console.log(`共${cookiesArr.length}个京东账号\n`);
+    $.shareCodesArr = [];
+    if ($.isNode()) {
+      Object.keys(shareCodes).forEach((item) => {
+        if (shareCodes[item]) {
+          $.shareCodesArr.push(shareCodes[item])
+        }
+      })
+    }
+    console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
+    resolve()
   })
 }
 
