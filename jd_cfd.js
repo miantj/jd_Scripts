@@ -1,6 +1,6 @@
 /*
   https://st.jingxi.com/fortune_island/index2.html
-  18 0-23/2 * * * https://raw.githubusercontent.com/smiek2221/scripts/master/gua_wealth_island.js 财富大陆
+  18 0-23/2 * * * https://raw.githubusercontent.com/smiek2221/scripts/master/jd_cfd.js 财富大陆
 */
 
 
