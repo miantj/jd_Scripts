@@ -22,7 +22,7 @@ $.innerInviteList = [];
 const HelpAuthorFlag = false;//是否助力作者SH  true 助力，false 不助力
 
 // 热气球接客 每次运行接客次数
-let serviceNum = 10;// 每次运行接客次数
+let serviceNum = 20;// 每次运行接客次数
 if ($.isNode() && process.env.gua_wealth_island_serviceNum) {
   serviceNum = Number(process.env.gua_wealth_island_serviceNum);
 }
@@ -108,7 +108,7 @@ async function run() {
     // 倒垃圾
     await RubbishOper()
     // 导游
-    await Guide()
+    //await Guide()
     // 撸珍珠
     await Pearl()
     // 牛牛任务
@@ -565,7 +565,7 @@ async function Pearl(){
   try{
     await $.wait(2000)
     $.ComposeGameState = await taskGet(`user/ComposePearlState`, '', '&dwGetType=0')
-    console.log(`\n当前有${$.ComposeGameState.dwCurProgress}个月饼${$.ComposeGameState.ddwVirHb && ' '+$.ComposeGameState.ddwVirHb/100+"红包" || ''}`)
+    console.log(`\n当前有${$.ComposeGameState.dwCurProgress}个珍珠${$.ComposeGameState.ddwVirHb && ' '+$.ComposeGameState.ddwVirHb/100+"红包" || ''}`)
     if($.ComposeGameState.dayDrawInfo.dwIsDraw == 0){
       let res = ''
       res = await taskGet(`user/GetPearlDailyReward`, '__t,strZone', ``)
@@ -586,7 +586,7 @@ async function Pearl(){
     }
     if (($.ComposeGameState.dwCurProgress < 8 || true) && $.ComposeGameState.strDT) {
       let b = 1
-      console.log(`合月饼${b}次 `)
+      console.log(`合珍珠${b}次 `)
       // b = 8-$.ComposeGameState.dwCurProgress
       for(i=1;b--;i++){
         let n = Math.ceil(Math.random()*12+12)
@@ -607,11 +607,11 @@ async function Pearl(){
             }
           }
         }
-        console.log("合成月饼")
+        console.log("合成珍珠")
         let strLT = ($.ComposeGameState.oPT || [])[$.ComposeGameState.ddwCurTime % ($.ComposeGameState.oPT || []).length]
         let res = await taskGet(`user/ComposePearlAddProcess`, '__t,strBT,strLT,strZone', `&strBT=${$.ComposeGameState.strDT}&strLT=${strLT}`)
         if(res && res.iRet == 0){
-          console.log(`合成成功:${res.ddwAwardHb && '获得'+res.ddwAwardHb/100+"红包 " || ''}当前有${res.dwCurProgress}个月饼${res.ddwVirHb && ' '+res.ddwVirHb/100+"红包" || ''}`)
+          console.log(`合成成功:${res.ddwAwardHb && '获得'+res.ddwAwardHb/100+"红包 " || ''}当前有${res.dwCurProgress}个珍珠${res.ddwVirHb && ' '+res.ddwVirHb/100+"红包" || ''}`)
         }else{
           console.log(JSON.stringify(res))
         }
@@ -622,7 +622,7 @@ async function Pearl(){
       if (i.dwIsAward == 0 && $.ComposeGameState.dwCurProgress >= i.dwCurStageEndCnt) {
         await $.wait(2000)
         let res = await taskGet(`user/ComposeGameAward`, '__t,dwCurStageEndCnt,strZone', `&dwCurStageEndCnt=${i.dwCurStageEndCnt}`)
-        await printRes(res,'月饼领奖')
+        await printRes(res,'珍珠领奖')
       }
     }
   }catch (e) {
