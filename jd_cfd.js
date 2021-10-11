@@ -110,7 +110,7 @@ async function run() {
     // 导游
     //await Guide()
     // 撸珍珠
-    await Pearl()
+    //await Pearl()
     // 牛牛任务
     await ActTask()
     // 日常任务、成就任务
