@@ -86,7 +86,8 @@ async function siteppM_skuOnceApply() {
     sid: "",
     type: "3",
     forcebot: "",
-    token: $.token
+    token: $.token,
+    feSt: "s"
   }
   return new Promise(async resolve => {
     $.post(taskUrl("siteppM_skuOnceApply", body), async (err, resp, data) => {
@@ -98,6 +99,7 @@ async function siteppM_skuOnceApply() {
           if (safeGet(data)) {
             data = JSON.parse(data)
             if (data.flag) {
+              await $.wait(20 * 1000)				
               await siteppM_appliedSuccAmount()
             } else {
               console.log(`保价失败：${data.responseMessage}`)
