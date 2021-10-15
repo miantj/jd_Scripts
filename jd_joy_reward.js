@@ -14,12 +14,6 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = false; //是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
 let Today = new Date();
 let strDisable20 = "false";
-if ($.isNode() && process.env.JOY_GET20WHEN16) {
-	strDisable20 = process.env.JOY_GET20WHEN16;
-	if (strDisable20 != "false") {
-		console.log("检测到16点时段才抢20京豆");
-	}
-}
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -62,6 +56,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 				$.index = i + 1;
 			$.isLogin = true;
 			$.nickName = '' || $.UserName;
+
 			await TotalBean();
 			console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
 			if (!$.isLogin) {
@@ -74,6 +69,14 @@ Date.prototype.Format = function (fmt) { //author: meizz
 				}
 				continue
 			}
+			
+			if ($.isNode() && process.env.JOY_GET20WHEN16) {
+				strDisable20 = process.env.JOY_GET20WHEN16;
+				if (strDisable20 != "false") {
+					console.log("设置16点时段才抢20京豆....");
+				}
+			}
+			
 			// console.log(`本地时间与京东服务器时间差(毫秒)：${await get_diff_time()}`);
 			$.validate = '';
 			$.validate = await zooFaker.injectToRequest();
@@ -124,8 +127,8 @@ async function joyReward() {
 			}
 		}
 
-		if (new Date().getHours() > 15 && new Date().getHours() <= 23 && strDisable20 != "false") {
-			console.log("现在是15点后时段，执行抢20京豆");
+		if (new Date().getHours() > 15 && new Date().getHours() < 23 && strDisable20 != "false") {
+			console.log("现在是15点后时段，执行先抢500京豆再抢20京豆...");
 			strDisable20 = "false";
 		}
 
@@ -156,11 +159,11 @@ async function joyReward() {
 
 			}
 		}
-		if (llError){
+		if (llError) {
 			console.log('东哥说现在不给你兑换，死了这条心吧...');
 			return;
 		}
-			
+
 		if (new Date().getMinutes() == 58) {
 			sleeptime = (60 - nowtime) * 1000;
 			console.log(`请等待时间到达59分` + `等待时间 ${sleeptime / 1000}`);
@@ -177,90 +180,37 @@ async function joyReward() {
 				await $.wait(sleeptime);
 			}
 		}
-
+		var llChange500 = true;
 		var llSuccess = false;
-		
+		llError = false;
 		for (let j = 0; j <= 14; j++) {
-			console.log(`\n正在尝试第` + (j + 1) + `次执行:${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")} \n`);
 			if (llSuccess) {
-				console.log(`兑换成功，跳出\n`);
+				console.log(`兑换成功，跳出循环...\n`);
 				break;
 			}
-			const data = $.getExchangeRewardsRes.data;
-
-			for (let item of data[giftSaleInfos]) {
-				if (item.giftType === 'jd_bean') {
-					saleInfoId = item.id;
-					salePrice = item.salePrice;
-					giftValue = item.giftValue;
-					rewardNum = giftValue;
-					if (salePrice && rewardNum == 500) {
-						if (!saleInfoId)
-							continue;
-						console.log(`\n开始尝试为您兑换${giftValue}京豆\n`);
-						console.log(`脚本开始兑换${rewardNum}京豆时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
-						await exchange(saleInfoId, 'pet');
-						console.log(`请求兑换API后时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
-						if ($.exchangeRes && $.exchangeRes.success) {
-							if ($.exchangeRes.errorCode === 'buy_success') {
-								console.log(`\n兑换${giftValue}成功,【消耗积分】${salePrice}个\n`)
-								llSuccess = true;
-								if ($.isNode() && process.env.JD_JOY_REWARD_NOTIFY) {
-									$.ctrTemp = `${process.env.JD_JOY_REWARD_NOTIFY}` === 'false';
-								} else if ($.getdata('jdJoyRewardNotify')) {
-									$.ctrTemp = $.getdata('jdJoyRewardNotify') === 'false';
-								} else {
-									$.ctrTemp = `${jdNotify}` === 'false';
-								}
-								if ($.ctrTemp) {
-									$.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【${giftValue}京豆】兑换成功🎉\n【积分详情】消耗积分 ${salePrice}`);
-									if ($.isNode()) {
-										allMessage += `【京东账号${$.index}】 ${$.nickName}\n【${giftValue}京豆】兑换成功🎉\n【积分详情】消耗积分 ${salePrice}${$.index !== cookiesArr.length ? '\n\n' : ''}`
-									}
-									break;
-								}
-							} else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
-								console.log(`\n兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~\n`)
-								break;
-							} else if ($.exchangeRes && $.exchangeRes.errorCode === 'stock_empty') {
-								console.log(`\n兑换${rewardNum}京豆失败，原因：当前京豆库存为空\n`)
-							} else if ($.exchangeRes && $.exchangeRes.errorCode === 'insufficient') {
-								console.log(`\n兑换${rewardNum}京豆失败，原因：当前账号积分不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
-								break;
-							} else {
-								console.log(`\n兑奖失败:${JSON.stringify($.exchangeRes)}`)
-							}
-						} else {
-							console.log(`\n兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
-						}
-
-					} else {
-						// console.log(`兑换${rewardNum}京豆失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
-						//$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
-					}
-
-				}
+			if (llError) {
+				console.log(`兑换失败，跳出循环...\n`);
+				break;
 			}
 
-			if (strDisable20 == "false") {
+			console.log(`\n正在尝试第` + (j + 1) + `次执行:${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")} \n`);
+			const data = $.getExchangeRewardsRes.data;
+			if (llChange500) {
 				for (let item of data[giftSaleInfos]) {
 					if (item.giftType === 'jd_bean') {
 						saleInfoId = item.id;
 						salePrice = item.salePrice;
 						giftValue = item.giftValue;
 						rewardNum = giftValue;
-						if (salePrice && rewardNum == 20) {
-
+						if (salePrice && rewardNum == 500) {
 							if (!saleInfoId)
 								continue;
-							console.log(`\n开始尝试为您兑换${giftValue}京豆\n`);
-							console.log(`脚本开始兑换${rewardNum}京豆时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
+							console.log(`开始兑换${rewardNum}京豆,时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
 							await exchange(saleInfoId, 'pet');
-							console.log(`请求兑换API后时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
+							console.log(`结束兑换API后时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
 							if ($.exchangeRes && $.exchangeRes.success) {
 								if ($.exchangeRes.errorCode === 'buy_success') {
-									// console.log(`兑换${giftValue}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
-									console.log(`\n兑换${giftValue}成功,【消耗积分】${salePrice}个\n`);
+									console.log(`兑换${giftValue}成功,【消耗积分】${salePrice}个`)
 									llSuccess = true;
 									if ($.isNode() && process.env.JD_JOY_REWARD_NOTIFY) {
 										$.ctrTemp = `${process.env.JD_JOY_REWARD_NOTIFY}` === 'false';
@@ -273,35 +223,86 @@ async function joyReward() {
 										$.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【${giftValue}京豆】兑换成功🎉\n【积分详情】消耗积分 ${salePrice}`);
 										if ($.isNode()) {
 											allMessage += `【京东账号${$.index}】 ${$.nickName}\n【${giftValue}京豆】兑换成功🎉\n【积分详情】消耗积分 ${salePrice}${$.index !== cookiesArr.length ? '\n\n' : ''}`
-											// await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】 ${$.nickName}\n【${giftValue}京豆】兑换成功\n【宠物等级】${data.level}\n【积分详情】消耗积分 ${salePrice}, 剩余积分 ${data.coin - salePrice}`);
 										}
-
 										break;
 									}
-									// if ($.isNode()) {
-									//   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${$.nickName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
-									// }
 								} else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
-									console.log(`\n兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~\n`)
-									//$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
-									break
+									console.log(`兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~`)
+									llError = true;
+									break;
 								} else if ($.exchangeRes && $.exchangeRes.errorCode === 'stock_empty') {
-									console.log(`\n兑换${rewardNum}京豆失败，原因：当前京豆库存为空\n`)
+									console.log(`兑换${rewardNum}京豆失败，原因：当前京豆库存为空`)
 								} else if ($.exchangeRes && $.exchangeRes.errorCode === 'insufficient') {
-									console.log(`\n兑换${rewardNum}京豆失败，原因：当前账号积分不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
-									break
+									console.log(`兑换${rewardNum}京豆失败，原因：当前账号积分不足兑换${giftValue}京豆所需的${salePrice}积分`)
+									if (strDisable20 != "false") {
+										console.log(`关闭兑换500京豆，开启20京豆兑换...`)
+										strDisable20 = "false";
+									} else {
+										console.log(`关闭兑换500京豆...`)
+									}
+									llChange500 = false;
+
 								} else {
-									console.log(`\n兑奖失败:${JSON.stringify($.exchangeRes)}`)
+									console.log(`兑奖失败:${JSON.stringify($.exchangeRes)}`)
 								}
 							} else {
-								console.log(`\n兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
+								console.log(`兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
 							}
 
-						} else {
-							// console.log(`兑换${rewardNum}京豆失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
-							//$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
 						}
+					}
+				}
+			}
+			if (strDisable20 == "false") {
+				for (let item of data[giftSaleInfos]) {
+					if (item.giftType === 'jd_bean') {
+						saleInfoId = item.id;
+						salePrice = item.salePrice;
+						giftValue = item.giftValue;
+						rewardNum = giftValue;
+						if (salePrice && rewardNum == 20) {
 
+							if (!saleInfoId)
+								continue;
+							console.log(`开始兑换${rewardNum}京豆,时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
+							await exchange(saleInfoId, 'pet');
+							console.log(`结束兑换API后时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`);
+							if ($.exchangeRes && $.exchangeRes.success) {
+								if ($.exchangeRes.errorCode === 'buy_success') {
+									console.log(`兑换${giftValue}成功,【消耗积分】${salePrice}个`)
+									llSuccess = true;
+									if ($.isNode() && process.env.JD_JOY_REWARD_NOTIFY) {
+										$.ctrTemp = `${process.env.JD_JOY_REWARD_NOTIFY}` === 'false';
+									} else if ($.getdata('jdJoyRewardNotify')) {
+										$.ctrTemp = $.getdata('jdJoyRewardNotify') === 'false';
+									} else {
+										$.ctrTemp = `${jdNotify}` === 'false';
+									}
+									if ($.ctrTemp) {
+										$.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【${giftValue}京豆】兑换成功🎉\n【积分详情】消耗积分 ${salePrice}`);
+										if ($.isNode()) {
+											allMessage += `【京东账号${$.index}】 ${$.nickName}\n【${giftValue}京豆】兑换成功🎉\n【积分详情】消耗积分 ${salePrice}${$.index !== cookiesArr.length ? '\n\n' : ''}`
+										}
+										break;
+									}
+								} else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
+									console.log(`兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~`)
+									llError = true;
+									break;
+								} else if ($.exchangeRes && $.exchangeRes.errorCode === 'stock_empty') {
+									console.log(`兑换${rewardNum}京豆失败，原因：当前京豆库存为空`)
+								} else if ($.exchangeRes && $.exchangeRes.errorCode === 'insufficient') {
+									console.log(`兑换${rewardNum}京豆失败，原因：当前账号积分不足兑换${giftValue}京豆所需的${salePrice}积分`)
+									llError = true;
+									break;
+								} else {
+									console.log(`兑奖失败:${JSON.stringify($.exchangeRes)}`)
+								}
+							} else {
+								console.log(`兑换京豆异常:${JSON.stringify($.exchangeRes)}`)
+							}
+
+						}
 					}
 				}
 			}
