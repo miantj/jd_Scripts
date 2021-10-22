@@ -66,7 +66,7 @@ let allMessage = '';
       AuthorizationInfo[$.UserName] = $.Authorization
     }
   }
-  let res = await getAuthorShareCode()
+  let res = ['1451063615004450818']
   //if (!res) {
     //$.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/ys.json'}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
     //await $.wait(1000)
