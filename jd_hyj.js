@@ -105,6 +105,7 @@ $.shareCodesArr = [];
                                     if (tmp[o].status == 1) {
                                         conti = true
                                         await travel_collectScore(tmp[o].taskToken, task.taskId)
+										await $.wait(10000)
                                     }
 
                                 }
@@ -113,6 +114,7 @@ $.shareCodesArr = [];
                                     if (tmp[o].status == 1) {
                                         conti = true
                                         await qryViewkitCallbackResult(tmp[o].taskToken)
+										await $.wait(10000)
                                     }
 
                                 }
@@ -124,6 +126,7 @@ $.shareCodesArr = [];
                                     if (r.productInfoVos[o].status == 1) {
                                         conti = true
                                         await travel_collectScore(r.productInfoVos[o].taskToken, task.taskId)
+										await $.wait(10000)
                                         t++
                                         if (t >= 5) break
                                     }
@@ -137,6 +140,7 @@ $.shareCodesArr = [];
                                     if (r.browseShopVo[o].status == 1) {
                                         conti = true
                                         await travel_collectScore(r.browseShopVo[o].taskToken, task.taskId)
+										await $.wait(10000)
                                         t++
                                         if (t >= 5) break
                                     }
@@ -151,13 +155,14 @@ $.shareCodesArr = [];
                                         memberUrl = transform(memberUrl)
                                         //await join(task.brandMemberVos[o].vendorIds, memberUrl.channel, memberUrl.shopId ? memberUrl.shopId : "")
                                         await travel_collectScore(task.brandMemberVos[o].taskToken, task.taskId)
+										await $.wait(10000)
                                     }
 
                                 }
                         }
 
                     }
-                    await $.wait(1000)
+                    await $.wait(10000)
                 } while (conti)
 
 
