@@ -2,6 +2,7 @@
 京东极速版签到+赚现金任务
 每日9毛左右，满3，10，50可兑换无门槛红包
 ⚠️⚠️⚠️一个号需要运行40分钟左右
+
 活动时间：长期
 活动入口：京东极速版app-现金签到
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -10,11 +11,14 @@
 [task_local]
 #京东极速版
 21 3,8 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js, tag=京东极速版, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+
 ================Loon==============
 [Script]
 cron "21 3,8 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js,tag=京东极速版
+
 ===============Surge=================
 京东极速版 = type=cron,cronexp="21 3,8 * * *",wake-system=1,timeout=33600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js
+
 ============小火箭=========
 京东极速版 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_speed_sign.js, cronexpr="21 3,8 * * *", timeout=33600, enable=true
 */
@@ -700,6 +704,10 @@ function invite() {
     "wXX9SjXOdYMWe5Ru/1+x9A==",
     "mCvmrmFghpDCLcL3VZs53BkAhucziHAYn3HhPmURJJE=",
     "E9EvSFNuA1pahSQT0uSsXkW1v0j+QOHQbk8+peJYc0I=",
+    "zPiP6uq7hi9AS7VecMnRvA==",
+    "YQ5wwbSWDzNIudDC2OWvSw==",
+    "+vbK7QKOtpHM4dsSRqUPPX/11g/P71iBYh46dyiMuKk=",
+    "w22w0sZEccp/OWxg1d20RtsryQGfghc94PsLIBqeX0E=",
   ]
   let inviterId = inviterIdArr[Math.floor((Math.random() * inviterIdArr.length))]
   let options = {
