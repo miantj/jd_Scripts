@@ -8,7 +8,7 @@ cron 30 * * * * jd_cfd_mooncake.js
 ============Quantumultx===============
 [task_local]
 #京喜财富岛合成珍珠
-30 * * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd_mooncake.js, tag=京喜财富岛合成珍珠, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
+30 0-2 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd_mooncake.js, tag=京喜财富岛合成珍珠, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
 ================Loon==============
 [Script]
 cron "30 * * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd_mooncake.js,tag=京喜财富岛合成珍珠
