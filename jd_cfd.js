@@ -104,7 +104,7 @@ async function run() {
     // 捡垃圾
     await pickshell(1)
     // 热气球接客
-    await service(serviceNum)
+    //await service(serviceNum)
     // 倒垃圾
     await RubbishOper()
     // 导游
@@ -670,7 +670,7 @@ async function ActTask(){
           if(item.strTaskName.indexOf('热气球接待') > -1){
             let b = (item.dwTargetNum-item.dwCompleteNum)
             // 热气球接客
-            await service(b)
+            //await service(b)
             await $.wait((Number(item.dwLookTime) * 1000) || 1000)
           }else if(item.dwPointType == 301){
             await $.wait((Number(item.dwLookTime) * 1000) || 1000)
