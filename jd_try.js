@@ -94,9 +94,9 @@ let args_xh = {
     /*
      * 商品试用之间和获取商品之间的间隔, 单位：毫秒(1秒=1000毫秒)
      * 可设置环境变量：JD_TRY_APPLYINTERVAL
-     * 默认为3000，也就是3秒
+     * 默认为5000，也就是5秒
      * */
-    applyInterval: process.env.JD_TRY_APPLYINTERVAL * 1 || 3000,
+    applyInterval: process.env.JD_TRY_APPLYINTERVAL * 1 || 5000,
     /*
      * 商品数组的最大长度，通俗来说就是即将申请的商品队列长度
      * 例如设置为20，当第一次获取后获得12件，过滤后剩下5件，将会进行第二次获取，过滤后加上第一次剩余件数
