@@ -1,8 +1,8 @@
 /*
 * 活动：潮玩儿制躁团
-* 入口：不知道
-* 说明：貌似没有加购，没有开卡，蚊子腿豆子，抽到啥看下日志（PS有概率能抽到融创门票）
-cron 23 11,12 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_zzt.js
+* 入口：https://xinrui2-isv.isvjcloud.com
+* 说明：、没有加购，没有开卡，蚊子腿豆子，抽到啥看下日志（PS有概率能抽到融创门票）
+cron 23 9,12 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_zzt.js
 * */
 const $ = new Env('潮玩儿制躁团');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
