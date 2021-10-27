@@ -1,7 +1,7 @@
 /*
 * 活动：APP-美妆馆-右侧浮窗
 cron 23 9,10 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_selectionOfficer.js
-* 说明：脚本内互助，无开卡，有加购
+* 说明：脚本内互助，无开卡，无加购
 * */
 const $ = new Env('选品官');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -124,7 +124,7 @@ async function main() {
         console.log(`进行第${i+1}次抽奖`);
         await takePostRequest('draw_prize');
         console.log('\n');
-        await $.wait(1000);
+        await $.wait(2000);
     }
     await takeGetRequest('get_my_prize?type=2&page=1&page_num=10');
 }
@@ -163,15 +163,15 @@ async function doTask(){
                 await $.wait(1000);
             }
         }
-        if($.oneTask.type === 8){
-            let subList = $.oneTask.info;
-            for (let j = 0; j < subList.length; j++) {
-                $.subListInfo = subList[j];
-                console.log(`任务：${subList[j].title},去执行`);
-                await takePostRequest('add_product');
-                await $.wait(1000);
-            }
-        }
+        //if($.oneTask.type === 8){
+            //let subList = $.oneTask.info;
+            //for (let j = 0; j < subList.length; j++) {
+                //$.subListInfo = subList[j];
+                //console.log(`任务：${subList[j].title},去执行`);
+                //await takePostRequest('add_product');
+                //await $.wait(1000);
+            //}
+        //}
         if($.oneTask.type === 5){
             let subList = $.oneTask.info;
             for (let j = 0; j < subList.length; j++) {
