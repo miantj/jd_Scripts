@@ -1,6 +1,6 @@
 /*
   https://st.jingxi.com/fortune_island/index2.html
-  18 0,1,9,14,18 * * * jd_cfd_help.js 财富大陆互助
+  15 0 * * * jd_cfd_help.js 财富岛互助
 */
 
 // prettier-ignore

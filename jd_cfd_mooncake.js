@@ -93,7 +93,7 @@ $.appId = 10028;
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-    $.canHelp = true
+    $.canHelp = false
     UA = UAInfo[$.UserName]
     num = 0
     if ($.shareCodes && $.shareCodes.length) {
