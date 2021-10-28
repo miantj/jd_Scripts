@@ -82,7 +82,7 @@ async function run(){
         break
       }
       $.actId = $.url2.match(/mall\/active\/([^/]+)\/index\.html/) && $.url2.match(/mall\/active\/([^/]+)\/index\.html/)[1] || '2GdKXzvywVytLvcJTk2K3pLtDEHq'
-      let arr = await Faker.getBody($.UA,$.url2)
+      let arr = await Faker.getBody($.url2)
       await getEid(arr)
       if(!$.eid){
         $.eid = -1
