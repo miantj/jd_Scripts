@@ -78,10 +78,12 @@ async function main() {
       console.log(`开始进行翻翻乐拿红包\n`)
       await gambleOpenReward();//打开红包
       if ($.canOpenRed) {
-        while (!$.canApCashWithDraw && $.changeReward) {
+        let num = 0;
+        do {
           await openRedReward();
           await $.wait(500);
-        }
+          num++
+        } while (!$.canApCashWithDraw && $.changeReward && num < 20)
         if ($.canApCashWithDraw) {
           //提现
           await openRedReward('gambleObtainReward', $.rewardData.rewardType);
