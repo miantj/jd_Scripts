@@ -161,14 +161,20 @@ async function pasture() {
         console.log(`\n温馨提示：${$.UserName} 请先手动完成【新手指导任务】再运行脚本再运行脚本\n`);
         return;
       }
-      if ($.homeInfo.maintaskId !== "pause") {
+      $.currentStep = $.homeInfo?.finishedtaskId
+      console.log(`打印新手流程进度：当前进度：${$.currentStep}，下一流程：${$.homeInfo.maintaskId}`)
+      if ($.homeInfo.maintaskId !== "pause" || isNew($.currentStep)) {
         console.log(`开始初始化`)
-        $.step = $.homeInfo.maintaskId
+        $.step = isNew($.currentStep) ? isNew($.currentStep, true) : $.homeInfo.maintaskId
         await takeGetRequest('DoMainTask');
         for (let i = 0; i < 20; i++) {
           if ($.DoMainTask.maintaskId !== "pause") {
             await $.wait(2000)
+            $.currentStep = $.DoMainTask?.finishedtaskId
             $.step = $.DoMainTask.maintaskId
+            await takeGetRequest('DoMainTask');
+          } else if (isNew($.currentStep)) {
+            $.step = isNew($.currentStep, true)
             await takeGetRequest('DoMainTask');
           } else {
             console.log(`初始化成功\n`)
@@ -268,8 +274,20 @@ async function pasture() {
       await takeGetRequest('cow');
       await $.wait(2000);
     }
+    await $.wait(2000);
+    await takeGetRequest('GetUserLoveInfo');
+    for (let key of Object.keys($.GetUserLoveInfo)) {
+      let vo = $.GetUserLoveInfo[key]
+      if (vo.drawstatus === 1) {
+        await $.wait(2000);
+        $.lovevalue = vo.lovevalue;
+        await takeGetRequest('DrawLoveHongBao');
+      }
+    }
     $.taskList = [];
     $.dateType = ``;
+    $.source = `jxmc`;
+    $.bizCode = `jxmc`;
     for (let j = 2; j >= 0; j--) {
       if (j === 0) {
         $.dateType = ``;
@@ -307,6 +325,17 @@ async function pasture() {
         }
       }
     }
+    $.taskList = [];
+    $.dateType = `2`;
+    $.source = `jxmc_zanaixin`;
+    $.bizCode = `jxmc_zanaixin`;
+    for (let j = 2; j >= 0; j--) {
+      await takeGetRequest('GetUserTaskStatusList');
+      await $.wait(2000);
+      await doTask(j);
+      await $.wait(2000);
+    }
+
     await takeGetRequest('GetHomePageInfo');
     await $.wait(2000);
     let materialNumber = 0;
@@ -447,8 +476,9 @@ async function takeGetRequest(type) {
       myRequest = getGetRequest(`GetHomePageInfo`, url);
       break;
     case 'GetUserTaskStatusList':
-      url = `https://m.jingxi.com/newtasksys/newtasksys_front/GetUserTaskStatusList?_=${Date.now() + 2}&source=jxmc&bizCode=jxmc&dateType=${$.dateType}&_stk=bizCode%2CdateType%2Csource&_ste=1`;
-      url += `&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`;
+      url = `https://m.jingxi.com/newtasksys/newtasksys_front/GetUserTaskStatusList?_=${Date.now() + 2}&source=${$.source}&bizCode=${$.bizCode}&dateType=${$.dateType}&showAreaTaskFlag=0&jxpp_wxapp_type=7`
+      url += `&_stk=${getStk(url)}`
+      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`
       myRequest = getGetRequest(`GetUserTaskStatusList`, url);
       break;
     case 'mowing': //割草
@@ -468,13 +498,15 @@ async function takeGetRequest(type) {
       myRequest = getGetRequest(`jump`, url);
       break;
     case 'DoTask':
-      url = `https://m.jingxi.com/newtasksys/newtasksys_front/DoTask?_=${Date.now() + 2}&source=jxmc&taskId=${$.oneTask.taskId}&bizCode=jxmc&configExtra=&_stk=bizCode%2CconfigExtra%2Csource%2CtaskId&_ste=1`;
-      url += `&h5st=${decrypt(Date.now(), '', '', url)}` + `&sceneval=2&g_login_type=1&g_ty=ajax`;
+      url = `https://m.jingxi.com/newtasksys/newtasksys_front/DoTask?_=${Date.now() + 2}&source=${$.source}&taskId=${$.oneTask.taskId}&bizCode=${$.bizCode}&configExtra=`;
+      url += `&_stk=${getStk(url)}`;
+      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`;
       myRequest = getGetRequest(`DoTask`, url);
       break;
     case 'Award':
-      url = `https://m.jingxi.com/newtasksys/newtasksys_front/Award?_=${Date.now() + 2}&source=jxmc&taskId=${$.oneTask.taskId}&bizCode=jxmc&_stk=bizCode%2Csource%2CtaskId&_ste=1`;
-      url += `&h5st=${decrypt(Date.now(), '', '', url)}` + `&sceneval=2&g_login_type=1&g_ty=ajax`;
+      url = `https://m.jingxi.com/newtasksys/newtasksys_front/Award?_=${Date.now() + 2}&source=${$.source}&taskId=${$.oneTask.taskId}&bizCode=${$.bizCode}`;
+      url += `&_stk=${getStk(url)}`;
+      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&sceneval=2&g_login_type=1&g_ty=ajax`;
       myRequest = getGetRequest(`Award`, url);
       break;
     case 'cow':
@@ -539,15 +571,27 @@ async function takeGetRequest(type) {
       break;
     case 'Combine':
       url = `https://m.jingxi.com/jxmc/operservice/Combine?channel=7&sceneid=1001&type=2&activeid=${$.activeid}&activekey=${$.activekey}&cardtype=${$.cardType}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
-      url += `&_stk=${getStk(url)}`
+      url += `&_stk=${getStk(url)}`;
       url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
       myRequest = getGetRequest(`Combine`, url);
       break;
     case 'BuyNew':
       url = `https://m.jingxi.com/jxmc/operservice/BuyNew?channel=7&sceneid=1001&activeid=${$.activeid}&activekey=${$.activekey}&type=${$.petType}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
-      url += `&_stk=${getStk(url)}`
+      url += `&_stk=${getStk(url)}`;
       url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
       myRequest = getGetRequest(`BuyNew`, url);
+      break;
+    case 'GetUserLoveInfo':
+      url = `https://m.jingxi.com/jxmc/queryservice/GetUserLoveInfo?channel=7&sceneid=1001&activeid=${$.activeid}&activekey=${$.activekey}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
+      url += `&_stk=${getStk(url)}`;
+      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+      myRequest = getGetRequest(`GetUserLoveInfo`, url);
+      break;
+    case 'DrawLoveHongBao':
+      url = `https://m.jingxi.com/jxmc/operservice/DrawLoveHongBao?channel=7&sceneid=1001&activeid=${$.activeid}&activekey=${$.activekey}&lovevalue=${$.lovevalue}&jxmc_jstoken=${token['farm_jstoken']}&timestamp=${token['timestamp']}&phoneid=${token['phoneid']}`;
+      url += `&_stk=${getStk(url)}`;
+      url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+      myRequest = getGetRequest(`DrawLoveHongBao`, url);
       break;
     default:
       console.log(`错误${type}`);
@@ -576,6 +620,23 @@ async function takeGetRequest(type) {
 function getStk(url) {
   let arr = url.split('&').map(x => x.replace(/.*\?/, "").replace(/=.*/, ""))
   return encodeURIComponent(arr.filter(x => x).sort().join(','))
+}
+
+function isNew(step, getNextStep = false) {
+  const charArr = [...Array(26).keys()].map(i => String.fromCharCode(i + 65)),
+    numArr = [...Array(12).keys()].map(i => i + 1)
+  if (getNextStep) {
+    const tempArr = step.split(`-`)
+    tempArr[0] = charArr[charArr.indexOf(tempArr[0]) + 1]
+    tempArr[1] = numArr[0]
+    return tempArr.join("-")
+  }
+  const tempArr = step.split(`-`)
+  if (tempArr.length < 2) return true
+  const num = numArr.length * (charArr.indexOf(tempArr[0])) + (+tempArr[1]),
+    orderArr = ['L', '6'] // 目标步骤
+  const numTo = numArr.length * (charArr.indexOf(orderArr[0])) + (+orderArr[1])
+  return num < numTo
 }
 
 function dealReturn(type, data) {
@@ -743,6 +804,20 @@ function dealReturn(type, data) {
         console.log(`获得一只${petInfo[type].name}，宠物id：${petid}，当前拥有${currnum}只鸡`)
       } else {
         console.log(`BuyNew：${JSON.stringify(data)}`)
+      }
+      break;
+    case 'GetUserLoveInfo':
+      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
+      if (data.ret === 0) {
+        $.GetUserLoveInfo = data.data.lovelevel
+      }
+      break;
+    case 'DrawLoveHongBao':
+      data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
+      if (data.ret === 0) {
+        console.log(`领取爱心奖励获得：${data.data.rewardinfo.prizevalue / 100}红包`)
+      } else {
+        console.log(`DrawLoveHongBao：${JSON.stringify(data)}`)
       }
       break;
     default:
