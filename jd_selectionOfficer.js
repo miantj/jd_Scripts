@@ -63,7 +63,7 @@ let invitelist = [];
             }
             console.log(`\n${$.UserName}去助力${$.oneInvite.user},助力码:${$.oneInvite.inviter_id}`);
             await takePostRequest('invite_friend');
-            await $.wait(1000);
+            await $.wait(3000);
         }
     }
 })()
@@ -124,7 +124,7 @@ async function main() {
         console.log(`进行第${i+1}次抽奖`);
         await takePostRequest('draw_prize');
         console.log('\n');
-        await $.wait(2000);
+        await $.wait(3000);
     }
     await takeGetRequest('get_my_prize?type=2&page=1&page_num=10');
 }
