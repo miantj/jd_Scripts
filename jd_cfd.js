@@ -1132,7 +1132,7 @@ function getUserInfo(showInvite = true) {
             console.log(`财富岛好友互助码每次运行都变化,旧的当天有效`);
             console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${strMyShareId}`);
             $.shareCodes.push(strMyShareId)
-            await uploadShareCode(strMyShareId)
+            //await uploadShareCode(strMyShareId)
           }
           $.info = {
             ...$.info,
@@ -1588,7 +1588,7 @@ function shareCodesFormat() {
   return new Promise(async resolve => {
     $.newShareCodes = []
     const readShareCodeRes = await readShareCode();
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
+    if (readShareCodeRes && readShareCodeRes.code === 2000) {
       $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds, ...(readShareCodeRes.data || [])])];
     } else {
       $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds])];
