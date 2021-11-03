@@ -98,9 +98,9 @@ function feedPets(feedNum) {
     console.log(`您设置的喂食数量::${FEED_NUM}g\n`);
     if (FEED_NUM === 0) { console.log(`跳出喂食`);resolve();return }
     console.log(`实际的喂食数量::${feedNum}g\n`);
-    const url = `https://jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5&invokeKey=JL1VTNRadM68cIMQ` + $.validate;
+    const url = `https://jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5&invokeKey=q8DNJdpcfRQ69gIx` + $.validate;
     let lkt = new Date().getTime()
-    let lks = $.md5('' + 'JL1VTNRadM68cIMQ' + lkt).toString()
+    let lks = $.md5('' + 'q8DNJdpcfRQ69gIx' + lkt).toString()
     const options = {
       url,
       headers: {
@@ -162,9 +162,9 @@ function feedPets(feedNum) {
 //三餐
 function ThreeMeals() {
   return new Promise(resolve => {
-    const url = `https://jdjoy.jd.com/common/pet/getFood?taskType=ThreeMeals&reqSource=h5&invokeKey=JL1VTNRadM68cIMQ` + $.validate
+    const url = `https://jdjoy.jd.com/common/pet/getFood?taskType=ThreeMeals&reqSource=h5&invokeKey=q8DNJdpcfRQ69gIx` + $.validate
     let lkt = new Date().getTime()
-    let lks = $.md5('' + 'JL1VTNRadM68cIMQ' + lkt).toString()
+    let lks = $.md5('' + 'q8DNJdpcfRQ69gIx' + lkt).toString()
     const options = {
       url,
       headers: {
