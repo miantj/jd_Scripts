@@ -1587,7 +1587,7 @@ function uploadShareCode(code) {
 function shareCodesFormat() {
   return new Promise(async resolve => {
     $.newShareCodes = []
-    const readShareCodeRes = await readShareCode();
+    const readShareCodeRes = [];
     if (readShareCodeRes && readShareCodeRes.code === 2000) {
       $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds, ...(readShareCodeRes.data || [])])];
     } else {

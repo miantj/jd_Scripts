@@ -44,7 +44,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
         });
         return;
     }
-    console.log(`\n发财大赢家助力逻辑：优先助力填写的互助码环境变量\n`)
+    console.log(`\n发财大赢家助力逻辑：优先助力填写的互助码环境变量，中午10点之后再给我助力\n`)
     message = ''
     $.helptype = 1
     $.needhelp = true
@@ -54,6 +54,7 @@ const JD_API_HOST = `https://api.m.jd.com`;
     //开红包查询
     for (let i = 0; i < cookiesArr.length && $.needhelp; i++) {
         cookie = cookiesArr[i];
+        $.hotFlag = false;
         if (cookie) {
             $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
             $.index = i + 1;
@@ -62,8 +63,9 @@ const JD_API_HOST = `https://api.m.jd.com`;
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
         }
         if (!dyjCode) {
-            console.log(`\n环境变量中没有检测到助力码,开始获取【京东账号${$.index}】助力码\n`)
             await open()
+            if ($.hotFlag) continue;
+            console.log(`\n环境变量中没有检测到助力码,开始获取【京东账号${$.index}】助力码\n`)
             await getid()
         } else {
             dyjStr = dyjCode.split("@")
@@ -81,14 +83,14 @@ const JD_API_HOST = `https://api.m.jd.com`;
             }
         }
     }
-    if (new Date().getHours() = 23) {
+    if (new Date().getHours() >= 100) {
         await getAuthorShareCode()
         if ($.authorCode && $.authorCode.length) {
             for (let i = 0; i < cookiesArr.length; i++) {
                 cookie = cookiesArr[i];
                 $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
                 $.canRun = true
-                console.log(`\n${$.UserName} 去助力作者\n`)
+                console.log(`\n${$.UserName} 去助力【zero205】\n`)
                 for (let j = 0; j < $.authorCode.length; j++) {
                     let item = $.authorCode[j];
                     await help(item.redEnvelopeId, item.inviter, 1)
@@ -136,10 +138,12 @@ async function exchange() {
                     console.log(`${$.name} API请求失败，请检查网路重试`);
                 } else {
                     data = JSON.parse(data);
-                    if (data.success && data.data.chatEnvelopeVo.status == 50059) {
-                        console.log(`【京东账号${$.index}】${data.data.chatEnvelopeVo.message} ，尝试兑换红包...`)
-                        $.rewardType = 1
-                        await exchange()
+                    if (data.success && data.data) {
+                        if (data.data.chatEnvelopeVo.status == 50053 || data.data.chatEnvelopeVo.status == 50059) {
+                            console.log(`【京东账号${$.index}】${data.data.chatEnvelopeVo.message} ，尝试兑换红包...`)
+                            $.rewardType = 1
+                            await exchange()
+                        }
                     } else {
                         console.log(`【京东账号${$.index}】提现成功`)
                     }
@@ -163,6 +167,10 @@ function open() {
                     console.log(`${$.name} API请求失败，请检查网路重试`);
                 } else {
                     data = JSON.parse(data);
+                    if (data.code === 16020) {
+                        $.hotFlag = true
+                        console.log(data.errMsg);
+                    }
                 }
             } catch (e) {
                 $.logErr(e, resp);
@@ -183,7 +191,7 @@ function getid() {
                     console.log(`${$.name} API请求失败，请检查网路重试`);
                 } else {
                     data = JSON.parse(data);
-                    console.log(data.data.state)
+                    // console.log(data.data.state)
                     if (data.data.state !== 0) {
                         if (data.success && data.data) {
                             console.log(`\n【您的redEnvelopeId】：${data.data.redEnvelopeId}`)
@@ -308,7 +316,7 @@ function help(rid, inviter, type) {
 function getAuthorShareCode() {
     return new Promise(resolve => {
         $.get({
-            url: "https://raw.fastgit.org/shufflewzc/updateTeam/main/shareCodes/dyj.json",
+            url: "https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/dyj.json",
             headers: {
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
             }
