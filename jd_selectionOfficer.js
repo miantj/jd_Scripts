@@ -184,15 +184,15 @@ async function doTask(){
                 await $.wait(1000);
             }
         }
-        if($.oneTask.type === 6 && ["card","car"].includes(process.env.FS_LEVEL)){
-            let subList = $.oneTask.info;
-            for (let j = 0; j < subList.length; j++) {
-                $.subListInfo = subList[j];
-                console.log(`任务：${subList[j].title},去执行`);
-                await takePostRequest('view_product');
-                await $.wait(1000);
-            }
-        }
+        //if($.oneTask.type === 6 && ["card","car"].includes(process.env.FS_LEVEL)){
+            //let subList = $.oneTask.info;
+            //for (let j = 0; j < subList.length; j++) {
+                //$.subListInfo = subList[j];
+                //console.log(`任务：${subList[j].title},去执行`);
+                //await takePostRequest('view_product');
+                //await $.wait(1000);
+            //}
+        //}
     }
 }
 
