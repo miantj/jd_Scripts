@@ -140,7 +140,7 @@ async function jump() {
     while ($.oneJumpInfo.userInfo.diceLeft > 0 && flag && runTime < 10) {
       //丢骰子
       await throwDice();
-      if ($.gridType && ($.gridType === 'boom' || $.gridType === 'road_block' || $.gridType === 'add_cart')) break;
+      if ($.gridType && ($.gridType === 'boom' || $.gridType === 'road_block' || $.gridType === 'join_member' || $.gridType === 'add_cart')) break;
       await $.wait(3000);
       switch ($.gridType) {
         case 'give_dice':
