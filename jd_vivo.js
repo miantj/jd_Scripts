@@ -1,7 +1,8 @@
 /**
-10 0,20 * * * rush_vivo.js
+20 0,20 * * * jd_vivo.js
+入口https://lzdz1-isv.isvjcloud.com/dingzhi/vivo/iqoojieyapa/activity/131545?activityId=dz2110100000406501
 **/
-const $ = new Env("Phone");
+const $ = new Env("Phone狂心跳吧");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
