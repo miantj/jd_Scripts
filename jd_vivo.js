@@ -137,14 +137,14 @@ async function doTask(){
     }else{
         console.log(`已关注`);
     }
-    if(!$.activityData.addCartStatus){
-        console.log(`去执行加购`);
-        $.taskType=21;
-        await takePostRequest('saveTask');
-        await $.wait(1000);
-    }else{
-        console.log(`已执行加购`);
-    }
+    //if(!$.activityData.addCartStatus){
+        //console.log(`去执行加购`);
+        //$.taskType=21;
+        //await takePostRequest('saveTask');
+        //await $.wait(1000);
+    //}else{
+        //console.log(`已执行加购`);
+    //}
     let toMainData = $.activityData.toMainData;
     for (let i = 0; i < toMainData.length; i++) {
         $.taskType=12;
