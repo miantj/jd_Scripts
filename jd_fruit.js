@@ -581,6 +581,7 @@ async function turntableFarm() {
 }
 //领取额外奖励水滴
 async function getExtraAward() {
+async function getExtraAward() {
   await farmAssistInit();
   if ($.farmAssistResult.code === "0") {
     if ($.farmAssistResult.assistFriendList && $.farmAssistResult.assistFriendList.length >= 2) {
@@ -595,6 +596,7 @@ async function getExtraAward() {
               num += $.receiveStageEnergy.amount
             }
           }
+        }
         message += `【额外奖励】${num}g水领取成功\n`;
       } else if ($.farmAssistResult.status === 3) {
         console.log("已经领取过8好友助力额外奖励");
