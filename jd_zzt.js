@@ -97,8 +97,8 @@ async function main() {
     authorizationInfo[$.UserName] = authres.access_token;
     tokenInfo[$.UserName] = $.token;
     console.log(`昵称：${user.nickname},剩余金币值：${user.coins}，助力码：${user.id}\n`);
-    if(user.is_all_map === 1){
-        console.log(`已到达终点`);
+    if(user.is_all_map === 2){
+        console.log(`已全部通关`);
         return;
     }
     let taskList = await taskUrl("shop_products", "");
