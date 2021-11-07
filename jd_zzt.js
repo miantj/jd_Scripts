@@ -106,15 +106,15 @@ async function main() {
     if(state.friend.length !== 5){
         codeList.push({'user':$.UserName,'code':user.id,'needTime':5 - state.friend.length})
     }
-    for (let key of Object.keys(taskList.products)) {
-        let vv = taskList.products[key];
-        let isFinishList = state.view_product;
-        if (isFinishList.indexOf(vv.id.toString()) === -1) {
-            console.log(`去浏览${vv.name} `)
-            await taskPostUrl("product_view", `product_id=${vv.id}`)
-            await $.wait(1000);
-        }
-    }
+    //for (let key of Object.keys(taskList.products)) {
+        //let vv = taskList.products[key];
+        //let isFinishList = state.view_product;
+        //if (isFinishList.indexOf(vv.id.toString()) === -1) {
+            //console.log(`去浏览${vv.name} `)
+            //await taskPostUrl("product_view", `product_id=${vv.id}`)
+            //await $.wait(1000);
+        //}
+    //}
     for (let key of Object.keys(taskList.shops_follow)) {
         let vv = taskList.shops_follow[key];
         let isFinishList = state.view_shop;
@@ -138,7 +138,7 @@ async function main() {
     console.log(`当前积分：${user.coins},可以摇骰子：${time}次`);
     for (let i = 0; i < time; i++) {
         console.log(`\n进行第${i+1}次摇骰子`);
-        let dice = await taskUrl("dice", "")
+        let dice = await taskUrl("dice_new", "")
         if (dice.prize_info && JSON.stringify(dice.prize_info) !== '[]'){
             if(dice.prize_info.type === 1){
                 console.log(`获得：${dice.prize_info.beans || 0}京豆`);
