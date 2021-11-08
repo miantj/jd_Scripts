@@ -177,20 +177,20 @@ async function pasture() {
       }
       console.log('获取活动信息成功');
       console.log(`互助码：${$.homeInfo.sharekey}`);
-      $.taskList = [], $.dateType = ``, $.source = `jxmc`, $.bizCode = `jxmc`;
-      await takeGetRequest('GetUserTaskStatusList');
-      for (let key of Object.keys($.taskList)) {
-        let vo = $.taskList[key]
-        if (vo.taskName === "邀请好友助力养鸡" || vo.taskType === 4) {
-          if (vo.completedTimes >= vo.configTargetTimes) {
-            console.log(`助力已满，不上传助力码`)
-          } else {
-            await uploadShareCode($.homeInfo.sharekey)
-            $.inviteCodeList.push($.homeInfo.sharekey);
-            await $.wait(2000)
-          }
-        }
-      }
+      //$.taskList = [], $.dateType = ``, $.source = `jxmc`, $.bizCode = `jxmc`;
+      //await takeGetRequest('GetUserTaskStatusList');
+      //for (let key of Object.keys($.taskList)) {
+        //let vo = $.taskList[key]
+        //if (vo.taskName === "邀请好友助力养鸡" || vo.taskType === 4) {
+          //if (vo.completedTimes >= vo.configTargetTimes) {
+            //console.log(`助力已满，不上传助力码`)
+          //} else {
+            //await uploadShareCode($.homeInfo.sharekey)
+            //$.inviteCodeList.push($.homeInfo.sharekey);
+            //await $.wait(2000)
+          //}
+        //}
+      //}
       const petNum = ($.homeInfo?.petinfo || []).length
       await takeGetRequest('GetCardInfo');
       if ($.GetCardInfo && $.GetCardInfo.cardinfo) {
