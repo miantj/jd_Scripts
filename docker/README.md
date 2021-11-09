@@ -30,7 +30,7 @@ pip install docker-compose
 
 
 
-- 常用命令
+#常用命令
  `docker-compose up -d` 启动（修改docker-compose.yml后需要使用此命令使更改生效）；  
  `docker-compose logs` 打印日志；  
  `docker-compose logs -f` 打印日志，-f表示跟随日志；  
@@ -40,18 +40,18 @@ pip install docker-compose
  `docker-compose restart` 重启容器；  
  `docker-compose down` 停止并删除容器；  
 
-青龙一键部署
+#青龙一键部署
 
 1. 新建一个文件夹，用于存放相关数据
 2. 下载本仓库中的`docker-compose.yml`至本地，或是复制文件内容后在本地自行建立并粘贴内容
 3. 使用docker-compose启动
 4. 浏览器输入ip:5700即可进入面板
 
-# 新建数据文件夹
+##新建数据文件夹
 mkdir qinglong
 cd qinglong
-# 下载docker-compose.yml文件
+##下载docker-compose.yml文件
 wget https://raw.githubusercontent.com/whyour/qinglong/develop/docker-compose.yml
-# 启动
+##启动
 docker-compose up -d
 
