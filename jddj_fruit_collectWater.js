@@ -254,7 +254,8 @@ async function taskLoginUrl(deviceid, thiscookie) {
             };
             let ckstr = '';
             await $.http.get(option).then(async response => {
-                if (response.body.indexOf('请求成功') > -1) {
+                    let body = JSON.parse(response.body);
+                    if (body.code == 0) {
                     for (const key in response.headers) {
                         if (key.toLowerCase().indexOf('cookie') > -1) {
                             ckstr = response.headers[key].toString();
@@ -262,6 +263,9 @@ async function taskLoginUrl(deviceid, thiscookie) {
                     }
                     ckstr += 'deviceid_pdj_jd=' + deviceid;
                 }
+                    else {
+                        console.log(body.msg);
+                    }				
             });
             resolve(ckstr);
 
