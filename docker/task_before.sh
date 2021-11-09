@@ -32,6 +32,7 @@ var_name=(
   ForOtherHealth
 )
 
+file_code=$dir_log/6dylan6_jdpro_code
 combine_sub() {
     local what_combine=$1
     local combined_all=""
@@ -57,8 +58,8 @@ combine_all() {
     done
 }
 
-if [[ $(ls $dir_code) ]]; then
-    latest_log=$(ls -r $dir_code | head -1)
-    . $dir_code/$latest_log
+if [[ $(ls $file_code) ]]; then
+    latest_log=$(ls -r $file_code | head -1)
+    . $file_code/$latest_log
     combine_all
 fi
