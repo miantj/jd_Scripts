@@ -5,7 +5,7 @@ Tips
 
 ##青龙拉库指令
 
-ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|code.sh"
+ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ##互助指南
 
@@ -15,4 +15,4 @@ RepoFileExtensions="js py sh"
 
 2、执行拉库
 
-3、在青龙手动执行互助码提取即可快速自动完成互助配置
+3、青龙执行互助码提取即可快速自动完成互助配置
