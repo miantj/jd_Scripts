@@ -485,7 +485,7 @@ function shareCodesFormat() {
     }
     //因好友助力功能下线。故暂时屏蔽
     const readShareCodeRes = await readShareCode();
-    const readShareCodeRes = null;
+    //const readShareCodeRes = null;
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
     }
