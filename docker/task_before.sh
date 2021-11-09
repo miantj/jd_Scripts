@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#6dylan6
 
 env_name=(
   FRUITSHARECODES
