@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 ## 导入通用变量与函数
+#获取助力码
+#15 12,23 * * * code.sh 
 grep 6dylan6 /ql/config/task_before.sh
 if [[ $? != 0 ]];then
 \cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
