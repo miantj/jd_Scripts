@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ## 导入通用变量与函数
-#15 12,23 * * * code.sh 
+#15 12,23 * * * jd_sharecode.sh 
 #new Env('获取助力码');
 grep 6dylan6 /ql/config/task_before.sh
 if [[ $? != 0 ]];then

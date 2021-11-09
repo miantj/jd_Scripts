@@ -32,7 +32,7 @@ var_name=(
   ForOtherHealth
 )
 
-file_code=$dir_log/6dylan6_jdpro_code
+file_code=$dir_log/6dylan6_jdpro_jd_sharecode
 combine_sub() {
     local what_combine=$1
     local combined_all=""
