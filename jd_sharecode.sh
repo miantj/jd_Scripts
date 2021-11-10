@@ -2,11 +2,11 @@
 ## 导入通用变量与函数
 #15 12,23 * * * jd_sharecode.sh 
 #new Env('获取互助码');
-grep 6dylan6 /ql/config/task_before.sh
+grep '6dylan6_jdpro' /ql/config/task_before.sh >/dev/null 2>&1
 if [[ $? != 0 ]];then
-\cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
+	\cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
 else
-echo "already config"
+	echo "already exist" >/dev/null 2>&1
 fi
 dir_shell=/ql/shell
 . $dir_shell/share.sh
