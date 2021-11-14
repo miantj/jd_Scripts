@@ -300,9 +300,9 @@ async function slaveHelp() {
       console.log(`助力好友结果: ${response.message}`);
     }
   }
-  if (helpPeoples && helpPeoples.length > 0) {
-    message += `【您助力的好友】${helpPeoples.substr(0, helpPeoples.length - 1)}\n`;
-  }
+  //if (helpPeoples && helpPeoples.length > 0) {
+    //message += `【您助力的好友】${helpPeoples.substr(0, helpPeoples.length - 1)}\n`;
+  //}
 }
 // 遛狗, 每天次数上限10次, 随机给狗粮, 每次遛狗结束需调用getSportReward领取奖励, 才能进行下一次遛狗
 async function petSport() {
