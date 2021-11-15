@@ -13,7 +13,7 @@ cron 18 0-23/2 * * * jd_cfd.js
 [Script]
 cron "18 0-23/2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js,tag=京喜财富岛
 ===============Surge=================
-京喜财富岛 = type=cron,cronexp="1 * * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js
+京喜财富岛 = type=cron,cronexp="18 0-23/2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js
 ============小火箭=========
 京喜财富岛 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_cfd.js, cronexpr="18 0-23/2 * * *", timeout=3600, enable=true
  */
