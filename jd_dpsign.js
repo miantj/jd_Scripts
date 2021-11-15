@@ -4,7 +4,7 @@
 自带的Token List网址已不可用
 由Shy_yhS更新店铺数据，当日签到超过20家则火爆
 更新日期:2021-10-28 00:19
-cron 30 0,23 * * * jd_qpqd_diy.js, tag=店铺签到diy
+cron 30 0,23 * * * jd_dpsign.js, tag=店铺签到diy
 */
 const $ = new Env('店铺签到');
 
