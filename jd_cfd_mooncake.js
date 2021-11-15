@@ -196,10 +196,6 @@ async function composePearlState(type) {
               if (data.iRet === 0) {
                 console.log(`当前已合成${data.dwCurProgress}颗月饼，总计获得${data.ddwVirHb / 100}元红包`)
                 if (data.strDT) {
-                  let beacon = data.PearlList[0]
-                  data.PearlList.shift()
-                  let beaconType = beacon.type
-                  let num = Math.ceil(Math.random() * 12 + 12)
                   // let num = Math.ceil(Math.random() * 12 + 12)
                   let num = data.PearlList.length
                   let div = Math.ceil(Math.random() * 4 + 2)				  
