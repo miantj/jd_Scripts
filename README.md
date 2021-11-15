@@ -3,6 +3,7 @@
 # Tips
 
 >个人搜集全网库，优化，屏蔽助力池，屏蔽开卡入会，自用库，日常更新,自动配置内部互助
+细水长流，低调使用，在精不在多，拉许多重复容易黑！
 
 #青龙[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
