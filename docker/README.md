@@ -57,10 +57,10 @@ mkdir qinglong
 cd qinglong
 ```
 
-###下载docker-compose.yml文件
+###下载或复制docker-compose.yml文件
 
 ```bash
-wget https://raw.githubusercontent.com/whyour/qinglong/develop/docker-compose.yml
+wget https://ghproxy.com/https://raw.githubusercontent.com/whyour/qinglong/develop/docker-compose.yml
 ```
 
 ###启动
