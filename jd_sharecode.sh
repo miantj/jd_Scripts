@@ -19,7 +19,7 @@ env_name=(
 #  DDFACTORY_SHARECODES
   JDZZ_SHARECODES
 # JXNC_SHARECODES
-  BOOKSHOP_SHARECODES
+#  BOOKSHOP_SHARECODES
   JD_CASH_SHARECODES
   JDSGMH_SHARECODES
 #  JDCFD_SHARECODES
@@ -33,7 +33,7 @@ var_name=(
 #  ForOtherJdFactory
   ForOtherJdzz
 #  ForOtherJxnc
-  ForOtherBookShop
+#  ForOtherBookShop
   ForOtherCash
   ForOtherSgmh
 #  ForOtherCfd
@@ -48,7 +48,7 @@ name_js=(
 #  6dylan6_jdpro_jd_jdfactory
   6dylan6_jdpro_jd_jdzz
 #  6dylan6_jdpro_jd_jxnc
-  6dylan6_jdpro_jd_bookshop
+#  6dylan6_jdpro_jd_bookshop
   6dylan6_jdpro_jd_cash
   6dylan6_jdpro_jd_sgmh
 #  6dylan6_jdpro_jd_cfd
@@ -63,7 +63,7 @@ name_config=(
 #  JdFactory
   Jdzz
 #  Jxnc
-  BookShop
+#  BookShop
   Cash
   Sgmh
 #  Cfd
@@ -78,7 +78,7 @@ name_chinese=(
 #  东东工厂
   京东赚赚
 #  京喜农场
-  口袋书店
+#  口袋书店
   签到领现金
   闪购盲盒
 #  京喜财富岛

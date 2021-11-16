@@ -10,7 +10,7 @@ env_name=(
   JDZZ_SHARECODES
 #  JDJOY_SHARECODES
 #  JXNC_SHARECODES
-  BOOKSHOP_SHARECODES
+#  BOOKSHOP_SHARECODES
   JD_CASH_SHARECODES
   JDSGMH_SHARECODES
 #  JDCFD_SHARECODES
@@ -25,7 +25,7 @@ var_name=(
   ForOtherJdzz
 #  ForOtherJoy
 #  ForOtherJxnc
-  ForOtherBookShop
+#  ForOtherBookShop
   ForOtherCash
   ForOtherSgmh
 #  ForOtherCfd
