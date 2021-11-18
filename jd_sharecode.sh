@@ -8,6 +8,7 @@ if [[ $? != 0 ]];then
 else
 	echo "already exist" >/dev/null 2>&1
 fi
+
 dir_shell=/ql/shell
 . $dir_shell/share.sh
 
@@ -17,7 +18,7 @@ env_name=(
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
 #  DDFACTORY_SHARECODES
-  JDZZ_SHARECODES
+#  JDZZ_SHARECODES
 # JXNC_SHARECODES
 #  BOOKSHOP_SHARECODES
   JD_CASH_SHARECODES
@@ -31,7 +32,7 @@ var_name=(
   ForOtherBean
   ForOtherDreamFactory
 #  ForOtherJdFactory
-  ForOtherJdzz
+#  ForOtherJdzz
 #  ForOtherJxnc
 #  ForOtherBookShop
   ForOtherCash
@@ -46,7 +47,7 @@ name_js=(
   6dylan6_jdpro_jd_plantBean
   6dylan6_jdpro_jd_dreamFactory
 #  6dylan6_jdpro_jd_jdfactory
-  6dylan6_jdpro_jd_jdzz
+#  6dylan6_jdpro_jd_jdzz
 #  6dylan6_jdpro_jd_jxnc
 #  6dylan6_jdpro_jd_bookshop
   6dylan6_jdpro_jd_cash
@@ -61,7 +62,7 @@ name_config=(
   Bean
   DreamFactory
 #  JdFactory
-  Jdzz
+#  Jdzz
 #  Jxnc
 #  BookShop
   Cash
@@ -76,7 +77,7 @@ name_chinese=(
   京东种豆得豆
   京喜工厂
 #  东东工厂
-  京东赚赚
+#  京东赚赚
 #  京喜农场
 #  口袋书店
   签到领现金

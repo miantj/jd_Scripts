@@ -7,7 +7,7 @@ env_name=(
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
 #  DDFACTORY_SHARECODES
-  JDZZ_SHARECODES
+#  JDZZ_SHARECODES
 #  JDJOY_SHARECODES
 #  JXNC_SHARECODES
 #  BOOKSHOP_SHARECODES
@@ -21,8 +21,8 @@ var_name=(
   ForOtherPet
   ForOtherBean
   ForOtherDreamFactory
-  #ForOtherJdFactory
-  ForOtherJdzz
+#  ForOtherJdFactory
+#  ForOtherJdzz
 #  ForOtherJoy
 #  ForOtherJxnc
 #  ForOtherBookShop
