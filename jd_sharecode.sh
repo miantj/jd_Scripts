@@ -2,7 +2,7 @@
 ## 导入通用变量与函数
 #15 12,23 * * * jd_sharecode.sh 
 #new Env('获取互助码');
-grep '6dylan6_jdpro' /ql/config/task_before.sh >/dev/null 2>&1
+grep '6dylan6_1119' /ql/config/task_before.sh >/dev/null 2>&1
 if [[ $? != 0 ]];then
 	\cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
 else
@@ -17,7 +17,7 @@ env_name=(
   PETSHARECODES
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
-#  DDFACTORY_SHARECODES
+  DDFACTORY_SHARECODES
 #  JDZZ_SHARECODES
 # JXNC_SHARECODES
 #  BOOKSHOP_SHARECODES
@@ -31,7 +31,7 @@ var_name=(
   ForOtherPet
   ForOtherBean
   ForOtherDreamFactory
-#  ForOtherJdFactory
+  ForOtherJdFactory
 #  ForOtherJdzz
 #  ForOtherJxnc
 #  ForOtherBookShop
@@ -46,7 +46,7 @@ name_js=(
   6dylan6_jdpro_jd_pet
   6dylan6_jdpro_jd_plantBean
   6dylan6_jdpro_jd_dreamFactory
-#  6dylan6_jdpro_jd_jdfactory
+  6dylan6_jdpro_jd_jdfactory
 #  6dylan6_jdpro_jd_jdzz
 #  6dylan6_jdpro_jd_jxnc
 #  6dylan6_jdpro_jd_bookshop
@@ -61,7 +61,7 @@ name_config=(
   Pet
   Bean
   DreamFactory
-#  JdFactory
+  JdFactory
 #  Jdzz
 #  Jxnc
 #  BookShop
@@ -76,7 +76,7 @@ name_chinese=(
   东东萌宠
   京东种豆得豆
   京喜工厂
-#  东东工厂
+  东东工厂
 #  京东赚赚
 #  京喜农场
 #  口袋书店

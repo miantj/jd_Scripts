@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-#6dylan6
+#6dylan6_1119
 
 env_name=(
   FRUITSHARECODES
   PETSHARECODES
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
-#  DDFACTORY_SHARECODES
+  DDFACTORY_SHARECODES
 #  JDZZ_SHARECODES
 #  JDJOY_SHARECODES
 #  JXNC_SHARECODES
@@ -21,7 +21,7 @@ var_name=(
   ForOtherPet
   ForOtherBean
   ForOtherDreamFactory
-#  ForOtherJdFactory
+  ForOtherJdFactory
 #  ForOtherJdzz
 #  ForOtherJoy
 #  ForOtherJxnc
