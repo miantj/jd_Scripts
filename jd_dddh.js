@@ -62,8 +62,13 @@ async function main() {
             if (!$.hotFlag) {
                 if ($.exchangeList) {
                     for (const vo of $.exchangeList.reverse()) {
+						if(vo.id !==7) {
                         $.log(`去兑换：${vo.name}`)
                         await taskPost('do_exchange', `id=${vo.id}`);
+						await $.wait(2000)
+						}else{
+							$.log('不换2元红包')
+						}
                     }
                 } else {
                     $.log("没有获取到兑换列表！")
