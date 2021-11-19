@@ -65,7 +65,7 @@ async function main() {
 						if(vo.id !==7) {
                         $.log(`去兑换：${vo.name}`)
                         await taskPost('do_exchange', `id=${vo.id}`);
-						await $.wait(2000)
+						await $.wait(2000);
 						}else{
 							$.log('不换2元红包')
 						}
