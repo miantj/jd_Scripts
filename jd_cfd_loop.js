@@ -76,7 +76,7 @@ if ($.isNode()) {
         await $.wait(time)
       }
     }
-  } while (count < 25)
+  } while (count < 10)
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done());
