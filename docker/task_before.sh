@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
-#6dylan6_1119
+#6dylan6_1123
+
+name_js=(
+  fruit.js
+  pet.js
+  plantBean.js
+  dreamFactory.js
+  jdfactory.js
+  cash.js
+  sgmh.js
+  health.js
+)
+
 
 env_name=(
   FRUITSHARECODES
@@ -32,6 +44,21 @@ var_name=(
   ForOtherHealth
 )
 
+function getArrItemIdx(){
+local arr=$1
+local item=$2
+local index=0
+for i in ${arr[*]}
+do
+  if [[ $item == $i ]]
+    then
+    echo $index
+    return
+  fi
+  index=$(( $index + 1 ))
+done
+}
+ 
 file_code=$dir_log/6dylan6_jdpro_jd_sharecode
 combine_sub() {
     local what_combine=$1
@@ -52,14 +79,31 @@ combine_sub() {
 combine_all() {
     for ((i = 0; i < ${#env_name[*]}; i++)); do
         result=$(combine_sub ${var_name[i]})
-        if [[ $result ]]; then
-            export ${env_name[i]}="$result"
-        fi
+        #if [[ $result ]]; then
+            #export ${env_name[i]}="$result"
+            #export ShareCodeConfigName=${name_config[i]}
+            #export ShareCodeEnvName=${env_name[i]}
+        #fi
     done
 }
 
+## 仅输出当前脚本的助力码
+combine_only() {
+        echo ${name_js[*]}|grep ${cur##*jd_} > /dev/null
+        if [[ `echo $?` -eq 0 ]];then
+            tmp=$(getArrItemIdx "${name_js[*]}" ${cur##*jd_})
+            result=$(combine_sub ${var_name[$tmp]})
+            if [[ $result ]]; then
+               export ${env_name[$tmp]}="$result"
+               #export ShareCodeConfigName=${name_js[$tmp]}
+               #export ShareCodeEnvName=${env_name[$tmp]}
+            fi
+        fi
+}
+
+cur=$1
 if [[ $(ls $file_code) ]]; then
     latest_log=$(ls -r $file_code | head -1)
     . $file_code/$latest_log
-    combine_all
+    combine_only
 fi
