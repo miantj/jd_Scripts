@@ -25,6 +25,7 @@ env_name=(
   JDSGMH_SHARECODES
 #  JDCFD_SHARECODES
   JDHEALTH_SHARECODES
+  MONEYTREE_SHARECODES  
 )
 var_name=(
   ForOtherFruit
@@ -39,6 +40,7 @@ var_name=(
   ForOtherSgmh
 #  ForOtherCfd
   ForOtherHealth
+  ForOtherMoneyTree 
 )
 
 name_js=(
@@ -54,6 +56,7 @@ name_js=(
   6dylan6_jdpro_jd_sgmh
 #  6dylan6_jdpro_jd_cfd
   6dylan6_jdpro_jd_health
+  6dylan6_jdpro_jd_moneyTree_help
 )
 
 name_config=(
@@ -69,6 +72,7 @@ name_config=(
   Sgmh
 #  Cfd
   Health
+  MoneyTree
 )
 
 name_chinese=(
@@ -84,6 +88,7 @@ name_chinese=(
   闪购盲盒
 #  京喜财富岛
   东东健康社区
+  摇钱树
 )
 
 gen_pt_pin_array() {

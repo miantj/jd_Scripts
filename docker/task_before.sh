@@ -10,6 +10,7 @@ name_js=(
   cash.js
   sgmh.js
   health.js
+  moneyTree_help.js
 )
 
 
@@ -27,6 +28,7 @@ env_name=(
   JDSGMH_SHARECODES
 #  JDCFD_SHARECODES
   JDHEALTH_SHARECODES
+  MONEYTREE_SHARECODES
 )
 var_name=(
   ForOtherFruit
@@ -42,6 +44,7 @@ var_name=(
   ForOtherSgmh
 #  ForOtherCfd
   ForOtherHealth
+  ForOtherMoneyTree
 )
 
 function getArrItemIdx(){
