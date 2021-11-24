@@ -2,7 +2,7 @@
 ## 导入通用变量与函数
 #15 12,23 * * * jd_sharecode.sh 
 #new Env('获取互助码');
-grep '6dylan6_1123' /ql/config/task_before.sh >/dev/null 2>&1
+grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
 if [[ $? != 0 ]];then
 	\cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
 else
