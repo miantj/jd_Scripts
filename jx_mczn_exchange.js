@@ -1,6 +1,7 @@
 // noinspection DuplicatedCode
+
 /*
-* 59 19 11-30 11 * jx_mczn_exchange.js
+* 59 19 11-30 11 * m_jx_mc_zn_exchange.js
 * */
 const {Env} = require('./magic');
 const $ = new Env('M牧场助农兑换');
@@ -16,7 +17,6 @@ $.logic = async function () {
         await $.wait(1000)
     }
 }
-$.run({appId: 10028}).catch(
 $.run({filename: __filename}).catch(
     reason => console.log(reason));
 
@@ -49,6 +49,7 @@ async function GetLoveGoodsList() {
     }
     return false;
 }
+
 /**
  * 兑换
  *
