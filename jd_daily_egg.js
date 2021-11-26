@@ -153,7 +153,7 @@ function toWithdraw() {
 }
 function toDailyHome() {
   return new Promise(async resolve => {
-    const body = getBody(false)
+    const body = getBody()
     $.get(taskUrl('toDailyHome', body), (err, resp, data) => {
       try {
         if (err) {
