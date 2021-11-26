@@ -17,4 +17,4 @@ pnpm install -g requests
 pnpm install -g jsdom
 pnpm install -g moment
 
-echo "安装完成!“
+echo "恭喜，已全部安装完成!"
