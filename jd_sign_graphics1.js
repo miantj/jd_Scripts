@@ -5,7 +5,7 @@ cron 10 8 * * * jd_sign_graphics1.js
 npm i png-js 或者 npm i png-js -S
 */
 
-const Faker = require('./JDSignValidator.js.js')
+const Faker = require('./JDSignValidator.js')
 const $ = new Env('京东签到翻牌');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
