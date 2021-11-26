@@ -15,6 +15,6 @@ pnpm install -g tslib
 pnpm install -g @types/node
 pnpm install -g requests
 pnpm install -g jsdom
-pnpm install -g moment
+#pnpm install -g moment
 
 echo "恭喜，已全部安装完成!"
