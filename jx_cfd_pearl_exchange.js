@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedVariable
 
 /*
-2 0 1-3,8-11,21-23 * * * m_jx_cfd_pearl_exchange.js
+2 0 0-23 * * * m_jx_cfd_pearl_exchange.js
 默认兑换5元，其他金额请设置环境变量，如 export PEARL_MONEY=10，即兑换10元；
 * */
 // noinspection JSUnresolvedFunction
