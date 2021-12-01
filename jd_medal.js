@@ -89,9 +89,9 @@ async function main() {
             }
         } else if (mainInfo.result.activityStatus === 3) {
             console.log("您已经集齐所有勋章了，快去领取奖品吧！")
-            message += `\n【京东账号${$.index}】${$.nickName || $.UserName}\n您已经集齐所有勋章了，快去领取奖品吧！`
+            message += `\n【京东账号${$.index}】${$.nickName || $.UserName}\n已集齐勋章，领奖：京东-我的-东东农场-点水轮风车！`
         } else if (mainInfo.result.activityStatus === 4) {
-            console.log("您已经集齐所有勋章并领取奖品了,等待下一次活动开启!")
+            console.log("已经集齐所有勋章并领取奖品,等待下一次活动开启!")
         }
     } else {
         console.log("没有获取到活动信息")
