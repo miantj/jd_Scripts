@@ -45,6 +45,10 @@ RepoFileExtensions="js py sh"
 
 task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE
 
-京东保价也建议并发，测试前几个号正常跑，后面就开始报频繁了
+京东保价也建议并发，测试前几个号正常跑，后面就开始报频繁！
 
 task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
+
+如需开卡入会，走下面通道
+
+* [@smiek2221](https://github.com/smiek2221/scripts.git)
