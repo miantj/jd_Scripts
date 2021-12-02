@@ -1,5 +1,6 @@
 /*
 45 3-21/6 * * * jx_aid_cashback.js
+env('京喜购物返红包助力')
 */
 
 let common = require("./function/common");
