@@ -29,7 +29,7 @@ $.appId = 10032;
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo();
   await $.wait(1000)
-  console.log(`\n\n\n默认不兑换5元以下和随机红包，如果需兑换请设置变量ddwVirHb=0\n`)
+  console.log(`\n默认不兑换5元以下和随机红包，如需兑换请设置变量ddwVirHb=0\n`)
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -131,9 +131,9 @@ async function perl_rp(dwLvl,dwIsRandHb,ddwVirHb,strPoolName) {
         } else {
           console.debug('perl_rp:',data)
           data = JSON.parse(data);
-		  if (data.iRet === '0') {
+		  if (data.iRet === 0) {
 			  console.log(`兑换成功`)
-			  allMessage += `【京东账号${$.index}】 ${$.nickName}\n兑换 ${(data.strAwardDetail.strName)}成功🎉\n`
+			  allMessage += `【京东账号${$.index}】 ${$.nickName || $.UserName}\n兑换 ${(data.strAwardDetail.strName)}红包成功🎉\n`
 		  } else {
 				  console.log (`兑换失败,下个整点在战！\n`)
 			    }
