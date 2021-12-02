@@ -1,7 +1,7 @@
 
 /**
 东东世界兑换
-cron 0 0 * * * jd_dddh.js
+cron 59 59 23,11 * * * jd_dddh.js
 TG频道：https://t.me/sheeplost
 */
 const $ = new Env("东东世界兑换");
