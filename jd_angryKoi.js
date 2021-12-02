@@ -32,7 +32,7 @@ let notify, allMessage = '';
         tools.push({id: i, assisted: false, cookie: cookiesArr[i]})
     }
     console.log(`用于助力的数目为 ${tools.length}`)
-    allMessage += `用于助力的数目为 ${tools.length}\n`
+    allMessage += `用于助力的ck数为 ${tools.length}个\n`
 
     console.log(`根据配置，计算互助顺序`)
     cookieIndexOrder = []
@@ -55,7 +55,7 @@ let notify, allMessage = '';
         }
     }
     console.log(`最终互助顺序如下（优先互助满前面的）：\n${cookieIndexOrder}`)
-    allMessage += `今日互助顺序(车头优先，其余等概率随机): ${cookieIndexOrder}\n\n`
+    //allMessage += `今日互助顺序(车头优先，其余等概率随机): ${cookieIndexOrder}\n\n`
 
     console.log("开始助力")
     // 最多尝试2*账号数目次，避免无限尝试，保底
@@ -114,7 +114,7 @@ let notify, allMessage = '';
         helpIndex++
     }
 
-    allMessage += "上述今日轮到互助的账号请记得前往 京东app/领券/锦鲤红包 里面手动领取红包"
+    allMessage += "上述账号记得前往 京东app/领券/锦鲤红包 里面手动领取红包"
 
     // 发送通知
     if ($.isNode() && allMessage) {
@@ -221,7 +221,7 @@ async function appendRewardInfoToNotify(cookie) {
     // 打印今日红包概览
     if (data?.data?.result?.redpacketConfigFillRewardInfo) {
         let info = data.data.result
-        allMessage += `${info.actName} ${info.redpacketInfo.headmanNickName} 已获取红包 ${info.redpacketInfo.packetTotalSum}，剩余可拆红包为 ${info.remainRedpacketNumber}\n`
+        allMessage += `${info.actName} ${info.redpacketInfo.headmanNickName} \n已获取红包 ${info.redpacketInfo.packetTotalSum}，剩余可拆红包为 ${info.remainRedpacketNumber}\n`
 
         let totalAssistNum = 0
         let totalRequireAssistNum = 0
