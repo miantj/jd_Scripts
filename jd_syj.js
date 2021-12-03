@@ -38,8 +38,6 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const JD_API_HOST = 'https://api.m.jd.com/api';
-let NoDoCk = [];
-
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -79,25 +77,21 @@ let NoDoCk = [];
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-	  $.index = i + 1;
-	  if(NoDoCk){
-			var llnoneed=false;
-			for (let NoCode of NoDoCk) {
-				if ($.UserName==NoCode){
-					llnoneed=true;
-					break;
-				}
-			}
-			if(llnoneed){
-				console.log(`账号${$.index} ${$.UserName} 活动火爆，跳过...`);
-				continue;
-			}
-		}
-
-      if ($.canHelp && (cookiesArr.length > $.assistNum)) {        
+      if ($.canHelp && (cookiesArr.length > $.assistNum)) {
+        if ($.tuanList.length) console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，优先内部账号互助`)
         for (let j = 0; j < $.tuanList.length; ++j) {
           console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力`)
           await helpFriendTuan($.tuanList[j])
+          if(!$.canHelp) break
+          await $.wait(200)
+        }
+      }
+      if ($.canHelp) {
+        $.authorTuanList = [...$.authorTuanList, ...($.body1 || [])];
+        if ($.authorTuanList.length) console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，如有剩余则给作者和随机团助力`)
+        for (let j = 0; j < $.authorTuanList.length; ++j) {
+          console.log(`账号 ${$.UserName} 开始给作者和随机团 ${$.authorTuanList[j]['assistedPinEncrypted']}助力`)
+          await helpFriendTuan($.authorTuanList[j])
           if(!$.canHelp) break
           await $.wait(200)
         }
@@ -560,6 +554,27 @@ async function distributeBeanActivity() {
     }
     if ($.tuan && $.tuan.hasOwnProperty('assistedPinEncrypted') && $.assistStatus !== 3) {
       $.tuanList.push($.tuan);
+      // const code = Object.assign($.tuan, {"time": Date.now()});
+      // $.http.post({
+      //   url: `http://go.chiang.fun/autocommit`,
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ "act": "zuan", code }),
+      //   timeout: 30000
+      // }).then((resp) => {
+      //   if (resp.statusCode === 200) {
+      //     try {
+      //       let { body } = resp;
+      //       body = JSON.parse(body);
+      //       if (body['code'] === 200) {
+      //         console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的【赚京豆-瓜分京豆】好友互助码提交成功\n`)
+      //       } else {
+      //         console.log(`【赚京豆-瓜分京豆】邀请码提交失败:${JSON.stringify(body)}\n`)
+      //       }
+      //     } catch (e) {
+      //       console.log(`【赚京豆-瓜分京豆】邀请码提交异常:${e}`)
+      //     }
+      //   }
+      // }).catch((e) => console.log(`【赚京豆-瓜分京豆】邀请码提交异常:${e}`));
     }
   } catch (e) {
     $.logErr(e);
@@ -589,7 +604,7 @@ function helpFriendTuan(body) {
               else if (data.resultCode === '2400205') console.log('助力结果：团已满\n')
               else if (data.resultCode === '2400203') {console.log('助力结果：助力次数已耗尽\n');$.canHelp = false}
               else if (data.resultCode === '9000000') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
-              else console.log(`助力结果：未知错误\n${JSON.stringify(data)}\n\n`)
+              else {console.log(`助力结果：未知错误\n${JSON.stringify(data)}\n\n`);$.canHelp = false}
             }
           }
         }
@@ -637,8 +652,7 @@ function getUserTuanInfo() {
               $.canStartNewAssist = data['data']['canStartNewAssist'];
             } else {
               $.tuan = true;//活动火爆
-              console.log(`赚京豆(微信小程序)-瓜分京豆】获取【活动信息失败 ${JSON.stringify(data)}\n`);
-			  NoDoCk.push($.UserName);
+              console.log(`赚京豆(微信小程序)-瓜分京豆】获取【活动信息失败 ${JSON.stringify(data)}\n`)
             }
           }
         }
