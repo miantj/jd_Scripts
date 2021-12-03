@@ -6,7 +6,7 @@
  19.0复制整段话 http:/J7ldD7ToqMhRJI星系牧场养牛牛，可获得DHA专属奶！%VAjYb8me2b!→去猄倲←
 [task_local]
 #星系牧场
-1 0-23/2 * * * jd_qqxing.js
+1 0-23/3 * * * jd_qqxing.js
 */
 const $ = new Env('QQ星系牧场');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -85,7 +85,9 @@ $.shareuuid = "5e81094ee1d640b2996883b48d0c410a"
                             await getproduct()
                             await writePersonInfo($.vid)
                             await dotask(task.taskid, $.pparam)
-                        } else {
+                        } else if (task.taskid == "add2cart") {
+							console.log(`跳过加购`)
+						} else {
                             await dotask(task.taskid, task.params)
                             await $.wait(10000)
                         }
