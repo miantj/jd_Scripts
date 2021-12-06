@@ -18,6 +18,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const ua = `jdltapp;iPhone;3.1.0;${Math.ceil(Math.random() * 4 + 10)}.${Math.ceil(Math.random() * 4)};${randomString(40)}`
 let fair_mode = process.env.KOI_FAIR_MODE == "true" ? true : false
 let chetou_number = process.env.KOI_CHETOU_NUMBER ? Number(process.env.KOI_CHETOU_NUMBER) : 0
+var kois = process.env.kois ?? ""
 let cookiesArr = []
 var tools = []
 
@@ -51,10 +52,18 @@ let notify, allMessage = '';
         shuffle(otherIndexes)
         cookieIndexOrder = cookieIndexOrder.concat(otherIndexes)
     } else {
+        let otherIndexes = []
         // 未开启公平模式，则按照顺序互助，前面的先互助满
         for (let idx = 0; idx < cookiesArr.length; idx++) {
-            cookieIndexOrder.push(idx)
+            var cookie = cookiesArr[idx];
+            
+            if (kois.indexOf(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]) != -1) {
+                otherIndexes.push(idx)
+            }else{
+                cookieIndexOrder.push(idx)
+            }
         }
+        cookieIndexOrder = otherIndexes.concat(cookieIndexOrder)
     }
     console.log(`最终互助顺序如下（优先互助满前面的）：\n${cookieIndexOrder}`)
     //allMessage += `本次互助顺序(车头优先，其余等概率随机，每次运行都不一样): ${cookieIndexOrder}\n\n`
