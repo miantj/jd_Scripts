@@ -53,4 +53,8 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
 如需开卡入会，走下面通道
 
+5、通知一对一推送，用法请参考[@ccwav](https://github.com/ccwav/QLScript2)
+
+6、青龙系统通知（新增删除任务、登录等通知），需把pushkey写入config.sh文件，直接建环境变量只发脚本运行通知。
+
 * [@smiek2221](https://github.com/smiek2221/scripts.git)
