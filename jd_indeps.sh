@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #依赖安装，运行一次就好
-#0 8 * 1 * jd_indeps.sh
+#0 8 1 1 * jd_indeps.sh
 #const $ = new Env('依赖安装');
 #
 echo "安装脚本所需依赖，首次拉库运行一次即可"
