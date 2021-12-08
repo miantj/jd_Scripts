@@ -1,9 +1,10 @@
 /**
  农场集勋章
- cron 16 7,16 * * * jd_medal.js
- TG频道：https://t.me/sheeplost
+ cron 10 7,16 * * * jd_medal.js
+集齐勋章自动兑换，默认兑换500豆，环境变量NC_EXTYPE=2兑换5元红包，等于1兑换2500水滴
  */
 const $ = new Env('农场集勋章');
+let extype = $.getdata('extype') || 3; 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -24,6 +25,7 @@ if ($.isNode()) {
         return;
     }
     UUID = getUUID('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+	console.log("\n集齐勋章自动兑换，默认兑换500豆，设置环境变量NC_EXTYPE=2兑换5元红包，=1兑换2500水滴\n")
     for (let i = 0; i < cookiesArr.length; i++) {
         UA = `jdapp;iPhone;10.0.8;14.6;${UUID};network/wifi;JDEbook/openapp.jdreader;model/iPhone9,2;addressid/2214222493;appBuild/168841;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16E158;supportJDSHWK/1`;
         if (cookiesArr[i]) {
@@ -41,7 +43,12 @@ if ($.isNode()) {
                     await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
                 }
                 continue
-            }
+        }
+      if ($.isNode()) {
+        if (process.env.NC_EXTYPE) {
+          extype = process.env.NC_EXTYPE;
+        }
+      }						
             await main()
         }
     }
@@ -51,7 +58,7 @@ if ($.isNode()) {
         } else {
             $.msg($.name, '', message)
         }
-    }
+    }	
 })().catch((e) => { $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '') }).finally(() => { $.done(); })
 
 async function main() {
@@ -89,9 +96,27 @@ async function main() {
             }
         } else if (mainInfo.result.activityStatus === 3) {
             console.log("您已经集齐所有勋章了，快去领取奖品吧！")
-            message += `\n【京东账号${$.index}】${$.nickName || $.UserName}\n已集齐勋章，领奖：京东-我的-东东农场-点水轮风车！`
+            getAwardInfo = await task('collect_getAwardInfo', {})
+            if(`${extype}` === 3) {
+            //if (!getAwardInfo.result.awardList[0].risk) {
+                collect_exchangeAward = await task('collect_exchangeAward', { "type": 3 })
+                if (collect_exchangeAward.code == 0) {
+                    console.log(`已兑换${collect_exchangeAward.result.awardValue}京豆`);
+                    message += `\n【京东账号${$.index}】${$.nickName || $.UserName}\n兑换${collect_exchangeAward.result.awardValue}京豆`
+                }
+            } else if (`${extype}` === 2) {
+                collect_exchangeAward = await task('collect_exchangeAward', { "type": 2 })
+                if (collect_exchangeAward.code == 0) {
+                    console.log(`已兑换${collect_exchangeAward.result.awardValue}红包`);
+                }
+            } else {
+                collect_exchangeAward = await task('collect_exchangeAward', { "type": 1 })
+                if (collect_exchangeAward.code == 0) {
+                    console.log(`已兑换${collect_exchangeAward.result.awardValue}水滴`);
+                }
+            }				
         } else if (mainInfo.result.activityStatus === 4) {
-            console.log("已经集齐所有勋章并领取奖品,等待下一次活动开启!")
+            console.log(`已经集齐所有勋章并领取奖品,等待下一次活动开启!`)
         }
     } else {
         console.log("没有获取到活动信息")
