@@ -6,7 +6,7 @@ by:小手冰凉 tg:@chianPLA
 ============Quantumultx===============
 [task_local]
 #京东小魔方--收集兑换
-31 8 * * * jd jd_mofang_ex.js, tag=京东小魔方--收集兑换, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+31 3 * * * jd_mf_exchange.js, tag=京东小魔方--收集兑换, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
  */
 const $ = new Env('5魔方兑换');
