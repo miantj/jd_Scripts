@@ -1,5 +1,5 @@
 /* 
-cron 14 8 * * * https://raw.githubusercontent.com/smiek2121/scripts/master/jd_sign_graphics.js
+cron 14 8,16 * * * https://raw.githubusercontent.com/smiek2121/scripts/master/jd_sign_graphics.js
 只支持nodejs环境
 需要安装依赖 
 npm i png-js 或者 npm i png-js -S
@@ -7,6 +7,7 @@ npm i png-js 或者 npm i png-js -S
 环境变量 JOY_HOST
 修改域名 https://jdjoy.jd.com 可以改成ip https://49.7.27.236
 */
+
 
 const validator = require('./function/JDJRValidator_Pure_smiek.js');
 const Faker=require('./function/sign_graphics_validate.js') 
@@ -260,7 +261,7 @@ function taskUrl(turnTableId) {
 }
 function tasPostkUrl(turnTableId) {
   let body = {"turnTableId":`${turnTableId}`,"fp":fp,"lks":$.CryptoJS.MD5(""+$.invokeKey+lkt).toString(),"lkt":lkt,"invokeKey":$.invokeKey}
-  const url = `https://api.m.jd.com/api?clientVersion=1.2.5&client=jxh5&appid=jdchoujiang_h5&t=${Date.now()}&functionId=turncardChannelSign&body=${JSON.stringify(body)}&h5st=undefined&turnTableId=${turnTableId}&fp=${fp}&eid=${eid}&lks=${$.CryptoJS.MD5(""+$.invokeKey+lkt).toString()}&lkt=${lkt}&invokeKey=${$.invokeKey}
+  const url = `https://api.m.jd.com/api?clientVersion=1.2.5&client=jxh5&appid=jdchoujiang_h5&t=${Date.now()}&functionId=turncardChannelSign&body=${JSON.stringify(body)}&h5st=undefined&turnTableId=${turnTableId}&fp=${fp}&eid=${eid}&lks=${$.CryptoJS.MD5(""+$.invokeKey+lkt).toString()}&lkt=${lkt}&invokeKey=${$.invokeKey}`
   return {
     url,
     headers: {
@@ -276,8 +277,6 @@ function tasPostkUrl(turnTableId) {
     }
   }
 }
-
-
 function jsonParse(str) {
   if (typeof str == "string") {
     try {
