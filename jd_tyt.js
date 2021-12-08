@@ -1,5 +1,5 @@
 /*
-入口 极速版 赚金币 
+入口 极速版-我的-推推赚大钱 
 分享到QQ查看邀请码 packetId就是
 #自定义变量
 export tytpacketId=""
@@ -33,6 +33,7 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 
 !(async() => {
+  if(process.env.tytpacketId) {	
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {
             "open-url": "https://bean.m.jd.com/bean/signIndex.action"
@@ -68,6 +69,9 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         }
     }
     console.log("推一推结束")
+  } else {
+             console.log(`\n您未设置tytpacketId变量，脚本结束运行！\n入口极速版-我的-推推赚大钱，分享到QQ查看邀请码 packetId到&之间那串`)
+    }	
 })()
     .catch((e) => {
         $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
