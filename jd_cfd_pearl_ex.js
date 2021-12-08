@@ -47,7 +47,7 @@ $.appId = 10032;
     .catch((e) => $.logErr(e))
     .finally(() => $.done());
 
-async function wait(starttime = process.env.pearl_wait || 64){
+async function wait(starttime = process.env.pearl_wait || 62){
   const nowtime = new Date().Format("s.S")
   if ($.index == 1 && nowtime < starttime) {
     const sleeptime = (starttime - nowtime) * 1000;
@@ -88,6 +88,7 @@ async function perl_auto() {
       }
       return flag
     })
+	await wait()	
     if (!prizes.length) {
       console.log('无红包满足条件,结束')
       return
@@ -106,7 +107,6 @@ async function perl_auto() {
       })
     }
     // console.debug('prizes:',prizes)
-    await wait()
     for (let i = 0; i < prizes.length; i++) {
       const prize = prizes[i]
       console.log('兑换面额:', prize.strPrizeName || '随机红包')
