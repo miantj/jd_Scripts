@@ -126,7 +126,7 @@ async function queryInteractiveRewardInfo(encryptProjectId, sourceCode, type) {
             data = JSON.parse(data)
             if (type == 1) {
               sum = data.exchangeRestScoreMap['367'];
-              console.log(`当前魔方${sum}个`);
+              console.log(`当前${sum}个魔方，开始兑换-----`);
               let task = await queryInteractiveInfo($.config.giftConfig.projectId, "acexinpin0823");
               data2 = JSON.parse(task);
               if (data2.subCode == '0') {
@@ -135,23 +135,18 @@ async function queryInteractiveRewardInfo(encryptProjectId, sourceCode, type) {
                   if (sum >= 5) {
                     if (vo.exchangeRate == 5) {
                       for (let i = 0; i < Math.floor(sum / 5); i++) {
-                        console.log(`开始5魔方第${i + 1}次兑换`);
+                        console.log(`开始5魔方第${i + 1}次兑换...`);
                         await doInteractiveAssignment($.config.giftConfig.projectId, vo.encryptAssignmentId, "acexinpin0823", 1);
                         await $.wait(1500);
                       }
                     }
-                  } if (sum < 5) {
-                    if (vo.exchangeRate == 1) {
-                      for (let i = 0; i < sum; i++) {
-                        console.log(`开始1魔方第${i + 1}次兑换`);
-                        await doInteractiveAssignment($.config.giftConfig.projectId, vo.encryptAssignmentId, "acexinpin0823", 1);
-                        await $.wait(1500);
-                      }
-                    }
+                  } else {
+                  console.log('积分不足，结束兑换')
+                  break;
                   }
                 }
               } else {
-                console.log('获取兑换失败了');
+                console.log('获取兑换失败');
               }
             } else {
               sum = data.exchangeRestScoreMap['368'];
@@ -187,7 +182,7 @@ async function doInteractiveAssignment(encryptProjectId, AssignmentId, sourceCod
             data = JSON.parse(data)
             if (data.subCode == '0') {
               if (type == 1) {
-                console.log(`当前兑换${data.rewardsInfo.successRewards['3'][0].rewardName}`);
+                console.log(`兑换成功，获得${data.rewardsInfo.successRewards['3'][0].rewardName}`);
               }
             } else {
               console.log(data.msg);
