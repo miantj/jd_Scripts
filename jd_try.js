@@ -119,7 +119,7 @@ let args_xh = {
      *
      * 不打印的优点：简短日志长度
      * 不打印的缺点：无法清晰知道每个商品为什么会被过滤，哪个商品被添加到了待提交试用组
-     * 可设置环境变量：JD_TRY_PLOG，默认为true
+     * 可设置环境变量：JD_TRY_PLOG，默认为false
      * */
     printLog: process.env.JD_TRY_PLOG || true,
     /*
