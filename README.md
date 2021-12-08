@@ -78,10 +78,10 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 |    `JOIN_PK_TEAM`            |    东东超市<br>自动参加PK队伍    | 非必须 | 每次pk活动参加作者创建的pk队伍,`true`表示参加,`false`表示不参加 ，暂无活动|
 |    `SUPERMARKET_LOTTERY`     |          东东超市抽奖          | 非必须 | 每天运行脚本是否使用金币去抽奖,`true`表示抽奖,`false`表示不抽奖，默认抽奖 |
 |      `FRUIT_BEAN_CARD`       |    农场<br>使用水滴换豆卡    | 非必须 | 农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),<br>`true`表示换豆(不浇水),`false`表示不换豆(继续浇水),脚本默认是浇水 |
-|       `JD_UNSUB`             |      批量取消商品与店铺关注开关      | 非必须 | 控制jd_unsubscribe.js运行  |
-|       `JD_CART_REMOVE`       |      清空购物车      | 非必须 | 控制jd_clean_car.js运行  |
+|       `JD_UNSUB`             |      批量取消商品与店铺关注开关      | 非必须 | 控制jd_unsubscribe.js运行，默认为true取关，false不取关 |
+|       `JD_CART_REMOVE`       |      清空购物车      | 非必须 | 控制jd_clean_car.js运行 ，默认false不清空，true清空 |
 |   `MONEY_TREE_SELL_FRUIT`    |    摇钱树<br>是否卖出金果    | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认卖出 |
-| `FACTORAY_WANTPRODUCT_NAME`  |     东东工厂<br>心仪商品     | 非必须 | 提供心仪商品名称(请尽量填写完整和别的商品有区分度)，达到条件后兑换，<br>如不提供则会兑换当前所选商品 |
+|   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换喜豆 |
 | `DREAMFACTORY_FORBID_ACCOUNT`|    京喜工厂<br>控制哪个账号不运行     | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行京喜工厂脚本，注：输入`0`，代表全部账号不运行京喜工厂脚本 |
 | `JDFACTORY_FORBID_ACCOUNT`|    东东工厂<br>控制哪个账号不运行    | 非必须 | 输入`1`代表第一个京东账号不运行，多个使用`&`连接，例：`1&3`代表账号1和账号3不运行东东工厂脚本，注：输入`0`，代表全部账号不运行东东工厂脚本 |
 
@@ -90,9 +90,10 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
 |            Name             |        归属        |  属性  | 说明                                                         |
 | :-------------------------: | :----------------: | :----: | ------------------------------------------------------------ |
-|      `JD_TRY`               |   京东试用运行开关 | 必须   |  true为开启，默认false不运行 |
+|      `JD_TRY`               |   京东试用运行开关 | 非必须   |  true为开启，默认false不运行 |
 |      `JD_TRY_TITLEFILTERS`  |   京东试用<br>商品名过滤 | 非必须 |  教程@软件@xxx， `@`分割 |
 |      `JD_TRY_PRICE`         |   京东试用<br>价格过滤   | 非必须 |  默认50 |
 |      `JD_TRY_TRIALPRICE `      |   京东试用<br>试用价格   | 非必须 |  试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用，默认1元 |
 |      `JD_TRY_APPLYNUMFILTER`      |   京东试用<br>人数过滤   | 非必须 |  已申请人数大于设置人数不申请，默认5000 |
+|      `JD_TRY_PLOG`      |   京东试用<br>日志配置   | 非必须 |  是否输出详细日志true为开，false为关，默认为false，输出简单日志 |
 
