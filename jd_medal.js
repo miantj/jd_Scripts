@@ -63,7 +63,7 @@ if ($.isNode()) {
 
 async function main() {
     mainInfo = await task('collect_Init', { "channel": 1 });
-    if (mainInfo) {
+    if (mainInfo && mainInfo.code != 3) {
         if (mainInfo.result.activityStatus === 2) {
             popWindow = mainInfo.result.popWindow;
             if (popWindow.windowType === 2 && popWindow.windowStatus === 1) {
