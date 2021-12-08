@@ -16,7 +16,7 @@ cron "0,30 0-23/1 * * *" script-path=jd_live_redrain.js,tag=超级直播间红�
 超级直播间红包雨 = type=cron,script-path=jd_live_redrain.js, cronexpr="0,30 0-23/1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('超级直播间红包雨');
-let allMessage = '', id = 'RRA2cUocg5uYEyuKpWNdh4qE4NW1bN2';
+let allMessage = '', id = 'RRA2ejfmREadAgZf85Lz75jCotx6dYR';
 let bodyList = {"6":{"url":"https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1625294597071&sign=55a8f9c9bc715d89fb3e4443b80d8f26&sv=111","body":"body=%7B%22liveId%22%3A%224586031%22%7D"}}
 let ids = {}
 for (let i = 0; i < 24; i++) {
@@ -48,16 +48,16 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
-    $.log(`\n远程红包雨配置获取错误，尝试从本地读取配置`);
-    $.http.get({url: `https://purge.jsdelivr.net/gh/gitupdate/updateTeam@master/redrain.json`}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
+    //$.log(`\n远程红包雨配置获取错误，尝试从本地读取配置`);
+    $.http.get({url: `https://purge.jsdelivr.net/gh/6dylan6/updateTeam@master/redrain.json`}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
     let hour = (new Date().getUTCHours() + 8) % 24;
     let redIds = await getRedRainIds();
-    if (!redIds) redIds = await getRedRainIds('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/redrain.json');
+    if (!redIds) redIds = await getRedRainIds('https://cdn.jsdelivr.net/gh/6dylan6/updateTeam@main/shareCodes/redrain.json');
     $.newAcids = [...(redIds || [])];
     if ($.newAcids && $.newAcids.length) {
-      $.log(`本地红包雨配置获取成功，ID为：${JSON.stringify($.newAcids)}\n`)
+      $.log(`远程红包雨配置获取成功，ID为：${JSON.stringify($.newAcids)}\n`)
     } else {
-      $.log(`无法从本地读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
+      $.log(`无法从远程读取配置，请检查运行时间(注：非红包雨时间执行出现此提示请忽略！！！！！！！！！！！)`)
       return
     }
     // if (ids[hour]) {
@@ -248,7 +248,7 @@ function taskUrl(function_id, body = {}) {
   }
 }
 
-function getRedRainIds(url = "https://raw.githubusercontent.com/gitupdate/updateTeam/master/redrain.json") {
+function getRedRainIds(url) {
   return new Promise(async resolve => {
     const options = {
       url: `${url}?${new Date()}`, "timeout": 10000, headers: {
