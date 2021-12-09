@@ -49,10 +49,10 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   let nowTs = new Date().getTime()
   if (!($.st <= nowTs && nowTs < $.ed)) {
     //$.log(`\n远程红包雨配置获取错误，尝试从本地读取配置`);
-    $.http.get({url: `https://purge.jsdelivr.net/gh/6dylan6/updateTeam@master/redrain.json`}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
+    $.http.get({url: `https://purge.jsdelivr.net/gh/6dylan6/updateTeam@main/shareCodes/live_redrain.json`}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
     let hour = (new Date().getUTCHours() + 8) % 24;
     let redIds = await getRedRainIds();
-    if (!redIds) redIds = await getRedRainIds('https://cdn.jsdelivr.net/gh/6dylan6/updateTeam@main/shareCodes/redrain.json');
+    if (!redIds) redIds = await getRedRainIds('https://cdn.jsdelivr.net/gh/6dylan6/updateTeam@main/shareCodes/live_redrain.json');
     $.newAcids = [...(redIds || [])];
     if ($.newAcids && $.newAcids.length) {
       $.log(`远程红包雨配置获取成功，ID为：${JSON.stringify($.newAcids)}\n`)
