@@ -10,14 +10,14 @@
 ============Quantumultx===============
 [task_local]
 #京喜工厂
-40 0,6-23 * * * jd_dreamFactory.js, tag=京喜工厂, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
+40 * * * * jd_dreamFactory.js, tag=京喜工厂, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
 ================Loon==============
 [Script]
-cron "40 0,6-23 * * *" script-path=jd_dreamFactory.js,tag=京喜工厂
+cron "40 * * * *" script-path=jd_dreamFactory.js,tag=京喜工厂
 ===============Surge=================
-京喜工厂 = type=cron,cronexp="40 0,6-23 * * *",wake-system=1,timeout=3600,script-path=jd_dreamFactory.js
+京喜工厂 = type=cron,cronexp="40 * * * *",wake-system=1,timeout=3600,script-path=jd_dreamFactory.js
 ============小火箭=========
-京喜工厂 = type=cron,script-path=jd_dreamFactory.js, cronexpr="40 0,6-23 * * *", timeout=3600, enable=true
+京喜工厂 = type=cron,script-path=jd_dreamFactory.js, cronexpr="40 * * * *", timeout=3600, enable=true
  */
 // prettier-ignore
 !function (t, r) { "object" == typeof exports ? module.exports = exports = r() : "function" == typeof define && define.amd ? define([], r) : t.CryptoJS = r() }(this, function () {
@@ -1602,9 +1602,9 @@ async function requestAlgo() {
               let enCryptMethodJDString = data.data.result.algo;
               if (enCryptMethodJDString) $.enCryptMethodJD = new Function(`return ${enCryptMethodJDString}`)();
               console.log(`获取签名参数成功！`)
-              console.log(`fp: ${$.fingerprint}`)
-              console.log(`token: ${$.token}`)
-              console.log(`enCryptMethodJD: ${enCryptMethodJDString}`)
+              //console.log(`fp: ${$.fingerprint}`)
+              //console.log(`token: ${$.token}`)
+              //console.log(`enCryptMethodJD: ${enCryptMethodJDString}`)
             } else {
               console.log(`fp: ${$.fingerprint}`)
               console.log('request_algo 签名参数API请求失败:')
