@@ -16,7 +16,7 @@ cron "0,30 0-23/1 * * *" script-path=jd_live_redrain.js,tag=超级直播间红�
 超级直播间红包雨 = type=cron,script-path=jd_live_redrain.js, cronexpr="0,30 0-23/1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('超级直播间红包雨');
-let allMessage = '', id = 'RRA2ejfmREadAgZf85Lz75jCotx6dYR';
+let allMessage = '', id = 'RRA2cUocg5uYEyuKpWNdh4qE4NW1bN2';
 let bodyList = {"6":{"url":"https://api.m.jd.com/client.action?functionId=liveActivityV946&uuid=8888888&client=apple&clientVersion=9.4.1&st=1625294597071&sign=55a8f9c9bc715d89fb3e4443b80d8f26&sv=111","body":"body=%7B%22liveId%22%3A%224586031%22%7D"}}
 let ids = {}
 for (let i = 0; i < 24; i++) {
