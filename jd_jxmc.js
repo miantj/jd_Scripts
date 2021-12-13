@@ -24,7 +24,7 @@ $.appId = 10028;
 let activeid = 'null';
 $.inviteCodeList = [];
 $.inviteCodeList_rp = [];
-let flag_hb = true
+let flag_hb = process.env.JXMC_HB == "false" ? false : true;
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
