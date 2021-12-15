@@ -34,6 +34,7 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 
 !(async () => {
+  console.log('\n自动获取并推第一个账号\n')
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
@@ -58,7 +59,9 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         }
         continue
       }
-      
+	  if (i === 0) {
+      await initateCoinDozer() //开团
+	  }
       await $.wait(2000)
       if ($.canRun) {
         await getCoinDozerInfo()
@@ -68,9 +71,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         await helpCoinDozer(packetId)
         await $.wait(500)
         if (tytpacketId === '') {
-		  await initateCoinDozer() //开团
           tytpacketId = `${packetId}`
-          console.log('不能助力自己')
+          console.log('不能帮自己砍')
         } else {
           await tythelp(tytpacketId)
 		}
@@ -189,7 +191,7 @@ function coinDozerBackFlow() {
         } else {
           data = JSON.parse(data);
           if (data.code == 0 && data.data) {
-            console.log(`\n${data.msg}`)
+            console.log(`${data.msg}\n`)
           }
         }
       } catch (e) {
