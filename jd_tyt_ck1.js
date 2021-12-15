@@ -59,23 +59,18 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         }
         continue
       }
-	  if (i === 0) {
-      await initateCoinDozer() //开团
-	  }
-      await $.wait(2000)
-      if ($.canRun) {
+      if ($.canRun && tytpacketId === '') {
+        await initateCoinDozer() //开团
+        await $.wait(2000)
         await getCoinDozerInfo()
         await $.wait(1000)
         await coinDozerBackFlow()
         await $.wait(1000)
         await helpCoinDozer(packetId)
         await $.wait(500)
-        if (tytpacketId === '') {
-          tytpacketId = `${packetId}`
-          console.log('不能帮自己砍')
-        } else {
+        tytpacketId = `${packetId}`
+      } else {
           await tythelp(tytpacketId)
-		}
       }
     }
   }
@@ -158,7 +153,7 @@ function tythelp(tytpacketId) {
         } else {
           data = JSON.parse(data);
           if (data.code == 0) {
-            console.log("帮推CK1：" + data.data.amount)
+            console.log("帮砍CK1：" + data.data.amount)
           } else
             console.log(data.msg + "CK1")
         }
