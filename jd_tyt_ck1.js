@@ -71,6 +71,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         tytpacketId = `${packetId}`
       } else {
           await tythelp(tytpacketId)
+		  await $.wait(2000)
       }
     }
   }
