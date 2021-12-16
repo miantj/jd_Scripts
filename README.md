@@ -81,7 +81,6 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 |     `JD_JOY_REWARD_NAME`     |  宠汪汪<br>积分兑换多少京豆  | 非必须 | 目前可填值为`20`或者`500`,脚本默认`20`,`0`表示不兑换京豆     |
 |    `MARKET_COIN_TO_BEANS`    |    东东超市<br>兑换京豆数量    | 非必须 | 控制`jd_blueCoin.js`兑换京豆数量,<br>可输入值为`20`或者`1000`的数字或者其他商品的名称,例如`碧浪洗衣凝珠` |
 |    `MARKET_REWARD_NOTIFY`    |  东东超市<br>兑换奖品推送开关  | 非必须 | 控制`jd_blueCoin.js`兑换奖品成功后是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
-|    `JOIN_PK_TEAM`            |    东东超市<br>自动参加PK队伍    | 非必须 | 每次pk活动参加作者创建的pk队伍,`true`表示参加,`false`表示不参加 ，暂无活动|
 |    `SUPERMARKET_LOTTERY`     |          东东超市抽奖          | 非必须 | 每天运行脚本是否使用金币去抽奖,`true`表示抽奖,`false`表示不抽奖，默认抽奖 |
 |      `FRUIT_BEAN_CARD`       |    农场<br>使用水滴换豆卡    | 非必须 | 农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),<br>`true`表示换豆(不浇水),`false`表示不换豆(继续浇水),脚本默认是浇水 |
 |       `JD_UNSUB`             |      批量取消商品与店铺关注开关      | 非必须 | 控制jd_unsubscribe.js运行，默认为true取关，false不取关 |
@@ -90,7 +89,6 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 |   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换喜豆 |
 | `JXMC_HB`|    京喜牧场<br>控制助力方向     | 非必须 | 设置为false助力金币，默认助力红包 |
 | `ddwVirHb`|    财富岛珍珠兑换<br>控制兑换过滤    | 非必须 | 默认兑换>=元，变量设置为0兑换1元，0.2元和随机，兑换一元建议设置变量等于0.5 |
-| `kois`|    锦鲤红包<br>控制车头账号    | 非必须 | 配置需要被助力的账号pin |
 
 ##### 脚本环境变量
 ###### 京东试用
