@@ -41,6 +41,12 @@ RepoFileExtensions="js py sh"
 
 如 task XXXXX.js conc JD_COOKIE
 
+分组运行方法：
+
+在任务后面加desi JD_COOKIE 需要运行的ck排序
+
+如 task XXXX.js desi JD_COOKIE 1-10  前10个一组运行
+
 2、极速版签到也开并发，不然任务跑不完，一个号要40分钟。。
 
 task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE
