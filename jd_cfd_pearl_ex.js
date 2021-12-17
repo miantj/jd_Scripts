@@ -47,7 +47,7 @@ $.appId = 10032;
     .catch((e) => $.logErr(e))
     .finally(() => $.done());
 
-async function wait(starttime = process.env.pearl_wait || 62){
+async function wait(starttime = process.env.pearl_wait || 63){
   const nowtime = new Date().Format("s.S")
   if ($.index == 1 && nowtime < starttime) {
     const sleeptime = (starttime - nowtime) * 1000;
@@ -271,7 +271,7 @@ async function requestAlgo() {
       "expandParams": ""
     })
   }
-  new Promise(async resolve => {
+  return new Promise(async resolve => {
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
