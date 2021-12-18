@@ -9,7 +9,7 @@
 ## 青龙[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
 ## 青龙拉库指令
-在青龙面板添加任务 ，定时建议一天两次，当然手动拉取也可。
+在青龙面板添加拉库任务 ，定时随意，工作日更新频繁集中在白天。
 ```
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 ```
@@ -20,15 +20,19 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ## 互助指南
 
-1、修改青龙config.sh配置
+1、修改青龙config.sh配置（特别注意，没有修改此配置，互助无法配置）
 
 RepoFileExtensions="js py"修改为
 
 RepoFileExtensions="js py sh"
 
-保存
+右上角保存
 
-2、执行拉库
+建议任务运行时间调大，默认1小时有些脚本跑不完就被结束。
+
+CommandTimeoutTime="3h"  即改为3小时。
+
+2、执行拉库任务。
 
 3、青龙执行'获取互助码'任务即可快速自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待所有其他脚本运行后产生日志才会获取到互助码，一般第二天会获取全部互助码）
 
@@ -41,11 +45,11 @@ RepoFileExtensions="js py sh"
 
 如 task XXXXX.js conc JD_COOKIE
 
-分组运行方法：
+任务分组运行方法：
 
-在任务后面加desi JD_COOKIE 需要运行的ck排序
+在任务后面加desi JD_COOKIE 需要运行的ck序号
 
-如 task XXXX.js desi JD_COOKIE 1-10  前10个一组运行
+如 task XXXX.js desi JD_COOKIE 1-10  前10个一组运行，2 8 9就是第2/8/9序号的ck执行，以此类推。
 
 2、极速版签到也开并发，不然任务跑不完，一个号要40分钟。。
 
@@ -58,11 +62,11 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 4、财富岛默认助力赚金币，如需要助力合成珍珠，请修改jd_cfd_mooncake.js任务定时，排在jd_cfd.js前面执行即可。
 
 
-5、通知一对一推送，用法请参考[@ccwav](https://github.com/ccwav/QLScript2)
+5、通知支持一对一推送和显示备注名称，用法请参考[@ccwav](https://github.com/ccwav/QLScript2)
 
-6、青龙系统通知（新增删除任务、登录等通知），需把pushkey写入config.sh文件，直接建环境变量只发脚本运行通知。
+6、青龙系统通知（新增删除任务、登录等通知），需把pushkey变量写入到config.sh文件，直接建环境变量只发脚本运行通知。
 
-7、如需开卡入会请参考[@smiek2221](https://github.com/smiek2221/scripts.git)
+7、如需开卡入会请使用[@smiek2221](https://github.com/smiek2221/scripts.git)
 
 
 ##### 控制脚本功能环境变量
@@ -96,9 +100,9 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 |            Name             |        归属        |  属性  | 说明                                                         |
 | :-------------------------: | :----------------: | :----: | ------------------------------------------------------------ |
 |      `JD_TRY`               |   京东试用运行开关 | 非必须   |  true为开启，默认false不运行 |
-|      `JD_TRY_TITLEFILTERS`  |   京东试用<br>商品名过滤 | 非必须 |  教程@软件@xxx， `@`分割 |
-|      `JD_TRY_PRICE`         |   京东试用<br>价格过滤   | 非必须 |  默认50 |
-|      `JD_TRY_TRIALPRICE `      |   京东试用<br>试用价格   | 非必须 |  试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用，默认1元 |
-|      `JD_TRY_APPLYNUMFILTER`      |   京东试用<br>人数过滤   | 非必须 |  已申请人数大于设置人数不申请，默认5000 |
+|      `JD_TRY_TITLEFILTERS`  |   京东试用<br>商品名过滤 | 非必须 |  比如不申请教程@软件@手机卡， `@`分割 |
+|      `JD_TRY_PRICE`         |   京东试用<br>价格过滤   | 非必须 |  默认20 |
+|      `JD_TRY_TRIALPRICE `      |   京东试用<br>试用价格   | 非必须 |  试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用，默认0元 |
+|      `JD_TRY_APPLYNUMFILTER`      |   京东试用<br>人数过滤   | 非必须 |  已申请人数大于设置人数不申请，默认10000 |
 |      `JD_TRY_PLOG`      |   京东试用<br>日志配置   | 非必须 |  是否输出详细日志true为开，false为关，默认为false，输出简单日志 |
 
