@@ -8,6 +8,11 @@ if [[ $? != 0 ]];then
 else
 	echo "already exist" >/dev/null 2>&1
 fi
+#2.10.7版本通知替换
+ver=`sed -n /version/p /ql/src/version.ts|tr -cd '[0-9]\n'`
+if [[ "${ver}" -ge "2107" ]];then
+   cp -f /ql/repo/6dylan6_jdpro/sendNotify.js /ql/deps
+fi
 
 dir_shell=/ql/shell
 . $dir_shell/share.sh
