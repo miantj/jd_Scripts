@@ -241,9 +241,9 @@ function doInteractiveAssignment(extraType, encryptProjectId, sourceCode, encryp
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data)
-            if (data.subCode === "1403") {
+            if (data.subCode !== "0") {
               $.hot = true
-              console.log(`活动太火爆了，还是去买买买吧！！！`)
+              console.log(`脚本只能签到，全网没有能用的了`)
               return
             }
             if (extraType === "assistTaskDetail") {
