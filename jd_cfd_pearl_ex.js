@@ -29,7 +29,7 @@ $.appId = 10032;
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo();
   await $.wait(1000)
-  console.log(`\n默认不兑换5元以下和随机红包，如需兑换请设置变量ddwVirHb=0\n`)
+  console.log(`\n默认兑换0.5元以上（1/5/10/100），如需调整请设置变量ddwVirHb，设置1就兑换大于1块，以此类推\n`)
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -77,9 +77,9 @@ async function perl_auto() {
         if (prize.dwState == 3) {
           flag = false
           console.log(strPrizeName, '已兑换过')
-        }else if (!prize.strPrizeName || prize.ddwVirHb <= (process.env.ddwVirHb || 1) * 100) {
+        }else if (!prize.strPrizeName || prize.ddwVirHb <= (process.env.ddwVirHb || 0.5) * 100) {
           flag = false
-          console.log(strPrizeName, '不大于', (process.env.ddwVirHb || 1), '元 过滤')
+          console.log(strPrizeName, '不大于', (process.env.ddwVirHb || 0.5), '元 过滤')
         } else if (prize.dwState == 1) {
           console.log(strPrizeName, '当前缺货,但依然兑换.')
         } else {
