@@ -1,9 +1,10 @@
 /*
 #快速推一推
-2 0 * * * jd_tyt_ck1.js, tag=推一推, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+2 2,5 * * * jd_tyt_ck1.js, tag=推一推, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 注意：助力码每天会变，旧的不可用。
-助力逻辑：自动助力CK1
+助力逻辑：默认自动助力排在1号的CK
 入口-极速版-推推赚大钱  5元无门槛卷 大概需要50人助力
+TYT_PACKETID 变量也可设置需要推的账号
 */
 const $ = new Env('推推赚大钱');
 const notify = $.isNode() ? require('./sendNotify') : '';
