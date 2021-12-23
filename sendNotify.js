@@ -1391,7 +1391,7 @@ function getuuid(strRemark, PtPin) {
     }
     if (!strTempuuid && TempCKUid) {
         for (let j = 0; j < TempCKUid.length; j++) {
-            if (PtPin == TempCKUid[j].pt_pin) {
+            if (PtPin == decodeURIComponent(TempCKUid[j].pt_pin)) {
                 strTempuuid = TempCKUid[j].Uid;
                 break;
             }
