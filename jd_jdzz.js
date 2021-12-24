@@ -64,7 +64,7 @@ let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 
         }
         continue
       }
-      await shareCodesFormat()
+      //await shareCodesFormat()
       await jdWish()
     }
   }
