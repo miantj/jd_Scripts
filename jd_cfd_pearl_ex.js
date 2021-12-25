@@ -47,7 +47,7 @@ $.appId = 10032;
     .catch((e) => $.logErr(e))
     .finally(() => $.done());
 
-async function wait(starttime = process.env.pearl_wait || 63){
+async function wait(starttime = process.env.pearl_wait || 62){
   const nowtime = new Date().Format("s.S")
   if ($.index == 1 && nowtime < starttime) {
     const sleeptime = (starttime - nowtime) * 1000;
