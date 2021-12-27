@@ -62,7 +62,7 @@ const JD_API_HOST = 'https://car-member.jd.com/api/';
     $.done();
 })
 
-async function wait(starttime = 59.9) {
+async function wait(starttime = 61) {
     const nowtime = new Date().Format("s.S")
     if ($.index == 1 && nowtime < starttime) {
         const sleeptime = (starttime - nowtime) * 1000;
