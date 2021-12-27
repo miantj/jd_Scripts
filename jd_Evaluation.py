@@ -4,19 +4,32 @@
 # 京东自动评价
 '''
 new Env('京东自动评价');
-0 20 1 1 * jd_Evaluation.py
+15 0 1,15 * * jd_Evaluation.py
 '''
-import os
-import random
-import re
-import sys
-import time
+
+################【参数】######################
+# 控制开关，默认不执行
+Ev_Start = 'false'
+
+###############################################
+
+import os, random, re, sys, time
 from urllib.parse import unquote
 from sendNotify import send
-import jieba.analyse
-import requests
 
-jieba.setLogLevel(jieba.logging.INFO)
+try:
+    import requests
+except Exception as e:
+    print(e, "\n缺少requests 模块，请执行命令安装：pip3 install requests")
+    exit(3)
+
+try:
+    import jieba.analyse
+
+    jieba.setLogLevel(jieba.logging.INFO)
+except Exception as e:
+    print(e, "\n缺少jieba 模块，请执行命令安装：pip3 install jieba")
+    exit(3)
 
 pwd = os.path.dirname(os.path.abspath(__file__)) + os.sep
 
@@ -45,6 +58,10 @@ def getEnvs(label):
             return int(label)
     except:
         return label
+if "Ev_Start" in os.environ:
+    if len(os.environ["Ev_Start"]) > 1:
+        Ev_Start = os.environ["Ev_Start"]
+        #printf(f"已获取并使用Env环境 Ev_Scope:{Ev_Scope}")
 
 
 class getJDCookie(object):
@@ -199,11 +216,11 @@ if os.path.exists(v4f):
     except:
         pass
 
-if "qjd_zlzh" in os.environ:
-    if len(os.environ["qjd_zlzh"]) > 1:
-        qjd_zlzh = os.environ["qjd_zlzh"]
-        qjd_zlzh = qjd_zlzh.replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(',')
-        #printf("已获取并使用Env环境 qjd_zlzh:", qjd_zlzh)
+#if "qjd_zlzh" in os.environ:
+#    if len(os.environ["qjd_zlzh"]) > 1:
+#        qjd_zlzh = os.environ["qjd_zlzh"]
+#        qjd_zlzh = qjd_zlzh.replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split(',')
+#        #printf("已获取并使用Env环境 qjd_zlzh:", qjd_zlzh)
 
 
 # 评价生成
@@ -311,7 +328,7 @@ def start():
                     if j['id'] == 'toComment':
                         cname = j['name']  # 评价按钮名字
                 if cname is None:
-                    #printf("没获得到按钮数据，跳过这个商品！")
+                    printf("没获得到按钮数据，跳过这个商品！")
                     continue
 
                 Ci.append({'name': name, 'oid': oid, 'pid': pid, 'cname': cname, 'multi': multi})
@@ -352,22 +369,22 @@ def start():
             def pjsj():
                 req = requests.post(url, headers=he, data=data)
                 if req.json()['errMsg'] == 'success':
-                    #printf("\t普通评价成功！！")
+                    printf("\t商品评价成功！！")
                     Cent[ce]['评价'] += 1 
                 else:
-                    printf("\t普通评价失败了.......")
+                    printf("\t商品评价失败了.......")
                     printf(data)
 
             def pjfw():
                 se_req = requests.get(se_url, headers=he, params=se_data)
                 if se_req.json()['errMsg'] == 'success':
-                    #printf("\t服务评价成功！！")
+                    printf("\t物流评价成功！！")
                     Cent[ce]['服务评价'] += 1 
                 else:
                     printf("\t服务评价失败了.......")
                     printf(se_data)
 
-            printf(f'开始评论{i}\t[{da["oid"]}')
+            printf(f'开始评价{i}\t[{da["oid"]}]')
 
             if da['cname'] == "评价晒单":
                 pjsj()
@@ -378,7 +395,7 @@ def start():
                 pass
             else:
                 printf(da['cname'])
-            #printf('等待5秒-可持续发展！')
+            printf('等待5秒-可持续发展！')
             time.sleep(5)
 
     # 晒单
@@ -387,7 +404,7 @@ def start():
         for i, da in enumerate(op(headers,_type=False)):
             if da['cname'] == "追加评价":
                 context = generation(da['name'], _type=0)
-                printf(f'开始晒单{i},{da["oid"]}')
+                printf(f'开始晒单{i}\t[{da["oid"]}]')
                 if da['multi']:
                     #printf('\t多个商品跳过！')
                     continue
@@ -401,14 +418,18 @@ def start():
                         ['//img30.360buyimg.com/shaidan/jfs/t1/139511/17/26249/850/61852a35Ea7906339/f7eb6b9438917f30.jpg', '//img30.360buyimg.com/shaidan/jfs/t1/143995/15/24443/5327/61860ba4Ecba97817/d7faafa606f76b1f.jpg'], 1)
                 }
                 req = requests.post(url, headers=headers, data=data)
-                if req.json()['data']['result'] != {}:
-                    #printf("\t晒单成功！！！")
-                    Cent[ce]['晒单'] += 1 
-                else:
-                    printf("\t晒单失败...")
-                    printf(req.json())
-                #printf('等待5秒-可持续发展！')
-                time.sleep(5)
+                try:
+                    if req.json()['data']['result'] != {}:
+                        printf("\t晒单成功！！！")
+                        Cent[ce]['晒单'] += 1
+                    else:
+                        printf("\t晒单失败...")
+                        printf(req.json())
+                    # printf('等待5秒-可持续发展！')
+                    time.sleep(20)
+                except KeyError:
+                    printf(f'当前无数据！返回，可能被风控，返回的数据：{req.json()}')
+                    return
 
     printf('### 开始批量评价 ###')
     global cookiesList, userNameList, pinNameList, ckNum, beanCount, userCount
@@ -416,24 +437,28 @@ def start():
 
     for i,ck,user,pin in zip(range(1,len(cookiesList)+1),cookiesList,userNameList,pinNameList):
         
-        printf(f"** 开始[账号{i}]-{user} **")
+        printf(f"\n\n** 开始[账号{i}]-{user} **")
         headers = {
             'cookie': ck,
             'user-agent': 'jdltapp;android;1.0.0;9;860105045422157-bce2658d9db5;network/wifi;model/JKM-AL00a;addressid/0;aid/5d84f5872ec4e5c8;oaid/51fe75e7-7e5d-aefc-fbed-ffffdf7f6bd2;osVer/28;appBuild/694;psn/860105045422157-bce2658d9db5|3;psq/26;uid/860105045422157-bce2658d9db5;adk/;ads/;pap/JA2020_3112531|1.0.0|ANDROID',
         }
         Cent[f'账号{i}[{user}]'] = {'评价':0 , '晒单':0, '服务评价':0}
-        printf('开始评价与服务评价！')
+        printf('开始商品与服务评价！')
         ordinary(headers, f'账号{i}[{user}]')
+        printf('商品与服务评价完成！！\n')
         printf('开始晒单！')
         sunbw(headers, f'账号{i}[{user}]')
-        printf('完成！！。等待10秒')
+        printf('晒单完成！！。等待10秒开始下一个账号\n')
         time.sleep(10)
     msg = ''
     for i in Cent:
-        msg += f'{i}\n{Cent[i]}\n\n' 
-    send('京东全自动评价',msg)
+        msg += f'{i}\n{Cent[i]}\n\n'
+    send('京东全自动评价', msg)
 
 
 
 if __name__ == '__main__':
+   if Ev_Start == 'true':
     start()
+	else:
+	printf('\n默认不运行，执行清设置变量Ev_Start=true \n')
