@@ -3,7 +3,7 @@
 京东金融养猪猪
 活动入口：京东金融养猪猪，
 脚本更新地址：https://github.com/zero205/JD_tencent_scf
-加了个邀新助力，不过应该没啥用。邀请码变量：PIGPETSHARECODES，变量仅支持单账号邀请码
+//加了个邀新助力，不过应该没啥用。邀请码变量：PIGPETSHARECODE，变量仅支持单账号邀请码
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
@@ -27,14 +27,15 @@ const MISSION_BASE_API = `https://ms.jr.jd.com/gw/generic/mission/h5/m`;
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let shareId = [''];
+let UA = $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+let shareId = ''
 $.shareCodes = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => { };
-  if (process.env.PIGPETSHARECODES) { shareId = process.env.PIGPETSHARECODES };
+  if (process.env.JR_USER_AGENT) UA = process.env.JR_USER_AGENT;
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -70,7 +71,7 @@ if ($.isNode()) {
   for (let j = 0; j < cookiesArr.length; j++) {
     cookie = cookiesArr[j];
     if ($.shareCodes && $.shareCodes.length) {
-      console.log(`\n自己账号内部循环互助，有剩余次数再帮作者助力\n`);
+      console.log(`\n自己账号内部循环互助\n`);
       for (let item of $.shareCodes) {
         await pigPetLotteryHelpFriend(item)
         await $.wait(1000)
@@ -760,7 +761,7 @@ function getJumpInfo(juid) {
         'Connection': 'keep-alive',
         'Accept': 'application/json',
         "Cookie": cookie,
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/application=JDJR-App&deviceId=1423833363730383d273532393d243445364-d224341443d2938333530323445433033353&eufv=1&clientType=ios&iosType=iphone&clientVersion=6.1.70&HiClVersion=6.1.70&isUpdate=0&osVersion=13.7&osName=iOS&platform=iPhone 6s (A1633/A1688/A1691/A1700)&screen=667*375&src=App Store&netWork=1&netWorkType=1&CpayJS=UnionPay/1.0 JDJR&stockSDK=stocksdk-iphone_3.5.0&sPoint=&jdPay=(*#@jdPaySDK*#@jdPayChannel=jdfinance&jdPayChannelVersion=6.1.70&jdPaySdkVersion=3.00.52.00&jdPayClientName=iOS*#@jdPaySDK*#@)',
+        'User-Agent': UA,
         'Accept-Language': 'zh-cn',
         'Referer': 'https://u1.jr.jd.com/uc-fe-wxgrowing/cloudpig/index/',
         'Accept-Encoding': 'gzip, deflate, br'
@@ -800,7 +801,7 @@ function queryMissionReceiveAfterStatus(missionId) {
         "Cookie": cookie,
         "Origin": "https://jdjoy.jd.com",
         "Referer": "https://jdjoy.jd.com/",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+        "User-Agent": UA
       }
     }
     $.get(options, (err, resp, data) => {
@@ -838,7 +839,7 @@ function finishReadMission(missionId, readTime) {
         "Cookie": cookie,
         "Origin": "https://jdjoy.jd.com",
         "Referer": "https://jdjoy.jd.com/",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+        "User-Agent": UA
       }
     }
     $.get(options, (err, resp, data) => {
@@ -942,7 +943,7 @@ function taskUrl(function_id, body) {
       'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
       'Host': `ms.jr.jd.com`,
       'Connection': `keep-alive`,
-      'User-Agent': `jdapp;android;8.5.12;9;network/wifi;model/GM1910;addressid/1302541636;aid/ac31e03386ddbec6;oaid/;osVer/28;appBuild/73078;adk/;ads/;pap/JA2015_311210|8.5.12|ANDROID 9;osv/9;pv/117.24;jdv/0|kong|t_1000217905_|jingfen|644e9b005c8542c1ac273da7763971d8|1589905791552|1589905794;ref/com.jingdong.app.mall.WebActivity;partner/oppo;apprpd/Home_Main;Mozilla/5.0 (Linux; Android 9; GM1910 Build/PKQ1.190110.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044942 Mobile Safari/537.36 Edg/86.0.4240.111`,
+      'User-Agent': UA,
       'Referer': `https://u.jr.jd.com/`,
       'Accept-Language': `zh-cn`
     }
