@@ -1,4 +1,4 @@
-*
+/*
 TG https://t.me/duckjobs
 github https://github.com/mmnvnmm/omo
 说明: 超级无线店铺签到
