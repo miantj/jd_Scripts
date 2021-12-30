@@ -129,18 +129,20 @@ if ($.isNode() && process.env.BEANCHANGE_DISABLECASH) {
 	//EnableMonth = process.env.BEANCHANGE_ENABLEMONTH;
 //}
 
-if ($.isNode() && process.env.BEANCHANGE_ALLNOTIFY) {
+//if ($.isNode() && process.env.BEANCHANGE_ALLNOTIFY) {
 	
-	var strTempNotify=process.env.BEANCHANGE_ALLNOTIFY ? process.env.BEANCHANGE_ALLNOTIFY.split('&') : [];
+	/*var strTempNotify=process.env.BEANCHANGE_ALLNOTIFY ? process.env.BEANCHANGE_ALLNOTIFY.split('&') : [];
 	if (strTempNotify.length > 0) {
 		for (var TempNotifyl in strTempNotify) {					
 			strAllNotify+=strTempNotify[TempNotifyl]+'\n';
 		}
-	}
+	}*/
+	strAllNotify=process.env.BEANCHANGE_ALLNOTIFY || "\b\b京东秒杀金币1月17号清零，记得换红包哦!!";	
 	console.log(`检测到设定了公告,将在推送信息中置顶显示...`);
-	strAllNotify = `【✨✨✨✨公告✨✨✨✨】\n`+strAllNotify;
+	strAllNotify = "✨✨✨✨✨✨✨公告✨✨✨✨✨✨✨\n"+strAllNotify;
 	console.log(strAllNotify);
-}
+	strAllNotify +="\n\b\b🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏\n"
+//}
 
 if (EnableMonth == "true" && Today.getDate() == 1 && Today.getHours() > 17)
 	llShowMonth = true;
