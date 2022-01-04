@@ -157,8 +157,10 @@ async function cfd() {
     await getTakeAggrPage('wxsign')
 
     //使用道具
-    await $.wait(2000)
-    await GetPropCardCenterInfo()
+    if (new Date().getHours() < 22){
+      await $.wait(2000)
+      await GetPropCardCenterInfo()
+    }
 
     //助力奖励
     await $.wait(2000)
@@ -820,7 +822,7 @@ async function getActTask(type = true) {
           if (type) {
             for (let key of Object.keys(data.Data.TaskList)) {
               let vo = data.Data.TaskList[key]
-              if ([1, 2].includes(vo.dwOrderId) && (vo.dwCompleteNum !== vo.dwTargetNum) && vo.dwTargetNum < 10) {
+              if ([0, 1, 2].includes(vo.dwOrderId) && (vo.dwCompleteNum !== vo.dwTargetNum) && vo.dwTargetNum < 10) {
                 console.log(`开始【🐮牛牛任务】${vo.strTaskName}`)
                 for (let i = vo.dwCompleteNum; i < vo.dwTargetNum; i++) {
                   console.log(`【🐮牛牛任务】${vo.strTaskName} 进度：${i + 1}/${vo.dwTargetNum}`)
@@ -875,7 +877,11 @@ function awardActTask(function_path, taskInfo = '') {
               if (msg.indexOf('活动太火爆了') !== -1) {
                 str = '任务为成就任务或者未到任务时间';
               } else {
-                str = msg + prizeInfo ? `获得金币 ¥ ${JSON.parse(prizeInfo).ddwCoin}` : '';
+                if (JSON.parse(prizeInfo).dwPrizeType == 4) {
+                  str = msg + prizeInfo ? `获得红包 ¥ ${JSON.parse(prizeInfo).strPrizeName}` : '';
+                } else {
+                  str = msg + prizeInfo ? `获得金币 ¥ ${JSON.parse(prizeInfo).ddwCoin}` : '';
+                }
               }
               console.log(`【🐮领牛牛任务奖励】${strTaskName} ${str}\n${$.showLog ? data : ''}`);
             }
@@ -1599,7 +1605,7 @@ function shareCodesFormat() {
   return new Promise(async resolve => {
     $.newShareCodes = []
     const readShareCodeRes = await readShareCode();
-    if (readShareCodeRes && readShareCodeRes.code === 2000) {
+    if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds, ...(readShareCodeRes.data || [])])];
     } else {
       $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds])];
