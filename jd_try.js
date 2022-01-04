@@ -46,9 +46,9 @@ let args_xh = {
      * A商品原价49元，试用价1元，如果下面设置为50，那么A商品不会被加入到待提交的试用组
      * B商品原价99元，试用价0元，如果下面设置为50，那么B商品将会被加入到待提交的试用组
      * C商品原价99元，试用价1元，如果下面设置为50，那么C商品将会被加入到待提交的试用组
-     * 默认为20
+     * 默认为0
      * */
-    jdPrice: process.env.JD_TRY_PRICE * 1 || 50,
+    jdPrice: process.env.JD_TRY_PRICE * 1 || 0,
     /*
      * 获取试用商品类型，默认为1，原来不是数组形式，我以为就只有几个tab，结果后面还有我服了
      * 1 - 精选
@@ -62,7 +62,7 @@ let args_xh = {
      * 可设置环境变量：JD_TRY_TABID，用@进行分隔
      * 默认为 1 到 5
      * */
-    tabId: process.env.JD_TRY_TABID && process.env.JD_TRY_TABID.split('@').map(Number) || [1,2,3,4,5],
+    tabId: process.env.JD_TRY_TABID && process.env.JD_TRY_TABID.split('@').map(Number) || [1,2,3,4,5,6,7,8,9,10],
     /*
      * 试用商品标题过滤，黑名单，当标题存在关键词时，则不加入试用组
      * 当白名单和黑名单共存时，黑名单会自动失效，优先匹配白名单，匹配完白名单后不会再匹配黑名单，望周知
@@ -77,9 +77,9 @@ let args_xh = {
      * A商品原价49元，现在试用价1元，如果下面设置为10，那A商品将会被添加到待提交试用组，因为1 < 10
      * B商品原价49元，现在试用价2元，如果下面设置为1，那B商品将不会被添加到待提交试用组，因为2 > 1
      * C商品原价49元，现在试用价1元，如果下面设置为1，那C商品也会被添加到带提交试用组，因为1 = 1
-     * 可设置环境变量：JD_TRY_TRIALPRICE，默认为1
+     * 可设置环境变量：JD_TRY_TRIALPRICE，默认为0
      * */
-    trialPrice: process.env.JD_TRY_TRIALPRICE * 1 || 1,
+    trialPrice: process.env.JD_TRY_TRIALPRICE * 1 || 0,
     /*
      * 最小提供数量，例如试用商品只提供2份试用资格，当前设置为1，则会进行申请
      * 若只提供5分试用资格，当前设置为10，则不会申请
@@ -90,11 +90,11 @@ let args_xh = {
      * 过滤大于设定值的已申请人数，例如下面设置的1000，A商品已经有1001人申请了，则A商品不会进行申请，会被跳过
      * 可设置环境变量：JD_TRY_APPLYNUMFILTER
      * */
-    applyNumFilter: process.env.JD_TRY_APPLYNUMFILTER * 1 || 5000,
+    applyNumFilter: process.env.JD_TRY_APPLYNUMFILTER * 1 || 10000,
     /*
      * 商品试用之间和获取商品之间的间隔, 单位：毫秒(1秒=1000毫秒)
      * 可设置环境变量：JD_TRY_APPLYINTERVAL
-     * 默认为5000，也就是5秒
+     * 默认为3000，也就是3秒
      * */
     applyInterval: process.env.JD_TRY_APPLYINTERVAL * 1 || 5000,
     /*
@@ -103,7 +103,7 @@ let args_xh = {
      * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
      * 可设置环境变量：JD_TRY_MAXLENGTH
      * */
-    maxLength: process.env.JD_TRY_MAXLENGTH * 1 || 80,
+    maxLength: process.env.JD_TRY_MAXLENGTH * 1 || 100,
     /*
      * 过滤种草官类试用，某些试用商品是专属官专属，考虑到部分账号不是种草官账号
      * 例如A商品是种草官专属试用商品，下面设置为true，而你又不是种草官账号，那A商品将不会被添加到待提交试用组
@@ -375,6 +375,11 @@ function try_feedsList(tabId, page){
                                             $.isPush = false;
                                             break;
                                         }
+                                        else if(itemTag.tagType === 5){
+                                            args_xh.printLog ? console.log('商品被跳过，该商品是付费试用！') : ''
+                                            $.isPush = false;
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -411,7 +416,7 @@ function try_feedsList(tabId, page){
                         }
                         console.log(`当前试用组长度为：${trialActivityIdList.length}`)
                         args_xh.printLog ? console.log(`${trialActivityIdList}`) : ''
-                        if(page === $.totalPages && $.nowTabIdIndex < args_xh.tabId.length){
+                        if(page >= $.totalPages && $.nowTabIdIndex < args_xh.tabId.length){
                             //这个是因为每一个tab都会有对应的页数，获取完如果还不够的话，就获取下一个tab
                             $.nowTabIdIndex++;
                             $.nowPage = 1;
