@@ -13,6 +13,7 @@ import re
 import sys
 import random
 import string
+import urllib
 
 
 def load_send():
@@ -54,7 +55,7 @@ def getinfo(ck):
     area3=random.randint(10000,99999)
     area4=random.randint(1000,9999)
     area=str(area1)+"_"+str(area2)+"_"+str(area3)+"_"+str(area4)
-     data='appid=newtry&functionId=try_MyTrials&uuid='+uuid+'&clientVersion=10.3.0&client=wh5&osVersion=13.2.3&area='+area+'&networkType=wifi&body=%7B%22page%22%3A1%2C%22selected%22%3A2%2C%22previewTime%22%3A%22%22%7D'
+    data='appid=newtry&functionId=try_MyTrials&uuid='+uuid+'&clientVersion=10.3.0&client=wh5&osVersion=13.2.3&area='+area+'&networkType=wifi&body=%7B%22page%22%3A1%2C%22selected%22%3A2%2C%22previewTime%22%3A%22%22%7D'
     response=requests.post(url=url,headers=headers,data=data)
     isnull=True
     try:
@@ -65,10 +66,11 @@ def getinfo(ck):
                 isnull=False
             i+=1
         if isnull==True:
-            print("没有在有效期内待领取的试用品")
+            print("\t没有待领取的试用品。\n")
     except:
         pass
 if __name__ == '__main__':
+    jd_try_notify=''
     try:
         cks = os.environ["JD_COOKIE"].split("&")
     except:
