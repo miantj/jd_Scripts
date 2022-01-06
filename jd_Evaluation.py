@@ -11,6 +11,8 @@ new Env('京东自动评价');
 # 控制开关，默认不执行
 Ev_Start = 'false'
 
+# 评价星级，评论是好评，星级默认4-5随机。只支持逗号 ENV设置： export Ev_xing='4,5'
+Ev_xing = '4,5'
 ###############################################
 
 import os
@@ -66,6 +68,13 @@ if "Ev_Start" in os.environ:
     if len(os.environ["Ev_Start"]) > 1:
         Ev_Start = os.environ["Ev_Start"]
         #printf(f"已获取并使用Env环境 Ev_Scope:{Ev_Scope}")
+try:
+    xing = []
+    for i in Ev_xing.split(','):
+        xing.append(i)
+except ValueError:
+    print('星级参数设置错误')
+    exit(3)
 
 
 class getJDCookie(object):
