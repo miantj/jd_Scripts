@@ -44,7 +44,6 @@ let activityIdList3 = [
     '456de0f620024cbda71e9a9cbaaf95e1',
     '0dee39bb7c9b48828d8cdc08af4875e7',
 ]
-]
 let lz_cookie = {}
 
 if (process.env.SEVENDAY_LIST && process.env.SEVENDAY_LIST != "") {
