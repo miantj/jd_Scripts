@@ -64,11 +64,11 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 4、财富岛默认助力赚金币，如需要助力合成珍珠，请修改jd_cfd_mooncake.js任务定时，排在jd_cfd.js前面执行即可。
 
 
-5、通知支持一对一推送和显示备注名称，用法请参考[@ccwav](https://github.com/ccwav/QLScript2)
+5、通知支持一对一推送和显示备注，用法请参考[@ccwav](https://github.com/ccwav/QLScript2)
 
 6、青龙系统通知（新增删除任务、登录等通知），需把pushkey变量写入到config.sh文件，直接建环境变量只发脚本运行通知。
 
-7、如需开卡入会请使用[@smiek2221](https://github.com/smiek2221/scripts.git)
+7、本库没有开卡，如需开卡入会请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
 
 
 ##### 控制脚本功能环境变量
