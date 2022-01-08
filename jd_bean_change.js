@@ -58,6 +58,7 @@ let DisableCash = "false";
 let llShowMonth = false;
 let Today = new Date();
 let strAllNotify="";
+let strSubNotify="";
 let llPetError=false;
 let strGuoqi="";
 let RemainMessage = '\n';
@@ -130,19 +131,17 @@ if ($.isNode() && process.env.BEANCHANGE_DISABLECASH) {
 //}
 
 //if ($.isNode() && process.env.BEANCHANGE_ALLNOTIFY) {
-	
-	/*var strTempNotify=process.env.BEANCHANGE_ALLNOTIFY ? process.env.BEANCHANGE_ALLNOTIFY.split('&') : [];
-	if (strTempNotify.length > 0) {
-		for (var TempNotifyl in strTempNotify) {					
-			strAllNotify+=strTempNotify[TempNotifyl]+'\n';
-		}
-	}*/
 	strAllNotify=process.env.BEANCHANGE_ALLNOTIFY || "\b\b京东秒杀金币1月17号清零，记得换红包哦!!";	
 	console.log(`检测到设定了公告,将在推送信息中置顶显示...`);
 	strAllNotify = "✨✨✨✨✨✨✨公告✨✨✨✨✨✨✨\n"+strAllNotify;
 	console.log(strAllNotify);
 	strAllNotify +="\n\b\b🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏🎏\n"
 //}
+if ($.isNode() && process.env.BEANCHANGE_SUBNOTIFY) {	
+	strSubNotify=process.env.BEANCHANGE_SUBNOTIFY;
+	strSubNotify+="\n";
+	console.log(`检测到预览置顶内容,将在一对一推送的预览显示...\n`);	
+}
 
 if (EnableMonth == "true" && Today.getDate() == 1 && Today.getHours() > 17)
 	llShowMonth = true;
@@ -463,7 +462,7 @@ async function showMsg() {
 	//return
 	ReturnMessageTitle="";
 	ReturnMessage = "";
-	var strsummary="";
+	var strsummary=strSubNotify;
 	if (MessageUserGp2) {
 		userIndex2 = MessageUserGp2.findIndex((item) => item === $.pt_pin);
 	}
@@ -813,12 +812,13 @@ async function showMsg() {
 
 	if ($.isNode() && WP_APP_TOKEN_ONE) {
 		var strTitle="京东资产统计";
-		if (TempBaipiao) {
-			strsummary=TempBaipiao + `\n` +strsummary;			
-			TempBaipiao = `【⏰商品白嫖清单⏰】\n` + TempBaipiao;
-			ReturnMessage = TempBaipiao + `\n` + ReturnMessage;
-		}
 		ReturnMessage=`【账号名称】${$.nickName || $.UserName}\n`+ReturnMessage;
+		
+		if (TempBaipiao) {
+			strsummary=TempBaipiao +strsummary;			
+			TempBaipiao = `【⏰商品白嫖活动提醒⏰】\n` + TempBaipiao;
+			ReturnMessage = TempBaipiao + `\n` + ReturnMessage;			
+		}
 		
 		ReturnMessage += RemainMessage;
 		if(strAllNotify)
@@ -1468,8 +1468,8 @@ function getMs() {
 					console.log(`getMs API请求失败，请检查网路重试`)
 				} else {
 					if (safeGet(data)) {
-						data = JSON.parse(data)
-							if (data.code === 2041 || data.code === 2042) {
+						data = JSON.parse(data);						
+							if (data.result.assignment.assignmentPoints) {
 								$.JdMsScore = data.result.assignment.assignmentPoints || 0
 							}
 					}
