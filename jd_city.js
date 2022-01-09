@@ -3,7 +3,7 @@
 =================================Quantumultx=========================
 [task_local]
 #城城领现金
-0 22,0-23/5 9-21 1 * gua_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+2 0,12,22 9-21 1 * jd_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
  */
 const $ = new Env('城城领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -40,9 +40,9 @@ $.shareCodesArr = [];
   }
   // await requireConfig();
   if(helpShareFlag+"" == "true"){
-    console.log('脚本优先助力[助力池] 如需开启优先助力[内部账号]，请设置环境变量  JD_CITY_HELPSHARE 为false\n')
+    console.log('如需开启助力[内部账号]，请设置环境变量  JD_CITY_HELPSHARE 为false\n')
   }else{
-    console.log('脚本优先助力[内部账号] 如需开启优先助力[助力池]，请设置环境变量  JD_CITY_HELPSHARE 为true\n')
+    console.log('如需开启助力[助力池]，请设置环境变量  JD_CITY_HELPSHARE 为true\n')
   }
   if (exchangeFlag+"" == "true") {
     console.log(`脚本自动抽奖`)
