@@ -45,7 +45,6 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.nickName = '';
       $.encryptProjectId = '';
       message = '';
-      $.sku = [], $.sku2 = [], $.adv = []
       await getInfo("https://prodev.m.jd.com/mall/active/fARfxZh3zdMqs4tkFBhpqaQKTGA/index.html");//集魔方首页
       await TotalBean();
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
@@ -83,16 +82,16 @@ async function queryInteractiveInfo(encryptProjectId, sourceCode) {
           if (data.code == '0') {
             for (let v of data.assignmentList) {
               if (new Date().getDate() == 9 && v.assignmentName == '9日大奖') {
-                await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
-                await doInteractiveAssignment($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
+                // await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
+                await doInteractiveAssignment($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215", 0);
               } else if (new Date().getDate() == 17 && v.assignmentName == '17日大奖') {
-                await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
-                await doInteractiveAssignment($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
+                // await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
+                await doInteractiveAssignment($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215", 0);
               } else if (new Date().getDate() == 24 && v.assignmentName == '24日大奖') {
-                await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
-                await doInteractiveAssignment($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
+                // await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
+                await doInteractiveAssignment($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215", 0);
               } else if (v.assignmentName == '签到') {
-                await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
+                // await queryInteractiveRewardInfo($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215", 0);
                 await doInteractiveAssignment($.encryptProjectId, v.encryptAssignmentId, "aceaceglqd20211215");
               }
             }
@@ -130,9 +129,11 @@ async function queryInteractiveRewardInfo(encryptProjectId, AssignmentId, source
 }
 
 // 兑换
-async function doInteractiveAssignment(encryptProjectId, AssignmentId, sourceCode) {
+async function doInteractiveAssignment(encryptProjectId, AssignmentId, sourceCode, type) {
+  body = { "encryptProjectId": encryptProjectId, "encryptAssignmentId": AssignmentId, "sourceCode": sourceCode, "completionFlag": true }
+  if (type === 0) { body = { "encryptProjectId": encryptProjectId, "encryptAssignmentId": AssignmentId, "sourceCode": sourceCode, "completionFlag": true, "ext": { "exchangeNum": 1 } } }
   return new Promise(async (resolve) => {
-    $.post(taskUrl("doInteractiveAssignment", { "encryptProjectId": encryptProjectId, "encryptAssignmentId": AssignmentId, "sourceCode": sourceCode, "completionFlag": true }), async (err, resp, data) => {
+    $.post(taskUrl("doInteractiveAssignment", body), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
