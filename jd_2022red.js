@@ -52,12 +52,12 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
       await run();
     }
   }
-  if(message){
-    $.msg($.name, ``, `${message}\nhttps://u.jd.com/SCMjnig\n\n跳转到app 可查看助力情况`);
-    if ($.isNode()){
-      await notify.sendNotify(`${$.name}`, `${message}\n\nhttps://u.jd.com/SCMjnig\n跳转到app 可查看助力情况`);
-    }
-  }
+  //if(message){
+  //  $.msg($.name, ``, `${message}\nhttps://u.jd.com/SdMRaGZ\n\n跳转到app 可查看助力情况`);
+  //  if ($.isNode()){
+  //    await notify.sendNotify(`${$.name}`, `${message}\n\nhttps://u.jd.com/SdMRaGZ\n跳转到app 可查看助力情况`);
+  //  }
+  //}
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
