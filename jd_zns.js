@@ -148,17 +148,17 @@ $.shareCodesArr = [];
 
                                 }
                                 break
-                            case 21:
-                                for (var o = 0; o < task.brandMemberVos.length; o++) {
-                                    if (task.brandMemberVos[o].status == 1) {
-                                        console.log(`\n\n ${task.brandMemberVos[o].title}`)
-                                        memberUrl = task.brandMemberVos[o].memberUrl
-                                        memberUrl = transform(memberUrl)
-                                        await join(task.brandMemberVos[o].vendorIds, memberUrl.channel, memberUrl.shopId ? memberUrl.shopId : "")
-                                        await tigernian_collectScore(task.brandMemberVos[o].taskToken, task.taskId)
-                                    }
-
-                                }
+                            //case 21:
+                            //    for (var o = 0; o < task.brandMemberVos.length; o++) {
+                            //        if (task.brandMemberVos[o].status == 1) {
+                            //            console.log(`\n\n ${task.brandMemberVos[o].title}`)
+                            //            memberUrl = task.brandMemberVos[o].memberUrl
+                            //            memberUrl = transform(memberUrl)
+                            //            //await join(task.brandMemberVos[o].vendorIds, memberUrl.channel, memberUrl.shopId ? memberUrl.shopId : "")
+                            //            await tigernian_collectScore(task.brandMemberVos[o].taskToken, task.taskId)
+                            //        }
+							//
+                            //    }
                         }
 
                     }
