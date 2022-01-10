@@ -165,6 +165,7 @@ $.shareCodesArr = [];
                                             await tigernian_collectScore(task.brandMemberVos[o].taskToken, task.taskId)
                                         }
 									}
+							}		
                         }
 
                     }
