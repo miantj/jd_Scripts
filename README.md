@@ -2,7 +2,7 @@
 
 # Tips
 
->搜集全网大佬，亲测运行，整理移除重复和失效，屏蔽助力池，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
+>搜集自全网大佬，亲测运行，整理移除重复和失效，屏蔽助力池，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
  
 >细水长流，低调使用，在精不在多，许多重复或失效的容易黑！
 
@@ -10,7 +10,7 @@
 
 ## 青龙拉库指令
 
-在青龙面板添加拉库任务 ，定时随意，集中在白天更新库。
+在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * ，集中在白天更新库，当然也可以手动拉。
 ```
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 ```
@@ -20,7 +20,7 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 拉库后，执行'依赖安装'任务即可完成所需依赖安装，脚本名jd_indeps，首次拉库执行一次即可，有新依赖再次执行。
 
 
-## 互助指南
+## 互助（内部助力）指南
 
 1、修改青龙config.sh配置（特别注意，没有修改此配置，互助无法配置）
 
@@ -30,7 +30,7 @@ RepoFileExtensions="js py sh"
 
 右上角保存
 
-建议任务运行时间调大，默认1小时有些脚本跑不完就被结束。
+建议调整任务运行超时时间，默认1小时有些脚本跑不完就被强制结束。
 
 CommandTimeoutTime="3h"  即改为3小时。
 
@@ -55,9 +55,9 @@ CommandTimeoutTime="3h"  即改为3小时。
 
 2、极速版签到也开并发，不然任务跑不完，一个号要40分钟。。
 
-task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE
+task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同版本不一样，按自己的写）
 
-3、京东保价也建议并发，测试前几个号正常跑，后面就开始报频繁！
+3、京东保价建议并发，否则前几个号正常跑，后面就会报频繁！
 
 task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
@@ -68,7 +68,7 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
 6、青龙系统通知（新增删除任务、登录等通知），需把pushkey变量写入到config.sh文件，直接建环境变量只发脚本运行通知。
 
-7、本库没有开卡，如需开卡入会请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
+7、本库没有开卡（个人洁癖），如需开卡入会请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
 
 
 ##### 控制脚本功能环境变量
