@@ -64,11 +64,22 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 4、财富岛默认助力赚金币，如需要助力合成珍珠，请修改jd_cfd_mooncake.js任务定时，排在jd_cfd.js前面执行即可。
 
 
-5、通知支持一对一推送和显示备注，用法请参考[@ccwav](https://github.com/ccwav/QLScript2)
+5、通知支持一对一推送和显示备注，详细用户参考[@ccwav](https://github.com/ccwav/QLScript2)
+
+备注显示变量如下
+export NOTIFY_SHOWNAMETYPE="1"    不做任何变动
+export NOTIFY_SHOWNAMETYPE="2"    效果是 :  账号名称：别名(备注)	
+export NOTIFY_SHOWNAMETYPE="3"    效果是 :  账号名称：pin(备注)
+export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
+
 
 6、青龙系统通知（新增删除任务、登录等通知），需把pushkey变量写入到config.sh文件，直接建环境变量只发脚本运行通知。
 
-7、本库没有开卡（个人洁癖），如需开卡入会请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
+7、本库没有开卡（不喜欢垃圾信息骚扰），如需开卡入会请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
+
+拉库命令下面，默认不跑，设置变量export guaopencard_addSku_All=true  export guaopencard_All=true
+
+ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklace.js|JDJRValidator_Pure.js|sign_graphics_validate.js|cleancart_activity.js"
 
 
 ##### 控制脚本功能环境变量
