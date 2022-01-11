@@ -1,20 +1,24 @@
 /*
-TG https://t.me/aaron_scriptsG
-被内鬼偷给柠檬了,大家一起玩吧
-28 0,6-23/2 * * * jd_travel.js
+23 0,6-23/2 * * * jd_travel.js
 */
 const $ = new Env('炸年兽');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-let cookiesArr = [], cookie = '', message, helpCodeArr = [], helpPinArr = [], wxCookie = "";
+let cookiesArr = [], cookie = '', message, helpCodeArr = [], expandHelpArr = [], helpPinArr = [], wxCookie = "";
 let wxCookieArr = process.env.WXCookie?.split("@") || []
 const teamLeaderArr = [], teamPlayerAutoTeam = {}
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const appid = $.appid = "50089"
+let teamMap = {}
+let userToTeamMap = {}
 $.curlCmd = ""
 const h = (new Date()).getHours()
 const helpFlag = h >= 9 && h < 12
 const puzzleFlag = h >= 13 && h < 18
+let expandFlag = h === 22, expandHelpFlag = h === 23
+if (process.env.JD_TRAVEL_EXPAND !== undefined) {
+    expandFlag = h === +process.env.JD_TRAVEL_EXPAND
+}
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -23,20 +27,20 @@ if ($.isNode()) {
 } else {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-const pkTeamNum = Math.ceil(cookiesArr.length / 30)
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-const { getAppCookie } = (() => {
-    try {
-        return require('./utils/wskeyUtils')
-    } catch (e) {
-        return {}
-    }
-})()
+const { getAppCookie } = safeRequire('./utils/wskeyUtils')
+const pkTeamNum = () => Math.ceil(cookiesArr.length / 30)
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
+    console.log(`
+【温馨提示】
+默认膨胀时间：22时， 默认开启膨胀红包时间：23时
+如不需要自动膨胀请设置环境变量 JD_TRAVEL_EXPAND=-1
+如需自动膨胀请注意设置好cron时间差，如22:00，23:00运行则刚好错过膨胀红包，22:30,23:00运行则助力基本可以成功
+`)
     const helpSysInfoArr = []
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
@@ -90,11 +94,25 @@ const { getAppCookie } = (() => {
         }
     }
     //
-    $.subSceneid = "ZNSZLh5" 
-    for (let i = 0; i < helpSysInfoArr.length; i++) {
+    $.subSceneid = "ZNSZLh5"
+    const helpInfoArr = []
+    helpCodeArr.length > 0 && helpInfoArr.push({
+        flag: helpFlag,
+        codeArr: helpCodeArr,
+        preFunctionId: "getHomeData",
+        functionId: "collectScore"
+    })
+    expandHelpArr.length > 0 && helpInfoArr.push({
+        flag: expandHelpFlag,
+        codeArr: expandHelpArr,
+        preFunctionId: "pk_getHomeData",
+        functionId: "pk_collectPkExpandScore"
+    })
+    for (let i = 0; i < helpSysInfoArr.length && helpInfoArr.length > 0; i++) {
         const s = helpSysInfoArr[i]
         cookie = s.cookie
         $.UserName = s.pin
+        $.pin = encodeURIComponent($.UserName)
         $.index = i + 1;
         $.isLogin = true;
         $.nickName = $.UserName;
@@ -102,41 +120,33 @@ const { getAppCookie } = (() => {
         console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
         if (!$.isLogin) continue
         $.UA = s.UA
+        // $.ZooFaker = require('./utils/ZooFaker_Necklace.js').utils()
         $.ZooFaker = utils()
         $.joyytoken = s.joyytoken
         $.blog_joyytoken = s.blog_joyytoken
+        $.shshshfpb = s.shshshfpb
         $.secretp = s.secretp
-        if (helpFlag) {
-            $.newHelpCodeArr = [...helpCodeArr]
-            for (let i = 0, codeLen = helpCodeArr.length; i < codeLen; i++) {
-                const helpCode = helpCodeArr[i]
-                const { pin, code } = helpCode
-                if (pin === $.UserName) continue
-                console.log(`去帮助用户：${pin}`)
-                const helpRes = await doApi("collectScore", null, { inviteId: code }, true, true)
-                if (helpRes?.result?.score) {
-                    const { alreadyAssistTimes, maxAssistTimes, maxTimes, score, times } = helpRes.result
-                    const c = maxAssistTimes - alreadyAssistTimes
-                    console.log(`互助成功，获得${score}爆竹，他还需要${maxTimes - times}人完成助力，你还有${maxAssistTimes - alreadyAssistTimes}次助力机会`)
-                    if (!c) break
-                } else {
-                    if (helpRes?.bizCode === -201) {
-                        $.newHelpCodeArr = $.newHelpCodeArr.filter(x => x.pin !== pin)
+        for (let j = 0; j < helpInfoArr.length; j++) {
+            const { flag, codeArr, preFunctionId, functionId } = helpInfoArr[j]
+            if (flag) {
+                $.newHelpCodeArr = [...codeArr]
+                for (let i = 0, codeLen = codeArr.length; i < codeLen; i++) {
+                    const helpCode = codeArr[i]
+                    const { pin, code } = helpCode
+                    if (pin === $.UserName) continue
+                    if (/pk/.test(preFunctionId)) {
+                        const team = teamMap[userToTeamMap[$.UserName]]
+                        if (team.includes(pin)) continue
                     }
-                    console.log(`互助失败，原因：${helpRes?.bizMsg}（${helpRes?.bizCode}）`)
-                    if (![0, -201, -202].includes(helpRes?.bizCode)) break
+                    console.log(`去帮助用户：${pin}`)
+                    await doApi(preFunctionId, { inviteId: code })
+                    await dealHelpRes(functionId, code, pin)
+                    await $.wait(3000)
+                    if ($.stopHelp) break
                 }
+                if ($.logBysha1) delete $.logBysha1
+                helpInfoArr[j].codeArr = [...$.newHelpCodeArr]
             }
-            helpCodeArr = [...$.newHelpCodeArr]
-        }
-        // $.joyytoken = ""
-        // cookie = cookie.replace(/joyytoken=\S+?;/, "joyytoken=;") 
-        if (teamPlayerAutoTeam.hasOwnProperty($.UserName)) {
-            const { groupJoinInviteId, groupNum, groupName } = teamLeaderArr[teamPlayerAutoTeam[$.UserName]]
-            console.log(`${groupName}人数：${groupNum}，正在去加入他的队伍...`)
-            await joinTeam(groupJoinInviteId)
-            teamLeaderArr[teamPlayerAutoTeam[$.UserName]].groupNum += 1
-            await $.wait(2000)
         }
     }
 })()
@@ -175,49 +185,15 @@ async function travel() {
             }
             const collectAutoScore = await doApi("collectAutoScore", null, null, true)
             collectAutoScore.produceScore && formatMsg(collectAutoScore.produceScore, "定时收集")
+            console.log("\n去看看战队\n")
+            await team()
             console.log("\n去做主App任务\n")
             await doAppTask()
-
-            console.log("\n去看看战队\n")
-            const pkHomeData = await doApi("pk_getHomeData")
-            const pkPopArr = await doApi("pk_getMsgPopup") || []
-            for (const pkPopInfo of pkPopArr) {
-                if (pkPopInfo?.type === 50 && pkPopInfo.value) {
-                    const pkDivideInfo = await doApi("pk_divideScores", null, null, true)
-                    pkDivideInfo?.produceScore && formatMsg(pkDivideInfo?.produceScore, "PK战队瓜分收益")
-                }
+            if (puzzleFlag) {
+                console.log("\n去做做拼图任务")
+                const { doPuzzle } = safeRequire('./jd_travel_puzzle')
+                doPuzzle && await doPuzzle($, cookie)
             }
-            const { votInfo } = pkHomeData
-            if (votInfo) {
-                const { groupPercentA, groupPercentB, packageA, packageB, status } = votInfo
-                if (status === 2) {
-                    let a = (+ packageA / + groupPercentA).toFixed(3)
-                    let b = (+ packageB / + groupPercentB).toFixed(3)
-                    const vot = a > b ? "A" : "B"
-                    console.log(`'A'投票平均收益：${a}，'B'投票平均收益：${b}，去投：${vot}`)
-                    await votFor(vot)
-                }
-            }
-            const { groupJoinInviteId, groupName, groupNum } = pkHomeData?.groupInfo || {}
-            if (groupNum !== undefined && groupNum < 30 && $.index <= pkTeamNum) {
-                if (groupJoinInviteId) {
-                    teamLeaderArr.push({
-                        groupJoinInviteId,
-                        groupNum,
-                        groupName
-                    })
-                }
-            } else if (groupNum === 1) {
-                const n = ($.index - 1) % pkTeamNum
-                if (teamLeaderArr[n]) {
-                    teamPlayerAutoTeam[$.UserName] = n
-                }
-            }
-            //if (puzzleFlag) {
-            //    console.log("\n去做做拼图任务")
-            //    const { doPuzzle } = require('./jd_travel_puzzle')
-            //    await doPuzzle($, cookie)
-            //}
         }
     } catch (e) {
         console.log(e)
@@ -249,6 +225,164 @@ async function travel() {
         await raise(true)
     } catch (e) {
         console.log(e)
+    }
+}
+
+async function team() {
+    const pkHomeData = await doApi("pk_getHomeData")
+    const pkPopArr = await doApi("pk_getMsgPopup") || []
+    for (const pkPopInfo of pkPopArr) {
+        if (pkPopInfo?.type === 50 && pkPopInfo.value) {
+            const pkDivideInfo = await doApi("pk_divideScores", null, null, true)
+            pkDivideInfo?.produceScore && formatMsg(pkDivideInfo?.produceScore, "PK战队瓜分收益")
+        }
+    }
+    const { votInfo, divideInfo } = pkHomeData
+    if (votInfo) {
+        const { groupPercentA, groupPercentB, packageA, packageB, status } = votInfo
+        if (status === 2) {
+            let a = (+ packageA / + groupPercentA).toFixed(3)
+            let b = (+ packageB / + groupPercentB).toFixed(3)
+            const vot = a > b ? "A" : "B"
+            console.log(`'A'投票平均收益：${a}，'B'投票平均收益：${b}，去投：${vot}`)
+            await votFor(vot)
+        }
+    }
+    const { groupJoinInviteId, groupName, groupNum } = pkHomeData?.groupInfo || {}
+    if (groupName && groupNum !== undefined) console.log(`当前战队：${groupName}（${groupNum}）`)
+    if (groupNum > 1) {
+        teamMap[groupName] = teamMap[groupName] || []
+        teamMap[groupName].push($.UserName)
+        userToTeamMap[$.UserName] = groupName
+    }
+    if (groupNum !== undefined && groupNum < 30 && $.index <= pkTeamNum()) {
+        if (groupJoinInviteId) {
+            teamLeaderArr.push({
+                groupJoinInviteId,
+                groupNum,
+                groupName
+            })
+        }
+    } else if (groupNum === 1) {
+        for (let n = 0; n < teamLeaderArr.length; n++) {
+            const bakCookie = cookie, bakJoyyToken = $.joyytoken
+            cookie = cookie.replace(/joyytoken=\S+?;/, "joyytoken=;")
+            $.joyytoken = ""
+            $.subSceneid = "HYGJZYh5"
+            $.logBysha1 = true
+            const { groupJoinInviteId, groupNum, groupName } = teamLeaderArr[n]
+            console.log(`${groupName}人数：${groupNum}，正在去加入他的队伍...`)
+            if (await joinTeam(groupJoinInviteId)) {
+                teamLeaderArr[n].groupNum += 1
+                await $.wait(2000)
+                teamPlayerAutoTeam[$.UserName] = n
+                break
+            }
+            cookie = bakCookie, $.joyytoken = bakJoyyToken
+            delete $.subSceneid
+            delete $.logBysha1
+        }
+    }
+
+    if (divideInfo) {
+        const { status, remainTime } = divideInfo
+        if (status === 0) {
+            console.log(`竞猜红包已到瓜分时间，去瓜分...`)
+            const getAmountForecast = await doApi("pk_getAmountForecast")
+            if (getAmountForecast) {
+                const { inflateStatus, userAward, userAwardExpand } = getAmountForecast
+                if (inflateStatus == '0') {
+                    if (!userAwardExpand) {
+                        console.log(`竞猜红包瓜分金额：${userAward}，去收取...`)
+                        await pk_receiveAward()
+                    } else {
+                        console.log(`竞猜红包瓜分金额：${userAward}，可膨胀至：${userAwardExpand}元`)
+                        if (userAwardExpand > 5) {
+                            await notify.sendNotify(`${$.name}膨胀${userAwardExpand}元！ - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请进入app首页‘全民炸年兽’（或搜索-全民炸年兽）\n点击‘去组队赚红包’右上角即可看到！`);
+                        }
+                        if (expandFlag) {
+                            const getExpandDetail = await doApi("pk_getExpandDetail")
+                            if (getExpandDetail) {
+                                const { inviteId, pkExpandDetailResult: { remainTime, userAward, userAwardExpand } } = getExpandDetail
+                                const expireTimeStr = new Date(new Date(new Date().toLocaleDateString()).getTime() + (+remainTime)).Format("h时m分s秒")
+                                console.log(`竞猜红包开始膨胀任务！膨胀邀请码：${inviteId}，膨胀失效时间：${expireTimeStr}`)
+                            } else {
+                                console.log(`获取竞猜红包详细详细失败！`)
+                            }
+                        }
+                    }
+                } else if (inflateStatus == '1') {
+                    console.log(`竞猜红包瓜分金额：${userAward}，膨胀任务已失效，去收取...`)
+                    await pk_receiveAward()
+                } else if (inflateStatus == '2') {
+                    console.log(`竞猜红包瓜分金额：${userAward}，可膨胀至：${userAwardExpand}元`)
+                    if (userAwardExpand > 10) {
+                        await notify.sendNotify(`${$.name}膨胀${userAwardExpand}元！ - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请进入app首页‘全民炸年兽’（或搜索-全民炸年兽）\n点击‘去组队赚红包’右上角即可看到！`);
+                    }
+                    if (expandFlag) {
+                        const getExpandDetail = await doApi("pk_getExpandDetail")
+                        if (getExpandDetail) {
+                            const { inviteId, pkExpandDetailResult: { remainTime, userAward, userAwardExpand } } = getExpandDetail
+                            const expireTimeStr = new Date(new Date(new Date().toLocaleDateString()).getTime() + (+remainTime)).Format("h时m分s秒")
+                            console.log(`竞猜红包开始膨胀任务！膨胀邀请码：${inviteId}，膨胀失效时间：${expireTimeStr}`)
+                        } else {
+                            console.log(`获取竞猜红包详细详细失败！`)
+                        }
+                    }
+                }
+            } else {
+                console.log(`获取竞猜红包信息失败！`)
+            }
+        } else if (status === 1) {
+            // 红包已领取
+        } else if (status === 2) {
+            const getExpandDetail = await doApi("pk_getExpandDetail")
+            if (getExpandDetail) {
+                const { inviteId, pkExpandDetailResult: { remainTime, userAward, userAwardExpand } } = getExpandDetail
+                const expireTimeStr = new Date(new Date(new Date().toLocaleDateString()).getTime() + (+remainTime)).Format("h时m分s秒")
+                console.log(`竞猜红包膨胀任务进行中！\n原红包金额：${userAward}，可膨胀至：${userAwardExpand}元\n膨胀邀请码：${inviteId}，膨胀失效时间：${expireTimeStr}`)
+                expandHelpArr.push({
+                    pin: $.UserName,
+                    code: inviteId
+                })
+            } else {
+                console.log(`获取竞猜红包详细详细失败！`)
+            }
+        } else if (status === 3) {
+            // 红包任务已完成
+            await pk_receiveAward()
+        }
+    }
+
+
+    async function pk_receiveAward() {
+        const { ext, value } = await doApi(`pk_receiveAward`)
+        console.log(`获得红包：${value}元（${ext}）`)
+    }
+}
+
+async function dealHelpRes(functionId, inviteId, pin) {
+    $.stopHelp = false
+    const helpRes = await doApi(functionId, null, { inviteId }, true, true)
+    if (helpRes?.result?.score) {
+        const { alreadyAssistTimes, maxAssistTimes, maxTimes, score, times } = helpRes.result
+        const c = maxAssistTimes - alreadyAssistTimes
+        const needNum = maxTimes - times
+        if (needNum === 0) {
+            $.newHelpCodeArr = $.newHelpCodeArr.filter(x => x.pin !== pin)
+        }
+        console.log(`互助成功，获得${score}爆竹🧨，他还需要${needNum}人完成助力，你还有${maxAssistTimes - alreadyAssistTimes}次助力机会`)
+        if (!c) $.stopHelp = true
+    } else {
+        console.log(`互助失败，原因：${helpRes?.bizMsg}（${helpRes?.bizCode}）`)
+        if (![0, -201, -202, -13, 103].includes(helpRes?.bizCode)) $.stopHelp = true
+        if (helpRes?.bizCode === -201 || helpRes?.bizCode === 103) {
+            $.newHelpCodeArr = $.newHelpCodeArr.filter(x => x.pin !== pin)
+        } else if (helpRes?.bizCode === -1002 && !$.logBysha1) {
+            console.log(`切换log方式：sha1`)
+            $.logBysha1 = true
+            await dealHelpRes.apply(this, arguments)
+        }
     }
 }
 
@@ -288,7 +422,7 @@ async function raise(isFirst = false) {
                     if (!flag) flag = true
                     let arr = [`解锁'${pointName}'成功`]
                     const { levelUpAward: { awardCoins, canFirstShare, couponInfo, firstShareAwardCoins, redNum } } = res
-                    arr.push(`获得${awardCoins}个爆竹`)
+                    arr.push(`获得${awardCoins}个爆竹🧨`)
                     if (couponInfo) {
                         arr.push(`获得【${couponInfo.name}】优惠券：满${couponInfo.usageThreshold}减${couponInfo.quota}（${couponInfo.desc}）`)
                     }
@@ -380,7 +514,7 @@ async function doAppTask() {
             console.log(`当前正在做任务：${shopName || title}`)
             const res = await doApi("collectScore", { taskId, taskToken, actionType: 1 }, null, true)
             if ($.stopCard) break
-            if (waitDuration || res.taskToken) {
+            if (waitDuration || res?.taskToken) {
                 await $.wait(waitDuration * 1000)
                 const res = await doApi("collectScore", { taskId, taskToken, actionType: 0 }, null, true)
                 res?.score && (formatMsg(res.score, "任务收益"), true)/*  || console.log(res) */
@@ -568,7 +702,7 @@ function mohuReadJson(json, key, len, keyName) {
 }
 
 function formatMsg(num, pre, ap) {
-    console.log(`${pre ? pre + "：" : ""}获得${num}个爆竹🪙${ap ? "，" + ap : ""}`)
+    console.log(`${pre ? pre + "：" : ""}获得${num}个爆竹🧨${ap ? "，" + ap : ""}`)
 }
 
 function getSs(secretp) {
@@ -1075,6 +1209,37 @@ function TotalBean() {
             }
         })
     })
+}
+function safeRequire(path = "") {
+    try {
+        return require(path)
+    } catch (e) {
+        return {}
+    }
+}
+
+Date.prototype.Format = function (fmt) {
+    var e,
+        n = this, d = fmt, l = {
+            "M+": n.getMonth() + 1,
+            "d+": n.getDate(),
+            "D+": n.getDate(),
+            "h+": n.getHours(),
+            "H+": n.getHours(),
+            "m+": n.getMinutes(),
+            "s+": n.getSeconds(),
+            "w+": n.getDay(),
+            "q+": Math.floor((n.getMonth() + 3) / 3),
+            "S+": n.getMilliseconds()
+        };
+    /(y+)/i.test(d) && (d = d.replace(RegExp.$1, "".concat(n.getFullYear()).substr(4 - RegExp.$1.length)));
+    for (var k in l) {
+        if (new RegExp("(".concat(k, ")")).test(d)) {
+            var t, a = "S+" === k ? "000" : "00";
+            d = d.replace(RegExp.$1, 1 == RegExp.$1.length ? l[k] : ("".concat(a) + l[k]).substr("".concat(l[k]).length))
+        }
+    }
+    return d;
 }
 
 String.prototype.getKeyVal = function (str) {
