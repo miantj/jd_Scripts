@@ -67,9 +67,13 @@ task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 5、通知支持一对一推送和显示备注，详细用户参考[@ccwav](https://github.com/ccwav/QLScript2)
 
 备注显示变量如下
+
 export NOTIFY_SHOWNAMETYPE="1"    不做任何变动
+
 export NOTIFY_SHOWNAMETYPE="2"    效果是 :  账号名称：别名(备注)	
+
 export NOTIFY_SHOWNAMETYPE="3"    效果是 :  账号名称：pin(备注)
+
 export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 
@@ -104,12 +108,13 @@ ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklac
 |       `JD_CART_REMOVE`       |      清空购物车      | 非必须 | 控制jd_clean_car.js运行 ，默认false不清空，true清空 |
 |   `MONEY_TREE_SELL_FRUIT`    |    摇钱树<br>是否卖出金果    | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认卖出 |
 |   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换喜豆 |
-| `JXMC_HB`|    京喜牧场<br>控制助力方向     | 非必须 | 设置为false助力金币，默认助力红包 |
 | `ddwVirHb`|    财富岛珍珠兑换<br>控制兑换过滤    | 非必须 | 默认兑换>=元，变量设置为0兑换1元，0.2元和随机，兑换一元建议设置变量等于0.5 |
 
 ##### 脚本环境变量
+
 ###### 京东试用（商品价格设置越低申请越多，最大只能申请300个每天）
-个人测试设置水上商品价格20元，能申请满300，设置80元，申请80多，数据大约，每天会不一样。申请越多比较耗时，80多个商品30分钟吧。
+
+个人测试设置水上商品价格20元，能申请满300，设置80元，申请80多，数据大约，每天会不一样。申请越多比较耗时，80多个商品30分钟，自行设置吧。
 
 |            Name             |        归属        |  属性  | 说明                                                         |
 | :-------------------------: | :----------------: | :----: | ------------------------------------------------------------ |
