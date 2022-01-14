@@ -2,10 +2,11 @@
 蛙老的会场红包脚本
 5 0,12,20 * * * jd_nhRed.js
 整点跑 红包几率大点
-
-返利变量：gua_nhjRed_rebateCode，若需要返利给自己，请自己修改环境变量[gua_nhjRed_rebateCode]换成自己的返利
-export gua_nhjRed_rebateCode=""
-
+https://u.jd.com/SCLyQi4
+跳转到app 可查看助力情况
+返利变量：gua_nhjRed_rebateCode，若需要返利给自己，请自己修改环境变量[gua_nhjRed_rebateCode]
+SCLyQi4换成自己的返利
+export gua_nhjRed_rebateCode=
 需要助力[火力值]的账号pin值
 如：【京东账号2】pin
 pin1换成对应的pin值 用,分开
@@ -13,7 +14,9 @@ pin1换成对应的pin值 用,分开
 export gua_nhjRed_rebatePin="pin1,pin2"
 */
 
+let rebateCodes = 'SdMRaGZ'
 let rebatePin = ''
+
 const $ = new Env('年货节红包');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -30,9 +33,11 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
+rebateCodes = $.isNode() ? (process.env.gua_nhjRed_rebateCode ? process.env.gua_nhjRed_rebateCode : `${rebateCodes}`) : ($.getdata('gua_nhjRed_rebateCode') ? $.getdata('gua_nhjRed_rebateCode') : `${rebateCodes}`);
+
 rebatePin = $.isNode() ? (process.env.gua_nhjRed_rebatePin ? process.env.gua_nhjRed_rebatePin : `${rebatePin}`) : ($.getdata('gua_nhjRed_rebatePin') ? $.getdata('gua_nhjRed_rebatePin') : `${rebatePin}`);
 let rebatePinArr = rebatePin && rebatePin.split(',') || []
-let rebateCode = ''
+rebateCode = rebateCodes
 message = ''
 newCookie = ''
 resMsg = ''
@@ -41,6 +46,7 @@ let shareCodeArr = {}
 $.runArr = {}
 const activeEndTime = '2022/01/27 00:00:00+08:00';//活动结束时间
 let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
+let timeH = $.time('H')
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -60,7 +66,6 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
   $.shareCode = ''
   $.again = false
   let getShare = false
-  let timeH = $.time('H')
   if(Object.getOwnPropertyNames($.shareCodeArr).length > 0 && ($.shareCodeArr["updateTime"] && $.time('d',new Date($.shareCodeArr["updateTime"] || Date.now()).getTime()) == $.time('d')) && timeH != 20 && timeH != 0){
     $.shareCodeArr = {}
     $.shareCodeArr["flag"] = true
@@ -130,9 +135,9 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
   }
   if(Object.getOwnPropertyNames($.shareCodeArr).length > 0 && $.shareCodeArr["updateTime"] != pinUpdateTime) $.setdata($.shareCodeArr,'gua_JDnhjRed')
   if(message){
-    $.msg($.name, ``, `${message}\nhttps://u.jd.com/SCMjnig\n\n跳转到app 可查看助力情况`);
+    $.msg($.name, ``, `${message}\nhttps://u.jd.com/SCLyQi4\n\n跳转到app 可查看助力情况`);
     if ($.isNode()){
-      // await notify.sendNotify(`${$.name}`, `${message}\n\nhttps://u.jd.com/SCMjnig\n跳转到app 可查看助力情况`);
+      // await notify.sendNotify(`${$.name}`, `${message}\n\nhttps://u.jd.com/SCLyQi4\n跳转到app 可查看助力情况`);
     }
   }
 })()
@@ -141,14 +146,12 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
 
 async function run(type = 0){
   try{
-    let rebateCodes = ["SdMRaGZ"];
-    rebateCodes = rebateCodes[Math.floor((Math.random() * rebateCodes.length))]
-    rebateCodes = $.isNode() ? (process.env.gua_nhjRed_rebateCode ? process.env.gua_nhjRed_rebateCode : `${rebateCodes}`) : ($.getdata('gua_nhjRed_rebateCode') ? $.getdata('gua_nhjRed_rebateCode') : `${rebateCodes}`);
-    rebateCode = rebateCodes
+    console.log(rebateCode)
     resMsg = ''
     let s = 0
     let t = 0
     do{
+      rebateCode = rebateCodes
       if(t>2) s = 0
       $.flag = 0
       newCookie = ''
@@ -166,7 +169,7 @@ async function run(type = 0){
       }
       if(type == 0){
         let n = 0
-        if(Object.getOwnPropertyNames(shareCodeArr).length > s && $.time('H') != 10 && $.time('H') != 20){
+        if(Object.getOwnPropertyNames(shareCodeArr).length > s && timeH != 10 && timeH != 20){
           for(let i in shareCodeArr || {}){
             if(i == $.UserName) {
               $.flag = 1
@@ -423,10 +426,6 @@ function getUrl1() {
 
 function getUrl() {
   return new Promise(resolve => {
-    if($.again == true) {
-        rebateCodes = ["SdMRaGZ"];
-        rebateCode = rebateCodes[Math.floor((Math.random() * rebateCodes.length))]
-    }
     const options = {
       url: `https://u.jd.com/${rebateCode}${$.shareCode && "?s="+$.shareCode || ""}`,
       followRedirect:false,
@@ -442,7 +441,6 @@ function getUrl() {
       } catch (e) {
         $.logErr(e, resp);
       } finally {
-        if($.again == true) $.again = false
         resolve(data);
       }
     })
