@@ -1,7 +1,7 @@
 /**
  特务Z
  脚本没有自动开卡，会尝试领取开卡奖励
- cron 23 8,13 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_productZ4Brand.js
+ cron 23 8,14,18 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_productZ4Brand.js
  一天要跑2次
  */
 const $ = new Env('特务Z-II');
@@ -116,13 +116,13 @@ async function doTask(){
             console.log(`任务：${$.oneTask.assignmentName}，已完成`);
             continue;
         }
-        if($.oneTask.assignmentType === 3 || $.oneTask.assignmentType === 0 || $.oneTask.assignmentType === 7){
+        if($.oneTask.assignmentType === 3  || $.oneTask.assignmentType === 7 || $.oneTask.assignmentType === 1){  //7是开卡  3是关注店铺 1是浏览会场
             if($.oneTask.assignmentType === 7){
                 console.log(`任务：${$.oneTask.assignmentName}，尝试领取开卡奖励；（不会自动开卡，如果你已经是会员，则会领取成功）`);
             }else{
                 console.log(`任务：${$.oneTask.assignmentName}，去执行`);
             }
-            let subInfo = $.oneTask.ext.followShop || $.oneTask.ext.brandMemberList || '';
+            let subInfo = $.oneTask.ext.followShop || $.oneTask.ext.brandMemberList || $.oneTask.ext.shoppingActivity;
             if(subInfo && subInfo[0]){
                 $.runInfo = subInfo[0];
             }else{
@@ -131,7 +131,7 @@ async function doTask(){
             await takeRequest('superBrandDoTask');
             await $.wait(1000);
             $.runFlag = true;
-        }else if($.oneTask.assignmentType === 2){
+        }else if($.oneTask.assignmentType === 2){  //助力任务
             console.log(`助力码：${$.oneTask.ext.assistTaskDetail.itemId}`);
             $.allInvite.push({
                 'userName':$.UserName,
