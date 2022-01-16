@@ -3,7 +3,7 @@
 https://yearfestival.jd.com
 优先内部互助,剩余次数助力作者
 3 0,12,18 * * * jd_tiger.js
-转义自HW大佬
+new Env('萌虎摇摇乐');
 */
 const name = '萌虎摇摇乐'
 let UA
