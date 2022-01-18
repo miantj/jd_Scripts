@@ -1469,9 +1469,9 @@ function getQLinfo(strCK, intcreated, strTimestamp, strRemark) {
                             var UseDay = Math.ceil((DateToday.getTime() - DateCreated.getTime()) / 86400000);
                             var LogoutDay = 30 - Math.ceil((DateToday.getTime() - DateTimestamp.getTime()) / 86400000);
                             if (LogoutDay < 1) {
-                                strReturn = "\n【登录信息】以服务" + UseDay + "天(账号即将到期，请重登续期)"
+                                strReturn = "\n【登录信息】已服务" + UseDay + "天(账号即将到期，请重登续期)"
                             } else {
-                                strReturn = "\n【登录信息】以服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
+                                strReturn = "\n【登录信息】已服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
                             }
                             break;
                         }
@@ -1479,7 +1479,14 @@ function getQLinfo(strCK, intcreated, strTimestamp, strRemark) {
                 }
             }
         }
-
+        //过期时间
+        var UseDay = Math.ceil((DateToday.getTime() - DateCreated.getTime()) / 86400000);
+        var LogoutDay = 30 - Math.ceil((DateToday.getTime() - DateTimestamp.getTime()) / 86400000);
+        if (LogoutDay < 1) {
+            strReturn = "\n【登录信息】已服务" + UseDay + "天(账号即将到期，请重登续期)"
+        } else {
+            strReturn = "\n【登录信息】已服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
+        }
     }
     return strReturn
 }
