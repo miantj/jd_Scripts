@@ -2,10 +2,8 @@
 蛙老的会场红包脚本
 5 0,12,20 * * * jd_nhRed.js
 整点跑 红包几率大点
-https://u.jd.com/SCLyQi4
 跳转到app 可查看助力情况
 返利变量：gua_nhjRed_rebateCode，若需要返利给自己，请自己修改环境变量[gua_nhjRed_rebateCode]
-SCLyQi4换成自己的返利
 export gua_nhjRed_rebateCode=
 需要助力[火力值]的账号pin值
 如：【京东账号2】pin
@@ -66,7 +64,7 @@ let timeH = $.time('H')
   $.shareCode = ''
   $.again = false
   let getShare = false
-  if(Object.getOwnPropertyNames($.shareCodeArr).length > 0 && ($.shareCodeArr["updateTime"] && $.time('d',new Date($.shareCodeArr["updateTime"] || Date.now()).getTime()) == $.time('d')) && timeH != 20 && timeH != 0){
+  if(Object.getOwnPropertyNames($.shareCodeArr).length > 0 && ($.shareCodeArr["updateTime"] && $.time('d',new Date($.shareCodeArr["updateTime"] || Date.now()).getTime()) == $.time('d')) && timeH != 20 && timeH != 10 && timeH != 0){
     $.shareCodeArr = {}
     $.shareCodeArr["flag"] = true
     getShare = true
@@ -222,7 +220,7 @@ function getCoupons(shareId = '',type = 1) {
   return new Promise(async resolve => {
     await requestAlgo();
     let time = Date.now()
-    let body = {"platform": 4,"unionActId": "31137","actId": $.actId,"d": rebateCode,"unionShareId": shareId, "type": type,"eid": -1}
+    let body = {"platform": 2,"unionActId": "31137","actId": $.actId,"d": rebateCode,"unionShareId": shareId, "type": type,"eid": "-1"}
     let h5st = h5stSign(body) || 'undefined'
     let message = ''
     let opts = {
