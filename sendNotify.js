@@ -331,7 +331,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By 6d
                                 if (DisableCkBody.code == 200) {
                                     console.log(`京东账号` + strdecPtPin + `已失效,自动禁用成功!\n`);
 
-                                    strNotifyOneTemp = `京东账号: ` + strdecPtPin + ` 已失效,自动禁用成功!\n如果要继续挂机，请联系管理员重新登录账号，账号有效期为30天.`;
+                                    strNotifyOneTemp = `京东账号: ` + strdecPtPin + ` 已失效,已自动禁用!\n如果要继续挂机，请重新登录账号，账号有效期为30天.`;
                                     strNotifyOneTemp += "\n任务标题：" + strtext;
                                     if (strAllNotify)
                                         strNotifyOneTemp += `\n` + strAllNotify;
@@ -342,7 +342,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By 6d
 
                                 } else {
                                     console.log(`京东账号` + strPtPin + `已失效,自动禁用失败!\n`);
-                                    strNotifyOneTemp = `京东账号: ` + strdecPtPin + ` 已失效!\n如果要继续挂机，请联系管理员重新登录账号，账号有效期为30天.`;
+                                    strNotifyOneTemp = `京东账号: ` + strdecPtPin + ` 已失效!\n如果要继续挂机，请重新登录账号，账号有效期为30天.`;
                                     strNotifyOneTemp += "\n任务标题：" + strtext;
                                     if (strAllNotify)
                                         strNotifyOneTemp += `\n` + strAllNotify;
