@@ -26,7 +26,7 @@ $.logic = async function () {
     await $.wait(1000, 3000)
     info = await api('choiceGoodsForFarm',{"imageUrl":'',"nickName":'',"shareCode":'',"goodsType":element.type,"type":"0","version":11,"channel":3,"babelChannel":0});
     if (info.code*1 === 0) {
-        $.putMsg(`再次种植【${info.farmUserPro.name}】成功`)
+        $.putMsg(`\n再次种植【${info.farmUserPro.name}】成功`)
     }
     await api('gotStageAwardForFarm',{"type":"4","version":11,"channel":3,"babelChannel":0});
     await api('waterGoodForFarm',{"type":"","version":11,"channel":3,"babelChannel":0});
