@@ -34,14 +34,14 @@ if ($.isNode()) {
           $.getdata("CookieJD2"),
           ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-
+    
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i =0; i < cookiesArr.length; i++) {
-      cookie = cookiesArr[i]
+      cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       message = ''
       $.isLogin = true;
@@ -65,7 +65,7 @@ if ($.isNode()) {
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
-
+    
 
 function PostRequest(uri,body) {
   const url = `https://api.m.jd.com/api`;
@@ -95,7 +95,7 @@ async function doTask(){
         await $.wait(2000)
         t = result.data.timeStamp
         }else{
-           $.log(result.data.bizMsg+"\n")
+           $.log(result.msg+"\n")
         }
         }catch(e) {
           $.logErr(e, response);
@@ -229,63 +229,64 @@ async function getlist(){
     $.post(MyRequest,async(error, response, data) =>{
     try{
         const result = JSON.parse(data)
-        if(logs)$.log(data)
+        if(logs) $.log(data)
         if(result.code == 200){
-
-       let list1 = result.data.taskList.find(item => item.taskId == 216)
+       
+       let list1 = result.data.taskList.find(item => item.taskItemType == "VENUE")
        num1 = Number(list1.totalNum) - Number(list1.finishNum)
        if(num1 > 0){
-
-       taskid = 216;
+       
+       taskid = list1.taskId;
        taskItemId = list1.taskItemId
+
        await doTask()
        await $.wait(2000)
        await DoTask()
-
+       
        }else{
         $.log("任务已完成")
         }
-
-       let list3 = result.data.taskList.find(item => item.taskId == 217)
+       
+       let list3 = result.data.taskList.find(item => item.taskItemType == "SHOP")
        num3 = Number(list3.totalNum) - Number(list3.finishNum)
        if(num3 > 0){
-
-       taskid = 217;
+       
+       taskid = list3.taskId;
        taskItemId = list3.taskItemId
+
        await doTask()
        await $.wait(2000)
        await DoTask()
-
+       
        }else{
         $.log("任务已完成")
         }
+       
 
-
-       let list4 = result.data.taskList.find(item => item.taskId == 218)
+       let list4 = result.data.taskList.find(item => item.taskItemType == "SKU")
        num4 = Number(list4.totalNum) - Number(list4.finishNum)
        if(num4 > 0){
-
-       taskid = 218;
+      
+       taskid = list4.taskId;
        taskItemId = list4.taskItemId
-       await doTask()
        await $.wait(2000)
        await DoTask()
-
+       
        }else{
         $.log("任务已完成")
         }
-
-       let list5 = result.data.taskList.find(item => item.taskId == 219)
-
+       
+       let list5 = result.data.taskList.find(item => item.taskItemType == "CHANNEL")
+       
        num5 = Number(list5.totalNum) - Number(list5.finishNum)
       if(num5 > 0){
-
-       taskid = 219;
+       
+       taskid = list5.taskId;
        taskItemId = list5.taskItemId
        await doTask()
        await $.wait(2000)
        await DoTask()
-
+       
        }else{
         $.log("任务已完成")
         }
@@ -293,12 +294,13 @@ async function getlist(){
            $.log(result.echo+"错误！\n")
         }
         if(num1 > 0 || num3 >  0|| num4 > 0 || num5 > 0){
-          await getlist()
-         }
          if(num >= 5){
           console.log("\n⚠️发生错误，脚本自动退出")
           return;
          }
+          await getlist()
+         }
+         
         }catch(e) {
           $.logErr(e, response);
       } finally {
@@ -321,7 +323,7 @@ let list6 = result.data.result.taskVos.find(item => item.taskId == 6)
 list0tokenArr.push(6+list6.productInfoVos[i].taskToken)
 list1tokenArr.push(list6.productInfoVos[i].taskToken)
 }
-
+        
         }else{
            $.log(result.data.bizMsg+"\n")
         }
@@ -345,7 +347,7 @@ async function gethelpcode(){
 let list1 = result.data.result.taskVos.find(item => item.taskId == 1)
        list0tokenArr.push(1+list1.assistTaskDetailVo.taskToken)
 list1tokenArr.push(list1.assistTaskDetailVo.taskToken)
-
+        
         }else{
            $.log(result.data.bizMsg+"\n")
         }
