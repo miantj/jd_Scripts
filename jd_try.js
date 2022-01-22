@@ -644,7 +644,17 @@ function jsonParse(str){
         }
     }
 }
-
+ const generateRandomInteger = (min, max = 0) => {
+   if (min > max) {
+     let temp = min;
+     min = max;
+     max = temp;
+   }
+   var Range = max - min;
+   var Rand = Math.random();
+   return min + Math.round(Rand * Range);
+ };
+ 
 function Env(name, opts){
     class Http{
         constructor(env){
