@@ -208,8 +208,8 @@ let args_xh = {
                         }
                         await try_apply(trialActivityTitleList[i], trialActivityIdList[i])
                         //console.log(`间隔等待中，请等待 ${args_xh.applyInterval} ms\n`)
-						console.log(`随机等待${waitTime}ms后继续`);
 						const waitTime = generateRandomInteger(5000, 8000);
+						console.log(`随机等待${waitTime}ms后继续`);						
                         await $.wait(waitTime);
                     }
                     console.log("试用申请执行完毕...")
