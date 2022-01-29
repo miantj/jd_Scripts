@@ -23,13 +23,12 @@ try:
 
     import execjs   #引入需要的模块
 
-    print ('PyExecJS模块已安装')
-
 except:
 
-    print ('缺少依赖PyExecJS,现在准备开始安装')
-    os.system('pip install PyExecJS')
+    os.system('pip install PyExecJS &> /dev/null')
     import execjs
+    sys.exit(0)
+
 """
 try:
     import execjs
