@@ -88,6 +88,8 @@ let h5st = ''
             await $.wait(2000)
             await jstoken();
          }
+         
+         await $.wait(20000);  //增加延迟，减少频繁异常
       }
    }
    if (allMessage) {
@@ -141,7 +143,7 @@ async function siteppM_skuOnceApply() {
                      await siteppM_appliedSuccAmount()
                   } else {
                      console.log(`保价失败：${data.responseMessage}`)
-                     message += `保价失败：${data.responseMessage}\n`
+                     //message += `保价失败：${data.responseMessage}\n`
                   }
                }
             }
