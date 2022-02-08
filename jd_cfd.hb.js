@@ -167,7 +167,7 @@ async function readExchangeItem() {
         // 2已兑
 
         // let strPrizeNames = ['11元', '1元', '111元', '100元',]
-        let strPrizeNames = ['1元', '0.5元', '0.1元']
+        let strPrizeNames = ['100元', '1元', '0.5元']
         await ExchangeState()
         if ($.exchangeData.hongbao) {
             for (let i = 0; i < $.exchangeData.hongbao.length; i++) {
