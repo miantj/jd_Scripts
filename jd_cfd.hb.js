@@ -28,7 +28,7 @@ function randomString(e) {
 }
 
 
-$.appId = 10032;
+$.appId = "92a36";
 
 
 $.exchangeItems = []
@@ -291,7 +291,7 @@ async function requestAlgo() {
             'Accept-Language': 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7'
         },
         'body': JSON.stringify({
-            "version": "1.0",
+            "version": "3.0",
             "fp": $.fp,
             "appId": $.appId,
             "timestamp": Date.now(),
@@ -348,7 +348,7 @@ function decrypt(time, stk, type, url) {
             st += `${item}:${getUrlQueryParams(url, item)}${index === stk.split(',').length - 1 ? '' : '&'}`;
         })
         const hash2 = $.CryptoJS.HmacSHA256(st, hash1.toString()).toString($.CryptoJS.enc.Hex);
-        return encodeURIComponent(["".concat(timestamp.toString()), "".concat($.fp.toString()), "".concat($.appId.toString()), "".concat($.token), "".concat(hash2)].join(";"))
+return encodeURIComponent(["".concat(timestamp.toString()), "".concat($.fingerprint.toString()), "".concat($.appId.toString()), "".concat($.token), "".concat(hash2), "".concat("3.0"), "".concat(time)].join(";"))
     } else {
         return encodeURIComponent('20210713151140309;3329030085477162;10032;tk01we5431d52a8nbmxySnZya05SXBQSsarucS7aqQIUX98n+iAZjIzQFpu6+ZjRvOMzOaVvqHvQz9pOhDETNW7JmftM;3e219f9d420850cadd117e456d422e4ecd8ebfc34397273a5378a0edc70872b9')
     }
