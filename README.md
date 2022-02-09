@@ -2,13 +2,13 @@
 
 # Tips
 
->搜集自全网大佬，亲测运行，整理移除重复和失效，屏蔽助力池，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
+>搜集全网可用，亲测运行，整理移除重复和失效，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
  
 >细水长流，低调使用，在精不在多，许多重复或失效的容易黑！
 
 ## 青龙[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
-## 青龙拉库指令
+## 指令
 
 在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * ，集中在白天更新库，当然也可以手动拉。
 ```
@@ -61,7 +61,7 @@ task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同�
 
 task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
-4、财富岛默认助力赚金币，如需要助力合成珍珠，请修改jd_cfd_mooncake.js任务定时，排在jd_cfd.js前面执行即可。
+4、财富岛默认助力赚金币，如需要助力合成珍珠，请修改jd_cfd_pearl.js任务定时，排在jd_cfd.js前面执行即可。
 
 
 5、通知支持一对一推送和显示备注，详细用户参考[@ccwav](https://github.com/ccwav/QLScript2)
