@@ -10,6 +10,8 @@
 
 ## 指令
 
+青龙config.sh配置需要把GithubProxyUrl="https://ghproxy.com/"修改为GithubProxyUrl=""否则会拉取失败
+
 在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * ，集中在白天更新库，当然也可以手动拉。
 ```
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
