@@ -1,5 +1,5 @@
 if (process.env.XFXD != "true") {
-    console.log("默认不运行,设置XFXD为true来运行\n需要手动过新手任务后再运行\n入口:APP-我的-左上角plus专属-会员店->天天领京豆->幸福小店\n可能黑号，自行评估跑不跑")
+    console.log("默认不运行,export XFXD='true'来运行\n需要手动过新手任务后再运行\n入口:APP-我的-左上角plus专属-会员店->天天领京豆->幸福小店\n可能黑号，自行评估跑不跑")
     return
 }
 /*
@@ -9,7 +9,7 @@ cron 18 0 * * * jd_xfxd.js
 TG频道：https://t.me/tom_210120
 */
 
-const $ = new Env('幸福小店刷福愿');
+const $ = new Env('幸福小店');
 const jsname = '京东幸福小店'
 const logDebug = 0
 
@@ -120,7 +120,7 @@ class UserInfo {
     }else {
         if(!(await checkEnv())) return;
         
-        console.log('\n请先手动进游戏过了新手引导再跑脚本\n活动入口：京东APP->我的->会员店->天天领京豆->幸福小店\n目前应该每天只能换20豆和10豆两档了，如果兑换失败的，尝试换IP或者手动兑换吧')
+        console.log('\n请先手动进游戏过了新手引导再跑脚本\n活动入口：京东APP->我的->会员店->天天领京豆->幸福小店\n如果兑换失败的，尝试换IP或者手动换吧')
         
         for(let user of userList) {
             console.log(`\n=========== 开始账号 ${user.nickname} ===========`)
