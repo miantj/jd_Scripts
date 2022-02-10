@@ -1,6 +1,6 @@
 /*
 京喜财富岛合成珍珠
-cron 35 1-5 * * * jd_cfd_pearl.js
+cron 35 1-5,9-10 * * * jd_cfd_pearl.js
 更新时间：2021-9-11
 活动入口：京喜APP-我的-京喜财富岛
 已支持IOS双京东账号,Node.js支持N个京东账号
