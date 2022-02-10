@@ -1477,7 +1477,7 @@ function biz(contents){
 function taskUrl(function_path, body = '', dwEnv = 7) {
   let url = `${JD_API_HOST}jxbfd/${function_path}?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=${dwEnv}&_cfd_t=${Date.now()}&ptag=7155.9.47${body ? `&${body}` : ''}`;
   url += `&_stk=${getStk(url)}`;
-  url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+  url += `&_ste=1&h5st=${decrypt(Date.now(), '', 3.0, url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
   return {
     url,
     headers: {
@@ -1495,7 +1495,7 @@ function taskUrl(function_path, body = '', dwEnv = 7) {
 function taskListUrl(function_path, body = '', bizCode = 'jxbfd') {
   let url = `${JD_API_HOST}newtasksys/newtasksys_front/${function_path}?strZone=jxbfd&bizCode=${bizCode}&source=jxbfd&dwEnv=7&_cfd_t=${Date.now()}&ptag=7155.9.47${body ? `&${body}` : ''}`;
   url += `&_stk=${getStk(url)}`;
-  url += `&_ste=1&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
+  url += `&_ste=1&h5st=${decrypt(Date.now(), '', 3.0, url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
   return {
     url,
     headers: {

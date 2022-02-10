@@ -151,7 +151,7 @@ async function refresh_perl() {
   return new Promise(async (resolve) => {
     const timestamp = Date.now()
     let url = `${JD_API_HOST}jxbfd/user/ExchangePearlState?__t=${timestamp + 2}&strZone=jxbfd&dwExchangeType=undefined&_ste=1`;
-    url += `&h5st=${decrypt(timestamp, '', '', url)}&_=${timestamp + 2}&sceneval=2&g_login_type=1`;
+    url += `&h5st=${decrypt(timestamp, '', 3.0, url)}&_=${timestamp + 2}&sceneval=2&g_login_type=1`;
     // console.debug('taskUrl_perl:',url)
     $.get({
       url,
@@ -188,7 +188,7 @@ async function refresh_perl() {
 function taskUrl_perl(function_path, dwLvl,dwIsRandHb,ddwVirHb,strPoolName) {
   const timestamp = Date.now()
   let url = `${JD_API_HOST}jxbfd/${function_path}?__t=${timestamp + 2}&strZone=jxbfd&dwLvl=${dwLvl}&dwIsRandHb=${dwIsRandHb}&ddwVirHb=${ddwVirHb}&strPoolName=${strPoolName}&dwExchangeType=${$.dwExchangeType}&_stk=__t%2CddwVirHb%2CdwExchangeType%2CdwIsRandHb%2CdwLvl%2CstrPoolName%2CstrZone&_ste=1`;
-  url += `&h5st=${decrypt(timestamp, '', '', url)}&_=${timestamp + 2}&sceneval=2&g_login_type=1`;
+  url += `&h5st=${decrypt(timestamp, '', 3.0, url)}&_=${timestamp + 2}&sceneval=2&g_login_type=1`;
   // console.debug('taskUrl_perl:',url)
   return {
     url,
