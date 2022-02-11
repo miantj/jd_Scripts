@@ -10,7 +10,7 @@
 
 ## 指令
 
-【注意】青龙config.sh配置需要把GithubProxyUrl="https://ghproxy.com/" 修改为GithubProxyUrl=""否则会拉取失败
+【注意】青龙config.sh配置需要把GithubProxyUrl="https://ghproxy.com/" 修改为GithubProxyUrl=""否则拉取失败，也可以自行找可用代理。
 
 在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * ，集中在白天更新库，当然也可以手动拉。
 
@@ -32,7 +32,7 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ## 互助（内部助力）指南
 
-1、修改青龙config.sh配置（特别注意，没有修改此配置，互助无法配置）
+1、修改青龙config.sh配置（特别注意，没有修改此配置，不内部互助）
 
 RepoFileExtensions="js py"修改为
 
@@ -40,16 +40,16 @@ RepoFileExtensions="js py sh"
 
 右上角保存
 
-建议调整任务运行超时时间，默认1小时有些脚本跑不完就被强制结束。
+建议调整任务运行超时时间，默认1小时有些脚本跑不完就被强制kill。
 
 CommandTimeoutTime="3h"  即改为3小时。
 
 2、执行拉库任务。
 
-3、青龙执行'获取互助码'任务即可快速自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待所有其他脚本运行后产生日志才会获取到互助码，一般第二天会获取全部互助码）
+3、青龙执行'获取互助码'任务即可快速自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待任务运行一遍后产生日志才会获取到互助码，可以看jd_sharecode日志获取情况）
 
 ## 一些提示
-1、涉及兑换的可以配置任务并发，不然后面的别想兑换到了!
+1、涉及兑换任务可以配置任务并发，就是全部一起跑。
 
 并发配置方法：
 
