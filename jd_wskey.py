@@ -27,7 +27,7 @@ except Exception as e:
 os.environ['no_proxy'] = '*'
 requests.packages.urllib3.disable_warnings()
 try:
-    from notify import send
+    from sendnotify import send
 except Exception as err:
     logger.debug(str(err))
     logger.info("无推送文件")
