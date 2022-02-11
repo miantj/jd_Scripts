@@ -2,9 +2,9 @@
 
 # Tips
 
->搜集全网可用，亲测运行，整理移除重复和失效，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
+>搜集全网可用，测运行，整理移除重复和失效，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
  
->细水长流，低调使用，在精不在多，许多重复或失效的容易黑！
+>细水长流，低调使用，在精不在多，许多重复或失效任务容易黑！
 
 ## 青龙[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
@@ -12,13 +12,15 @@
 
 【注意】青龙config.sh配置需要把GithubProxyUrl="https://ghproxy.com/" 修改为GithubProxyUrl=""否则拉取失败，也可以自行找可用代理。
 
-在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * ，集中在白天更新库，当然也可以手动拉。
+2022-2-11 我找到了还行的代理，拉库速度还行，先用着了  GithubProxyUrl="https://git.metauniverse-cn.com/"
+
+在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * 
 
 ```
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
-还是拉取失败用下面指令吧！
+怎么都拉不成功，用下面指令！
 
 ```
 ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
@@ -27,7 +29,7 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ## 依赖安装
 
-拉库后，执行'依赖安装'任务即可完成所需依赖安装，脚本名jd_indeps，首次拉库执行一次即可，有新依赖再次执行。
+拉库后，执行'依赖安装'任务安装所需依赖，脚本名jd_indeps，首次拉库执行一次即可，有新依赖再次执行。
 
 
 ## 互助（内部助力）指南
@@ -103,8 +105,9 @@ ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklac
 | :--------------------------: | :--------------------------: | :----: | ------------------------------------------------------------ |
 |     `PET_NOTIFY_CONTROL`     |     东东萌宠<br>推送开关     | 非必须 | 控制京东萌宠是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `FRUIT_NOTIFY_CONTROL`    |     东东农场<br>推送开关     | 非必须 | 控制京东农场是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
-|    `NOTIFY_AUTOCHECKCK`    |       自动禁用失效CK开关  | 非必须 | 有CK失效自动禁用并通知 |
+|    `NOTIFY_AUTOCHECKCK`    |       自动禁用失效CK开关  | 非必须 | 有CK失效自动禁用并通知，true为自动禁用，false不自动禁用，默认false |
 |       `JOY_FEED_COUNT`       |        宠汪汪喂食数量        | 非必须 | 控制`jd_joy_feedPets.js`脚本喂食数量,可以填的数字10,20,40,80,其他数字不可. |
+|       `NOTIFY_SKIP_LIST`       |        控制关闭某些标题的通知  | 非必须 | 通知标题在此变量里面存在(&隔开),则屏蔽不发送通知.例 : export NOTIFY_SKIP_LIST="临期京豆换喜豆&京东资产统计" |
 |      `FRUIT_BEAN_CARD`       |    农场<br>使用水滴换豆卡    | 非必须 | 农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),<br>`true`表示换豆(不浇水),`false`表示不换豆(继续浇水),脚本默认是浇水 |
 |       `JD_UNSUB`             |      批量取消商品与店铺关注开关      | 非必须 | 控制jd_unsubscribe.js运行，默认为true取关，false不取关 |
 |       `JD_CART_REMOVE`       |      清空购物车      | 非必须 | 控制jd_clean_car.js运行 ，默认false不清空，true清空 |
