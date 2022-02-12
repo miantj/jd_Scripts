@@ -95,7 +95,7 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 拉库命令下面，默认不跑，设置变量export guaopencard_addSku_All=true  export guaopencard_All=true
 
-ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklace.js|JDJRValidator_Pure.js|sign_graphics_validate.js|cleancart_activity.js"
+ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklace.js|JDJRValidator_Pure.js|sign_graphics_validate.js|cleancart_activity.js|jdCookie.js|sendNotify.js"
 
 
 ##### 控制脚本功能环境变量
