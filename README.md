@@ -12,7 +12,6 @@
 
 【注意】青龙config.sh配置需要把GithubProxyUrl="https://ghproxy.com/" 修改为GithubProxyUrl=""否则拉取失败，也可以自行找可用代理。
 
-2022-2-11 我找到了还行的代理，拉库速度还行，先用着了  GithubProxyUrl="https://git.metauniverse-cn.com/"
 
 在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * 
 
