@@ -8,7 +8,7 @@
 h5st参数有时效性，抓包后请及时运行脚本
 40 6,14 * * * jd_fcwb_help.js
 * * */
-const $ = new Env('发财挖宝');
+const $ = new Env('发财挖宝-助力');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [];
