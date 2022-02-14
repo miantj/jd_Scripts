@@ -19,7 +19,7 @@
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
-怎么都拉不成功，用下面指令！
+怎么都拉不成功，用下面指令！(更新会稍慢点）
 
 ```
 ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
