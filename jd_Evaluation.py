@@ -1,6 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# @Time : 2021/10/30 10:58
+# @Time : 2022/02/15
 # 京东自动评价
 '''
 new Env('京东自动评价');
@@ -503,13 +503,13 @@ def start():
             'cookie': ck,
             'user-agent': 'jdltapp;android;1.0.0;9;860105045422157-bce2658d9db5;network/wifi;model/JKM-AL00a;addressid/0;aid/5d84f5872ec4e5c8;oaid/51fe75e7-7e5d-aefc-fbed-ffffdf7f6bd2;osVer/28;appBuild/694;psn/860105045422157-bce2658d9db5|3;psq/26;uid/860105045422157-bce2658d9db5;adk/;ads/;pap/JA2020_3112531|1.0.0|ANDROID',
         }
-        Cent[f'账号{i}[{user}]'] = {'评价':0 , '晒单':0, '服务评价':0}
+        Cent[f'账号{i}[{user}]'] = {'评价':0 , '晒单':0, '服务评价':0, '追加评价':0}
         printf('开始商品与服务评价！')
         ordinary(headers, f'账号{i}[{user}]')
         printf('商品与服务评价完成！！\n')
-        printf('开始晒单！')
-        sunbw(headers, f'账号{i}[{user}]')
-        printf('晒单完成！！。等待10秒开始下一个账号\n')
+        #printf('开始晒单！')
+        #sunbw(headers, f'账号{i}[{user}]')
+        #printf('晒单完成！！。等待10秒开始下一个账号\n')
         time.sleep(10)
     msg = ''
     for i in Cent:
