@@ -10,7 +10,7 @@ new Env('发财挖宝');
 import os,json,random,time,re,string,functools,asyncio
 import sys
 sys.path.append('../../tmp')
- print('\n挖的如果都是0.01红包就是黑了，别挣扎了！\n')
+print('\n挖的如果都是0.01红包就是黑了，别挣扎了！\n')
 try:
     import requests
 except Exception as e:
