@@ -230,7 +230,7 @@ if(DisableIndex!=-1){
 	EnableJDGC=false;	
 }
 //领现金
-let EnableCash=false;
+let EnableCash=true;
 DisableIndex=strDisableList.findIndex((item) => item === "领现金");
 if(DisableIndex!=-1){
 	console.log("检测到设定关闭领现金查询");
@@ -312,6 +312,7 @@ if(DisableIndex!=-1){
 			$.todayinJxBean=0;
 			$.todayOutJxBean=0;	
 			$.xibeanCount = 0;
+			$.PigPet = '';
 			TempBaipiao = "";
 			strGuoqi="";
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
@@ -390,6 +391,11 @@ if(DisableIndex!=-1){
 				await GetJxBeanInfo();
 				await jxbean();
 			}
+			
+			//金融养猪
+			if(EnablePigPet)	
+				await GetPigPetInfo();
+			
 			await showMsg();
 			if (intPerSent > 0) {
 				if ((i + 1) % intPerSent == 0) {
@@ -846,6 +852,23 @@ async function showMsg() {
 
 	}
 	
+	if ($.PigPet) {
+		if (userIndex2 != -1) {
+			ReceiveMessageGp2 += `【账号${IndexGp2} ${$.nickName || $.UserName}】${$.PigPet} (金融养猪)\n`;
+		}
+		if (userIndex3 != -1) {
+			ReceiveMessageGp3 += `【账号${IndexGp3} ${$.nickName || $.UserName}】${$.PigPet} (金融养猪)\n`;
+		}
+		if (userIndex4 != -1) {
+			ReceiveMessageGp4 += `【账号${IndexGp4} ${$.nickName || $.UserName}】${$.PigPet} (金融养猪)\n`;
+		}
+		if (userIndex2 == -1 && userIndex3 == -1 && userIndex4 == -1) {
+			allReceiveMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】${$.PigPet} (金融养猪)\n`;
+		}
+
+		TempBaipiao += `【金融养猪】${$.PigPet} 可以兑换了!\n`;
+
+	}
 	if(EnableJDPet){
 		llPetError=false;
 		const response = await PetRequest('energyCollect');
@@ -1104,22 +1127,21 @@ async function Monthbean() {
 
 async function jdCash() {
 	let functionId = "cash_homePage";
-	let body = "%7B%7D";
-	let uuid = randomString(16);
+	let body = {};	  
 	console.log(`正在获取领现金任务签名...`);
 	isSignError = false;
-	let sign = await getSign(functionId, decodeURIComponent(body), uuid)
+	let sign = await getSign(functionId, body);
 		if (isSignError) {
 			console.log(`领现金任务签名获取失败,等待2秒后再次尝试...`)
 			await $.wait(2 * 1000);
 			isSignError = false;
-			sign = await getSign(functionId, decodeURIComponent(body), uuid);
+			sign =await getSign(functionId, body);
 		}
 		if (isSignError) {
 			console.log(`领现金任务签名获取失败,等待2秒后再次尝试...`)
 			await $.wait(2 * 1000);
 			isSignError = false;
-			sign = await getSign(functionId, decodeURIComponent(body), uuid);
+			sign = await getSign(functionId, body);
 		}
 		if (!isSignError) {
 			console.log(`领现金任务签名获取成功...`)
@@ -1128,9 +1150,8 @@ async function jdCash() {
 			$.jdCash = 0;
 			return
 		}
-		let url = `${JD_API_HOST}?functionId=${functionId}&build=167774&client=apple&clientVersion=10.1.0&uuid=${uuid}&${sign}`
 		return new Promise((resolve) => {
-			$.post(apptaskUrl(url, body), async(err, resp, data) => {
+			$.post(apptaskUrl(functionId, sign), async (err, resp, data) => {
 				try {
 					if (err) {
 						console.log(`${JSON.stringify(err)}`)
@@ -1139,7 +1160,7 @@ async function jdCash() {
 						if (safeGet(data)) {
 							data = JSON.parse(data);
 							if (data.code === 0 && data.data.result) {
-								$.jdCash = data.data.result.totalMoney || 0;
+								$.jdCash = data.data.result.totalMoney || 0;								
 								return
 							}
 						}
@@ -1153,57 +1174,56 @@ async function jdCash() {
 			})
 		})
 }
-function apptaskUrl(url, body) {
-	return {
-		url,
-		body: `body=${body}`,
-		headers: {
-			'Cookie': cookie,
-			'Host': 'api.m.jd.com',
-			'Connection': 'keep-alive',
-			'Content-Type': 'application/x-www-form-urlencoded',
-			'Referer': '',
-			'User-Agent': 'JD4iPhone/167774 (iPhone; iOS 14.7.1; Scale/3.00)',
-			'Accept-Language': 'zh-Hans-CN;q=1',
-			'Accept-Encoding': 'gzip, deflate, br',
-		}
-	}
+function apptaskUrl(functionId = "", body = "") {
+  return {
+    url: `${JD_API_HOST}?functionId=${functionId}`,
+    body,
+    headers: {
+      'Cookie': cookie,
+      'Host': 'api.m.jd.com',
+      'Connection': 'keep-alive',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Referer': '',
+      'User-Agent': 'JD4iPhone/167774 (iPhone; iOS 14.7.1; Scale/3.00)',
+      'Accept-Language': 'zh-Hans-CN;q=1',
+      'Accept-Encoding': 'gzip, deflate, br',
+    }
+  }
 }
-function getSign(functionid, body, uuid) {
-	return new Promise(async resolve => {
-		let data = {
-			"functionId": functionid,
-			"body": body,
-			"uuid": uuid,
-			"client": "apple",
-			"clientVersion": "10.1.0"
-		}
-		let HostArr = ['jdsign.cf', 'signer.nz.lu']
-		let Host = HostArr[Math.floor((Math.random() * HostArr.length))]
-			let options = {
-			url: `https://cdn.nz.lu/ddo`,
-			body: JSON.stringify(data),
-			headers: {
-				Host,
-				"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-			},
-			timeout: 15000
-		}
-		$.post(options, (err, resp, data) => {
-			try {
-				if (err) {
-					console.log(`${JSON.stringify(err)}`);
-					isSignError = true;
-					//console.log(`${$.name} getSign API请求失败，请检查网路重试`)
-				} else {}
-			} catch (e) {
-				$.logErr(e, resp)
-			}
-			finally {
-				resolve(data);
-			}
-		})
-	})
+function getSign(functionId, body) {
+  return new Promise(async resolve => {
+    let data = {
+      functionId,
+      body: JSON.stringify(body),
+      "client":"apple",
+      "clientVersion":"10.3.0"
+    }
+    let HostArr = ['jdsign.cf', 'signer.nz.lu']
+    let Host = HostArr[Math.floor((Math.random() * HostArr.length))]
+    let options = {
+      url: `https://cdn.nz.lu/ddo`,
+      body: JSON.stringify(data),
+      headers: {
+        Host,
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      },
+      timeout: 30 * 1000
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(JSON.stringify(err))
+          console.log(`${$.name} getSign API请求失败，请检查网路重试`)
+        } else {
+
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 function TotalBean() {
 	return new Promise(async resolve => {
@@ -2429,6 +2449,60 @@ function timeFormat(time) {
 		date = new Date();
 	}
 	return date.getFullYear() + '-' + ((date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1)) + '-' + (date.getDate() >= 10 ? date.getDate() : '0' + date.getDate());
+}
+
+
+function GetPigPetInfo() {
+    return new Promise(async resolve => {
+        const body = {
+            "shareId": "",
+            "source": 2,
+            "channelLV": "juheye",
+            "riskDeviceParam": "{}",
+        }
+        $.post(taskPetPigUrl('pigPetLogin', body), async(err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`GetPigPetInfo API请求失败，请检查网路重试`)
+                } else {
+                    if (data) {
+                        data = JSON.parse(data);
+                        if (data.resultData.resultData.wished && data.resultData.resultData.wishAward) {
+							$.PigPet=`${data.resultData.resultData.wishAward.name}`                           
+                        }
+                    } else {
+                        console.log(`GetPigPetInfo: 京东服务器返回空数据`)
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            }
+            finally {
+                resolve();
+            }
+        })
+    })
+}
+
+
+function taskPetPigUrl(function_id, body) {
+  return {
+    url: `https://ms.jr.jd.com/gw/generic/uc/h5/m/${function_id}?_=${Date.now()}`,
+    body: `reqData=${encodeURIComponent(JSON.stringify(body))}`,
+    headers: {
+      'Accept': `*/*`,
+      'Origin': `https://u.jr.jd.com`,
+      'Accept-Encoding': `gzip, deflate, br`,
+      'Cookie': cookie,
+      'Content-Type': `application/x-www-form-urlencoded;charset=UTF-8`,
+      'Host': `ms.jr.jd.com`,
+      'Connection': `keep-alive`,
+      'User-Agent': UA,
+      'Referer': `https://u.jr.jd.com/`,
+      'Accept-Language': `zh-cn`
+    }
+  }
 }
 
 function GetDateTime(date) {
