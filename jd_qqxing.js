@@ -7,6 +7,10 @@
 #星系牧场
 1 0-23/3 * * * jd_qqxing.js
 */
+if (process.env.QQX != "true") {
+    console.log("默认不运行,export QQX='true'来运行\n需要手动进入一次活动，且有加购任务")
+    return
+}
 const $ = new Env('QQ星系牧场');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
