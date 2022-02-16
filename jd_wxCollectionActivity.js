@@ -5,17 +5,17 @@ JD_CART_REMOVESIZE || 20; // 运行一次取消多全部已关注的商品。数
 JD_CART_REMOVEALL || true;    //是否清空，如果为false，则上面设置了多少就只删除多少条
 RUN_CAR=ture 才运行脚本
 10 10 * * * 
-
+ACTIVITY_ID || "";  //活动ID  以逗号分隔  111,22,33
 */
 const $ = new Env('加购物车抽奖');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '' ,isPush = false;
-let activityIdList = ['11b4d4d13fa24062bb0cb45c0abd3301', 'f0ffa62f09f6447b8fcfddaeafd15810', '421c0b9e90f2423d8ef980c2508bc7b2', 'c475a9c7b08545b9b359d1a97f14ec8c', '47d527740de74ed88f65e946b4d0500a', '4363aec53aac44309e8afa5cf58ce950']
+let activityIdList = []
 let lz_cookie = {}
 
 if (process.env.ACTIVITY_ID && process.env.ACTIVITY_ID != "") {
-    activityId = process.env.ACTIVITY_ID;
+    activityIdList = process.env.COLLECTION_ID.split(",");
 }
 
 if ($.isNode()) {
@@ -45,9 +45,9 @@ $.keywordsNum = 0;
         return;
     }
     // activityIdList = await getActivityIdList('https://raw.githubusercontent.com/FKPYW/dongge/master/code/wxCollectionActivity.json')
-    for(let a in activityIdList){
-        activityId = activityIdList[a];
-        console.log("开起第 "+ a +" 个活动，活动id："+activityId)
+    for (let a = 0; a < activityIdList.length; a++) {
+        let activityId = activityIdList[a];
+        console.log(`开起第 ${a + 1} 个活动，活动id：${activityId}`)
         for (let i = 0; i < cookiesArr.length; i++) {
             if (cookiesArr[i]) {
                 cookie = cookiesArr[i]
@@ -79,10 +79,10 @@ $.keywordsNum = 0;
                 $.drawInfoName = false
                 $.getPrize = null;
                 await addCart();
-                if($.drawInfoName === false || $.getPrize === null){
-                    break
-                } else if($.getPrize != null && !$.getPrize.includes("京豆")){
-                    break
+                if ($.drawInfoName === false || $.getPrize === null) {
+                    continue
+                } else if ($.getPrize != null && !$.getPrize.includes("京豆")) {
+                    continue
                 }
                 await $.wait(2000)
                 // await requireConfig();
@@ -362,7 +362,13 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 
 }
-function requireConfig(){
+
+function strToJson(str) {
+    var json = eval('(' + str + ')');
+    return json;
+}
+
+function requireConfig() {
     return new Promise(resolve => {
         if($.isNode() && process.env.JD_CART){
             if(process.env.JD_CART_KEYWORDS){
@@ -382,9 +388,9 @@ function getCart_xh(){
                 "User-Agent": "jdapp;JD4iPhone/167724 (iPhone; iOS 15.0; Scale/3.00)",
             },
         }
-        $.get(option, async(err, resp, data) => {
-            try{
-                data = JSON.parse(getSubstr(data, "window.cartData = ", "window._PFM_TIMING"));
+        $.get(option, async (err, resp, data) => {
+            try {
+                data = strToJson(getSubstr(data, "window.cartData = ", "window._PFM_TIMING"));
                 $.areaId = data.areaId;   // locationId的传值
                 $.traceId = data.traceId; // traceid的传值
                 venderCart = data.cart.venderCart;
