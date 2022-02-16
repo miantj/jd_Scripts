@@ -1,6 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# @Time : 2022/02/15
+# @Time : 2022/02/16
 # 京东自动评价
 '''
 new Env('京东自动评价');
@@ -271,16 +271,16 @@ def generation(pname, _class=0, _type=1):
                     "我会推荐想买$的朋友也来这家店里买",
                     "真是一次愉快的购物！",
                     "大大的好评!以后买$再来你们店！(￣▽￣)",
-                    "大家可以买来试一试，真的是太爽了，一晚上都沉浸在爽之中"
+                    "大家可以买来试一试，真的是挺好的，哈哈"
                 ]
             },
             0: {
                 "开始": [
-                    "用了这么久的 $ ,东西是真的好用，真的难忘上一次购买时使用的激动，",
+                    "用了这么多的 $ ,东西是真的好用，真的难忘上一次购买时使用的激动，",
                     "使用了几天 $ ",
-                    "这是我买到的最好用的$ ",
-                    "我草，是真的好用啊，几天的体验下来，真是怀恋当初购买时下单的那一刻的激动!!!!!!!!!",
-                    "我草，用了几天下来，$ 变得好大好大，这精致的外观，这细腻的皮肤，摸上去，真是令人激动！",
+                    "这是我买到的很好用的$ ",
+                    "666，是真的好用啊，几天的体验下来，真是怀恋当初购买时下单的那一刻的激动!!!!!!!!!",
+                    "666，用了几天下来，$ 体验很好，这精致的外观，这细腻的手感，摸上去，真是令人激动！",
                     "$  这小家伙，真是太令人愉悦了，用了都说好好好好！",
                     "不用睡不着觉，这家店的 $ 真是太好用了。",
                     "真是牛逼啊，一天不用难受一天，用了一天难受一年！"
@@ -303,7 +303,7 @@ def generation(pname, _class=0, _type=1):
                     "下次还来这家店买 $ ，就没见过这么牛逼的东西",
                     "东西很好，孩子很喜欢",
                     "现在睡觉都抱着  $  睡觉，真是太好用了",
-                    "令人难玩的一次购物"
+                    "令人难忘的一次购物"
                 ]
             }
         }
@@ -333,44 +333,54 @@ def start():
             OUT = True
             while OUT:
                 req = requests.get(f'https://wq.jd.com/bases/orderlist/list?order_type=6&start_page={page}&last_page=0&page_size=10', headers=he)
-                data = req.json()
-                for i, da in enumerate(data['orderList']):
-                    oid = da['orderId']
-                    if len(da['productList']) == 1:  # 单订单
-                        pid = da['productList'][0]['skuId']
-                        name = da['productList'][0]['title']
-                        cname = None
-                        for j in da['buttonList']:
-                            if j['id'] == 'toComment':
-                                cname = j['name']  # 评价按钮名字
-                        if cname is None:
-                            # printf("没获得到按钮数据，跳过这个商品！")
-                            continue
-                        elif cname == '查看评价':
-                            judgmentAndEvaluation += 1
-                            if judgmentAndEvaluation == 2:
-                                OUT = False
-                            continue
-                        else:
-                            judgmentAndEvaluation = 0
-                        Ci.append({'name': name, 'oid': oid, 'pid': pid, 'cname': cname, 'multi': False})
-                    else:
-                        # 针对多订单的处理
-                        odd_url = 'https://api.m.jd.com/api?body={"orderId":"%s"}&appid=jd-cphdeveloper-m&functionId=getEvalPage' % oid
-                        odd_req = requests.get(odd_url, headers=he)
-                        odd_data = odd_req.json()
-                        for odd_da in odd_data['data']['jingdong_club_voucherbyorderid_get_response']['userCommentVoList']:
-                            pid = odd_da['productId']
-                            name = odd_da['productSolrInfo']['fullName']
-                            after = odd_da['afterDiscussionStatus']
-                            append = odd_da['append']
-                            cname = "评价晒单" if after == 0 else "追加评价" if append == 1 else "查看评价"
-                            if cname == "查看评价":
-                                continue
-                            Ci.append({'name': name, 'oid': oid, 'pid': pid, 'cname': cname, 'multi': True})
-                # break
-
-                page += 1
+                if req.status_code != 401:
+                  #printf(f'{req}')
+                  data = req.json()
+                  #printf(f'{data}')
+                  for i, da in enumerate(data['orderList']):
+                    #if len(data['orderList']):
+                      oid = da['orderId']
+                      if len(da['productList']) == 1:  # 单订单
+                          pid = da['productList'][0]['skuId']
+                          printf(f'{pid}')
+                          name = da['productList'][0]['title']
+                          printf(f'{name}')
+                          cname = None
+                          for j in da['buttonList']:
+                              if j['id'] == 'toComment':
+                                  cname = j['name']  # 评价按钮名字
+                          if cname is None:
+                              # printf("没获得到按钮数据，跳过这个商品！")
+                              continue
+                          elif cname == '查看评价':
+                              judgmentAndEvaluation += 1
+                              if judgmentAndEvaluation == 2:
+                                  OUT = False
+                              continue
+                          else:
+                              judgmentAndEvaluation = 0
+                          Ci.append({'name': name, 'oid': oid, 'pid': pid, 'cname': cname, 'multi': False})
+                      else:
+                          # 针对多订单的处理
+                          odd_url = 'https://api.m.jd.com/api?body={"orderId":"%s"}&appid=jd-cphdeveloper-m&functionId=getEvalPage' % oid
+                          odd_req = requests.get(odd_url, headers=he)
+                          odd_data = odd_req.json()
+                          for odd_da in odd_data['data']['jingdong_club_voucherbyorderid_get_response']['userCommentVoList']:
+                              pid = odd_da['productId']
+                              name = odd_da['productSolrInfo']['fullName']
+                              after = odd_da['afterDiscussionStatus']
+                              append = odd_da['append']
+                              cname = "评价晒单" if after == 0 else "追加评价" if append == 1 else "查看评价"
+                              if cname == "查看评价":
+                                  continue
+                              Ci.append({'name': name, 'oid': oid, 'pid': pid, 'cname': cname, 'multi': True})
+                  # break
+                    #else:
+                      #break
+                  page += 1
+                else:
+                  printf(f'jump')
+                  break
             # exit()
         # except:
         #     printf('获取评价出错，可能ck失效')
@@ -422,7 +432,7 @@ def start():
                 }
                 se_req = requests.get(se_url, headers=he, params=se_data)
                 if se_req.json()['errMsg'] == 'success':
-                    printf("\t物流评价成功！！")
+                    printf("\t服务评价成功！！")
                     Cent[ce]['服务评价'] += 1 
                 else:
                     printf("\t服务评价失败了.......")
@@ -438,10 +448,10 @@ def start():
                 }
                 zj_req = requests.post(zj_url, headers=he, data=zj_data)
                 if zj_req.json()['errMsg'] == 'success':
-                    # printf("\t追加评价成功！！")
+                    printf("\t追加成功！！")
                     Cent[ce]['追加评价'] += 1
                 else:
-                    printf("\t追加评价失败了.......")
+                    printf("\t追加失败了.......")
                     printf(zj_data)
 
             printf(f'开始评论{i}[当前类型：{da["cname"]}]\t[{da["oid"]}]')
