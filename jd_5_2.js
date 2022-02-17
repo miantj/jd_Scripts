@@ -1,6 +1,6 @@
 /*
 极速版抢卷
-58 59 6,9,14,17,20 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_5_2.js, tag=极速版抢卷, enabled=true
+58 59 6,9,14,17,20 * * * jd_5_2.js
  */
  console.log('\n如报错请moment,运行一遍依赖安装任务\n')
 const $ = new Env('抢极速全品卷5-2');
