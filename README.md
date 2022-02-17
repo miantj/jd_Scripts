@@ -2,7 +2,9 @@
 
 # Tips
 
->搜集全网可用，测运行，整理移除重复和失效，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
+>搜集全网可用，测运行，无重复，移除失效，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
+
+>欢迎提Issue、Pr
  
 >细水长流，低调使用，在精不在多，许多重复或失效任务容易黑！
 
@@ -19,7 +21,7 @@
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
-怎么都拉不成功，用下面指令！(更新会稍慢点）
+怎么都拉不成功，用下面指令！(更新会慢点）
 
 ```
 ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
@@ -28,7 +30,7 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ## 依赖安装
 
-拉库后，执行'依赖安装'任务安装所需依赖，脚本名jd_indeps，首次拉库执行一次即可，有新依赖再次执行。
+拉库后，执行'依赖安装'任务安装此库脚本所需依赖，脚本名jd_indeps，首次拉库执行一次即可，有新依赖再次执行。
 
 
 ## 互助（内部助力）指南
@@ -47,7 +49,7 @@ CommandTimeoutTime="3h"  即改为3小时。
 
 2、执行拉库任务。
 
-3、青龙执行'获取互助码'任务即可快速自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待任务运行一遍后产生日志才会获取到互助码，可以看jd_sharecode日志获取情况）
+3、执行'获取互助码'任务即可自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待任务运行一遍后产生日志才会获取到互助码，可以看jd_sharecode日志获取情况）
 
 ## 一些提示
 1、涉及兑换任务可以配置任务并发，就是全部一起跑。
@@ -64,7 +66,7 @@ CommandTimeoutTime="3h"  即改为3小时。
 
 如 task XXXX.js desi JD_COOKIE 1-10  前10个一组运行，2 8 9就是第2/8/9序号的ck执行，以此类推。
 
-2、极速版签到也开并发，不然任务跑不完，一个号要40分钟。。
+2、极速版签到建议并发，不然号多跑不完，一个号要40多分钟。。
 
 task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同版本不一样，按自己的写）
 
@@ -111,7 +113,9 @@ ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklac
 |       `JD_UNSUB`             |      批量取消商品与店铺关注开关      | 非必须 | 控制jd_unsubscribe.js运行，默认为true取关，false不取关 |
 |       `JD_CART_REMOVE`       |      清空购物车      | 非必须 | 控制jd_clean_car.js运行 ，默认false不清空，true清空 |
 |   `MONEY_TREE_SELL_FRUIT`    |    摇钱树<br>是否卖出金果    | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认卖出 |
-|   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换喜豆 |
+|   `QQX`    |    QQ星牧场<br>是否运行    | 非必须 | 因为有加购，所以选择运行，`true`运行，默认`false`不运行 |
+|   `Ev_Start`    |    自动评价<br>是否运行    | 非必须 | 选择运行，`true`运行，默认`false`不运行 |
+|   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换7天内过期京豆换喜豆 |
 | `ddwVirHb`|    财富岛珍珠兑换<br>控制兑换过滤    | 非必须 | 默认兑换>=元，变量设置为0兑换1元，0.2元和随机，兑换一元建议设置变量等于0.5 |
 
 ##### 脚本环境变量
@@ -123,6 +127,6 @@ ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklac
 |            Name             |        归属        |  属性  | 说明                                                         |
 | :-------------------------: | :----------------: | :----: | ------------------------------------------------------------ |
 |      `JD_TRY`               |   京东试用运行开关 | 非必须   |  true为运行，默认false不运行 |
-|      `JD_TRY_GOOD_FILTERS`  |   京东试用<br>商品名过滤 | 非必须 |  比如不申请教程@软件@手机卡， `@`分割，脚本已自带一些过滤 |
+|      `JD_TRY_TITLEFILTERS`  |   京东试用<br>商品标题过滤 | 非必须 |  比如不申请含教程@软件@手机卡， `@`分割，脚本已自带一些过滤 |
 |      `JD_TRY_PRICE`         |   京东试用<br>商品价格过滤   | 非必须 |  默认20 |
 
