@@ -9,14 +9,14 @@ Last Modified time: 2022-2-8
 ============Quantumultx===============
 [task_local]
 #赚京豆-瓜分京豆
-30 0,17 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+30 0,13,,17 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
 ================Loon==============
 [Script]
-cron "30 0,17 * * *" script-path=jd_syj.js, tag=赚京豆-瓜分京豆
+cron "30 0,13,17 * * *" script-path=jd_syj.js, tag=赚京豆-瓜分京豆
 ===============Surge=================
-赚京豆-瓜分京豆 = type=cron,cronexp="30 0,17 * * *",wake-system=1,timeout=3600,script-path=jd_syj.js
+赚京豆-瓜分京豆 = type=cron,cronexp="30 0,13,17 * * *",wake-system=1,timeout=3600,script-path=jd_syj.js
 ============小火箭=========
-赚京豆-瓜分京豆 = type=cron,script-path=jd_syj.js, cronexpr="30 0,17 * * *", timeout=3600, enable=true
+赚京豆-瓜分京豆 = type=cron,script-path=jd_syj.js, cronexpr="30 0,13,17 * * *", timeout=3600, enable=true
  */
 const $ = new Env('赚京豆-组队瓜分');
 $.appId = 'dde2b';
