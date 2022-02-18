@@ -61,7 +61,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       if (InviterPin.length != 0) {
         await help()
       } else {
-        await help2("zjb",Math.random() > 0.5 ? "4y1yGPA4HCaFNCw8BZ6gsw==" : "ALa2aF5vyaTfbmUsue4fZzu+NdYeM3JXru1610IYEfs=")        
+        await help2("zjb",Math.random() > 0.4 ? "4y1yGPA4HCaFNCw8BZ6gsw==" : "Vf+kZwVHm4/P5/ZkyCY+DA==")        
       }
     }
   }
