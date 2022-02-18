@@ -6,7 +6,7 @@ export InviterPin="9vOskAagcMJ4EOWXPQSS9A%3D%3D" ##你的邀请码
 ##助力逻辑：填写你的邀请码变量之后会助力你填写的邀请码
 [task_local]
 #柠檬赚金币
-25 1 * * * jd_zjb.js
+25 1,13 * * * jd_zjb.js
 */
 const $ = new Env('极速版赚金币邀请');
 const notify = $.isNode() ? require('./sendNotify') : '';
