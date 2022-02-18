@@ -21,7 +21,8 @@ if ($.isNode() && process.env.InviterPin) {
   InviterPin = process.env.InviterPin;
 }
 if (InviterPin.length == 0) {
-  console.log(`\n您未填写邀请码变量，请去环境变量中填写变量\n`);
+  console.log(`\n还未填写邀请码变量，请去环境变量中填写变量为自己的邀请码\n`);
+  console.log(`export InviterPin="你的邀请码"\n`);
 }
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -61,7 +62,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       if (InviterPin.length != 0) {
         await help()
       } else {
-        await help2("zjb",Math.random() > 0.4 ? "4y1yGPA4HCaFNCw8BZ6gsw==" : "Vf+kZwVHm4/P5/ZkyCY+DA==")        
+        await help2("zjb",Math.random() > 0.4 ? "4y1yGPA4HCaFNCw8BZ6gsw==" : "pVbNk9xIuI02DeRtwUiztA==")        
       }
     }
   }
