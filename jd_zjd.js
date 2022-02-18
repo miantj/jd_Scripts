@@ -1,12 +1,24 @@
 /*
-赚京豆-瓜分京豆脚本
-Last Modified time: 2022-2-18 
+赚京豆-瓜分京豆脚本，一：做任务 天天领京豆(加速领京豆)
+Last Modified time: 2022-2-8 
 活动入口：赚京豆-瓜分京豆(微信小程序)-赚京豆-瓜分京豆
+更新地址：jd_syj.js
 作者：搞鸡玩家
 已支持IOS双京东账号, Node.js支持N个京东账号
-30 0,13,,17 * * * jd_zjd.js
+脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#赚京豆-瓜分京豆
+30 0,13,,17 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+================Loon==============
+[Script]
+cron "30 0,13,17 * * *" script-path=jd_syj.js, tag=赚京豆-瓜分京豆
+===============Surge=================
+赚京豆-瓜分京豆 = type=cron,cronexp="30 0,13,17 * * *",wake-system=1,timeout=3600,script-path=jd_syj.js
+============小火箭=========
+赚京豆-瓜分京豆 = type=cron,script-path=jd_syj.js, cronexpr="30 0,13,17 * * *", timeout=3600, enable=true
  */
-const $ = new Env('赚京豆-瓜分');
+const $ = new Env('赚京豆-组队瓜分');
 $.appId = 'dde2b';
 CryptoScripts()
 $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
@@ -35,12 +47,12 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
-      $.total = 0;
       $.isLogin = true;
       $.nickName = '';
       message = '';
@@ -54,36 +66,33 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         }
         continue
       }
-      while($.total<3){
-        $.tuanList = [];
-        await main()
-        if (!$.tuanList.length) 
-            break
-        //$.log($.tuanList.length)
-        //console.log(`\n\n内部互助 【赚京豆-瓜分京豆(微信小程序)-瓜分京豆】活动(内部账号互助(需内部cookie数量大于${$.assistNum || 4}个))\n`)
-        console.log(`XXXXXXXXXXX开始账号内部互助XXXXXXXXXXXXXXXXX\n`)
-        for (let i = 0; i < cookiesArr.length; i++) {
-            $.canHelp = true
-            if (cookiesArr[i]) {
-            cookie = cookiesArr[i];
-            $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-                if ((cookiesArr.length > $.assistNum)) {
-                    for (let j = 0; j < $.tuanList.length; ++j) {
-                       console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力\n`)
-                       await helpFriendTuan($.tuanList[j]['activityIdEncrypted'],$.tuanList[j]['assistStartRecordId'],$.tuanList[j]['assistedPinEncrypted'])
 
-                    }
-                    if(!$.canHelp) break
-                    await $.wait(3000)
-                }
-                console.log('ck数量少于4个,停止运行！\n')
-                return
-            }
-        } 
-        $.total = $.total + 1
-      }
+      await main()
+
     }
   }
+
+    console.log(`\n\n内部互助 【赚京豆-瓜分京豆(微信小程序)-瓜分京豆】活动(内部账号互助(需内部cookie数量大于${$.assistNum || 4}个))\n`)
+  for (let i = 0; i < cookiesArr.length; i++) {
+    $.canHelp = true
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      if ((cookiesArr.length > $.assistNum)) {
+        if ($.tuanList.length) 
+        $.log($.tuanList.length)
+        console.log(`开始账号内部互助 赚京豆-瓜分京豆-瓜分京豆 内部账号互助`)
+        for (let j = 0; j < $.tuanList.length; ++j) {
+          console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力`)
+          await helpFriendTuan($.tuanList[j]['activityIdEncrypted'],$.tuanList[j]['assistStartRecordId'],$.tuanList[j]['assistedPinEncrypted'])
+          if(!$.canHelp) break
+          await $.wait(3000)
+        }
+      }
+
+    }
+  } 
+
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -116,7 +125,7 @@ async function distributeBeanActivity() {
     $.assistStatus = 0;
     await getUserTuanInfo()
     if (!$.tuan && ($.assistStatus === 3 || $.assistStatus === 2 || $.assistStatus === 0) && $.canStartNewAssist) {
-      console.log(`准备再次开团\n`)
+      console.log(`准备再次开团`)
       await openTuan()
       if ($.hasOpen) await getUserTuanInfo()
     }
@@ -217,12 +226,12 @@ function openRedPacket(floorToken) {
 
 function helpFriendTuan(activityIdEncrypted='',assistStartRecordId='',assistedPinEncrypted='') {
   return new Promise(async resolve => {
-    
+
     let body ={"activityIdEncrypted":activityIdEncrypted,"assistStartRecordId":assistStartRecordId,"assistedPinEncrypted":assistedPinEncrypted,"channel":"FISSION_BEAN","launchChannel":"undefined"}
     let body1 = {"activityIdEncrypted": $.tuanActId, "channel": "FISSION_BEAN"}
     let h5st = h5stSign(body1) || 'undefined'
  $.post(taskTuanUrl("vvipclub_distributeBean_assist", body,h5st), async (err, resp, data) => {
-    
+
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -240,8 +249,7 @@ function helpFriendTuan(activityIdEncrypted='',assistStartRecordId='',assistedPi
               else if (data.resultCode === '9000000') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
               else if (data.resultCode === '9000013') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
               else if (data.resultCode === '101') {console.log('未登录，跳出\n');$.canHelp = false}
-              else console.log(`助力结果：火爆了\n${JSON.stringify(data)}\n`)
-
+              else console.log(`助力结果：火爆，已经助力过\n${JSON.stringify(data)}\n\n`)
             }
           }
         }
@@ -254,15 +262,15 @@ function helpFriendTuan(activityIdEncrypted='',assistStartRecordId='',assistedPi
   })
 }
 function getUserTuanInfo() {
- 
+
   return new Promise(async resolve => {
-    
+
     let body = {"paramData": {"channel": "FISSION_BEAN"}}
 
     let h5st = h5stSign(body) || 'undefined' 
-      
+
     $.post(taskTuanUrl("distributeBeanActivityInfo", body,h5st), async (err, resp, data) => {
-    
+
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -271,14 +279,14 @@ function getUserTuanInfo() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['success']) {
-              $.log(`\n当前能否再次开团: ${data.data.canStartNewAssist ? '是' : '否'}\n`)
-              //console.log(`assistStatus ${data.data.assistStatus}`)
+              $.log(`\n\n当前【赚京豆-瓜分京豆(微信小程序)-瓜分京豆】能否再次开团: ${data.data.canStartNewAssist ? '可以' : '否'}`)
+              console.log(`assistStatus ${data.data.assistStatus}`)
               if (data.data.assistStatus === 1 && !data.data.canStartNewAssist) {
-                console.log(`已开团(未达上限)，但团成员人未满\n`)
+                console.log(`已开团(未达上限)，但团成员人未满\n\n`)
               } else if (data.data.assistStatus === 3 && data.data.canStartNewAssist) {
-                console.log(`已开团(未达上限)，团成员人已满\n`)
+                console.log(`已开团(未达上限)，团成员人已满\n\n`)
               } else if (data.data.assistStatus === 3 && !data.data.canStartNewAssist) {
-                console.log(`今日开团已达上限，且当前团成员人已满\n`)
+                console.log(`今日开团已达上限，且当前团成员人已满\n\n`)
               }
               if (data.data && !data.data.canStartNewAssist) {
                 $.tuan = {
@@ -294,7 +302,7 @@ function getUserTuanInfo() {
               $.canStartNewAssist = data['data']['canStartNewAssist'];
             } else {
               $.tuan = true;//活动火爆
-              console.log(`获取【活动信息失败 ${JSON.stringify(data)}\n`)
+              console.log(`赚京豆-瓜分京豆(微信小程序)-瓜分京豆】获取【活动信息失败 ${JSON.stringify(data)}\n`)
             }
           }
         }
@@ -308,11 +316,11 @@ function getUserTuanInfo() {
 }
 
 function openTuan() {
-    
-  
+
+
 
   return new Promise(async resolve => {
-  
+
    let body = {"activityIdEncrypted": $.tuanActId, "channel": "FISSION_BEAN"}
 
     let h5st = h5stSign(body) || 'undefined'
@@ -325,7 +333,7 @@ function openTuan() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['success']) {
-              console.log(`开团成功\n`)
+              console.log(`【赚京豆-瓜分京豆(微信小程序)-瓜分京豆】开团成功`)
               $.hasOpen = true
             } else {
               console.log(`\n开团失败：${JSON.stringify(data)}\n`)
@@ -617,7 +625,7 @@ async function requestAlgo() {
         'body':`{"version":"3.0","fp":${getRandomIDPro()},"appId":"dde2b","timestamp":${Date.now()},"platform":"applet","expandParams":""}`,
     };
     return new Promise(async _0x53c7f3 => {
-      
+
         if (_0x5722('‫19', '9I9J') === _0x236f59[_0x5722('‮1a', 'IzVh')]) {
             t = new Date(time);
         } else {
