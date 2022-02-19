@@ -1581,7 +1581,7 @@ function getQLinfo(strCK, intcreated, strTimestamp, strRemark) {
     var strCheckCK = strCK.match(/pt_key=([^; ]+)(?=;?)/) && strCK.match(/pt_key=([^; ]+)(?=;?)/)[1];
     var strPtPin = decodeURIComponent(strCK.match(/pt_pin=([^; ]+)(?=;?)/) && strCK.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     var strReturn = "";
-    if (strCheckCK.substring(0, 4) == "AAJh") {
+    //if (strCheckCK.substring(0, 4) == "AAJh") {
         var DateCreated = new Date(intcreated);
         var DateTimestamp = new Date(strTimestamp);
         var DateToday = new Date();
@@ -1611,7 +1611,7 @@ function getQLinfo(strCK, intcreated, strTimestamp, strRemark) {
             strReturn = "\n【登录信息】已服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
         }
 
-    }
+    //}
     return strReturn
 }
 
