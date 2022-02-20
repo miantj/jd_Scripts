@@ -7,11 +7,11 @@
 #星系牧场
 1 0-23/3 * * * jd_qqxing.js
 */
-if (process.env.QQX != "true") {
-    console.log("\n默认不运行,export QQX='true'来运行\n需要手动进入一次活动，且有加购任务\n")
-    console.log("快捷入口：26:/！BBs7bCLR1K56！，星系牧场养牛牛，可获得DHA专属奶！\n")
-    return
-}
+//if (process.env.QQX != "true") {
+//    console.log("\n默认不运行,export QQX='true'来运行\n需要手动进入一次活动，且有加购任务\n")
+//    console.log("快捷入口：26:/！BBs7bCLR1K56！，星系牧场养牛牛，可获得DHA专属奶！\n")
+//    return
+//}
 const $ = new Env('QQ星系牧场');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
