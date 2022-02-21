@@ -162,6 +162,8 @@ class getJDCookie(object):
                 resp = requests.get(url=url, headers=headers, timeout=60).json()
             if resp['retcode'] == "0":
                 nickname = resp['data']['userInfo']['baseInfo']['nickname']
+                if not nickname:
+                    nickname = resp['data']['userInfo']['baseInfo']['curPin']
                 return ck, nickname
             else:
                 context = f"账号{userNum}【{pinName}】Cookie 已失效！请重新获取。"
