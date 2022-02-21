@@ -2,8 +2,7 @@
 *
 京东金融养猪猪
 活动入口：京东金融养猪猪，
-脚本更新地址：https://github.com/zero205/JD_tencent_scf
-加了个邀新助力，不过应该没啥用。邀请码变量：PIGPETSHARECODE，变量仅支持单账号邀请码
+加了个邀新助力，不过应该没啥用。邀请码变量：PIGPETSHARECODES，变量仅支持单账号邀请码
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
@@ -41,7 +40,7 @@ if ($.isNode()) {
 }
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
   }
   if (process.env.PIGPETSHARECODE) {
@@ -55,7 +54,7 @@ if ($.isNode()) {
       shareId = res[Math.floor((Math.random() * res.length))];
     }
   }
-  console.log(`\n【原作者：LXK大佬】\n\nBy：zero205\n添加：邀请新用户，大转盘助力，抢粮食\n修改：优化日志输出，自动喂食\n\n默认不抢粮食（成功机率小），需要的请添加变量JD_PIGPET_PK，值填true\nTodo：领取成就奖励\n`);
+  console.log(`\n【原作者：LXK大佬】\n加：邀请新用户，大转盘助力，抢粮食\n修改：优化日志输出，自动喂食\n\n默认不抢粮食（成功机率小），需要的请添加变量JD_PIGPET_PK，值填true\nTodo：领取成就奖励\n`);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -77,12 +76,13 @@ if ($.isNode()) {
     }
   }
   console.log(`\n======开始大转盘助力======\n`);
-  $.helpId = await getAuthorShareCode('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/pig.json');
+  //$.helpId = await getAuthorShareCode('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/pig.json');
+  $.helpId = await getAuthorShareCode();
   $.shareCodes = [...$.shareCodes, ...($.helpId || [])]
   for (let j = 0; j < cookiesArr.length; j++) {
     cookie = cookiesArr[j];
     if ($.shareCodes && $.shareCodes.length) {
-      console.log(`\n自己账号内部循环互助，有剩余次数再帮【zero205】助力\n`);
+      console.log(`\n自己账号内部循环互助，有剩余次数再帮作者助力\n`);
       for (let item of $.shareCodes) {
         await pigPetLotteryHelpFriend(item)
         await $.wait(1000)
@@ -200,14 +200,13 @@ function pigPetUserBag() {
                       let i = parseInt(process.env.PIG_FEED_LIMIT || 50)
                       console.log(`\n每次运行最多喂食${i}次(环境变量PIG_FEED_LIMIT)`)
                       do {
-                        console.log(`\n10秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
-                        await $.wait(10000);
+                        console.log(`\n15秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
+                        await $.wait(15000);
                         await pigPetAddFood(item.sku);
                         if ($.finish) break
                         item.count = item.count - 20
                         i--
                       } while (item.count >= 20 && i > 0)
-                      if ($.finish) break
                     }
                   }
                 } else {
@@ -288,7 +287,7 @@ function pigPetLogin() {
               if (data.resultData.resultCode === 0) {
                 $.hasPig = data.resultData.resultData.hasPig;
                 if (!$.hasPig) {
-                  console.log(`\n京东账号${$.index} ${$.nickName} 未开启养猪活动,请手动去京东金融APP开启此活动或复制口令直达：\n29.0复制整段话 Https:/JWHOjEv6wgo0BQ 我的5斤百香果能领取啦，来养猪，一起赚#0E4EfAMIKuyDlW%打kai>【ぺ京倲金融ぺ App】～\n`)
+                  console.log(`\n京东账号${$.index} ${$.nickName} 未开启养猪活动,请手动去京东金融APP开启此活动`)
                   return
                 }
                 if (data.resultData.resultData.wished) {
@@ -423,12 +422,9 @@ function pigPetRank() {
                 for (let i = 0; i < $.friends.length; i++) {
                   if ($.friends[i].status === 1) {
                     $.friendId = $.friends[i].uid
-                    $.name = $.friends[i].nickName
-                    if (!['zero205', 'xfa05'].includes($.name)) { //放过孩子吧TT
-                      console.log(`去抢夺【${$.friends[i].nickName}】的食物`)
-                      await $.wait(2000)
-                      await pigPetFriendIndex($.friendId)
-                    }
+                    console.log(`去抢夺【${$.friends[i].nickName}】的食物`)
+                    await $.wait(2000)
+                    await pigPetFriendIndex($.friendId)
                   }
                 }
               } else {
