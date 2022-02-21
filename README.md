@@ -2,18 +2,18 @@
 
 # Tips
 
->搜集全网可用，测运行，无重复，移除失效，去除内置助力，日常更新，一键自动配置内部互助,自动安装所需依赖（需青龙2.8+）;
+>搜集全网可用，测运行无重复，移除失效，无助力池，一键配置内部互助,自动安装所需依赖（需青龙2.8+）;
 
->欢迎提Issue、Pr
  
->细水长流，低调使用，在精不在多，许多重复或失效任务容易黑！
+>细水长流，低调使用，在精不在多，许多重复或失效任务容易号黑！
 
 ## 青龙[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
 ## 指令
 
-【注意】青龙config.sh配置需要把GithubProxyUrl="https://ghproxy.com/" 修改为GithubProxyUrl=""否则拉取失败，也可以自行找可用代理。
+【注意】青龙config.sh配置老版本把GithubProxyUrl="https://ghproxy.com/" 修改为GithubProxyUrl=""否则拉取失败，也可以自行找可用代理。
 
+2022-02-21 可用代理 GithubProxyUrl="https://js.6dygit.workers.dev/"
 
 在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * 
 
