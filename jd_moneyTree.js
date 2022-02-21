@@ -7,7 +7,7 @@
 ===============Quantumultx===============
 [task_local]
 #京东摇钱树
-3 0-23/2 * * * jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png, enabled=true
+3 0-23/2 * * * jd_moneyTree.js
 
 ==============Loon===========
 [Script]
@@ -86,7 +86,7 @@ async function jd_moneyTree() {
     const userRes = await user_info();
     if (!userRes || !userRes.realName) return
     await signEveryDay();
-    await dayWork();
+    //await dayWork();
     await harvest();
     await sell();
     await myWealth();
