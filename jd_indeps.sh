@@ -5,7 +5,8 @@
 #
 echo "安装脚本所需依赖，首次拉库运行一次即可"
 echo "开始安装............"
-
+pnpm install -g
+pnpm install -g pnpm
 pnpm install -g png-js
 pnpm install -g date-fns
 pnpm install -g axios
