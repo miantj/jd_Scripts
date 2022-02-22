@@ -11,22 +11,29 @@
 
 ## 指令
 
-【注意】青龙config.sh配置老版本把GithubProxyUrl="https://ghproxy.com/" 修改为GithubProxyUrl=""否则拉取失败，也可以自行找可用代理。
+【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/（差不在多18行）" 修改为GithubProxyUrl=""，否则拉取失败。
 
-2022-02-21 可用代理 GithubProxyUrl="https://js.6dygit.workers.dev/"
+国内机用下面指令（带代理）：
 
-在青龙面板添加拉库任务 ，定时建议40 8-23/4 * * * 
+```
+ql repo https://js.6dygit.workers.dev/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+
+```
+国外机用下面指令：
 
 ```
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
-怎么都拉不成功，用下面指令！(更新会慢点）
+
+没代理就用gitee版吧，用下面指令！(更新会慢点）
 
 ```
 ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
+
+任务定时建议 40 8-23/4 * * *
 
 ## 依赖安装
 
