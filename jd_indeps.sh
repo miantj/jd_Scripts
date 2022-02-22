@@ -14,7 +14,7 @@ pnpm install -g crypto-js
 pnpm install -g ts-md5
 pnpm install -g tslib
 pnpm install -g @types/node
-pnpm install -g requests
+pnpm install -g request
 pnpm install -g jsdom
 pnpm install -g moment
 pip install jieba
