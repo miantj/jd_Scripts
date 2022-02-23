@@ -61,6 +61,7 @@ message = ""
     //   break
     // }
 	hot_flag = false
+	failed_cnt = 0
     cookie = cookiesArr[i];
     if (cookie) {
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
