@@ -3,8 +3,8 @@
 
 
 """
-cron: 23 11 * * *
-new Env('京东金融灯火星河闹元宵');
+cron: 35 9 * * *
+new Env('京东金融抽白条');
 """
 
 
@@ -26,7 +26,6 @@ except:
 
     os.system('pip install PyExecJS &> /dev/null')
     import execjs
-    sys.exit(0)
 
 """
 try:
@@ -54,7 +53,7 @@ def load_send():
         send=False
         printf("加载通知服务失败~")
 load_send()
-
+    
 def get_remarkinfo():
     url='http://127.0.0.1:5600/api/envs'
     try:
@@ -158,11 +157,11 @@ def draw(activityid,eid,fp):
             send('抽到白条分期券','去看日志')
     except:
         printf('出错啦，出错原因为:'+json.loads(response.text)['failDesc']+'\n\n')
-
-    time.sleep(5)
-
+    
+    time.sleep(10)
+    
 if __name__ == '__main__':
-    printf('游戏入口:京东金融-白条-中间横幅6666元\n')
+    printf('游戏入口:京东金融-白条-天天试手气\n')
     remarkinfos={}
     get_remarkinfo()
     try:
@@ -187,6 +186,6 @@ if __name__ == '__main__':
         info=JDSignValidator('https://prodev.m.jd.com/mall/active/498THTs5KGNqK5nEaingGsKEi6Ao/index.html')
         eid=json.loads(geteid(info[1],info[2]).split('_*')[1])['eid']
         fp=info[0]
-        draw('C9z2s20071Z2p58191i0Z128616921QH',eid,fp)
+        draw('Q72966994128142102X259KS',eid,fp)
         if sendNotifyflag:
-            send('京东白条灯火星河闹元宵抽奖通知',username+'抽到'+str(prizeAward)+'的优惠券了') 
+            send('京东白条抽奖通知',username+'抽到'+str(prizeAward)+'的优惠券了，速去京东金融-白条-天天试手气查看')
