@@ -42,7 +42,7 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ## 互助（内部助力）指南
 
-1、修改青龙config.sh配置（特别注意，没有修改此配置，不内部互助）
+1、修改青龙config.sh配置（特别注意，没有修改此配置，会少依赖安装任务和获取互助任务）
 
 RepoFileExtensions="js py"修改为
 
