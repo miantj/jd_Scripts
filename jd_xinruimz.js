@@ -4,7 +4,7 @@ cron 38 6-20/3 * * * jd_xinruimz.js
 入口: https://xinruimz-isv.isvjcloud.com/plantation
 无助力
 */
-if (process.env.QQX != "true") {
+if (process.env.MZYJY != "true") {
     console.log("默认不运行,容易黑,export MZYJY='true'来运行\n 获取accessToken失败就是黑了，手动进活动看看是不是火爆")
     return
 }
