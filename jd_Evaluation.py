@@ -1,7 +1,8 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# @Time : 2022/02/16
+# @Time : 2022/03/01
 # 京东自动评价
+https://github.com/6dylan6/jdpro
 '''
 new Env('京东自动评价');
 15 0 1,15 * * jd_Evaluation.py
@@ -97,21 +98,27 @@ class getJDCookie(object):
             else:
                 pass
         if os.path.exists(ql_new):
-            printf("当前环境青龙面板新版")
+            printf("\n当前环境青龙面板新版\n")
             return ql_new
         elif os.path.exists(ql_old):
-            printf("当前环境青龙面板旧版")
+            printf("\n当前环境青龙面板旧版\n")
             return ql_old
         elif os.path.exists(v4f):
-            printf("当前环境V4")
+            printf("\n当前环境V4\n")
             return v4f
         return curf
 
     # 获取cookie
     def getCookie(self):
         global cookies
+        cookies = []
         ckfile = self.getckfile()
         try:
+            if "JD_COOKIE" in os.environ:
+                if len(os.environ["JD_COOKIE"]) > 10:
+                    cookies = os.environ["JD_COOKIE"]
+                    printf("\n当前获取使用环境变量CK\n")
+                    return
             if os.path.exists(ckfile):
                 with open(ckfile, "r", encoding="utf-8") as f:
                     cks = f.read()
@@ -121,23 +128,18 @@ class getJDCookie(object):
                     cks = r.findall(cks)
                     if len(cks) > 0:
                         if 'JDCookies.txt' in ckfile:
-                            printf("当前获取使用 JDCookies.txt 的cookie")
+                            printf("\n当前获取使用JDCookies.txt文件中的CK\n")
                         cookies = ''
                         for i in cks:
                             if 'pt_key=xxxx' in i:
                                 pass
                             else:
                                 cookies += i
-                        return
             else:
                 with open(pwd + 'JDCookies.txt', "w", encoding="utf-8") as f:
-                    cks = "#多账号换行，以下示例：（通过正则获取此文件的ck，理论上可以自定义名字标记ck，也可以随意摆放ck）\n账号1【Curtinlv】cookie1;\n账号2【TopStyle】cookie2;"
+                    cks = "#多账号换行，以下示例：（通过正则获取此文件的ck，理论上可以自定义名字标记ck，也可以随意摆放ck）\n账号a pt_key=xxx;pt_pin=xxx;;\n账号b pt_key=xxx;pt_pin=xxx;"
                     f.write(cks)
                     f.close()
-            if "JD_COOKIE" in os.environ:
-                if len(os.environ["JD_COOKIE"]) > 10:
-                    cookies = os.environ["JD_COOKIE"]
-                    printf("已获取并使用Env环境 Cookie")
         except Exception as e:
             printf(f"【getCookie Error】{e}")
 
@@ -166,11 +168,11 @@ class getJDCookie(object):
                     nickname = resp['data']['userInfo']['baseInfo']['curPin']
                 return ck, nickname
             else:
-                context = f"账号{userNum}【{pinName}】Cookie 已失效！请重新获取。"
+                context = f"账号{userNum}【{pinName}】Cookie 已失效！请重新获取\n。"
                 printf(context)
                 return ck, False
         except Exception:
-            context = f"账号{userNum}【{pinName}】Cookie 已失效！请重新获取。"
+            context = f"账号{userNum}【{pinName}】Cookie 已失效！请重新获取\n。"
             printf(context)
             return ck, False
 
@@ -204,13 +206,13 @@ class getJDCookie(object):
                 if len(cookiesList) > 0 and len(userNameList) > 0:
                     return cookiesList, userNameList, pinNameList
                 else:
-                    printf("没有可用Cookie，已退出")
+                    printf("没有可用CK，已退出\n")
                     exit(3)
             else:
-                printf("cookie 格式错误！...本次操作已退出")
+                printf("CK格式错误！...本次运行退出\n")
                 exit(4)
         else:
-            printf("cookie 格式错误！...本次操作已退出")
+            printf("CK格式错误或无CK！...请检查\n")
             exit(4)
 
 
@@ -344,9 +346,9 @@ def start():
                       oid = da['orderId']
                       if len(da['productList']) == 1:  # 单订单
                           pid = da['productList'][0]['skuId']
-                          printf(f'{pid}')
+                          #printf(f'{pid}')
                           name = da['productList'][0]['title']
-                          printf(f'{name}')
+                          #printf(f'{name}')
                           cname = None
                           for j in da['buttonList']:
                               if j['id'] == 'toComment':
@@ -467,7 +469,7 @@ def start():
                 zjpj()
             else:
                 printf(da['cname'])
-            printf('等待5秒-可持续发展！')
+            printf('等待5秒-可持续发展！\n')
             time.sleep(5)
 
     # 晒单
@@ -504,7 +506,7 @@ def start():
                     printf(f'当前无数据！返回，可能被风控，返回的数据：{req.json()}')
                     return
 
-    printf('### 开始批量评价 ###')
+    printf('######## 开始批量评价 ########\n')
     global cookiesList, userNameList, pinNameList, ckNum, beanCount, userCount
     cookiesList, userNameList, pinNameList = getCk.iscookie()
 
