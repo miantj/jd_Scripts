@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time : 2022/03/01
 # 京东自动评价
-https://github.com/6dylan6/jdpro
+#https://github.com/6dylan6/jdpro
 '''
 new Env('京东自动评价');
 15 0 1,15 * * jd_Evaluation.py
