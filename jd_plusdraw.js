@@ -67,6 +67,7 @@ async function main() {
                 await doInteractiveAssignment(actid, vo.encryptAssignmentId, vi.itemId)
               }
             }
+         console.log('\n全部任务已做完\n')
         }
   } else {
     $.log('没有获取到活动信息')
