@@ -75,7 +75,8 @@ async function main() {
   }  
   for (let i=0; i<3; i++) {
       console.log('开始转盘。。。。')
-      await doreward(actid)
+      draw = await doreward(actid)
+      if (draw.msg == "兑换积分不足") {break}
       }  
 }
 
