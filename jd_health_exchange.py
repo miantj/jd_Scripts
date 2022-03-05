@@ -1,24 +1,17 @@
 #!/bin/env python3
 # -*- coding: utf-8 -*
 '''
-感谢Curtin提供的其他脚本供我参考
-感谢aburd ch大佬的指导
-项目名称:jd_health_exchange.py
-Author: 一风一燕
-功能：健康社区兑换
-Date: 2021-08-12
+Date: 2022-03-04
 cron: 1 0 * * * jd_health_exchange.py
 new Env('健康社区兑换京豆');
-教程：本脚本默认兑换20京豆，需要8W积分，默认保留10W积分，有18W积分以上才兑换20京豆
-cron时间填写：兑换京豆随意写，如果是其他商品，根据相关时间填写
 '''
 #如果不想兑换京豆，ENV设置： export heath_noexchage='x'
 # x填写数字，x对应cookies中第几个账号，如果中间有黑号，黑号不算。多个账号不兑换用&隔开，例如2&3&4
 heath_noexchage=''
 
-##############默认保留10W积分，18W积分才兑换20京豆############
+##############默认保留20W积分，18W积分才兑换20京豆############
 ###想保留其他分数，ENV设置： export least='xxx'
-least = '180000'
+least = 200000
 
 # 20京豆id为4
 id = '4'
@@ -29,9 +22,6 @@ id = '4'
 dd_thread = '10'
 
 UserAgent = ''
-
-
-
 
 import requests
 import time,datetime
@@ -91,68 +81,7 @@ def getEnvs(label):
 
 
 class getJDCookie(object):
-#     # 适配各种平台环境ck
-#
-#     def getckfile(self):
-#         global v4f
-#         curf = pwd + 'JDCookies.txt'
-#         v4f = '/jd/config/config.sh'
-#         ql_new = '/ql/config/env.sh'
-#         ql_old = '/ql/config/cookie.sh'
-#         if os.path.exists(curf):
-#             with open(curf, "r", encoding="utf-8") as f:
-#                 cks = f.read()
-#                 f.close()
-#             r = re.compile(r"pt_key=.*?pt_pin=.*?;", re.M | re.S | re.I)
-#             cks = r.findall(cks)
-#             if len(cks) > 0:
-#                 return curf
-#             else:
-#                 pass
-#         if os.path.exists(ql_new):
-#             printT()("当前环境青龙面板新版")
-#             return ql_new
-#         elif os.path.exists(ql_old):
-#             printT()("当前环境青龙面板旧版")
-#             return ql_old
-#         elif os.path.exists(v4f):
-#             printT()("当前环境V4")
-#             return v4f
-#         return curf
-#
-#     # 获取cookie
-#     def getCookie(self):
-#         global cookies
-#         ckfile = self.getckfile()
-#         try:
-#             if os.path.exists(ckfile):
-#                 with open(ckfile, "r", encoding="utf-8") as f:
-#                     cks = f.read()
-#                     f.close()
-#                 if 'pt_key=' in cks and 'pt_pin=' in cks:
-#                     r = re.compile(r"pt_key=.*?pt_pin=.*?;", re.M | re.S | re.I)
-#                     cks = r.findall(cks)
-#                     if len(cks) > 0:
-#                         if 'JDCookies.txt' in ckfile:
-#                             printT()("当前获取使用 JDCookies.txt 的cookie")
-#                         cookies = ''
-#                         for i in cks:
-#                             if 'pt_key=xxxx' in i:
-#                                 pass
-#                             else:
-#                                 cookies += i
-#                         return
-#             else:
-#                 with open(pwd + 'JDCookies.txt', "w", encoding="utf-8") as f:
-#                     cks = "#多账号换行，以下示例：（通过正则获取此文件的ck，理论上可以自定义名字标记ck，也可以随意摆放ck）\n账号1【Curtinlv】cookie1;\n账号2【TopStyle】cookie2;"
-#                     f.write(cks)
-#                     f.close()
-#             if "JD_COOKIE" in os.environ:
-#                 if len(os.environ["JD_COOKIE"]) > 10:
-#                     cookies = os.environ["JD_COOKIE"]
-#                     printT()("已获取并使用Env环境 Cookie")
-#         except Exception as e:
-#             printT()(f"【getCookie Error】{e}")
+
 
     # 检测cookie格式是否正确
     def getUserInfo(self, ck, pinName, userNum):
@@ -428,7 +357,7 @@ def checkUser(cookies):
             if user_num == 1:
                 printT("您已设置兑换的商品：【{0}豆】 需要{1}积分".format(title, exchangePoints))
                 print("********** 首先检测您是否有钱呀 ********** ")
-            if str(total_exchangePoints) > least:
+            if int(total_exchangePoints) > least:
                 total_exchangePoints = int(total_exchangePoints)
                 if not str(user_num) in heath_noexchage_list:
                     cookieList.append(i)            #将够钱兑换的账号保存下来给cookieList[]，其余不够钱的账号剔除在外，不执行兑换

@@ -85,7 +85,7 @@ if ($.isNode()) {
   //await deleteFile(JD_DailyBonusPath);//删除下载的JD_DailyBonus.js文件
   if ($.isNode() && allMessage && process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE === 'true') {
     $.msg($.name, '', allMessage);
-    await notify.sendNotify($.name, allMessage)
+    //await notify.sendNotify($.name, allMessage)
   }
 })()
     .catch((e) => $.logErr(e))
