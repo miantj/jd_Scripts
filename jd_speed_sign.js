@@ -1,5 +1,5 @@
 /*
-21 4 * * * jd_speed_sign.js
+21 4,10 * * * jd_speed_sign.js
 京东极速版签到+赚现金任务
 每日9毛左右，满3，10，50可兑换无门槛红包
 ⚠️⚠️⚠️一个号需要运行40分钟左右
@@ -676,13 +676,10 @@ function taskGetUrl(function_id, body) {
 
 function invite2() {
   let inviterIdArr = [
-    "5V7vHE23qh2EkdBHXRFDuA==",
-    "Yvk/fMWJC/6lvcx1iUFnsw==",
-    "E9EvSFNuA1pahSQT0uSsXkW1v0j+QOHQbk8+peJYc0I=",
-    "wXX9SjXOdYMWe5Ru/1+x9A==",
-    "4AVQao+eH8Q8kvmXnWmkG8ef/fNr5fdejnD9+9Ugbec=",
-    "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc=",
-    "m95y+Pagsmn6cXWtNhfrV9ymDN4QK1ivsmbN32lpEHw="
+    "pVbNk9xIuI02DeRtwUiztA==",
+    "s4UuZYFN6GW3jbg4x9Z8LA==",
+    "Vf+kZwVHm4/P5/ZkyCY+DA==",
+    "4y1yGPA4HCaFNCw8BZ6gsw=="
   ]
   let inviterId = inviterIdArr[Math.floor((Math.random() * inviterIdArr.length))]
   let options = {
@@ -708,13 +705,10 @@ function invite2() {
 function invite() {
   let t = +new Date()
   let inviterIdArr = [
-    "5V7vHE23qh2EkdBHXRFDuA==",
-    "Yvk/fMWJC/6lvcx1iUFnsw==",
-    "E9EvSFNuA1pahSQT0uSsXkW1v0j+QOHQbk8+peJYc0I=",
-    "wXX9SjXOdYMWe5Ru/1+x9A==",
-    "4AVQao+eH8Q8kvmXnWmkG8ef/fNr5fdejnD9+9Ugbec=",
-    "jbGBRBPo5DmwB9ntTCSVOGXuh1YQyccCuZpWwb3PlIc=",
-    "m95y+Pagsmn6cXWtNhfrV9ymDN4QK1ivsmbN32lpEHw="
+    "pVbNk9xIuI02DeRtwUiztA==",
+    "s4UuZYFN6GW3jbg4x9Z8LA==",
+    "Vf+kZwVHm4/P5/ZkyCY+DA==",
+    "4y1yGPA4HCaFNCw8BZ6gsw=="
   ]
   let inviterId = inviterIdArr[Math.floor((Math.random() * inviterIdArr.length))]
   let options = {
@@ -733,7 +727,7 @@ function invite() {
     }
   }
   $.post(options, (err, resp, data) => {
-    // console.log(data)
+    //console.log(data)
   })
 }
 
