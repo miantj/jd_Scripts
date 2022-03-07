@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*
 '''
 Date: 2022-03-04
-cron: 1 0 * * * jd_health_exchange.py
+cron: 5 0 0 * * * jd_health_exchange.py
 new Env('健康社区兑换京豆');
 '''
 #如果不想兑换京豆，ENV设置： export heath_noexchage='x'
