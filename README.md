@@ -123,6 +123,8 @@ ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklac
 |   `QCARD`    |    店铺退会链接<br>是否运行    | 非必须 | 按需运行，`true`运行，默认`false`不运行 |
 |   `Ev_Start`    |    自动评价<br>是否运行    | 非必须 | 选择运行，`true`运行，默认`false`不运行 |
 |   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换7天内过期京豆换喜豆 |
+|   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
+
 
 ##### 脚本环境变量
 
