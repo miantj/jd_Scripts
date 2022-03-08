@@ -1,5 +1,5 @@
 
-短信获取ck一键安装，需要的自取
+短信获取ck一键安装，需要的自取（centos7测试可用，非docker）
 
 ```
 bash <(curl -s -S -L https://cdn.jsdelivr.net/gh/6dylan6/jdck@main/jdck.sh)
