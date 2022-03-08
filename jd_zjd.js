@@ -9,7 +9,7 @@ Last Modified time: 2022-2-8
 ============Quantumultx===============
 [task_local]
 #赚京豆-瓜分京豆
-30 0,13,,17 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
+30 0,13,17 * * * jd_syj.js, tag=赚京豆-瓜分京豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_syj.png, enabled=true
 ================Loon==============
 [Script]
 cron "30 0,13,17 * * *" script-path=jd_syj.js, tag=赚京豆-瓜分京豆
@@ -47,7 +47,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  console.log('\如果跑失败，多跑几次，如需修改车头数量，修改脚本76行cookiesArr.length为5，就是前5个开团\n')
+  console.log('\如果跑失败，尝试重跑，如需修改车头数量，修改脚本51行cookiesArr.length为车头数量\n')
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
