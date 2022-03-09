@@ -4,7 +4,7 @@
 ```
 docker run -dit -p 6705:6789 --name jdck  6dylan6/jdck:latest
 ```
-
+![image](https://s1.ax1x.com/2022/03/09/bRabXn.png)
 # Tips
 
 >搜集全网可用，测运行无重复，移除失效，无助力池，默认无加购，一键配置内部互助,自动安装所需依赖（需青龙2.8+）;
