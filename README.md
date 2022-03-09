@@ -1,8 +1,8 @@
 
-短信获取ck一键安装，需要的自取（centos7测试可用，非docker）
+短信获取京东ck一键，需要的自取（docker）
 
 ```
-bash <(curl -s -S -L https://cdn.jsdelivr.net/gh/6dylan6/jdck@main/jdck.sh)
+docker run -dit -p 6705:6789 --name jdck  6dylan6/jdck:latest
 ```
 
 # Tips
