@@ -145,6 +145,7 @@ async function main() {
   await $.wait(2000);
   if (!$.openFail){
   await getUserInfo();
+  }
 }
 //参与活动
 function joinActive() {
