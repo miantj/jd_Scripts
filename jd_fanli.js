@@ -6,14 +6,14 @@
 ============Quantumultx===============
 [task_local]
 #京东饭粒
-40 0,9,17 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js, tag=京东饭粒, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
+38 5,13,17 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js, tag=京东饭粒, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
 ================Loon==============
 [Script]
-cron "40 0,9,17 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js,tag=京东饭粒
+cron "38 5,13,17 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js,tag=京东饭粒
 ===============Surge=================
-京东饭粒 = type=cron,cronexp="40 0,9,17 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js
+京东饭粒 = type=cron,cronexp="38 5,13,17 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js
 ============小火箭=========
-京东饭粒 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js, cronexpr="40 0,9,17 * * *", timeout=3600, enable=true
+京东饭粒 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js, cronexpr="38 5,13,17 * * *", timeout=3600, enable=true
  */
 
 const $ = new Env('京东饭粒');
@@ -38,23 +38,21 @@ if ($.isNode()) {
     cookiesArr.reverse();
     cookiesArr = cookiesArr.filter(item => !!item);
 }
-!(async() => {
+!(async () => {
     if (!cookiesArr[0]) {
-        $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {
-            "open-url": "https://bean.m.jd.com/bean/signIndex.action"
-        });
+        $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
-    for (let i = 0; i < cookiesArr.length; i++) {
+        for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             if ($.runOut)
                 break;
-            $.hasGet = 0
-                cookie = cookiesArr[i]
-                originCookie = cookiesArr[i]
-                newCookie = ''
-                $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-                $.index = i + 1;
+            $.hasGet = 0;
+            cookie = cookiesArr[i];
+            originCookie = cookiesArr[i];
+            newCookie = '';
+            $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
+            $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';
             await checkCookie();
@@ -71,30 +69,29 @@ if ($.isNode()) {
             await getTaskFinishCount(cookiesArr[i])
             await $.wait(2000)
             if ($.count.finishCount < $.count.maxTaskCount) {
-                let range = $.count.maxTaskCount - $.count.finishCount
-                    for (let j = 0; j < range; j++) {
-                        console.log(`开始第${$.count.finishCount+j+1}次`)
-
-                        await getTaskList(cookie)
-                        await $.wait(2000)
-                        for (let k in $.taskList) {
-                            if ($.taskList[k].taskId !== null && $.taskList[k].status == 1) {
-                                console.log(`开始尝试活动:` + $.taskList[k].taskName);
-                                await saveTaskRecord(cookie, $.taskList[k].taskId, $.taskList[k].businessId, $.taskList[k].taskType)
-                                if ($.sendBody) {
-                                    await $.wait(Number($.taskList[k].watchTime) * 1300)
-                                    await saveTaskRecord1(cookie, $.taskList[k].taskId, $.taskList[k].businessId, $.taskList[k].taskType, $.sendBody.uid, $.sendBody.tt)
-                                } else {
-                                    continue;
-                                }
-                                if ($.count.finishCount == $.count.maxTaskCount) {
-                                    console.log(`任务全部完成!`);
-                                }
-                            }
-
+                
+                let range = $.count.maxTaskCount - $.count.finishCount;
+                await getTaskList(cookie)
+                await $.wait(2000)
+				var CountDoTask =0;
+				for (let k in $.taskList) {
+                if ($.taskList[k].taskId !== null && $.taskList[k].statusName != "活动结束" && $.taskList[k].statusName != "明日再来") {
+						CountDoTask+=0;
+                        console.log(`开始尝试活动:` + $.taskList[k].taskName);
+                        await saveTaskRecord(cookie, $.taskList[k].taskId, $.taskList[k].businessId, $.taskList[k].taskType);
+                        if ($.sendBody) {
+                            await $.wait(Number($.taskList[k].watchTime) * 1300);
+                            await saveTaskRecord1(cookie, $.taskList[k].taskId, $.taskList[k].businessId, $.taskList[k].taskType, $.sendBody.uid, $.sendBody.tt);
+                        } else {
+                            continue;
+                        }
+                        if ($.count.finishCount == $.count.maxTaskCount) {
+                            console.log(`任务全部完成!`);                           
+                            break;
                         }
                     }
 
+                }
             } else {
                 console.log("任务已做完")
             }
@@ -202,7 +199,7 @@ function saveTaskRecord1(ck, taskId, businessId, taskType, uid, tt) {
                     if (data) {
                         data = JSON.parse(data);
                         if (data.content) {
-                            if (data.content.status = 1)
+                            if (data.content.status == 1 && data.content.beans > 0)
                                 $.count.finishCount += 1;
                             console.log("浏览结果", data.content.msg);
                         } else
