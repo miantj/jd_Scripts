@@ -171,7 +171,7 @@ pwd = os.path.dirname(os.path.abspath(__file__)) + os.sep
 
 ######
 OpenCard = False
-openCardBean = 20
+openCardBean = 5
 sleepNum = 0.1
 record = True
 onlyRecord = False
@@ -1335,8 +1335,8 @@ def start():
     send("【JD入会领豆】", message_info)
     exitCodeFun(0)
 if __name__ == '__main__':
-   if OpenCard == 'true':
+   if OpenCard == True:
     start()
    else:
-    print("\n默认不运行，请设置变量OpenCard='true' \n")
-    print("默认大于20豆才开卡入会，如需配置请查看脚本说明!\n")
+    print("\n默认不运行，请设置变量OpenCard='True' \n")
+    print("默认筛选大于5豆的店铺才进行开卡，如需配置门槛请查看脚本说明!\n")
