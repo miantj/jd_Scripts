@@ -3,7 +3,7 @@
 活动入口:京东汽车 - 右下角 - 领京豆
 先跑积分
 
-10 8 * * * jd_mpdzcar.js
+10 3,10 * * * jd_mpdzcar.js
 */
 const $ = new Env("头文字J");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
