@@ -10,7 +10,7 @@
 
 ## 指令
 
-【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/（差不在多18行）" 修改为GithubProxyUrl=""，否则拉取失败。
+【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/ （差不在多19行）" 修改为GithubProxyUrl=""，否则拉取失败，以上版本无需配置。
 
 国内机用下面指令（带代理）：
 
@@ -41,7 +41,7 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ## 互助（内部助力）指南
 
-1、修改青龙config.sh配置（特别注意，没有修改此配置，会少依赖安装任务和获取互助任务）
+1、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，会少依赖安装任务和获取互助任务）
 
 RepoFileExtensions="js py"修改为
 
@@ -80,10 +80,7 @@ task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同�
 
 task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
-4、财富岛默认助力赚金币，如需要助力合成珍珠，请修改jd_cfd_pearl.js任务定时，排在jd_cfd.js前面执行即可。
-
-
-5、通知支持一对一推送和显示备注，详细用户参考[@ccwav](https://github.com/ccwav/QLScript2)
+4、通知支持一对一推送和显示备注，详细用法参考[@ccwav](https://github.com/ccwav/QLScript2)
 
 备注显示变量如下
 
@@ -98,7 +95,7 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 6、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
 
-7、本库没有开卡（不喜欢垃圾信息骚扰），如需开卡入会请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
+7、本库没有开卡（不喜欢垃圾信息骚扰），如需店铺开卡请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
 
 拉库命令下面，默认不跑，设置变量export guaopencard_addSku_All=true  export guaopencard_All=true
 
@@ -123,5 +120,6 @@ ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklac
 |   `Ev_Start`    |    自动评价<br>是否运行    | 非必须 | 选择运行，`true`运行，默认`false`不运行 |
 |   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换7天内过期京豆换喜豆 |
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
+|   `OpenCard`           |     开卡有礼     | 非必须 | 默认为false不执行，设置True执行，门槛默认是5豆以上才开卡 |
 
 
