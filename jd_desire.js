@@ -9,7 +9,7 @@ by:小手冰凉 tg:@chianPLA
 ===========================
 [task_local]
 #京东集魔方
-31 1,20 * * * jd_mofang_j.js, tag=京东集魔方, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+31 2,19 * * * jd_mofang_j.js, tag=京东集魔方, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
  */
 
 const $ = new Env('京东集魔方');
