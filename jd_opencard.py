@@ -172,7 +172,7 @@ pwd = os.path.dirname(os.path.abspath(__file__)) + os.sep
 ######
 OpenCard = False
 openCardBean = 5
-sleepNum = 0.1
+sleepNum = 0
 record = True
 onlyRecord = False
 memory = False
@@ -1111,7 +1111,7 @@ def getRemoteShopid():
     shopidList = []
     venderidList = []
     url = base64.decodebytes(
-        b"aHR0cHM6Ly9naXRlZS5jb20vY3VydGlubHYvUHVibGljL3Jhdy9tYXN0ZXIvT3BlbkNhcmQvc2hvcGlkLnR4dA==")
+        b"aHR0cHM6Ly9naXRlZS5jb20vZHlsYW5vdGUvYWNpZC9yYXcvbWFzdGVyL3Nob3BpZC50eHQ=")
     try:
         rShopid = gettext(url)
         rShopid = rShopid.split("\n")
