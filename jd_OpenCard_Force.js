@@ -20,7 +20,7 @@ cron:10 10 10 10 *
 
 */
 
-const $ = new Env('入会开卡领取礼包(通用)');
+const $ = new Env('入会开卡领礼包(通用)');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -41,7 +41,7 @@ if ($.isNode()) {
 allMessage = '';
 message = '';
 !(async () => {
-  console.log("\n\n【由于自动运行会自动开卡，建议禁用】\n【如需使用请自行查找入会ID添加】\n【变量：export VENDER_ID='ID'】\n\n")
+  console.log("\n【如需使用,入会ID添加变量：export VENDER_ID='ID'】\n\n")
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
       "open-url": "https://bean.m.jd.com/"
@@ -72,7 +72,7 @@ message = '';
 
 async function run() {
   try {
-        const joinVenderIdList = process.env.VENDER_ID.split('&');
+        const joinVenderIdList = process.env.VENDER_ID.split("&");
         for (let i = 0; i < joinVenderIdList.length; i++) {
             $.joinVenderId = joinVenderIdList[i];
             $.errorJoinShop = '';
