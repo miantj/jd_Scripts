@@ -1,17 +1,28 @@
 #!/usr/bin/env bash
 ## 导入通用变量与函数
-#15 12,23 * * * jd_sharecode.sh 
+#15 3,23 * * * jd_sharecode.sh 
 #new Env('获取互助码');
-grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
-if [[ $? != 0 ]];then
-	\cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
-else
-	echo "already exist" >/dev/null 2>&1
-fi
-#2.10.7版本通知替换
+#青龙不同版本处理
 ver=`sed -n /version/p /ql/src/version.ts|tr -cd '[0-9]\n'`
-if [[ "${ver}" -ge "2107" ]];then
+if [[ "${ver}" -ge "2107" ]] && [[ "${ver}" -lt "2120" ]]
+then
    cp -f /ql/repo/6dylan6_jdpro/sendNotify.js /ql/deps
+   grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
+   if [[ $? != 0 ]];then
+	   \cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
+   fi
+elif [[ "${ver}" -ge "2120" ]]
+then
+   cp -f /ql/data/repo/6dylan6_jdpro/sendNotify.js /ql/deps
+   grep '6dylan6_1124' /ql/data/config/task_before.sh >/dev/null 2>&1
+   if [[ $? != 0 ]];then
+	   \cp /ql/data/repo/6dylan6_jdpro/docker/task_before.sh /ql/data/config/
+   fi
+else
+   grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
+   if [[ $? != 0 ]];then
+	   \cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
+   fi
 fi
 
 dir_shell=/ql/shell
