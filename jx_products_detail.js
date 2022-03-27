@@ -25,7 +25,7 @@ let showMsg = '';
             console.log(showMsg);
             await $.wait(1000)
             // 账号${$.index} - ${$.UserName}
-            await notify.sendNotify(`${$.name}`, `${showMsg}`);
+            //await notify.sendNotify(`${$.name}`, `${showMsg}`);
             break;
         }
     }
