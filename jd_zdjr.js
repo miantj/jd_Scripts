@@ -7,6 +7,7 @@ jd_zdjr_activityUrl 活动地址 必需
 需要配合重写获取=>活动id、活动地址
 https://\w+-isv.isvjcloud.com/wxTeam/shopInfo url script-request-body jd_zdjr.js
 mitm
+1 1 1 1 * jd_zdjr.js
 *-isv.isvjcloud.com
 */
 
