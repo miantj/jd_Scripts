@@ -95,11 +95,9 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 6、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
 
-7、本库没有开卡（不喜欢垃圾信息骚扰），如需店铺开卡请拉瓜佬库[@smiek2221](https://github.com/smiek2221/scripts.git)
+7、本库开卡任务默认不运行，如需运行请设置变量export DY_OPENALL="true"
 
-拉库命令下面，默认不跑，设置变量export guaopencard_addSku_All=true  export guaopencard_All=true
 
-ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklace.js|JDJRValidator_Pure.js|sign_graphics_validate.js|cleancart_activity.js|jdCookie.js|sendNotify.js"
 
 
 ##### 控制脚本功能环境变量
@@ -120,6 +118,6 @@ ql repo https://github.com/smiek2121/scripts.git "jd_|gua_" "" "ZooFaker_Necklac
 |   `Ev_Start`    |    自动评价<br>是否运行    | 非必须 | 选择运行，`true`运行，默认`false`不运行 |
 |   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换7天内过期京豆换喜豆 |
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
-|   `OpenCard`           |     开卡有礼     | 非必须 | 默认为false不执行，设置True执行，门槛默认是5豆以上才开卡 |
+
 
 
