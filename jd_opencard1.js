@@ -16,7 +16,7 @@ if (process.env.DY_OPENALL != "true") {
     return
 }
 
-const $ = new Env('3.30-4.8 约惠春天 好物来袭');
+const $ = new Env('约惠春天_好物来袭_开卡1');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 CryptoScripts()
