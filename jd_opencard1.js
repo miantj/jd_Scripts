@@ -12,7 +12,7 @@ export DY_OPENALL="true"
 */
 
 if (process.env.DY_OPENALL != "true") {
-    console.log("\n开卡任务默认不运行,设置变量export DY_OPENALL="true"来运行\n")
+    console.log('\n开卡任务默认不运行,设置变量export DY_OPENALL="true"来运行\n')
     return
 }
 
