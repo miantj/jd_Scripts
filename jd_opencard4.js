@@ -16,7 +16,7 @@ if (process.env.DY_OPENALL != "true") {
     return
 }
 
-let opencard_toShop = "false"
+let opencard_toShop = "true"
 const $ = new Env('我的新家超级配_开卡');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
