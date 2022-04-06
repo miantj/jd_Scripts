@@ -690,7 +690,7 @@ function getListIntegral() {
             //for (let i = 0; i < parseInt($.integralCount / 50); i ++) {
               //await lottery();
               //await $.wait(500);
-            }
+            //}
           } else {
             console.log(`integralRecord失败：${JSON.stringify(data)}`);
           }
