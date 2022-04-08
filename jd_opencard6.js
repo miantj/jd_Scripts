@@ -19,7 +19,7 @@ if (process.env.DY_OPENALL != "true") {
 let guaopencard_addSku = "true"
 let guaopencard = "true"
 let guaopenwait = "0"
-let guaopencard_draw = "0"
+let guaopencard_draw = "3"
 
 const $ = new Env('暖春焕新季-开卡');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
