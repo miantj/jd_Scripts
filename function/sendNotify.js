@@ -14,7 +14,7 @@ const querystring = require('querystring');
 const exec = require('child_process').exec;
 const $ = new Env();
 const timeout = 15000; //超时时间(单位毫秒)
-console.log("加载sendNotify，当前版本: 20220327");
+//console.log("加载sendNotify，当前版本: 20220327");
 // =======================================go-cqhttp通知设置区域===========================================
 //gobot_url 填写请求地址http://127.0.0.1/send_private_msg
 //gobot_token 填写在go-cqhttp文件设置的访问密钥
@@ -130,7 +130,7 @@ const {
     getEnvs,
     DisableCk,
     getEnvByPtPin
-} = require('./ql');
+} = require('./function/ql');
 const fs = require('fs');
 let isnewql = fs.existsSync('/ql/data/config/auth.json');
 let strCKFile="";
@@ -177,7 +177,7 @@ let isLogin = false;
 if (process.env.NOTIFY_SHOWNAMETYPE) {
     ShowRemarkType = process.env.NOTIFY_SHOWNAMETYPE;
 }
-async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By 6dylan6',strsummary="") {
+async function sendNotify(text, desp, params = {}, author = "\n================================\n好物推荐：https://u.jd.com/WLEVYTM\n疫情民生专供：https://u.jd.com/WMDL7nV",strsummary="") {
     console.log(`开始发送通知...`); 
 	
 	//NOTIFY_FILTERBYFILE代码来自Ca11back.
@@ -458,7 +458,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By 6d
             var strPtPin = await GetPtPin(text);
             var strdecPtPin = decodeURIComponent(strPtPin);
             if (strPtPin) {
-                await sendNotifybyWxPucher("汪汪乐园领取通知", `【京东账号】${strdecPtPin}\n当前等级: 30\n已自动领取最高等级奖励\n请前往京东极速版APP查看使用优惠券\n活动入口：京东极速版APP->我的->优惠券->京券`, strdecPtPin);
+                await sendNotifybyWxPucher("汪汪乐园领取通知", `【京东账号】${strdecPtPin}\n当前等级: 30\n请到京东极速版APP提现6.66\n活动入口：京东极速版APP->我的->汪汪乐园->点礼包`, strdecPtPin);
             }
         }
 
@@ -1647,7 +1647,7 @@ function getRemark(strRemark) {
     }
 }
 
-async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 By 6dylan6', strsummary = "") {
+async function sendNotifybyWxPucher(text, desp, PtPin, author = "\n================================\n好物推荐：https://u.jd.com/WLEVYTM\n疫情民生专供：https://u.jd.com/WMDL7nV", strsummary = "") {
 
     try {
         var Uid = "";
@@ -2157,9 +2157,9 @@ function buildLastDesp(desp, author = '') {
         return desp.trim();
     } else {
         if (!author.match(/本通知 By/)) {
-            author = `\n\n本通知 By ${author}`
+            author = `\n\n${author}`
         }
-        return desp.trim() + author + "\n通知时间: " + GetDateTime(new Date());
+        return desp.trim() + author + "\n现在时刻: " + GetDateTime(new Date());
     }
 }
 
