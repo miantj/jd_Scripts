@@ -191,10 +191,6 @@ if "least" in os.environ:
     least = getEnvs(os.environ["least"])
     printT(f"已获取并使用Env环境 least:{least}")
 
-if "dd_thread" in os.environ:
-    if len (os.environ["dd_thread"]) > 1:
-        dd_thread = getEnvs (os.environ["dd_thread"])
-        printT(f"已获取并使用Env环境 dd_thread:{dd_thread}")
 
 heath_noexchage_list = heath_noexchage.split('&')
 
@@ -275,27 +271,7 @@ class msg(object):
         ###################
 msg().main()
 
-class TaskThread(threading.Thread):
-    """
-    处理task相关的线程类
-    """
-    def __init__(self, func, args=()):
-        super(TaskThread, self).__init__()
-        self.func = func  # 要执行的task类型
-        self.args = args  # 要传入的参数
 
-    def run(self):
-        # 线程类实例调用start()方法将执行run()方法,这里定义具体要做的异步任务
-        #print("start func {}".format(self.func.__name__))  # 打印task名字　用方法名.__name__
-        self.result = self.func(*self.args)  # 将任务执行结果赋值给self.result变量   前面加*，表示传入多个参数
-
-    def get_result(self):
-        # 该方法返回task函数的执行结果,方法名不是非要get_result
-        try:
-            return self.result
-        except Exception as ex:
-            print(ex)
-            return "ERROR"
 def listcookie():             #将JDCookies.txt的cookies变成list[]
     if 'pt_key=' in cookies and 'pt_pin=' in cookies:
         r = re.compile(r"pt_key=.*?pt_pin=.*?;" ,  re.M | re.S | re.I)         #r"" 的作用是去除转义字符.
@@ -327,11 +303,9 @@ def setHeaders(cookie):
         'Connection': 'keep-alive',
         'Accept': 'application/json, text/plain, */*',
         'Referer': 'https://h5.m.jd.com/',
-        #'Host': 'ms.jr.jd.com',
         'Content-Type': 'application/x-www-form-urlencoded',
-        #'User-Agent': 'jdapp;iPhone;9.4.8;14.3;809409cbd5bb8a0fa8fff41378c1afe91b8075ad;network/wifi;ADID/201EDE7F-5111-49E8-9F0D-CCF9677CD6FE;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone13,4;addressid/2455696156;supportBestPay/0;appBuild/167629;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
         'User-Agent': userAgent(),
-        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Encoding': 'gzip, deflate',
         'Accept-Language': 'zh-cn'
     }
     return headers,userName
@@ -352,11 +326,11 @@ def checkUser(cookies):
     for i in cookies:
         headers,userName = setHeaders(i)
         try:
-            total_exchangePoints = cheak_points('jdhealth_getTaskDetail','{"buildingId":"","taskId":22,"channelId":1}',headers)
-            title,exchangePoints,bizMsg,bizCode = jdhealth_getCommodities('jdhealth_getCommodities','{}',headers)
+            total_exchangePoints = cheak_points('jdhealth_getHomeData','{}',headers)
+            title,exchangePoints,bizMsg,bizCode = jdhealth_getCommodities('jdhealth_getCommodities','',headers)
             if user_num == 1:
                 printT("您已设置兑换的商品：【{0}豆】 需要{1}积分".format(title, exchangePoints))
-                print("********** 首先检测您是否有钱呀 ********** ")
+                print("********** 检测符合兑换要求的账号 ********** ")
             if int(total_exchangePoints) > least:
                 total_exchangePoints = int(total_exchangePoints)
                 if not str(user_num) in heath_noexchage_list:
@@ -426,7 +400,7 @@ def jdhealth_exchange(functionId,body,headers):
             print(e)
 
 def start():
-    print (f"###### 启动并发线程 【Thread-{dd_thread}】")
+    print (f"############# 开始############ ")
     cookiesList, userNameList, pinNameList = getCk.iscookie ()
     cookies1 = checkUser (cookiesList)  # 将够钱兑换的账号保存下来给cookies，其余不够钱的账号剔除在外，不执行兑换
     final = 1
@@ -438,7 +412,7 @@ def start():
             final = jdhealth_exchange ('jdhealth_exchange','{"commodityType":2,"commodityId":"4"}',headers)
             user_num += 1
             if final == 0:
-                last_points = cheak_points ('jdhealth_getTaskDetail','{"buildingId":"","taskId":22,"channelId":1}',headers)
+                last_points = cheak_points ('jdhealth_getHomeData','',headers)
                 title, exchangePoints, bizMsg, bizCode = jdhealth_getCommodities ('jdhealth_getCommodities', '{}',headers)
                 # printT (f"账号{user_num}:【{userName}】剩余积分:{last_integration}...")
                 msg (f"账号{user_num}:【{userName}】成功兑换【{title}豆】，剩余积分:{last_points}...")
