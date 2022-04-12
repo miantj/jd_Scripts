@@ -25,21 +25,21 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ```
 
-没代理就用gitee版吧，用下面指令！(更新会慢点）
+怎么都拉不了就用gitee版吧，用下面指令！(更新会慢点）
 
 ```
 ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
 
-任务定时建议 40 8-23/4 * * *
+任务定时建议 40 0-23/4 * * *    
 
 ## 依赖安装
 
 拉库后，执行'依赖安装'任务安装此库脚本所需依赖，脚本名jd_indeps，首次拉库执行一次即可，有新依赖再次执行。
 
 
-## 互助（内部助力）指南
+## 互助指南
 
 1、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，会少依赖安装任务和获取互助任务）
 
@@ -57,8 +57,9 @@ CommandTimeoutTime="3h"  即改为3小时。
 
 3、执行'获取互助码'任务即可自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待任务运行一遍后产生日志才会获取到互助码，可以看jd_sharecode日志获取情况）
 
-## 一些使用技巧
-1、涉及兑换任务可以配置任务并发，就是全部一起跑。
+## 一些使用技巧与问题解答
+
+1、涉及兑换或需要抢的可以配置任务并发，就是全部一起跑。
 
 并发配置方法：
 
@@ -72,15 +73,15 @@ CommandTimeoutTime="3h"  即改为3小时。
 
 如 task XXXX.js desi JD_COOKIE 1-10  前10个一组运行，2 8 9就是第2/8/9序号的ck执行，以此类推。
 
-2、极速版签到建议并发，不然号多跑不完，一个号要40多分钟。。
+2、极速版签到建议并发，不然号多跑不完，一个号要30多分钟。。
 
 task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同版本不一样，按自己的写）
 
-3、京东保价建议并发，否则前几个号正常跑，后面就会报频繁！
+3、保价建议并发，否则可能前几个号正常跑，后面会报频繁！
 
 task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
-4、通知支持一对一推送和显示备注，详细用法参考[@ccwav](https://github.com/ccwav/QLScript2)
+4、通知支持一对一推送和显示备注，详细用法参考[notify.md](./notify.md)
 
 备注显示变量如下
 
@@ -92,11 +93,13 @@ export NOTIFY_SHOWNAMETYPE="3"    效果是 :  账号名称：pin(备注)
 
 export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
+5、因为青龙有随机延时（可以在配置文件设置为0，默认300秒），所以涉及准点运行的任务，最后加now，如果是desi或conc不用加也会准时跑。
 
 6、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
 
 7、本库开卡任务默认不运行，如需运行请设置变量export DY_OPENALL="true"
 
+8、如果通知文件发现和库里的不一致，那是青龙自带的覆盖了，正常库里会自动覆盖掉青龙的通知文件，如果没有自动那就手动拷贝一份到deps目录下吧，或者直接删掉deps目录下的sendnotify.js
 
 
 
