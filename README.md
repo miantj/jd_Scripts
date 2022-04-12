@@ -32,7 +32,7 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ```
 
-任务定时建议 40 0-23/4 * * *    
+任务定时建议 50 7-23/2 * * *  
 
 ## 依赖安装
 
@@ -45,13 +45,11 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 RepoFileExtensions="js py"修改为
 
-RepoFileExtensions="js py sh"
+RepoFileExtensions="js py sh ts"
 
-右上角保存
+保存
 
-建议调整任务运行超时时间，默认1小时有些脚本跑不完就被强制kill。
 
-CommandTimeoutTime="3h"  即改为3小时。
 
 2、执行拉库任务。
 
@@ -101,7 +99,7 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 8、如果通知文件发现和库里的不一致，那是青龙自带的覆盖了，正常库里会自动覆盖掉青龙的通知文件，如果没有自动那就手动拷贝一份到deps目录下吧，或者直接删掉deps目录下的sendnotify.js
 
-
+9、建议调整任务运行超时时间，默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整吧。
 
 ##### 控制脚本功能环境变量
 
