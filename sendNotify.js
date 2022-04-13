@@ -266,10 +266,17 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 
             if (Notify_CKTask) {
                 console.log("触发CK脚本，开始执行....");
-                Notify_CKTask = "task " + Notify_CKTask + " now";
-                await exec(Notify_CKTask, function (error, stdout, stderr) {
-                    console.log(error, stdout, stderr)
-                });
+                await exec(`ps -ef|grep -v grep|grep ${Notify_CKTask}`, async function (err, stdout, stderr){
+                if (!stdout) {
+                             Notify_CKTask = "task " + Notify_CKTask + " now";
+                             console.log(Notify_CKTask)
+                             await exec(Notify_CKTask);
+                } else {
+                             console.log('已有相同任务在执行,跳过此次执行！\n')
+                             return
+                       }
+                })
+
             }
         }
         if (process.env.NOTIFY_AUTOCHECKCK == "true") {
