@@ -3,7 +3,7 @@
 一次性开卡
 第一个账号助力作者 其他依次助力CK1
 第一个CK失效会退出脚本
-32 4,15 14-29 4 * jd_opencard12.js
+32 4,15 14-29 4 * jd_opencard13.js
 默认不执行，需要执行请设置变量
 export DY_OPENALL="true"
 */
@@ -13,7 +13,7 @@ if (process.env.DY_OPENALL != "true") {
     return
 }
 
-const $ = new Env('4.13~4.29 早鸟焕春 大牌惠聚');
+const $ = new Env('早鸟焕春 大牌惠聚-开卡');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 CryptoScripts()
@@ -134,7 +134,7 @@ async function run() {
     await takePostRequest('checkOpenCard');
 	console.log($.actorUuid)
     // return
-    if($.allOpenCard == true){
+    if($.allOpenCard == false){
       console.log('开卡任务')
       for(o of $.openList){
         $.openCard = false
