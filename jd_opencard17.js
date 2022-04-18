@@ -16,7 +16,7 @@ let guaopencard = "true"
 let guaopenwait = "0"
 let guaopencard_draw = "3"
 
-const $ = new Env('4.18~5.5 甄选大牌 品质嗨购')
+const $ = new Env('甄选大牌 品质嗨购-开卡')
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 CryptoScripts()
