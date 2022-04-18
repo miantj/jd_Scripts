@@ -96,7 +96,7 @@ function queryRedRainTemplateNew(actId) {
   const body = { "actId": actId };
   return new Promise(async resolve => {
     const options = {
-      url: `https://api.m.jd.com/client.action?functionId=noahRedRainLottery&client=wh5&clientVersion=1.0.0&&body=${encodeURIComponent(JSON.stringify(body))}&_=${(new Date).getTime()}`,
+      url: `https://api.m.jd.com/client.action?appid=redrain-2021&functionId=queryRedRainTemplateNew&client=wh5&clientVersion=1.0.0&body=${encodeURIComponent(JSON.stringify(body))}&_=${(new Date).getTime()}`,
       headers: {
         Host: "api.m.jd.com",
         origin: 'https://h5.m.jd.com/',
@@ -155,9 +155,8 @@ function doInteractiveAssignment(encryptProjectId, encryptAssignmentId) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.subCode == "0") {
-              //console.log(`${data.rewardsInfo.successRewards[3][0].rewardName}`);
-              message += `领取成功，获得 ${data.rewardsInfo.successRewards[3][0].rewardName}`
-              allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n领取成功，获得 ${data.rewardsInfo.successRewards[3][0].rewardName}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
+              console.log(`${data.rewardsInfo.successRewards[3][0].quantity}京豆`);
+              allMessage += `京东账号${$.index}${$.nickName || $.UserName}\n领取成功，获得【${data.rewardsInfo.successRewards[3][0].quantity}】京豆${$.index !== cookiesArr.length ? '\n\n' : ''}`;
             } else {
               console.log(data);
             }
