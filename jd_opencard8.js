@@ -79,10 +79,10 @@ let activityCookie =''
   $.activityId = "dz40c5c3a14fd59a0c47466d63f0c7"
   $.shareUuid = "533c04cedd474c9a9693899099a949c8"
   console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/april/springUnion2/activity?activityId=${$.activityId}&shareUuid=${$.shareUuid}`)
-  let shareUuidArr = [$.shareUuid,"d7553f7c6ec3458ca122011bb2354ea8"]
+  let shareUuidArr = ["d7553f7c6ec3458ca122011bb2354ea8"]
   let s = Math.floor((Math.random()*10))
   let n = 0
-  if(s >= 1 && s<= 6) n = Math.floor((Math.random()*shareUuidArr.length))
+  n = Math.floor((Math.random()*shareUuidArr.length))
   $.shareUuid = shareUuidArr[n] ? shareUuidArr[n] : $.shareUuid
 
   for (let i = 0; i < cookiesArr.length; i++) {
