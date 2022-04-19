@@ -12,7 +12,7 @@ if (process.env.DY_OPENALL != "true") {
 }
 
 const $ = new Env('4月桌面好物和小天才-开卡');
-const Faker=require('./sign_graphics_validate.js') 
+const Faker=require('./function/sign_graphics_validate.js') 
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 CryptoScripts()
