@@ -1,7 +1,7 @@
 
 /*
 一次性开卡
-10 9,18 18-30 4 * jd_opencardL18.js 
+10 9,18 18-30 4 * jd_opencard18.js 
 默认不执行，需要执行请设置变量
 export DY_OPENALL="true"
 */
