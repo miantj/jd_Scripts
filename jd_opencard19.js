@@ -139,7 +139,27 @@ async function member() {
       console.log("去助力 -> " + $.authorCode);
       await task("linkgame/assist/status", `activityId=${$.activityId}&pin=${encodeURIComponent($.secretPin)}&shareUuid=${$.authorCode}`);
       await task("linkgame/assist", `activityId=${$.activityId}&pin=${encodeURIComponent($.secretPin)}&shareUuid=${$.authorCode}`);
+      // await task('linkgame/help/list', `pin=${encodeURIComponent($.secretPin)}&activityId=${$.activityId}`)
 
+      // await task('linkgame/task/info', `pin=${encodeURIComponent($.secretPin)}&activityId=${$.activityId}`)
+      // console.log('任务 -> ')
+      // await $.wait(2000)
+      // await task('opencard/addCart', `activityId=${$.activityId}&pin=${encodeURIComponent($.secretPin)}`);
+      // await $.wait(2000)
+      // await task('linkgame/sendAllCoupon', `activityId=${$.activityId}&pin=${encodeURIComponent($.secretPin)}`);
+      // await getFirstLZCK()
+      // await getToken();
+      // console.log('抽奖 -> ')
+      // await $.wait(2000)
+      // await task('linkgame/draw', `activityId=${$.activityId}&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.secretPin)}`);
+      // console.log('100 -> ')
+      // await getFirstLZCK()
+      // await getToken();
+      // await $.wait(2000)
+      // await task('linkgame/draw/record', `activityId=${$.activityId}&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.secretPin)}`);
+    }
+  }
+}
 function task(function_id, body, isCommon = 0, own = 0) {
   return new Promise((resolve) => {
     $.post(taskUrl(function_id, body, isCommon), async (err, resp, data) => {
