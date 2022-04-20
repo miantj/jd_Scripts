@@ -71,7 +71,7 @@ async function jdsign() {
     await $.wait(2000)
     await getInfo("https://pro.m.jd.com/mall/active/3SC6rw5iBg66qrXPGmZMqFDwcyXi/index.html");//京东图书
     await $.wait(2000)
-    await getInfo("https://prodev.m.jd.com/mall/active/2FzVtkSfUtvU8YoiTeALkJ68PxAs/index.html");//医疗馆 12.31结束
+    await getInfo("https://prodev.m.jd.com/mall/active/2FzVtkSfUtvU8YoiTeALkJ68PxAs/index.html");//医疗馆 
     await $.wait(2000)
     await getInfo("https://prodev.m.jd.com/mall/active/hPJiMgUQmc34bamrApLUBRUy82W/index.html");//3.31结束    
 
@@ -107,7 +107,7 @@ async function getInfo(url) {
 // 签到
 async function doInteractiveAssignment(encryptProjectId, AssignmentId) {
   return new Promise(async (resolve) => {
-    $.post(taskUrl("doInteractiveAssignment", { "encryptProjectId": encryptProjectId, "encryptAssignmentId": AssignmentId, "sourceCode": "aceaceqingzhan", "itemId": "1", "actionType": "", "completionFlag": "true", "ext": {} }), async (err, resp, data) => {
+    $.post(taskUrl("doInteractiveAssignment", { "encryptProjectId": encryptProjectId, "encryptAssignmentId": AssignmentId, "sourceCode": "acetttsign", "itemId": "1", "actionType": "", "completionFlag": "true", "ext": {} }), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
