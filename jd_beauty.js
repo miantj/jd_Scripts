@@ -143,6 +143,7 @@ async function jdBeauty() {
 async function mr() {
   $.coins = 0
   let positionList = ['b1', 'h1', 's1', 'b2', 'h2', 's2']
+  let positionList2 = ['b2', 'h2', 's2']
   $.tokens = []
   $.pos = []
   $.helpInfo = []
@@ -364,7 +365,7 @@ async function mr() {
                 client.send(`{"msg":{"type":"action","args":{"position":"${vo.data.position}","material_id":${ma.id}},"action":"material_produce_v2"}}`)
                 await $.wait(5000);
               } else {
-                ma = $.material.base[1]['items'][positionList.indexOf(vo.data.position)]
+                ma = $.material.base[1]['items'][positionList2.indexOf(vo.data.position)]
                 if (ma) {
                   console.log(`else去生产${ma.name}`)
                   client.send(`{"msg":{"type":"action","args":{"position":"${vo.data.position}","material_id":${ma.id}},"action":"material_produce_v2"}}`)
@@ -410,7 +411,7 @@ async function mr() {
         case "product_lists":
           let need_material = []
           if (vo.code === '200' || vo.code === 200) {
-            $.products = vo.data.filter(vo=>vo.level===$.level)
+            $.products = vo.data.filter(vo=>vo.level===$.level-1)
             console.log(`========可生产商品信息========`)
             for (let product of $.products) {
               let num = Infinity
@@ -527,7 +528,7 @@ async function mr() {
           break
         case "to_exchange":
           if(oc(() => vo.data.coins)){
-            console.log(`兑换${vo.data.coins/-1000}京豆成功`)
+            console.log(`兑换${vo.data.coins/-10000}京豆成功`)
           }else{
             console.log(`兑换京豆失败`)
           }
