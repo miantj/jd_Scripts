@@ -1,10 +1,10 @@
 
-# Tips
+# WELCOME！！！
 
->搜集全网可用，测运行无重复，移除失效，无助力池，默认无加购，一键配置内部互助,自动安装所需依赖（需青龙2.8+）;
+>搜自全网，亲测运行，加密代码审查保障安全，无重复，定期移除失效，默认无加购，一键配置内部互助(可选模式),自动安装运行依赖（需青龙2.8+）;
 
  
->细水长流，低调使用，在精不在多，许多重复或失效任务容易号黑！
+>欢迎大家issue、pr，会一一回复！
 
 ## 青龙[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
@@ -25,7 +25,7 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ```
 
-怎么都拉不了就用gitee版吧，用下面指令！(更新会慢点）
+怎么都拉不下来就用gitee版吧，用下面指令！(更新会慢点）
 
 ```
 ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
@@ -50,7 +50,6 @@ RepoFileExtensions="js py sh ts"
 保存
 
 
-
 2、执行拉库任务。
 
 3、执行'获取互助码'任务即可自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待任务运行一遍后产生日志才会获取到互助码，可以看jd_sharecode日志获取情况）
@@ -71,7 +70,7 @@ RepoFileExtensions="js py sh ts"
 
 如 task XXXX.js desi JD_COOKIE 1-10  前10个一组运行，2 8 9就是第2/8/9序号的ck执行，以此类推。
 
-2、极速版签到建议并发，不然号多跑不完，一个号要30多分钟。。
+2、极速版签到建议并发，号多跑很久的，一个号要30多分钟。。
 
 task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同版本不一样，按自己的写）
 
@@ -95,11 +94,11 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 6、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
 
-7、本库开卡任务默认不运行，如需运行请设置变量export DY_OPENALL="true"
+7、本库开卡任务默认不执行，如需运行请设置变量export DY_OPENALL="true"，所有开卡任务通用。
 
 8、如果通知文件发现和库里的不一致，那是青龙自带的覆盖了，正常库里会自动覆盖掉青龙的通知文件，如果没有自动那就手动拷贝一份到deps目录下吧，或者直接删掉deps目录下的sendnotify.js
 
-9、建议调整任务运行超时时间，默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整吧。
+9、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整。
 
 ##### 控制脚本功能环境变量
 
@@ -119,6 +118,8 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 |   `Ev_Start`    |    自动评价<br>是否运行    | 非必须 | 选择运行，`true`运行，默认`false`不运行 |
 |   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换7天内过期京豆换喜豆 |
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
+|   ` HelpType`           |     互助模式    | 非必须 | 默认顺序助力，0是全部一样顺序助力，1是均等机会助力，2是随机顺序助力，例： export HelpType=1 |
+|   `PandaToken`           |     领现金使用     | 非必须 | Token去[TG](https://t.me/pang_da_bot) 获取，获取一次7天有效期1000次调用，export PandaToken='你获取的token' |
 
 
 

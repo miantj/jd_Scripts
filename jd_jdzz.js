@@ -1,8 +1,7 @@
 /*
 京东赚赚
-可以做随机互助
 活动入口：京东赚赚小程序
-长期活动，每日收益2毛左右，多号互助会较多
+长期活动，每日收益2毛左右
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
@@ -41,7 +40,7 @@ const inviteCodes = [
 ]
 let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000);
 !(async () => {
-  await requireConfig();
+  //await requireConfig();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
