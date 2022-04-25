@@ -5,7 +5,7 @@ export computer_activityId="16"
 即时任务，无需cron
 */
 
-const $ = new Env('电脑配件');
+const $ = new Env('电脑配件通用');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 const notify = $.isNode() ? require('./sendNotify') : '';

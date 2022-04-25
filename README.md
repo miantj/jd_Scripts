@@ -1,14 +1,14 @@
 
 # WELCOME！！！
 
->搜自全网，亲测运行，加密代码审查保障安全，无重复，定期移除失效，默认无加购，一键配置内部互助(可选模式),自动安装运行依赖（需青龙2.8+）;
+>搜自全网，亲测运行，加密代码审查确保CK安全，无重复，定期移除失效，默认无加购，一键配置内部互助(可选模式),自动安装运行依赖（需青龙2.8+）;
 
  
 >欢迎大家issue、pr，会一一回复！
 
-## 青龙[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
+## 青龙面板[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
-## 指令
+## 拉库指令
 
 【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/ （差不在多19行）" 修改为GithubProxyUrl=""，否则拉取失败，以上版本无需配置。
 
@@ -54,7 +54,11 @@ RepoFileExtensions="js py sh ts"
 
 3、执行'获取互助码'任务即可自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待任务运行一遍后产生日志才会获取到互助码，可以看jd_sharecode日志获取情况）
 
-## 一些使用技巧与问题解答
+
+
+<details>
+<summary>使用技巧与问题解答</summary>
+<pre><code>
 
 1、涉及兑换或需要抢的可以配置任务并发，就是全部一起跑。
 
@@ -99,8 +103,34 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 8、如果通知文件发现和库里的不一致，那是青龙自带的覆盖了，正常库里会自动覆盖掉青龙的通知文件，如果没有自动那就手动拷贝一份到deps目录下吧，或者直接删掉deps目录下的sendnotify.js
 
 9、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整。
+</code></pre>
+</details>
 
-##### 控制脚本功能环境变量
+## 加密脚本清单
+
+<details>
+<summary>加密脚本清单，不放心可禁用</summary>
+<pre><code>
+jd_zdjr.js （组队瓜分京豆，全加密）
+jd_cjzdgf.js （CJ组队瓜分，全加密）
+jd_fan.js （粉丝互动，全加密）
+jd_twjk.js  （特务集卡，全加密）
+jd_wxgame.js （打豆豆，全加密）
+jd_fcwb_help.js (发财挖宝助力，全加密）
+jd_half_redrain.js (半点京豆雨，全加密）
+jd_jxmc.js （京喜牧场，算法加密）
+jd_cfd.js （京喜财富岛，算法加密）
+jd_cfd_loop.js (京喜财富岛捡贝壳，算法加密）
+jd_15-8.js （极速抢券15-8，算法加密）
+jd_computer.js （电脑配件通用任务，算法加密）
+jd_speed_sign.js （极速版签到，算法加密）
+jd_speed_sign.js  （极速版红包，算法加密）
+开卡系列全部都有算法加密 
+</code></pre>
+</details>
+
+
+## 控制脚本功能环境变量
 
 
 |             Name             |             归属             |  属性  | 说明                                                         |
@@ -120,6 +150,6 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
 |   ` HelpType`           |     互助模式    | 非必须 | 默认顺序助力，0是全部一样顺序助力，1是均等机会助力，2是随机顺序助力，例： export HelpType=1 |
 |   `PandaToken`           |     领现金使用     | 非必须 | Token去[TG](https://t.me/pang_da_bot) 获取，获取一次7天有效期1000次调用，export PandaToken='你获取的token' |
-
+|   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
 
 
