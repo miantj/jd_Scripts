@@ -765,7 +765,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 SCKEY = process.env.PUSH_KEY2;
             }
 			
-            if (process.env.DEER_KEY2) {
+            if (process.env.DEER_KEY2 && Use_pushdeerNotify) {
                 PUSHDEER_KEY = process.env.DEER_KEY2;
             }
 			
@@ -873,7 +873,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 SCKEY = process.env.PUSH_KEY3;
             }
 			
-            if (process.env.DEER_KEY3) {
+            if (process.env.DEER_KEY3 && Use_pushdeerNotify) {
                 PUSHDEER_KEY = process.env.DEER_KEY3;
             }
 			
@@ -982,7 +982,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 SCKEY = process.env.PUSH_KEY4;
             }
 			
-            if (process.env.DEER_KEY4) {
+            if (process.env.DEER_KEY4 && Use_pushdeerNotify) {
                 PUSHDEER_KEY = process.env.DEER_KEY4;
             }
 			
@@ -1091,7 +1091,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 SCKEY = process.env.PUSH_KEY5;
             }
 			
-            if (process.env.DEER_KEY5) {
+            if (process.env.DEER_KEY5 && Use_pushdeerNotify) {
                 PUSHDEER_KEY = process.env.DEER_KEY5;
             }
 			
@@ -1199,7 +1199,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 SCKEY = process.env.PUSH_KEY6;
             }
 			
-            if (process.env.DEER_KEY6) {
+            if (process.env.DEER_KEY6 && Use_pushdeerNotify) {
                 PUSHDEER_KEY = process.env.DEER_KEY6;
             }
 			
@@ -1307,7 +1307,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 SCKEY = process.env.PUSH_KEY7;
             }
 
-            if (process.env.DEER_KEY7) {
+            if (process.env.DEER_KEY7 && Use_pushdeerNotify) {
                 PUSHDEER_KEY = process.env.DEER_KEY7;
             }
 
