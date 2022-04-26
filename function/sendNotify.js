@@ -29,6 +29,11 @@ let GOBOT_QQ = ''; // 如果GOBOT_URL设置 /send_private_msg 则需要填入 us
 //(环境变量名 PUSH_KEY)
 let SCKEY = '';
 
+// =======================================PushDeer通知设置区域===========================================
+//此处填你申请的PushDeer KEY.
+//(环境变量名 DEER_KEY)
+let PUSHDEER_KEY = '';
+
 // =======================================Bark App通知设置区域===========================================
 //此处填你BarkAPP的信息(IP/设备码，例如：https://api.day.app/XXXXXXXX)
 let BARK_PUSH = '';
@@ -177,7 +182,7 @@ let isLogin = false;
 if (process.env.NOTIFY_SHOWNAMETYPE) {
     ShowRemarkType = process.env.NOTIFY_SHOWNAMETYPE;
 }
-async function sendNotify(text, desp, params = {}, author = "\n================================\n好物推荐：https://u.jd.com/WLEVYTM\n疫情民生专供：https://u.jd.com/WMDL7nV",strsummary="") {
+async function sendNotify(text, desp, params = {}, author = "\n================================\n好物推荐：https://u.jd.com/WLEVYTM\n疫情民生保供：https://u.jd.com/WMDL7nV",strsummary="") {
     console.log(`开始发送通知...`); 
 	
 	//NOTIFY_FILTERBYFILE代码来自Ca11back.
@@ -205,6 +210,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
         GOBOT_TOKEN = '';
         GOBOT_QQ = '';
         SCKEY = '';
+		PUSHDEER_KEY= '';
         BARK_PUSH = '';
         BARK_SOUND = '';
         BARK_GROUP = 'QingLong';
@@ -228,6 +234,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 
         //变量开关
         var Use_serverNotify = true;
+		var Use_pushdeerNotify = true;
         var Use_pushPlusNotify = true;
         var Use_BarkNotify = true;
         var Use_tgBotNotify = true;
@@ -266,10 +273,17 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 
             if (Notify_CKTask) {
                 console.log("触发CK脚本，开始执行....");
-                Notify_CKTask = "task " + Notify_CKTask + " now";
-                await exec(Notify_CKTask, function (error, stdout, stderr) {
-                    console.log(error, stdout, stderr)
-                });
+                await exec(`ps -ef|grep -v grep|grep ${Notify_CKTask}`, async function (err, stdout, stderr){
+                if (!stdout) {
+                             Notify_CKTask = "task " + Notify_CKTask + " now";
+                             console.log(Notify_CKTask)
+                             await exec(Notify_CKTask);
+                } else {
+                             console.log('已有相同任务在执行,跳过此次执行！\n')
+                             return
+                       }
+                })
+
             }
         }
         if (process.env.NOTIFY_AUTOCHECKCK == "true") {
@@ -544,6 +558,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                         if (strCustomTempArr.length > 2) {
                             console.log("关闭所有通知变量...");
                             Use_serverNotify = false;
+							Use_pushdeerNotify = false;
                             Use_pushPlusNotify = false;
                             Use_pushPlushxtripNotify = false;
                             Use_BarkNotify = false;
@@ -561,6 +576,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                                     Use_serverNotify = true;
                                     console.log("自定义设定启用Server酱进行通知...");
                                     break;
+                                case "pushdeer":
+                                    Use_pushdeerNotify = true;
+                                    console.log("自定义设定启用pushdeer进行通知...");
+                                    break;									
                                 case "pushplus":
                                     Use_pushPlusNotify = true;
                                     console.log("自定义设定启用pushplus(推送加)进行通知...");
@@ -631,7 +650,11 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             if (process.env.PUSH_KEY && Use_serverNotify) {
                 SCKEY = process.env.PUSH_KEY;
             }
-
+			
+            if (process.env.DEER_KEY && Use_pushdeerNotify) {
+                PUSHDEER_KEY = process.env.DEER_KEY;
+            }
+			
             if (process.env.WP_APP_TOKEN && Use_WxPusher) {
                 WP_APP_TOKEN = process.env.WP_APP_TOKEN;
             }
@@ -741,7 +764,11 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             if (process.env.PUSH_KEY2 && Use_serverNotify) {
                 SCKEY = process.env.PUSH_KEY2;
             }
-
+			
+            if (process.env.DEER_KEY2) {
+                PUSHDEER_KEY = process.env.DEER_KEY2;
+            }
+			
             if (process.env.WP_APP_TOKEN2 && Use_WxPusher) {
                 WP_APP_TOKEN = process.env.WP_APP_TOKEN2;
             }
@@ -845,7 +872,11 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             if (process.env.PUSH_KEY3 && Use_serverNotify) {
                 SCKEY = process.env.PUSH_KEY3;
             }
-
+			
+            if (process.env.DEER_KEY3) {
+                PUSHDEER_KEY = process.env.DEER_KEY3;
+            }
+			
             if (process.env.WP_APP_TOKEN3 && Use_WxPusher) {
                 WP_APP_TOKEN = process.env.WP_APP_TOKEN3;
             }
@@ -950,7 +981,11 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             if (process.env.PUSH_KEY4 && Use_serverNotify) {
                 SCKEY = process.env.PUSH_KEY4;
             }
-
+			
+            if (process.env.DEER_KEY4) {
+                PUSHDEER_KEY = process.env.DEER_KEY4;
+            }
+			
             if (process.env.WP_APP_TOKEN4 && Use_WxPusher) {
                 WP_APP_TOKEN = process.env.WP_APP_TOKEN4;
             }
@@ -1055,7 +1090,11 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             if (process.env.PUSH_KEY5 && Use_serverNotify) {
                 SCKEY = process.env.PUSH_KEY5;
             }
-
+			
+            if (process.env.DEER_KEY5) {
+                PUSHDEER_KEY = process.env.DEER_KEY5;
+            }
+			
             if (process.env.WP_APP_TOKEN5 && Use_WxPusher) {
                 WP_APP_TOKEN = process.env.WP_APP_TOKEN5;
             }
@@ -1159,7 +1198,11 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             if (process.env.PUSH_KEY6 && Use_serverNotify) {
                 SCKEY = process.env.PUSH_KEY6;
             }
-
+			
+            if (process.env.DEER_KEY6) {
+                PUSHDEER_KEY = process.env.DEER_KEY6;
+            }
+			
             if (process.env.WP_APP_TOKEN6 && Use_WxPusher) {
                 WP_APP_TOKEN = process.env.WP_APP_TOKEN6;
             }
@@ -1262,6 +1305,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 
             if (process.env.PUSH_KEY7 && Use_serverNotify) {
                 SCKEY = process.env.PUSH_KEY7;
+            }
+
+            if (process.env.DEER_KEY7) {
+                PUSHDEER_KEY = process.env.DEER_KEY7;
             }
 
             if (process.env.WP_APP_TOKEN7 && Use_WxPusher) {
@@ -1554,7 +1601,8 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             iGotNotify(text, desp, params), //iGot
             gobotNotify(text, desp), //go-cqhttp
             gotifyNotify(text, desp), //gotify
-            wxpusherNotify(text, desp) // wxpusher
+            wxpusherNotify(text, desp), // wxpusher
+            PushDeerNotify(text, desp) //pushdeer推送
         ]);
 }
 
@@ -1647,7 +1695,7 @@ function getRemark(strRemark) {
     }
 }
 
-async function sendNotifybyWxPucher(text, desp, PtPin, author = "\n================================\n好物推荐：https://u.jd.com/WLEVYTM\n疫情民生专供：https://u.jd.com/WMDL7nV", strsummary = "") {
+async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n================================\n好物推荐：<a href="https://u.jd.com/WLEVYTM">https://u.jd.com/WLEVYTM</a>\n疫情民生保供：<a href="https://u.jd.com/WLEVYTM">https://u.jd.com/WLEVYTM</a>', strsummary = "") {
 
     try {
         var Uid = "";
@@ -2584,6 +2632,52 @@ function wxpusherNotify(text, desp) {
             resolve();
         }
     });
+}
+
+function PushDeerNotify(text, desp, time = 2100) {
+  return new Promise((resolve) => {
+    if (PUSHDEER_KEY) {
+      desp = encodeURI(desp);
+      desp = desp.replace(/%0A/g, '%0A%0A');
+      const options = {
+        url: `https://api2.pushdeer.com/message/push`,
+        body: `pushkey=${PUSHDEER_KEY}&text=${text}&desp=${desp}&type=markdown`,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout,
+      };
+      setTimeout(() => {
+        $.post(options, (err, resp, data) => {
+          try {
+            if (err) {
+              console.log('发送通知调用API失败！！\n');
+              console.log(err);
+            } else {
+              data = JSON.parse(data);
+              // 通过返回的result的长度来判断是否成功
+              if (
+                data.content.result.length !== undefined &&
+                data.content.result.length > 0
+              ) {
+                console.log('PushDeer发送通知消息成功🎉\n');
+              } else {
+                console.log(
+                  `PushDeer发送通知消息异常\n${JSON.stringify(data)}`,
+                );
+              }
+            }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve(data);
+          }
+        });
+      }, time);
+    } else {
+      resolve();
+    }
+  });
 }
 
 function GetDateTime(date) {
