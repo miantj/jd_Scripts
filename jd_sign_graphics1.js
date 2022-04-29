@@ -1,9 +1,8 @@
 /* 
-8 8 * * * jd_sign_graphics1.js
+8 8,16 * * * jd_sign_graphics1.js
 只支持nodejs环境
 需要安装依赖 
 npm i png-js 或者 npm i png-js -S
-
 */
 
 const Faker = require('./function/sign_graphics_validate.js')
@@ -32,6 +31,7 @@ const turnTableId = [
  //  { "name": "美妆-1", "id": 293, "shopid": 30284, "url": "https://sendbeans.jd.com/jump/index/" },
  // { "name": "美妆-2", "id": 1162, "shopid": 56178, "url": "https://sendbeans.jd.com/jump/index/" },
    { "name": "美妆-3", "id": 1082, "shopid": 1000004123, "url": "https://sendbeans.jd.com/jump/index/" },
+   { "name": "翻牌", "id": 1082, "shopid": 1000004123, "url": "https://sendbeans.jd.com/jump/index/" },
 ]
 
 !(async () => {
