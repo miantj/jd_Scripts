@@ -114,7 +114,6 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 jd_zdjr.js （组队瓜分京豆，全加密）
 jd_cjzdgf.js （CJ组队瓜分，全加密）
 jd_fan.js （粉丝互动，全加密）
-jd_twjk.js  （特务集卡，全加密）
 jd_wxgame.js （打豆豆，全加密）
 jd_fcwb_help.js (发财挖宝助力，全加密）
 jd_half_redrain.js (半点京豆雨，全加密）
