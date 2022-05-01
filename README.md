@@ -111,6 +111,7 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 <details>
 <summary>加密脚本清单，不放心可禁用</summary>
 <pre><code>
+jd_zjd.js (赚京豆，全加密）
 jd_zdjr.js （组队瓜分京豆，全加密）
 jd_cjzdgf.js （CJ组队瓜分，全加密）
 jd_fan.js （粉丝互动，全加密）
