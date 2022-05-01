@@ -121,7 +121,6 @@ jd_half_redrain.js (半点京豆雨，全加密）
 jd_jxmc.js （京喜牧场，算法加密）
 jd_cfd.js （京喜财富岛，算法加密）
 jd_cfd_loop.js (京喜财富岛捡贝壳，算法加密）
-jd_15-8.js （极速抢券15-8，算法加密）
 jd_computer.js （电脑配件通用任务，算法加密）
 jd_speed_sign.js （极速版签到，算法加密）
 jd_speed_signred.js  （极速版红包，算法加密）
