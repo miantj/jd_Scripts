@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 #依赖安装，运行一次就好
-#0 8 27 4 * jd_indeps.sh
-#const $ = new Env('依赖安装');
+#0 8 5 5 * jd_indeps.sh
+#new Env('依赖安装');
 #
-echo -e "安装脚本所需依赖，首次拉库运行一次即可，有更新在运行/n"
+
+npm_ver=`pnpm -v|awk -F. '{print $1}'`
+if [[ $npm_ver -ge 7 ]];then
+export PNPM_HOME="/root/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+fi
+
+echo -e "安装脚本所需依赖，首次拉库运行一次即可，有更新在运行\n"
 echo -e "开始安装............\n"
 pnpm config set registry https://registry.npm.taobao.org
 pnpm install -g
@@ -19,6 +26,6 @@ pnpm install -g request
 pnpm install -g jsdom
 pnpm install -g moment
 pnpm install -g tough-cookie
-pip install jieba
+pip3 install jieba
 
-echo -e "\n恭喜，所需依赖已全部安装!"
+echo -e "\n所需依赖安装完成!"
