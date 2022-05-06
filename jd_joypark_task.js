@@ -59,7 +59,7 @@ message = ""
       //     }
       //   }
       // }
-      /**await getJoyBaseInfo()
+      /*await getJoyBaseInfo()
       f ($.joyBaseInfo && $.joyBaseInfo.invitePin) {
         $.log(`${$.name} - ${$.UserName}  助力码: ${$.joyBaseInfo.invitePin}`);
         $.invitePinTaskList.push($.joyBaseInfo.invitePin);
@@ -69,7 +69,7 @@ message = ""
         $.isLogin = false
         $.log("服务端异常，不知道为啥有时候这样，后面再观察一下，手动执行应该又没问题了")
         continue
-      }**/
+      }*/
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
           "open-url": "https://bean.m.jd.com/bean/signIndex.action"
