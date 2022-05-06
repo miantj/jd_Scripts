@@ -1,18 +1,7 @@
 /*
-脚本默认会帮我助力开工位，介意请添加变量HELP_JOYPARK，false为不助力
-export HELP_JOYPARK=""
-更新地址：https://github.com/Tsukasa007/my_script
-============Quantumultx===============
-[task_local]
-#汪汪乐园每日任务
+只做部分任务
+
 2 2,15 * * * jd_joypark_task.js, tag=汪汪乐园每日任务, img-url=https://raw.githubusercontent.com/tsukasa007/icon/master/jd_joypark_task.png, enabled=true
-================Loon==============
-[Script]
-cron "2 2,15 * * *" script-path=jd_joypark_task.js,tag=汪汪乐园每日任务
-===============Surge=================
-汪汪乐园每日任务 = type=cron,cronexp="2 2,15 * * *",wake-system=1,timeout=3600,script-path=jd_joypark_task.js
-============小火箭=========
-汪汪乐园每日任务 = type=cron,script-path=jd_joypark_task.js, cronexpr="2 2,15 * * *", timeout=3600, enable=true
 */
 const $ = new Env('汪汪乐园每日任务');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
