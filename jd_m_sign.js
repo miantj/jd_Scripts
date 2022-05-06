@@ -6,7 +6,7 @@
 ===========================
 [task_local]
 #京东通天塔--签到
-31 3,15 * * * jd_m_sign.js
+31 1,15 * * * jd_m_sign.js
  */
 
 const $ = new Env('京东通天签到');
@@ -65,6 +65,8 @@ async function jdsign() {
     console.log(`签到开始........`)
     await getInfo("https://pro.m.jd.com/mall/active/3S28janPLYmtFxypu37AYAGgivfp/index.html");//拍拍二手签到
     await $.wait(2000)
+    await getInfo("https://prodev.m.jd.com/mall/active/2BspupMr6qenk9JUWpbAnepLHjwy/index.html");//女装馆6.30
+    await $.wait(2000)
     await getInfo("https://pro.m.jd.com/mall/active/kPM3Xedz1PBiGQjY4ZYGmeVvrts/index.html");//陪伴
     await $.wait(2000)
     await getInfo("https://pro.m.jd.com/mall/active/4RBT3H9jmgYg1k2kBnHF8NAHm7m8/index.html");//京东服装
@@ -72,8 +74,8 @@ async function jdsign() {
     await getInfo("https://pro.m.jd.com/mall/active/3SC6rw5iBg66qrXPGmZMqFDwcyXi/index.html");//京东图书
     await $.wait(2000)
     await getInfo("https://prodev.m.jd.com/mall/active/2FzVtkSfUtvU8YoiTeALkJ68PxAs/index.html");//医疗馆 
-    await $.wait(2000)
-    await getInfo("https://prodev.m.jd.com/mall/active/hPJiMgUQmc34bamrApLUBRUy82W/index.html");//3.31结束    
+    //await $.wait(2000)
+    //await getInfo("https://prodev.m.jd.com/mall/active/hPJiMgUQmc34bamrApLUBRUy82W/index.html");//3.31结束    
 
 //     await $.wait(1000)
 //     await getInfo("https://pro.m.jd.com/mall/active/3joSPpr7RgdHMbcuqoRQ8HbcPo9U/index.html");//生活特权签到
