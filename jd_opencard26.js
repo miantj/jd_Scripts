@@ -15,6 +15,11 @@
 15 7 7-31 5 * jd_opencard26.js
 
 */
+if (process.env.DY_OPENALL != "true") {
+    console.log('\n开卡任务默认不运行,设置变量export DY_OPENALL="true"来运行！\n')
+    return
+}
+
 
 const $ = new Env('泉粉邀请卡-开卡');
 
