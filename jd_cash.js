@@ -40,6 +40,7 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let allMessage = '';
 let jdPandaToken = '';
+
 jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
 if (!jdPandaToken) {
     console.log('请填写Panda获取的Token,变量是PandaToken');
@@ -52,7 +53,6 @@ if (!jdPandaToken) {
     return;
   }
  // await requireConfig()
-  
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -220,7 +220,6 @@ async function appdoTask(type,taskInfo) {
   let functionId = 'cash_doTask'
   let body = {"type":type,"taskInfo":taskInfo}
   let sign = await getSignfromPanda(functionId, body)  
-
   return new Promise((resolve) => {
     $.post(apptaskUrl(functionId, sign), (err, resp, data) => {
       try {
@@ -280,7 +279,7 @@ function getSignfromPanda(functionId, body) {
     }
     return new Promise((resolve) => {
         let url = {
-            url: "https://api.jds.codes/jd/sign",
+            url: "https://api.zhezhe.cf/jd/sign",
             body: JSON.stringify(data),
 		    followRedirect: false,
 		    headers: {
@@ -292,18 +291,19 @@ function getSignfromPanda(functionId, body) {
 		    timeout: 30000
         }
         $.post(url, async(err, resp, data) => {
-            try {				
-                data = JSON.parse(data);				
-				
+            try {
+                data = JSON.parse(data);
 				if (data && data.code == 200) {
                     lnrequesttimes = data.request_times;
                     console.log("连接Panda服务成功，当前Token使用次数为" + lnrequesttimes);
-                    if (data.data.sign)
+                    if (data.data){
                         strsign = data.data.sign || '';
-                    if (strsign != '')
+					}
+                    if (strsign != ''){
                         resolve(strsign);
+					}
                     else
-                        console.log("签名获取失败,可能Token使用次数上限或被封.");
+                        console.log("签名获取失败,可能Token使用次数上限或被封或换个时间再试.");
                 } else {
                     console.log("签名获取失败.");
                 }
