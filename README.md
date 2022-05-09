@@ -12,10 +12,10 @@
 
 【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/ （差不在多19行）" 修改为GithubProxyUrl=""，否则拉取失败，以上版本无需配置。
 
-国内机用下面指令（带代理）：代理挂了，暂时去掉代理
+国内机用下面指令（带代理）：（之前代理挂了，更换）
 
 ```
-ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://js.dayplus.xyz/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
 国外机用下面指令：
@@ -113,8 +113,6 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 <pre><code>
 jd_zjd.js (赚京豆，全加密）
 jd_twjk.js （特务集卡，全加密）
-jd_zdjr.js （组队瓜分京豆，全加密）
-jd_cjzdgf.js （CJ组队瓜分，全加密）
 jd_fan.js （粉丝互动，全加密）
 jd_wxgame.js （打豆豆，全加密）
 jd_fcwb_help.js (发财挖宝助力，全加密）
