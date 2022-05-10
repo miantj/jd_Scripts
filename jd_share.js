@@ -15,8 +15,8 @@ let activityShopId = ''
 if (process.env.OWN_COOKIE_NUM && process.env.OWN_COOKIE_NUM != 4) {
     ownCookieNum = process.env.OWN_COOKIE_NUM;
 }
-if (process.env.SHARE_ACTIVITY_ID && process.env.SHARE_ACTIVITY_ID != "") {
-    activityId = process.env.SHARE_ACTIVITY_ID;
+if (process.env.ACTIVITY_ID && process.env.ACTIVITY_ID != "") {
+    activityId = process.env.ACTIVITY_ID;
 }
 
 if ($.isNode()) {
@@ -33,7 +33,7 @@ if ($.isNode()) {
     cookiesArr.reverse();
     cookiesArr = cookiesArr.filter(item => !!item);
 }
-console.log("关注 https://t.me/okyydsnb")
+
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -109,10 +109,10 @@ console.log("关注 https://t.me/okyydsnb")
                 if ($.errorMessage === '活动太火爆，还是去买买买吧') {
                     break
                 }
-                await $.wait(2000)
+                //await $.wait(2000)
             }
         }
-        await $.wait(2000)
+        //await $.wait(2000)
     }
     for (let i = 0; i < ownCookieNum; i++) {
         if (cookiesArr[i]) {
@@ -127,7 +127,7 @@ console.log("关注 https://t.me/okyydsnb")
             $.activityId = activityId
             $.activityShopId = activityShopId
             await getPrize();
-            await $.wait(2000)
+            //await $.wait(2000)
         }
     }
 })()
@@ -148,7 +148,7 @@ async function share() {
     if ($.token) {
         await getMyPing();
         if ($.secretPin) {
-            await $.wait(2000)
+            await $.wait(500)
             await task('common/accessLogWithAD', `venderId=${$.activityShopId}&code=25&pin=${encodeURIComponent($.secretPin)}&activityId=${$.activityId}&pageUrl=${$.activityUrl}&subType=app&adSource=null`, 1);
             await task('activityContent', `activityId=${$.activityId}&pin=${encodeURIComponent($.secretPin)}&friendUuid=${encodeURIComponent($.authorCode)}`)
         } else {
@@ -238,7 +238,7 @@ function taskUrl(function_id, body, isCommon) {
             'User-Agent': `jdapp;iPhone;9.5.4;13.6;${$.UUID};network/wifi;ADID/${$.ADID};model/iPhone10,3;addressid/0;appBuild/167668;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`,
             Connection: 'keep-alive',
             Referer: $.activityUrl,
-            Cookie: cookie
+            Cookie: $.cookie
         },
         body: body
 
@@ -348,6 +348,7 @@ function getFirstLZCK() {
                             }
                         }
                     }
+				$.cookie = cookie
                 }
             } catch (error) {
                 console.log(error)

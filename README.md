@@ -6,6 +6,10 @@
  
 >欢迎大家issue、pr，会一一回复！
 
+
+##请注意安全，不用不明js，app，exe！被偷回到解放前！！！
+
+
 ## 青龙面板[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
 ## 拉库指令
@@ -112,10 +116,7 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 <summary>加密脚本清单，不放心可禁用</summary>
 <pre><code>
 jd_zjd.js (赚京豆，全加密）
-jd_twjk.js （特务集卡，全加密）
 jd_fan.js （粉丝互动，全加密）
-jd_wxgame.js （打豆豆，全加密）
-jd_fcwb_help.js (发财挖宝助力，全加密）
 jd_half_redrain.js (半点京豆雨，全加密）
 jd_jxmc.js （京喜牧场，算法加密）
 jd_cfd.js （京喜财富岛，算法加密）
