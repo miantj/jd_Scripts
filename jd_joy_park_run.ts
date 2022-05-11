@@ -44,12 +44,13 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
       for (let t of res?.data?.detailVos || []) {
         if (getDate(new Date(t.createTime)) === new Date().getDate()) {
           sum = add(sum, t.amount)
+          success++
         } else {
           break
         }
       }
-      console.log('成功', success)
-      console.log('收益', sum)
+      console.log('今日成功', success, '次')
+      console.log('今日收益', sum, '元')
 
       res = await team('runningTeamInfo', {"linkId": "L-sOanK_5RJCz7I314FpnQ"})
       if (!captainId) {
@@ -57,10 +58,12 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
           console.log('成为队长')
           captainId = res.data.captainId
         } else if (res.data.members.length !== 6) {
-          console.log('队伍未满', res.data.members.length)
+          console.log('队伍未满', res.data.members.length, '人')
+          console.log('战队收益', res.data.teamSumPrize, '元')
           captainId = res.data.captainId
         } else {
-          console.log('队伍已满')
+          console.log('队伍已满', res.data.members.length, '人')
+          console.log('战队收益', res.data.teamSumPrize, '元')
         }
       } else if (captainId && res.data.members.length === 0) {
         console.log('已有组队ID，未加入队伍')
@@ -81,25 +84,31 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
           o2s(res, '组队失败')
         }
       } else {
-        console.log('已组队', res.data.members.length)
-        console.log('战队收益', res.data.teamSumPrize)
+        console.log('已组队', res.data.members.length, '人')
+        console.log('战队收益', res.data.teamSumPrize, '元')
       }
 
 
       h5stTool = new H5ST('b6ac3', 'jdltapp;', fp_b6ac3)
       await h5stTool.__genAlgo()
       res = await runningPageHome()
-      console.log('🧧', res.data.runningHomeInfo.prizeValue)
+      console.log('🧧总金额', res.data.runningHomeInfo.prizeValue, '元')
       await wait(2000)
-
-      console.log('能量恢复中', secondsToMinutes(res.data.runningHomeInfo.nextRunningTime / 1000), '能量棒', res.data.runningHomeInfo.energy)
-      if (res.data.runningHomeInfo.nextRunningTime && res.data.runningHomeInfo.nextRunningTime / 1000 < 300) {
-        await wait(res.data.runningHomeInfo.nextRunningTime)
-        res = await runningPageHome()
-        console.log('能量恢复中', secondsToMinutes(res.data.runningHomeInfo.nextRunningTime / 1000), '能量棒', res.data.runningHomeInfo.energy)
-        await wait(1000)
+      if (res.data.runningHomeInfo.nextRunningTime){
+      console.log('能量恢复中，等待', secondsToMinutes(res.data.runningHomeInfo.nextRunningTime / 1000))
+        if (res.data.runningHomeInfo.nextRunningTime / 1000 < 300) {
+          await wait(res.data.runningHomeInfo.nextRunningTime)
+          res = await runningPageHome()
+          console.log('能量恢复完成，开始跑步....')
+          await wait(1000)
+        } else {
+            console.log('等恢复完能量在跑吧！')
+               }
+      } else {
+          console.log('有能量，开始跑步......')
       }
 
+      
       if (!res.data.runningHomeInfo.nextRunningTime) {
         console.log('终点目标', assets)
         for (let i = 0; i < 10; i++) {
@@ -126,7 +135,7 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
       }
 
       res = await runningPageHome()
-      console.log('🧧', res.data.runningHomeInfo.prizeValue)
+      console.log('🧧总金额', res.data.runningHomeInfo.prizeValue, '元')
       await wait(2000)
     } catch (e) {
       console.log('Error', e)
