@@ -644,7 +644,7 @@ async function dealReturn(_0x30482d,_0x18cd25){
 							let _0x5c63d2=typeof _0x525566.data.drawOk==='object'&&_0x525566.data.drawOk||_0x525566.data;
 							_0x2332d8=_0x5c63d2.drawOk==true&&_0x5c63d2.name||'';
 						}
-						if(_0x295b97=='抽奖'&&_0x2332d8&&_0x2332d8.indexOf('京豆')==-1){
+						if(_0x295b97=='抽奖'&&_0x2332d8&&_0x2332d8.indexOf('京豆') > -1){
 							if($.isNode())await notify.sendNotify(''+$.name,'【京东账号'+$.index+'】'+($.nickName||$.UserName)+'\n'+_0x295b97+'成功,获得 '+_0x2332d8+'\n');
 						}
 						if(!_0x2332d8){
