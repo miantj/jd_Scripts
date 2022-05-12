@@ -27,7 +27,7 @@ guaopenwait145="0"
 */
 
 if (process.env.DY_OPENALL != "true") {
-    console.log('\n开卡任务默认不运行,设置变量export DY_OPENALL="true"来运行，无水就停\n')
+    console.log('\n开卡任务默认不运行,设置变量export DY_OPENALL="true"来运行，无水就停！\n')
     return
 }
 
@@ -36,7 +36,7 @@ let guaopencard_addSku = 'true'
 let guaopencard = 'true'
 let guaopenwait = '0'
 let guaopencard_draw = '0'
-const _0x22c107=new Env('臻爱陪伴 助力成长');
+const _0x22c107=new Env('臻爱陪伴 助力成长-开卡');
 const _0x179cc1=_0x22c107['isNode']()?require('./jdCookie.js'):'';
 const _0x5d929a=_0x22c107.isNode()?require('./sendNotify'):'';
 let _0x4334f9='';
