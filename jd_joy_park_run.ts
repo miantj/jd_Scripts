@@ -46,7 +46,7 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
       }
 
       for (let t of res?.data?.detailVos || []) {
-        if (getDate(new Date(t.createTime)) === new Date().getDate()) {
+        if (t.amount > 0 && getDate(new Date(t.createTime)) === new Date().getDate()) {
           sum = add(sum, t.amount)
           success++
         } else {
