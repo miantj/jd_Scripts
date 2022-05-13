@@ -184,7 +184,10 @@ def get_beans_7days(ck):
             resp = session.get(url, params=gen_params(page), headers=headers, timeout=100).text
             res = json.loads(resp)
             if res['resultCode'] == 0:
-                for i in res['data']['list']:
+                data_list =  res['data']['list']
+                if len(data_list) == 0: 
+                    break
+                for i in data_list:
                     for date in days:
                         if str(date) in i['createDate'] and i['amount'] > 0:
                             beans_in[str(date)] = beans_in[str(date)] + i['amount']
