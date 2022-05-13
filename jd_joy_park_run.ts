@@ -1,9 +1,10 @@
 /**
-汪汪乐园-跑步+组队
+汪汪乐园-跑步+组队+提现
 默认翻倍到0.08红包结束,修改请设置变量
 export JD_JOY_PARK_RUN_ASSETS="0.08"
 32 * * * * jd_joy_park_run.ts
 new Env('极速版汪汪赛跑')
+Modify By Dylan from HW
 **/
 
 import {get, post, o2s, requireConfig, wait} from './TS_USER_AGENTS'
@@ -17,7 +18,6 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
 !(async () => {
   let cookiesArr: string[] = await requireConfig()
   let account: { pt_pin: string, joy_park_run: number }[] = []
-
 
   for (let [index, value] of cookiesArr.entries()) {
     cookie = value
@@ -38,7 +38,11 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
         console.log('可提现', rewardAmount)
         res = await api('runningPrizeDraw', {"linkId": "L-sOanK_5RJCz7I314FpnQ", "type": 2})
         await wait(2000)
-        console.log(res.data.message)
+        if (res.success){
+               console.log(res.data.message)
+           } else {
+                console.log('提现失败：', res.errMsg)
+             }
       }
 
       for (let t of res?.data?.detailVos || []) {
@@ -93,47 +97,34 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
       await h5stTool.__genAlgo()
       res = await runningPageHome()
       console.log('🧧总金额', res.data.runningHomeInfo.prizeValue, '元')
+      
+      let energy: number = res.data.runningHomeInfo.energy
+      console.log('💊 X', res.data.runningHomeInfo.energy, '个能量棒') 
       await wait(2000)
       if (res.data.runningHomeInfo.nextRunningTime){
-      console.log('能量恢复中，等待', secondsToMinutes(res.data.runningHomeInfo.nextRunningTime / 1000))
+      console.log('⏳体力恢复中，还有', secondsToMinutes(res.data.runningHomeInfo.nextRunningTime / 1000))
         if (res.data.runningHomeInfo.nextRunningTime / 1000 < 300) {
           await wait(res.data.runningHomeInfo.nextRunningTime)
           res = await runningPageHome()
-          console.log('能量恢复完成，开始跑步....')
+          console.log('体力恢复完成，开始跑步....')
           await wait(1000)
         } else {
-            console.log('等恢复完能量在跑吧！')
+            console.log('⏳等体力恢复在跑吧！');
+            continue;
                }
       } else {
-          console.log('有能量，开始跑步......')
+          console.log('体力已恢复，开始跑步....')
       }
 
-      
-      if (!res.data.runningHomeInfo.nextRunningTime) {
-        console.log('终点目标', assets)
-        for (let i = 0; i < 10; i++) {
-          res = await api('runningOpenBox', {"linkId": "L-sOanK_5RJCz7I314FpnQ"})
-          if (parseFloat(res.data.assets) >= assets) {
-            let assets: number = parseFloat(res.data.assets)
-            res = await api('runningPreserveAssets', {"linkId": "L-sOanK_5RJCz7I314FpnQ"})
-            console.log('领取成功', assets)
-            break
-          } else {
-            if (res.data.doubleSuccess) {
-              console.log('翻倍成功', parseFloat(res.data.assets))
-              await wait(5000)
-            } else if (!res.data.doubleSuccess && !res.data.runningHomeInfo.runningFinish) {
-              console.log('开始跑步', parseFloat(res.data.assets))
-              await wait(5000)
-            } else {
-              console.log('翻倍失败')
-              break
-            }
-          }
-          await wait(5000)
-        }
+      await startRunning(res, assets)
+      for (let i = 0; i < energy; i++) {
+        console.log('💉消耗能量棒跑步....')
+        res = await api('runningUseEnergyBar', {"linkId": "L-sOanK_5RJCz7I314FpnQ"})
+        //console.log(res.errMsg)
+        res = await runningPageHome()
+        await startRunning(res, assets)
+        await wait(1000)
       }
-
       res = await runningPageHome()
       console.log('🧧总金额', res.data.runningHomeInfo.prizeValue, '元')
       await wait(2000)
@@ -143,6 +134,33 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
     }
   }
 })()
+
+async function startRunning(res: any, assets: number) {
+  if (!res.data.runningHomeInfo.nextRunningTime) {
+    console.log('终点目标', assets)
+    for (let i = 0; i < 5; i++) {
+      res = await api('runningOpenBox', {"linkId": "L-sOanK_5RJCz7I314FpnQ"})
+      if (parseFloat(res.data.assets) >= assets) {
+        let assets: number = parseFloat(res.data.assets)
+        res = await api('runningPreserveAssets', {"linkId": "L-sOanK_5RJCz7I314FpnQ"})
+        console.log('领取成功', assets)
+        break
+      } else {
+        if (res.data.doubleSuccess) {
+          console.log('翻倍成功', parseFloat(res.data.assets))
+          await wait(10000)
+        } else if (!res.data.doubleSuccess && !res.data.runningHomeInfo.runningFinish) {
+          console.log('开始跑步', parseFloat(res.data.assets))
+          await wait(10000)
+        } else {
+          console.log('翻倍失败')
+          break
+        }
+      }
+    }
+  }
+  await wait(3000)
+}
 
 async function api(fn: string, body: object) {
   let timestamp: number = Date.now(), h5st: string = ''
