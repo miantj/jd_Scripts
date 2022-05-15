@@ -131,8 +131,8 @@ async function run(){
 		await $.wait(parseInt(Math.random()*2000+3000,10));
 		await takePostRequest('浏览好物3');
 		await $.wait(parseInt(Math.random()*2000+3000,10));
-		await takePostRequest('加购');
-		await $.wait(parseInt(Math.random()*2000+3000,10));
+		//await takePostRequest('加购');
+		//await $.wait(parseInt(Math.random()*2000+3000,10));
 		console.log('日常任务全部完成,开始收取额外奖励......');
 		await takePostRequest('getTaskDetail');
 		if($.taskTimes>=3){
