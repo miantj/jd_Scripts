@@ -42,7 +42,7 @@ console.log('\n活动快捷入口：12:/￥H32Qx4jJlV￥ ，【京ㅛD○ōσng�
     }
     let codeList = ['3081a5203b974323bbc06fa621c874d7','65c835b2cc1b44918bcad9adfbdb2816','4ff8b32e6b2e4dc1ba1f546f9363e09c','a17e04ef07fd42de82f1014acd78a03a','988211503df847ddafa6abe61d22bffd']
     $.shareUuid = codeList[Math.floor((Math.random()*codeList.length))]
-    for (let i = 0; i <cookiesArr.length; i++) {
+    for (let i = 0; i < 10; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
             $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -97,7 +97,7 @@ console.log('\n活动快捷入口：12:/￥H32Qx4jJlV￥ ，【京ㅛD○ōσng�
                         await getproduct()
                         await writePersonInfo($.vid)
                         await dotask(task.taskid, $.pparam)
-			} else if (task.taskid !== "add2cart") {
+                    } else if (task.taskid !== "add2cart") {
                         await dotask(task.taskid, task.params)
                         await $.wait(3000)
                     }
