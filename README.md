@@ -86,7 +86,7 @@ task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同�
 
 task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
 
-4、通知支持一对一推送和显示备注，详细用法参考[notify.md](./notify.md)
+4、通知支持一对一推送和显示备注，还有分组通知等用法参考[notify.md](./notify.md)
 
 备注显示变量如下
 
@@ -113,9 +113,10 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 ## 加密脚本清单
 
 <details>
-<summary>加密脚本清单，不放心可禁用</summary>
+<summary>加密脚本清单，已审查， 不放心可禁用</summary>
 <pre><code>
 jd_zjd.js (赚京豆，全加密）
+jddj_fruit.js（到家果园，全加密）
 jd_fans.js （粉丝互动，全加密）
 jd_half_redrain.js (半点京豆雨，全加密）
 jd_jxmc.js （京喜牧场，算法加密）
@@ -149,5 +150,6 @@ jd_speed_signred.js  （极速版红包，算法加密）
 |   ` HelpType`           |     互助模式    | 非必须 | 默认顺序助力，0是全部一样顺序助力，1是均等机会助力，2是随机顺序助力，例： export HelpType=1 |
 |   `PandaToken`           |     领现金使用     | 非必须 | Token去[TG](https://t.me/pang_da_bot) 获取，获取一次7天有效期1000次调用，export PandaToken='你获取的token' |
 |   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
+|   `DY_ZJD`           |     赚京豆     | 非必须 |默认不执行，设置变量DY_ZJD='true'执行 |
 
 
