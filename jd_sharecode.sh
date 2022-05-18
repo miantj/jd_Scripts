@@ -6,14 +6,14 @@
 
 if [[ -d /ql/deps ]]
 then
-   \cp /ql/repo/6dylan6_jdpro/sendNotify.js /ql/deps
+   #\cp /ql/repo/6dylan6_jdpro/sendNotify.js /ql/deps
    grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
    if [[ $? != 0 ]];then
 	   \cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
    fi
 elif [[ -d /ql/data ]]
 then
-   \cp /ql/data/repo/6dylan6_jdpro/sendNotify.js /ql/data/deps
+   #\cp /ql/data/repo/6dylan6_jdpro/sendNotify.js /ql/data/deps
    grep '6dylan6_1124' /ql/data/config/task_before.sh >/dev/null 2>&1
    if [[ $? != 0 ]];then
 	   \cp /ql/data/repo/6dylan6_jdpro/docker/task_before.sh /ql/data/config/
