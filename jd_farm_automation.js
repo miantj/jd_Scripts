@@ -1,9 +1,9 @@
 //20 8 10 4 * jd_farm_automation.js
 
-console.log('默认种4级，如需调整请配置 M_JD_FARM_LEVEL\n使用率不高，指定（desi）账号运行\n')
+console.log('默认种2级，如需调整请设置变量 M_JD_FARM_LEVEL\n使用率不高，指定（desi）账号运行\n')
 const {Env} = require('./function/magic');
 const $ = new Env('农场自动种植兑换');
-let level = process.env.M_JD_FARM_LEVEL ? process.env.M_JD_FARM_LEVEL * 1 : 4
+let level = process.env.M_JD_FARM_LEVEL ? process.env.M_JD_FARM_LEVEL * 1 : 2
 $.logic = async function () {
     let info = await api('initForFarm',
         {"version": 11, "channel": 3, "babelChannel": 0});
@@ -27,7 +27,7 @@ $.logic = async function () {
     }
     if (info.farmUserPro.treeState === 3) {
         let hongBao = info.myHongBaoInfo.hongBao;
-        $.putMsg(`${hongBao.discount}红包，${$.formatDate(hongBao.endTime)}过期`)
+        $.putMsg(`已兑换${hongBao.discount}红包，${$.formatDate(hongBao.endTime)}过期`)
     }
     
     let element = info.farmLevelWinGoods[level][0] || 0;
@@ -44,7 +44,7 @@ $.logic = async function () {
         "babelChannel": 0
     });
     if (info.code * 1 === 0) {
-        $.putMsg(`已种【${info.farmUserPro.name}】`)
+        $.putMsg(`\n再次种植【${info.farmUserPro.name}】`)
     }
     let a = await api('gotStageAwardForFarm',
         {"type": "4", "version": 11, "channel": 3, "babelChannel": 0});
