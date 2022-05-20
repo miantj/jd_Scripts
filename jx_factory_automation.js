@@ -4,6 +4,7 @@
 变量：京喜工厂自动化生产(填写需要生产的商品名)
 配合京喜工厂商品列表详情使用
 //export COMMODITY_NAME="芦荟洗手液2瓶"
+2 10 20 5 * jx_factory_automation.js
 */
 const {Env} = require('./function/magic');
 const $ = new Env('M京喜工厂自动化');

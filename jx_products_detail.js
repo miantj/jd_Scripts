@@ -1,6 +1,7 @@
 /*
-定时随机
+定时自定义
  script-path=jx_products_detail.js,tag=京喜工厂商品列表详情
+2 10 20 5 * jx_products_detail.js
 **/
 const $ = new Env('京喜工厂获取商品列表');
 const JD_API_HOST = 'https://m.jingxi.com/';

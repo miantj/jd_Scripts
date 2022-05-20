@@ -1,3 +1,6 @@
+/*
+2 10 20 5 * m_jd_wx_collectCard.js
+ */
 let mode = __dirname.includes('magic')
 //const {Env} = mode ? require('../magic') : require('./magic')
 const {Env} = mode ? require('./function/magic') : require('./function/magic')

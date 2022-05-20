@@ -1,3 +1,8 @@
+/*
+定时自定义
+2 10 20 5 * jd_bean_info.js
+ */
+
 const $ = new Env('京豆详情统计');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

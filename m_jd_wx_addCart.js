@@ -1,3 +1,6 @@
+/*
+2 10 20 5 * m_jd_wx_addCart.js
+ */
 let mode = __dirname.includes('magic')
 const {Env} = mode ? require('./function/magic') : require('./function/magic')
 const $ = new Env('M加购有礼');
