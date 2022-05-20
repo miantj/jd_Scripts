@@ -54,7 +54,7 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
         }
       }
       console.log('今日成功', success, '次')
-      console.log('今日收益', sum, '元')
+      console.log('今日收益', sum.toFixed(2), '元')
 
       res = await team('runningTeamInfo', {"linkId": "L-sOanK_5RJCz7I314FpnQ"})
       if (!captainId) {
