@@ -12,6 +12,7 @@ let UA = ``;
 $.allInvite = [];
 let useInfo = {};
 $.helpEncryptAssignmentId = '';
+$.flag = false
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -50,6 +51,7 @@ if ($.isNode()) {
         }catch (e) {
             console.log(JSON.stringify(e));
         }
+		if (i == 0 && $.flag) return;
         await $.wait(1000);
     }
     if($.allInvite.length > 0 ){
@@ -83,7 +85,8 @@ async function main() {
     $.activityInfo = {};
     await takeRequest('superBrandSecondFloorMainPage');
     if(JSON.stringify($.activityInfo) === '{}'){
-        console.log(`获取活动详情失败`);
+        console.log(`本期活动结束，期待下期。。。`);
+		$.flag = true
         return ;
     }
     console.log(`获取活动详情成功`);
@@ -104,7 +107,7 @@ async function main() {
         console.log(`可抽奖次数:${$.callNumber}`);
     }
     for (let i = 0; i < $.callNumber; i++) {
-        console.log(`进行抽奖`);
+        console.log(`进行第${i+1}抽奖：`);;
         await takeRequest('superBrandTaskLottery');//抽奖
         await $.wait(1000);
     }
@@ -242,7 +245,7 @@ function dealReturn(type, data) {
                 $.runFlag = false;
                 console.log(`抽奖失败`);
             }
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
             break;
 
         case 'help':
