@@ -153,6 +153,12 @@ async function appindex(info=false) {
                     await appdoTask(task.type, task.jump.params.url)
                     await $.wait(5000)
                   }
+                }else if (task.type === 7) {
+                  for (let i = task.doTimes; i < task.times; ++i) {
+                    console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
+                    await appdoTask(task.type, 1)
+                    await $.wait(5000)
+                  }
                 }
               }
             }
@@ -219,31 +225,37 @@ function index() {
 async function appdoTask(type,taskInfo) {
   let functionId = 'cash_doTask'
   let body = {"type":type,"taskInfo":taskInfo}
-  let sign = await getSignfromPanda(functionId, body)  
-  return new Promise((resolve) => {
-    $.post(apptaskUrl(functionId, sign), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`appdoTask API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if(data.code === 0) {
-              console.log(`任务完成成功`)
-              // console.log(data.data.result.taskInfos)
-            } else {
-              console.log(JSON.stringify(data))
+  for (let i=0; i<3; i++){
+  var sign = await getSignfromPanda(functionId, body)
+  if(sign) break;
+  await $.wait(5000)
+  }  
+  if(sign){
+    return new Promise((resolve) => {
+      $.post(apptaskUrl(functionId, sign), (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`appdoTask API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if(data.code === 0) {
+                console.log(`任务完成成功`)
+                // console.log(data.data.result.taskInfos)
+              } else {
+                console.log(JSON.stringify(data))
+              }
             }
           }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
         }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
+      })
     })
-  })
+  }
 }
 function doTask(type,taskInfo) {
   return new Promise((resolve) => {
@@ -292,6 +304,7 @@ function getSignfromPanda(functionId, body) {
         }
         $.post(url, async(err, resp, data) => {
             try {
+              if (data){
                 data = JSON.parse(data);
 				if (data && data.code == 200) {
                     lnrequesttimes = data.request_times;
@@ -307,7 +320,7 @@ function getSignfromPanda(functionId, body) {
                 } else {
                     console.log("签名获取失败.");
                 }
-				
+              }else{console.log('连接连接Panda服务失败，重试。。。')}	
             }catch (e) {
                 $.logErr(e, resp);
             }finally {
