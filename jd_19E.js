@@ -5,6 +5,10 @@
 不完善，凑合跑，估计很快凉。。
 */
 
+if (process.env.DY_19E != "true") {
+    console.log('\n默认不运行，运行前最好手动进任务做完新手引导,设置变量export DY_19E="true"来运行\n')
+    return
+}
 
 
 const $ = new Env('热爱奇旅分19亿');
