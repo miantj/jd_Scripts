@@ -5,10 +5,6 @@
 不完善，凑合跑，估计很快凉。。
 */
 
-if (process.env.DY_19E != "true") {
-    console.log('\n默认不运行，运行前最好手动进任务做完新手引导,设置变量export DY_19E="true"来运行\n')
-    return
-}
 
 
 const $ = new Env('热爱奇旅分19亿');
@@ -38,14 +34,15 @@ $.shareCodesArr = [];
         return;
     }
     $.inviteIdCodesArr = {}
-    for (let i = 0; i < cookiesArr.length && true; i++) {
+    /*for (let i = 0; i < cookiesArr.length && true; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
             $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
             $.index = i + 1;
             await getUA()
         }
-    }
+    }*/
+    await getUA()
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
@@ -57,23 +54,7 @@ $.shareCodesArr = [];
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             //   await shareCodesFormat()
             $.newShareCodes = []
-            for (let i = 0; i < $.newShareCodes.length && true; ++i) {
-                console.log(`\n开始助力 【${$.newShareCodes[i]}】`)
-                let res = await getInfo($.newShareCodes[i])
-                if (res && res['data'] && res['data']['bizCode'] === 0) {
-                    if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0] && res['data']['result']['toasts'][0]['status'] === '3') {
-                        console.log(`助力次数已耗尽，跳出`)
-                        break
-                    }
-                    if (res['data']['result']['toasts'] && res['data']['result']['toasts'][0]) {
-                        console.log(`助力 【${$.newShareCodes[i]}】:${res.data.result.toasts[0].msg}`)
-                    }
-                }
-                if ((res && res['status'] && res['status'] === '3') || (res && res.data && res.data.bizCode === -11)) {
-                    // 助力次数耗尽 || 黑号
-                    break
-                }
-            }
+
             try {
                 await get_secretp()
 
@@ -92,7 +73,7 @@ $.shareCodesArr = [];
                     let r = []
                     for (var p = 0; p < res.taskVos.length; p++) {
                         task = res.taskVos[p]
-                        if (task.status != 1) continue
+                        if (task.status != 1 && !task.simpleRecordInfoVo) continue
                         switch (task.taskType) {
                             case 7:
                             case 9:
@@ -117,7 +98,7 @@ $.shareCodesArr = [];
                                 }
                                 await $.wait(8000)
                                 for (var o = 0; o < tmp.length; o++) {
-                                    if (tmp[o].status == 1) {
+                                    if (tmp[o].status == 1 && task.taskType !== 3 && task.taskType !== 26  ) {
                                         conti = true
                                         await qryViewkitCallbackResult(tmp[o].taskToken)
                                         await $.wait(1000)
@@ -164,6 +145,17 @@ $.shareCodesArr = [];
                                     }
 
                                 }
+                                break
+                            case 0:
+                                //r = await promote_getFeedDetail(task.taskId)
+                                    tmp = task.simpleRecordInfoVo
+                                //for (var o = 0; o < tmp.length; o++) {
+                                    if (task.status == 1 && task.taskName !== '去组队分大奖' || task.status !== 1 ) {
+                                        conti = true
+                                        await promote_collectScore(tmp.taskToken, task.taskId)
+                                        await $.wait(1000)
+                                    }
+                                //}    
                         }
 
                     }
@@ -177,13 +169,39 @@ $.shareCodesArr = [];
                     await $.wait(1000)
                 } while (ret)
                 console.log(`\n\n助力码：${res.inviteId}\n`)
-                $.newShareCodes.push(res.inviteId)
+                //$.newShareCodes.push(res.inviteId)
                 inviteId.push(res.inviteId)
             } catch (e) {
                 $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
             }
         }
     }
+        for (let i = 0; i < cookiesArr.length; i++) {
+        if (cookiesArr[i]) {
+            cookie = cookiesArr[i];
+            $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+            $.index = i + 1;
+            $.isLogin = true;
+            $.nickName = '';
+            message = '';
+            console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);  
+            await get_secretp() 
+            await $.wait(1000)     
+            for (let s = 0; s < inviteId.length; s++) {
+                console.log(`\n开始助力 【${inviteId[s]}】`)
+                let res = await help(inviteId[s])
+                if ( res['data']['bizCode'] === 0) {
+                        console.log('助力成功,获得：', parseFloat(res.data.result.acquiredScore), '金币')
+                          if (res.data.result?.redpacket?.value)
+                            console.log('🧧', parseFloat(res.data.result?.redpacket?.value))
+                             //console.log('助力结果：'+res.data.bizMsg)
+                } else if (res.data.bizMsg === '助力次数用完啦~') { console.log(res.data.bizMsg);break}
+               else if (res.data.bizMsg === '好友人气爆棚，不需要助力啦~') { console.log(res.data.bizMsg)}
+               else {console.log(res.data.bizMsg)}
+                await $.wait(1000)
+            }  
+        }
+       }       
 })()
 .catch((e) => {
         $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -218,7 +236,7 @@ function get_secretp() {
                         if (data.code == 0) {
                             if (data.data && data.data.bizCode === 0) {
                                 secretp = data.data.result.homeMainInfo.secretp
-                                console.log(secretp)
+                                //console.log(secretp)
                           }
                         } else 
                         if (data.code != 0) {
@@ -306,7 +324,7 @@ function promote_raise() {
 function promote_collectAtuoScore() {
     let body = { "ss": { "extraData": { "log": "", "sceneid": "RAhomePageh5" }, "secretp": secretp, "random": randomString(6) } };
     return new Promise((resolve) => {
-        $.post(taskPostUrl("promote_collectAtuoScore", body), async(err, resp, data) => {
+        $.post(taskPostUrl("promote_collectAutoScore", body), async(err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
@@ -350,7 +368,7 @@ function promote_getTaskDetail() {
                                     console.log("黑号")
                                     resolve("")
                                 }
-                                inviteId.push(data.data.result.inviteId)
+                                //inviteId.push(data.data.result.inviteId)
                                 resolve(data.data.result)
                             }
                         } else {
@@ -384,8 +402,38 @@ function promote_collectScore(taskToken, taskId) {
                                 console.log(data.msg)
                             }
                         } else {
-                            console.log(`\n\n 失败:${JSON.stringify(data)}\n`)
+                            console.log(`\n 失败:${JSON.stringify(data)}\n`)
                         }
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data);
+            }
+        })
+    })
+}
+
+function help(inviteId) {
+    let body = { "actionType": 0, "inviteId": inviteId,"ss": { "extraData": { "log": "", "sceneid": "RAhomePageh5" }, "secretp": secretp, "random": randomString(6) } };
+    return new Promise((resolve) => {
+        $.post(taskPostUrl("promote_collectScore", body), async(err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    if (safeGet(data)) {
+                        data = JSON.parse(data);
+                        //console.log(data)
+                        //if (data.data.bizCode === 0) {
+                            //if (data.data && data['data']['bizCode'] === 0) {
+                              //  console.log(data.bizMsg)
+                            //}
+                        //} else {
+                           // console.log(`\n 失败:` + data.bizMsg)
+                       // }
                     }
                 }
             } catch (e) {
