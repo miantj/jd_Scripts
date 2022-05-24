@@ -58,9 +58,10 @@ $.shareCodesArr = [];
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             //   await shareCodesFormat()
             $.newShareCodes = []
+			await get_secretp()
             await promote_collectAtuoScore()
             try {
-                await get_secretp()
+                
 
                 do {
                     var conti = false
