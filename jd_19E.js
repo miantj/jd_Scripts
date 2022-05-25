@@ -19,7 +19,7 @@ let cookiesArr = [],
     cookie = '';
 let secretp = '',
     inviteId = []
-
+let conti = false
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -37,7 +37,7 @@ let groups = []
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
-    console.log('\n任务+助力+组队，不完善，凑合跑\n')
+    console.log('\n开始异常了，快凉了\n')
     await getUA()
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
@@ -70,7 +70,7 @@ let groups = []
             }
             try {
                 do {
-                    var conti = false
+                    
                     res = await promote_getTaskDetail()
                     for (var p = 0; p < res.lotteryTaskVos[0].badgeAwardVos.length; p++) {
                         if (res.lotteryTaskVos[0].badgeAwardVos[p].status == 3) {
@@ -142,7 +142,7 @@ let groups = []
 
                                 }
                                 break
-                            case 21:
+                            case 210:
                                 for (var o = 0; o < task.brandMemberVos.length; o++) {
                                     if (task.brandMemberVos[o].status == 1) {
                                         //console.log(`\n\n ${task.brandMemberVos[o].title}`)
@@ -265,7 +265,7 @@ function get_secretp() {
                         if (data.code == 0) {
                             if (data.data && data.data.bizCode === 0) {
                                 secretp = data.data.result.homeMainInfo.secretp
-                                //console.log(secretp)
+                               // console.log(secretp)
                           }
                         } else 
                         if (data.code != 0) {
@@ -366,7 +366,7 @@ function promote_collectAtuoScore() {
                             if (data.data && data['data']['bizCode'] === 0) {
 
                                 console.log(`成功领取${data.data.result.produceScore}个币`)
-                            }
+                            }else{console.log(data.data.bizMsg)}
                         } else {
                             //console.log(`\n\nsecretp失败:${JSON.stringify(data)}\n`)
                         }
@@ -430,7 +430,7 @@ function promote_collectScore(taskToken, taskId) {
                         if (data.code === 0) {
                             if (data.data && data['data']['bizCode'] === 0) {
                                 console.log(data.msg)
-                            }
+                            }else{console.log(data.data.bizMsg);conti=false}
                         } else {
                             console.log(`\n 失败:${JSON.stringify(data)}\n`)
                         }
