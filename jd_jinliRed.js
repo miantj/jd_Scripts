@@ -10,7 +10,7 @@ https://github.com/6dylan6/ 优化版：
 export  KOI_FAIR_MODE="true"
 ## 设置1个车头，如果有更多个车头，就写对应数目。仅当车头互助满，才会助力后面的。
 export KOI_TOP_NUM="1"
-5 10 17 5 * 
+5 10 17 5 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_jinliRed.js
 */
 const $ = new Env("锦鲤红包-本地log")
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
