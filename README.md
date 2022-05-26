@@ -9,6 +9,7 @@
 
 ## 请注意安全，不用不明js，app，exe！被偷回到解放前！！！
 
+##[TG频道](https://t.me/pang_da_bot)
 
 ## 青龙面板[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
@@ -151,5 +152,6 @@ jd_speed_signred.js  （极速版红包，算法加密）
 |   `PandaToken`           |     领现金使用     | 非必须 | Token去[TG](https://t.me/pang_da_bot) 获取，获取一次7天有效期1000次调用，export PandaToken='你获取的token' |
 |   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
 |   `DY_ZJD`           |     赚京豆     | 非必须 |默认不执行，设置变量DY_ZJD='true'执行 |
+|   `DY_19E`           |     618活动     | 非必须 |默认不执行，设置变量DY_19E='true'执行 |
 
 
