@@ -1,7 +1,7 @@
 /*
 发财挖宝-助力CK1
 活动入口：极速版-发财挖宝
-默认助力满40停止。
+默认助力满30停止。
 定时自己按需设置，默认不运行
 40 10 10 5 * https://github.com/6dylan6/jdpro/jd_fcwb_help.js
 
@@ -67,7 +67,7 @@ async function run(){
 			$.helpCount++;
 		}
 		console.log('【账号'+$.index+'】已邀请人数：'+$.personNum+($.index!=1&&' 【账号1】已邀请人数：'+$.helpCount||''));
-		if($.helpCount>=40)$.hasEnd=true;
+		if($.helpCount>=30)$.hasEnd=true;
 	}catch(_0x933d6a){
 		console.log(_0x933d6a);
 	}
