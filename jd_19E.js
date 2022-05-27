@@ -43,7 +43,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
-	console.log(`\n自行测试,算法加密\n已审查，不偷CK！\n`);
+	console.log(`\n自行测试,任务+助力+组队+升级\n算法加密，已审查不偷CK！\n`);
     const helpSysInfoArr = []
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
@@ -254,6 +254,11 @@ async function travel() {
 
     try {
         //await raise(true)
+        console.log('\n开始升级。。。')
+        			do {
+                    var ret = await promote_raise()
+                    await $.wait(1000)
+                } while (ret)
     } catch (e) {
         console.log(e)
     }
@@ -281,7 +286,6 @@ async function votFor(votFor) {
 
 async function raise(isFirst = false) {
     const homeData = await doApi("getHomeData")
-    // console.log(homeData)
     if (!homeData) return
     const { homeMainInfo: { raiseInfo: { cityConfig: { clockNeedsCoins, points }, remainScore } } } = homeData
     if (remainScore >= clockNeedsCoins) {
@@ -316,6 +320,58 @@ async function raise(isFirst = false) {
             await $.wait(2000)
         }
         if (flag) await raise()
+    }
+}
+
+function promote_raise() {
+    let s = Math.floor((Math.random()*3)) +1
+    let body = {"scenceId":s, "ss": { "extraData": { "log": "", "sceneid": "RAhomePageh5" }, "secretp": $.secretp, "random": randomString(6) } };
+    return new Promise((resolve) => {
+        $.post(taskPostUrl("promote_raise", body), async(err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    if (safeGet(data)) {
+                        data = JSON.parse(data);
+                        if (data.code === 0) {
+                            if (data.data && data['data']['bizCode'] === 0) {
+
+                                console.log(`升级成功`)
+                                resolve(true)
+                            } else {
+                                resolve(false)
+                            }
+                        } else {
+                            console.log(`升级失败:${JSON.stringify(data)}\n`)
+                            resolve(false)
+                        }
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data);
+            }
+        })
+    })
+}
+function taskPostUrl(functionId, body) {
+    return {
+        //functionId=promote_getHomeData&body={}&client=wh5&clientVersion=1.0.0
+        url: `${JD_API_HOST}`,
+        body: `functionId=${functionId}&body=${escape(JSON.stringify(body))}&client=m&clientVersion=-1&appid=signed_wh5`,
+        headers: {
+            'Cookie': cookie,
+            'Host': 'api.m.jd.com',
+            'Connection': 'keep-alive',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            "User-Agent": $.UA,
+            'Origin': 'https://wbbny.m.jd.com',
+            'Accept-Language': 'zh-cn',
+            'Accept-Encoding': 'gzip, deflate, br',
+        }
     }
 }
 
