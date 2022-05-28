@@ -9,7 +9,7 @@
 
 ## 请注意安全，不用不明js，app，exe！被偷回到解放前！！！
 
-##[TG频道](https://t.me/pang_da_bot)
+## [TG频道](https://t.me/dylan_jdpro)
 
 ## 青龙面板[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
