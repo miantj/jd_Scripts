@@ -10,11 +10,13 @@ export PNPM_HOME="/root/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 fi
 
-echo -e "安装脚本所需依赖，首次拉库运行一次即可，有更新在运行\n"
+echo -e "安装脚本所需依赖，不一定一次全部安装成功，请自己检查\n"
 echo -e "开始安装............\n"
+
+apk add g++ make pixman-dev pango-dev cairo-dev --no-cache
 pnpm config set registry https://registry.npm.taobao.org
 pnpm install -g
-pnpm install -g pnpm
+pnpm install -g canvas
 pnpm install -g png-js
 pnpm install -g date-fns
 pnpm install -g axios
@@ -28,4 +30,4 @@ pnpm install -g moment
 pnpm install -g tough-cookie
 pip3 install jieba
 
-echo -e "\n所需依赖安装完成!"
+echo -e "\n所需依赖安装完成，请检查有没有报错，可尝试再次运行"
