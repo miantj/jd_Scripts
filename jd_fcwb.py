@@ -9,10 +9,11 @@ new Env('发财挖宝');
 当血量剩余 1 时停止挖宝，领取奖励并提现
 '''
 import os,json,random,time,re,string,functools,asyncio
+import urllib.parse
 import sys
 sys.path.append('../../tmp')
-print('\n挖的如果都是0.01红包就是黑了，别挣扎了！\n')
-print('\n当血量剩余 1 时停止挖宝，领取奖励并提现，请先跑助力\n')
+print('\n挖的如果都是0.01红包就是黑了！第一次使用脚本前手动进活动做完新手引导，也许可能减少黑的可能\n')
+print('\n当血量剩余 1 时停止挖宝，领取奖励并提现，请先跑助力补充体力\n')
 try:
     import requests
 except Exception as e:
@@ -157,6 +158,7 @@ def jinge(cookie,i):
 def happyDigHome(cookie):
     body={"linkId":linkId,"round":1}
     res=taskGetUrl("happyDigHome", body, cookie)
+    exit_flag = "false"
     if not res:
         return
     if res['code']==0:
@@ -174,9 +176,14 @@ def happyDigHome(cookie):
                 chunks=roundList_n['chunks']                        # 当前池详情list
 
                 a=jinge(cookie,roundid)
-                print(f'当前池序号为 {roundid} \n当前池规模为 {rows}*{rows}')
-                print(f'剩余血量 {a[0]}')
-                print(f'当前池已得京东红包 {a[2]}\n当前池已得微信红包 {a[1]}\n')
+                if roundid==1:
+                    print(f'\n开始 "入门" 难度关卡（{rows}*{rows}）')
+                elif roundid==2:
+                    print(f'\n开始 "挑战" 难度关卡（{rows}*{rows}）')
+                elif roundid==3:
+                    print(f'\n开始 "终极" 难度关卡（{rows}*{rows}）')
+                print(f'当前剩余血量 {a[0]}🩸')
+                ## print(f'当前池已得京东红包 {a[2]}\n当前池已得微信红包 {a[1]}\n')
                 _blood=xueliang(cookie)
                 if _blood>1  or incep_blood>=21:
                     happyDigDo(cookie,roundid,0,0)
@@ -187,15 +194,23 @@ def happyDigHome(cookie):
                     for n in range(roundid_n):
                         for i in range(roundid_n):
                             _blood=xueliang(cookie)
-                            if _blood>1  or incep_blood>=21:
-                                print(f'当前血量为 {_blood} 健康，继续挖宝')
-                                print(f'本次挖取坐标为 ({n},{i})')
+                            if _blood>1 or incep_blood>=21:
+                                ## print(f'当前血量为 {_blood}')
+                                a=n+1
+                                b=i+1
+                                print(f'挖取坐标({a},{b})')
                                 happyDigDo(cookie,roundid,n,i)
                             else:
                                 a=jinge(cookie,roundid)
-                                print(f'当前血量为 {_blood} 不健康，结束该池挖宝')
-                                print(f'当前池已得京东红包 {a[2]}\n当前池已得微信红包 {a[1]}\n')
+                                print(f'没血了，不挖了')
+                                exit_flag = "true"
+                                ## print(f'当前池已得京东红包 {a[2]}\n当前池已得微信红包 {a[1]}\n')
                                 break
+
+                        if exit_flag == "true":
+                            break
+                if exit_flag == "true":
+                    break
         else:
             print(f'获取数据失败\n{res}\n')
     else:
@@ -228,19 +243,19 @@ def happyDigDo(cookie,roundid,rowIdx,colIdx):
         if res['success']:
             typeid=res['data']['chunk']['type']
             if typeid==2:
-                print(f"挖到京东红包 {res['data']['chunk']['value']}\n")
+                print(f"获得极速版红包 {res['data']['chunk']['value']} 🧧\n")
             elif typeid==3:
-                print(f"挖到微信红包 {res['data']['chunk']['value']}\n")
+                print(f"🎉 获得微信零钱 {res['data']['chunk']['value']} 💰\n")
             elif typeid==4:
-                print(f"挖到炸弹\n")
+                print(f"💥Boom💥 挖到了炸弹 💣\n")
             elif typeid==1:
-                print(f"挖到优惠券\n")
+                print(f"获得优惠券 🎟️\n")
             else:
-                print(f'挖到外星物品\n')
+                print(f'不知道挖到了什么 🎁\n')
         else:
-            print(f'挖取失败\n{res}\n')
+            print(f'{res}\n挖宝失败\n')
     else:
-        print(f'挖取失败\n{res}\n')
+        print(f'{res}\n挖宝失败\n')
 
 # # 助力码
 # def inviteCode(cookie):
@@ -273,10 +288,9 @@ def happyDigDo(cookie,roundid,rowIdx,colIdx):
 
 # 领取奖励
 def happyDigExchange(cookie):
-    for n in range(0,4):
+    for n in range(1,4):
         xueliang(cookie)
-        
-        print('开始领取奖励')
+        print(f"\n开始领取第{n}场的奖励")
         body={"round":n,"linkId":linkId}
         res=taskGetUrl("happyDigExchange", body, cookie)
         if not res:
@@ -284,17 +298,18 @@ def happyDigExchange(cookie):
         if res['code']==0:
             if res['success']:
                 try:
-                    print(f"领取到微信红包 {res['data']['wxValue']}")
-                except:
-                    pass
-                try:
-                    print(f"领取到京东红包 {res['data']['redValue']}\n")
+                    print(f"已领取极速版红包 {res['data']['redValue']} 🧧")
                 except:
                     print('')
+                if res['data']['wxValue'] != "0":
+                    try:
+                        print(f"可提现微信零钱 {res['data']['wxValue']} 💰")
+                    except:
+                        pass
             else:
-                print(res['errMsg']+'\n')
+                print(res['errMsg'])
         else:
-            print(res['errMsg']+'\n')
+            print(res['errMsg'])
 
 
 
@@ -316,14 +331,18 @@ def spring_reward_list(cookie):
                 poolBaseId=_items['poolBaseId']
                 prizeGroupId=_items['prizeGroupId']
                 prizeBaseId=_items['prizeBaseId']
-                if '红包' not in prizeDesc:
-                    print('尝试微信提现')
+                if '红包' in f"{prizeDesc}":
+                    continue
+                if '券' in f"{prizeDesc}":
+                    continue
+                else:
+                    print('\n去提现微信零钱 💰')
                     time.sleep(3.2)
                     wecat(cookie,amountid,poolBaseId,prizeGroupId,prizeBaseId)
         else:
             print(f'获取数据失败\n{res}\n')
     else:
-        print(f'获取数据失败\n{res}\n')                     
+        print(f'获取数据失败\n{res}\n')
 
 # 微信提现
 def wecat(cookie,amountid,poolBaseId,prizeGroupId,prizeBaseId):
@@ -378,7 +397,7 @@ def main():
     print(f'====================共{len(cookie_list)}京东个账号Cookie=========\n')
 
     for e,cookie in enumerate(cookie_list,start=1):
-        print(f'******开始【账号 {e}】 {get_pin(cookie)} *********\n')
+        print(f'******开始【账号 {e}】 {urllib.parse.unquote(get_pin(cookie))} *********\n')
         happyDigHome(cookie)
         spring_reward_list(cookie)
 
