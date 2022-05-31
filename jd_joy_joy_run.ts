@@ -2,7 +2,7 @@
 汪汪乐园-跑步+组队+提现
 默认翻倍到0.04红包结束,修改请设置变量
 export JD_JOY_PARK_RUN_ASSETS="0.08"
-11 * * * * jd_joy_park_run.ts
+15 0 * * * * jd_joy_joy_run.ts
 new Env('极速版汪汪赛跑')
 Modify By Dylan from HW
 **/
@@ -18,7 +18,7 @@ let assets: number = 0, captainId: string = '', h5stTool: H5ST = null
 !(async () => {
   let cookiesArr: string[] = await requireConfig()
   let account: { pt_pin: string, joy_park_run: number }[] = []
-
+  console.log('每周五0点开放提现,每周日18点组队分钱！！')
   for (let [index, value] of cookiesArr.entries()) {
     cookie = value
     UserName = decodeURIComponent(cookie.match(/pt_pin=([^;]*)/)![1])
