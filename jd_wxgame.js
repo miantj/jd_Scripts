@@ -36,7 +36,6 @@ if (process.env.WXGAME_ACT_ID && process.env.WXGAME_ACT_ID != "") {
     return;
 }
 
-
 !(async()=>{
 	if(!cookiesArr[0]){
 		$.msg($.name,'【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取','https://bean.m.jd.com/bean/signIndex.action',{'open-url':'https://bean.m.jd.com/bean/signIndex.action'});
@@ -64,7 +63,7 @@ if (process.env.WXGAME_ACT_ID && process.env.WXGAME_ACT_ID != "") {
 				}
 				continue;
 			}
-			await randoms();
+			//await randoms();
 			authorCodeList=[''];
 			$.bean=0;
 			$.ADID=getUUID('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',1);
@@ -180,7 +179,7 @@ async function dadoudou(){
 					$.stopGame=false;
 					do{
 						$.gameId=null;
-						$.gameScore=random(_0x1b2ad5,20000);
+						$.gameScore=random(15000,20000);
 						await task('game/start','activityId='+$.activityId+'&pin='+encodeURIComponent($.secretPin));
 						await $.wait(2000);
 						if($.gameId){
@@ -274,7 +273,7 @@ function task(_0x4aa22f,_0xa136f7,_0x4cd080=0){
 									if(_0x5b1a2a.data.status===1){
 															console.log('抽奖');
 															let _0x5af712=new Date().getTime().toString();
-															await task(_0x447ae0,'activityId='+$.activityId+'&pin='+encodeURIComponent($.secretPin)+'&score='+$.gameScore+'&gameId='+$.gameId+'&reqtime='+_0x5af712+'&sign='+$.md5($.gameId+','+_0x5af712+',0eed6538f6e84b754ad2ab95b45c54f8'));
+															await task(game/luckyDraw,'activityId='+$.activityId+'&pin='+encodeURIComponent($.secretPin)+'&score='+$.gameScore+'&gameId='+$.gameId+'&reqtime='+_0x5af712+'&sign='+$.md5($.gameId+','+_0x5af712+',0eed6538f6e84b754ad2ab95b45c54f8'));
 														}
 									break;
 								case 'game/luckyDraw':
