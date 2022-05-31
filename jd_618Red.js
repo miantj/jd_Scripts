@@ -39,7 +39,7 @@ rebateCodes = $.isNode() ? (process.env.RedCode ? process.env.RedCode : `${rebat
 rebatePin = $.isNode() ? (process.env.RedPin ? process.env.RedPin : `${rebatePin}`) : ($.getdata('RedPin') ? $.getdata('RedPin') : `${rebatePin}`);
 let rebatePinArr = rebatePin && rebatePin.split(',') || []
 rebateCode = rebateCodes
-if (!rebateCode) {console.log('未设置返利Code');return}
+if (!rebateCode) {console.log('会锁佣，请设置自己的返利Code在运行');return}
 message = ''
 newCookie = ''
 resMsg = ''
