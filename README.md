@@ -1,7 +1,7 @@
 
 ## DY
 
->收自全网，加密代码审查确保CK安全，测运行无重复，定期移除失效，默认无加购，一键配置内部互助(可选模式),自动安装运行依赖（需青龙2.8+）;
+>全网可用，加密代码审查，测运行无重复，定期移除失效，默认无加购，一键配置内部互助(可选模式),自动安装运行依赖（需青龙2.8+）;
 
  
 >欢迎大家issue、pr，会一一回复！
@@ -9,7 +9,7 @@
 
 ## 请注意安全，不用不明js，app，exe！被偷回到解放前！！！
 
-## [TG频道](https://t.me/dylan_jdpro)
+## 防走失[TG频道](https://t.me/dylan_jdpro)
 
 ## 青龙面板[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
 
@@ -17,7 +17,7 @@
 
 【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/ （差不在多19行）" 修改为GithubProxyUrl=""，否则拉取失败，以上版本无需配置。
 
-国内机用下面指令（带代理）：（之前代理挂了，更换）
+国内机用下面指令（带代理，不要太频繁请求，会ban）：
 
 ```
 ql repo https://js.dayplus.xyz/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
@@ -149,9 +149,8 @@ jd_speed_signred.js  （极速版红包，算法加密）
 |   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换7天内过期京豆换喜豆 |
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
 |   ` HelpType`           |     互助模式    | 非必须 | 默认顺序助力，0是全部一样顺序助力，1是均等机会助力，2是随机顺序助力，例： export HelpType=1 |
-|   `PandaToken`           |     领现金使用     | 非必须 | Token去[TG](https://t.me/pang_da_bot) 获取，获取一次7天有效期1000次调用，export PandaToken='你获取的token' |
+|   `PandaToken`           |     领现金使用     | 非必须 | Token去[TG机器人](https://t.me/pang_da_bot) 获取，获取一次7天有效期1000次调用，export PandaToken='你获取的token' |
 |   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
 |   `DY_ZJD`           |     赚京豆     | 非必须 |默认不执行，设置变量DY_ZJD='true'执行 |
-|   `DY_19E`           |     618活动     | 非必须 |默认不执行，设置变量DY_19E='true'执行 |
 
 
