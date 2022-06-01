@@ -10,7 +10,7 @@
 第一个CK失效会退出脚本
 
 入口：[ 6.1~6.18 大牌齐聚倾囊相送 (https://lzdz-isv.isvjcloud.com/dingzhi/bd/common/activity?activityId=90322060105)]
-
+10 16 1-18 6 * jd_opencard39.js
 */
 
 if (process.env.DY_OPENALL != "true") {

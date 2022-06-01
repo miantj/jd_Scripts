@@ -17,7 +17,7 @@
 请求太频繁会被黑ip
 过10分钟再执行
 
-
+10 10 1-18 6 * jd_opencard43.js
 */
 if (process.env.DY_OPENALL != "true") {
     console.log('\n开卡任务默认不运行,设置变量export DY_OPENALL="true"来运行，自测有无水\n')

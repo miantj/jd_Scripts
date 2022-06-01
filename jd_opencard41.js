@@ -17,7 +17,7 @@
 请求太频繁会被黑ip
 过10分钟再执行
 
-
+10 14 1-18 6 * jd_opencard41.js
 */
 
 if (process.env.DY_OPENALL != "true") {
