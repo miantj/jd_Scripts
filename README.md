@@ -130,8 +130,9 @@ jd_speed_signred.js  （极速版红包，算法加密）
 </details>
 
 
-## 控制脚本功能环境变量
+## 部分脚本环境变量
 
+[Wskey转换环境变量](https://github.com/Zy143L/wskey)
 
 |             Name             |             归属             |  属性  | 说明                                                         |
 | :--------------------------: | :--------------------------: | :----: | ------------------------------------------------------------ |
@@ -152,5 +153,7 @@ jd_speed_signred.js  （极速版红包，算法加密）
 |   `PandaToken`           |     领现金使用     | 非必须 | Token去[TG机器人](https://t.me/pang_da_bot) 获取，获取一次7天有效期1000次调用，export PandaToken='你获取的token' |
 |   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
 |   `DY_ZJD`           |     赚京豆     | 非必须 |默认不执行，设置变量DY_ZJD='true'执行 |
+
+
 
 
