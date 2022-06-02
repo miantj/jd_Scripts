@@ -77,9 +77,6 @@ if ($.isNode() && process.env.CC_NOHELPAFTER8) {
       option = {};
       await shareCodesFormat();
       await jdPlantBean();
-      if(llhelp){
-		  await doHelp()
-	  }
       await showMsg();
     }
   }
@@ -101,7 +98,7 @@ async function jdPlantBean() {
       console.log(`\n活动太火爆了，还是去买买买吧！\n`)
       return
     }	
-    for (let i = 0; i < $.plantBeanIndexResult.data.roundList.length; i++) {
+    for (let i = 0; i < $.plantBeanIndexResult.data?.roundList?.length; i++) {
       if ($.plantBeanIndexResult.data.roundList[i].roundState === "2") {
         num = i
         break
@@ -124,10 +121,12 @@ async function jdPlantBean() {
       await doTask();//做日常任务
       //await doEgg();
       await stealFriendWater();
-	  await $.wait(1000)
       await doCultureBean();
       await doGetReward();
       await showTaskProcess();
+      if(llhelp){
+		  await doHelp()
+	  }
       await plantShareSupportList();
     } else {
       console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
@@ -172,8 +171,8 @@ async function doGetReward() {
 async function doCultureBean() {
   await plantBeanIndex();
   if ($.plantBeanIndexResult && $.plantBeanIndexResult.code === '0') {
-    const plantBeanRound = $.plantBeanIndexResult.data.roundList[num]
-    if (plantBeanRound.roundState === '2') {
+    const plantBeanRound = $.plantBeanIndexResult.data?.roundList[num]
+    if (plantBeanRound?.roundState === '2') {
       //收取营养液
       if (plantBeanRound.bubbleInfos && plantBeanRound.bubbleInfos.length) console.log(`开始收取营养液`)
       for (let bubbleInfo of plantBeanRound.bubbleInfos) {
@@ -400,7 +399,7 @@ async function doTask() {
 function showTaskProcess() {
   return new Promise(async resolve => {
     await plantBeanIndex();
-    $.taskList = $.plantBeanIndexResult.data.taskList;
+    $.taskList = $.plantBeanIndexResult.data?.taskList;
     if ($.taskList && $.taskList.length > 0) {
       console.log("     任务   进度");
       for (let item of $.taskList) {
@@ -422,7 +421,7 @@ async function doHelp() {
     await helpShare(plantUuid);
     if ($.helpResult && $.helpResult.code === '0') {
       // console.log(`助力好友结果: ${JSON.stringify($.helpResult.data.helpShareRes)}`);
-      if ($.helpResult.data.helpShareRes) {
+      if ($.helpResult.data?.helpShareRes) {
         if ($.helpResult.data.helpShareRes.state === '1') {
           console.log(`助力好友${plantUuid}成功`)
           console.log(`${$.helpResult.data.helpShareRes.promptText}\n`);
@@ -440,7 +439,7 @@ async function doHelp() {
     } else {
       console.log(`助力好友失败: ${JSON.stringify($.helpResult)}`);
     }
-   await $.wait(1000)
+   await $.wait(2000)
   }
 }
 function showMsg() {
@@ -556,11 +555,11 @@ async function plantBeanIndex() {
 }
 function readShareCode() {
   return new Promise(async resolve => {
-    $.get({url: `https://cdn.jsdelivr.net/gh/6dylan6/updateTeam@main/shareCodes/plant_bean.json`, timeout: 10000}, (err, resp, data) => {
+    $.get({url: `https://cdn.jsdelivr.net/gh/6dylan6/updateTeam@main/shareCodes/plant_bean.json`, timeout: 20000}, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          //console.log(`${JSON.stringify(err)}`)
+          //console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
             //console.log(`随机取码放到您固定的互助码后面(不影响已有固定互助)`)
@@ -652,7 +651,7 @@ function requestGet(function_id, body = {}) {
         'Accept-Encoding': 'gzip, deflate, br',
         'Content-Type': "application/x-www-form-urlencoded"
       },
-      timeout: 10000,
+      timeout: 20000,
     };
     $.get(option, (err, resp, data) => {
       try {
@@ -684,7 +683,7 @@ function TotalBean() {
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       },
-      "timeout": 10000,
+      "timeout": 20000,
     }
     $.post(options, (err, resp, data) => {
       try {
@@ -717,15 +716,18 @@ function TotalBean() {
 }
 function request(function_id, body = {}){
   return new Promise(async resolve => {
-    await $.wait(2000);
+    await $.wait(5000);
     $.post(taskUrl(function_id, body), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n种豆得豆: API查询请求失败 ‼️‼️')
           console.log(`function_id:${function_id}`)
           $.logErr(err);
+        } else if (data.indexOf('data') > -1){
+          data = JSON.parse(data);
         } else {
           data = JSON.parse(data);
+          console.log(data.errorMessage)
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -752,7 +754,7 @@ function taskUrl(function_id, body) {
       "Accept-Encoding": "gzip, deflate, br",
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    timeout: 10000,
+    timeout: 20000,
   }
 }
 function getParam(url, name) {
