@@ -28,6 +28,6 @@ pnpm install -g request
 pnpm install -g jsdom
 pnpm install -g moment
 pnpm install -g tough-cookie
-pip3 install jieba
+pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ jieba
 
 echo -e "\n所需依赖安装完成，请检查有没有报错，可尝试再次运行"
