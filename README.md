@@ -11,7 +11,7 @@
 
 ## 防走失[TG频道](https://t.me/dylan_jdpro)
 
-## 一键配置（复制执行）
+## 一键配置（2.11.3版本青龙，默认国内机拉库命令，建好后根据情况自行调整）
 
 ```
 curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro/main/docker/ql1key.sh -o install.sh && bash install.sh
