@@ -1,17 +1,17 @@
 
 ## DY
 
->全网可用，加密代码审查，测运行无重复，定期移除失效，默认无加购，一键配置内部互助(可选模式),自动安装运行依赖（需青龙2.8+）;
+>全网可用，加密代码审查，测运行无重复，定期移除失效，默认无加购，内部互助(可选模式);
 
  
 >欢迎大家issue、pr，会一一回复！
 
 
-## 请注意安全，不用不明js，app，exe！被偷回到解放前！！！
+### 上车注意安全，不用不明js，app，exe！
 
-## 防走失[TG频道](https://t.me/dylan_jdpro)
+### 防走失[TG频道](https://t.me/dylan_jdpro)
 
-## 一键配置（2.11.3版本青龙，默认国内机拉库命令，建好后根据情况自行调整）
+### 一键配置（2.11.3版本青龙，默认国内机拉库命令，建好后根据情况自行调整）
 
 ```
 curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro/main/docker/ql1key.sh -o install.sh && bash install.sh
