@@ -11,7 +11,11 @@
 
 ## 防走失[TG频道](https://t.me/dylan_jdpro)
 
-## 青龙面板[INSTALL](https://github.com/6dylan6/jdpro/tree/main/docker)
+## 一键配置（复制执行）
+
+```
+curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro/main/docker/ql1key.sh -o install.sh && bash install.sh
+```
 
 ## 拉库指令
 
