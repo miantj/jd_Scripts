@@ -17,6 +17,8 @@
 
 【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/ （差不在多19行）" 修改为GithubProxyUrl=""，否则拉取失败，以上版本无需配置。
 
+2.13版本以上拉库方式变了，到订阅管理添加订阅，请看配置[截图](https://github.com/6dylan6/jdpro/issues/251)
+
 国内机用下面指令（带代理，不要太频繁请求，会ban）：
 
 ```
