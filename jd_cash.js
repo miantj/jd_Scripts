@@ -41,11 +41,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let allMessage = '';
 let jdPandaToken = '';
 
-jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
-if (!jdPandaToken) {
-    console.log('请填写Panda获取的Token,变量是PandaToken');
-	return;
-}
+//jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `${jdPandaToken}`) : ($.getdata('PandaToken') ? $.getdata('PandaToken') : `${jdPandaToken}`);
+//if (!jdPandaToken) {
+//    console.log('请填写Panda获取的Token,变量是PandaToken');
+//	return;
+//}
 
 !(async () => {
   if (!cookiesArr[0]) {
@@ -298,7 +298,7 @@ function getSignfromPanda(functionId, body) {
 		        'Accept': '*/*',
 		        "accept-encoding": "gzip, deflate, br",
 		        'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + jdPandaToken
+				//'Authorization': 'Bearer ' + jdPandaToken
 		    },
 		    timeout: 30000
         }
@@ -307,8 +307,8 @@ function getSignfromPanda(functionId, body) {
               if (data){
                 data = JSON.parse(data);
 				if (data && data.code == 200) {
-                    lnrequesttimes = data.request_times;
-                    console.log("连接Panda服务成功，当前Token使用次数为" + lnrequesttimes);
+                    //lnrequesttimes = data.request_times;
+                    console.log("连接Panda服务成功!");
                     if (data.data){
                         strsign = data.data.sign || '';
 					}
