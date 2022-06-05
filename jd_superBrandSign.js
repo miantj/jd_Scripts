@@ -8,7 +8,7 @@
 ============Quantumultx===============
 [task_local]
 #特物Z_签到
-55 6,23 1-19 6 * https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_superBrandSign.js, tag=特物Z, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+55 6,13 1-19 6 * https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_superBrandSign.js, tag=特物Z, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
  */
 const $ = new Env('特物Z_签到');
@@ -65,8 +65,9 @@ if ($.isNode()) {
                     console.log("今日已签到");
                 }
             }
+            await getid("showSecondFloorSignInfo", "sign")           
             if ($.callNumber >= 300) {
-                await superBrandTaskLottery("sign", $.encryptProjectId, $.activitySign1Info.encryptAssignmentId)
+                await superBrandTaskLottery("sign", $.encryptProjectId, 'D2bsHLsAAPxoUhfKtHU3TvMpWrw')
             }
         }
     }
