@@ -70,8 +70,8 @@ async function main(_0x57c48b){
 		}
 		_0x21ba54=getRandomArrayElements(_0x21ba54,_0x21ba54.length);
 		let _0x3b38d3={};
-		console.log('店铺总数：'+_0x21ba54.length);
-		for(let _0x44fbb2=0;(_0x44fbb2<_0x21ba54.length)&&!_0xbc125c&&$.runFlag;_0x44fbb2++){
+		//console.log('店铺总数：'+_0x21ba54.length);
+		for(let _0x44fbb2=0;(_0x44fbb2<10)&&!_0xbc125c&&$.runFlag;_0x44fbb2++){
 			let _0x4e7c82=_0x21ba54[_0x44fbb2];
 			let _0x529963=_0x4e7c82.link;
 			let _0x4841ae=_0x4e7c82.extension.shopInfo.venderId;
