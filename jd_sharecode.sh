@@ -3,26 +3,9 @@
 #15 3,23 * * * jd_sharecode.sh 
 #new Env('获取互助码');
 
-
-if [[ -d /ql/deps ]]
-then
-   #\cp /ql/repo/6dylan6_jdpro/sendNotify.js /ql/deps
-   grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
-   if [[ $? != 0 ]];then
-	   \cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
-   fi
-elif [[ -d /ql/data ]]
-then
-   #\cp /ql/data/repo/6dylan6_jdpro/sendNotify.js /ql/data/deps
-   grep '6dylan6_1124' /ql/data/config/task_before.sh >/dev/null 2>&1
-   if [[ $? != 0 ]];then
-	   \cp /ql/data/repo/6dylan6_jdpro/docker/task_before.sh /ql/data/config/
-   fi
-else
-   grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
-   if [[ $? != 0 ]];then
-	   \cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/
-   fi
+grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
+if [[ $? != 0 ]];then
+ cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/ >/dev/null 2>&1 || cp /ql/data/repo/6dylan6_jdpro/docker/task_before.sh /ql/data/config/
 fi
 
 dir_shell=/ql/shell
