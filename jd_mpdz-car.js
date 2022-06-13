@@ -331,7 +331,7 @@ async function dealReturn(type,data){
 						$.carlist=res.data.data||[];
 						$.usecar = $.carlist.reverse().find(item => item.isUnlock === true)
                         console.log(`使用我最牛X的${$.usecar.carName}进行游戏！`)
-                        let pointArr = [{id:1,point:100},{id:2,ponit:150},{id:3,point:200},{id:4,ponit:300}]
+                        let pointArr = [{id:1,point:100},{id:2,point:150},{id:3,point:200},{id:4,point:300}]
                         $.point = pointArr.find(a => a.id === $.usecar.id)
 					}
 				}else if(res.message){
