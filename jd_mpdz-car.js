@@ -163,7 +163,6 @@ async function takePostRequest(type){
 		case 'activity_load':
 			url=`${domain}/dm/front/jdCardRunning/activity/load?open_id=&mix_nick=${$.MixNick}&push_way=1&user_id=`;
 			admJson={'jdToken':$.Token,'inviteNick':$.inviteNick};
-			if($.joinVenderId)admJson={...admJson,'shopId':''+$.joinVenderId};
 			body=taskPostUrl('/jdCardRunning/activity/load',admJson);
 			break;
 		case 'taskList':
@@ -213,7 +212,7 @@ async function takePostRequest(type){
 			break;
 		case 'sendGameAward':
 			url=`${domain}/dm/front/jdCardRunning/game/sendGameAward?open_id=&mix_nick=${$.MixNick}`;
-			admJson={'actId':$.actId,'point':$.point.point,'gameLogId':$.gameLogId,'userId':10299171,'buyerNick':$.inviteNick};
+			admJson={'actId':$.actId,'point':$.point.point||300,'gameLogId':$.gameLogId,'userId':10299171,'buyerNick':$.inviteNick};
 			body=taskPostUrl('/jdCardRunning/game/sendGameAward',admJson);
 			break;
 		case 'missionInviteList':
@@ -263,8 +262,8 @@ async function dealReturn(type,data){
 		console.log(`${type} 执行任务异常`);
 		console.log(data);
 		$.runFalag=false;
-	}try{
-		let title='';
+	}
+    try{
 		switch(type){
 			case 'isvObfuscator':
 				if(typeof res == 'object'){
@@ -345,29 +344,29 @@ async function dealReturn(type,data){
 				break;			
 			case 'playGame':
 				if(typeof res=='object'){
-					if(res.success&&res.success===true&&res.data){
-					if(res.data.status&&res.data.status==200){
-						$.gameLogId=res.data.data.gameLogId;
-						console.log(`游戏ID： ${$.gameLogId}`);
-					}
-				}else if(res.message){
-					console.log(`${type} ${res.message}`)
-				}else{
-					console.log(data);
-				}
+				    	if(res.success&&res.success===true&&res.data){
+				    	    if(res.data.status&&res.data.status==200){
+				    	    	$.gameLogId=res.data.data.gameLogId;
+				    	    	console.log(`游戏ID： ${$.gameLogId}`);
+				    	    }
+				        }else if(res.message){  
+				    	    console.log(`${type} ${res.message}`)
+				        }else{  
+				            console.log(data);
+				        }
 				}else{
 					console.log(data);
 				}
 				break;
 			case 'sendGameAward':
 				if(typeof res=='object'){
-					if(res.success&&res.data){
-					console.log(`游戏完成，获得${$.point.point}能量!`);
-				}else if(res.message){
-					console.log(`${type} ${res.message}`)
-				}else{
-					console.log(data);
-				}
+				    if(res.success&&res.data){
+				        console.log(`游戏完成，获得${$.point.point}能量!`);
+				       }else if(res.message){
+				            console.log(`${type} ${res.message}`)
+				       }else{
+				            console.log(data);
+				       }
 				}else{
 					console.log(data);
 				}
@@ -384,6 +383,7 @@ async function dealReturn(type,data){
 			case 'missionInviteList':
 			case'绑定':
 			case'助力':
+                let title=''
 				if(type=='followShop')title='关注';
 				if(type=='addCart')title='加购';
                 if(type=='specialSign')title='签到';
@@ -402,7 +402,7 @@ async function dealReturn(type,data){
 								$.remainChance = res.data.missionCustomer.remainChance|| 0;
 							}
 						}else if(type=='missionInviteList'){
-							console.log(`今日被助力(${res.data.total}/10)`);
+							console.log(`本月已邀请助力(${res.data.total})`);
 						}
 					}else if(res.data.msg){
 						console.log(res.data.msg);
@@ -422,7 +422,8 @@ async function dealReturn(type,data){
 				break;
 			default:
 				console.log(data);
-		}if(typeof res=='object'){
+		}
+        if(typeof res=='object'){
 			if(res.errorMessage){
 				if(res.errorMessage.indexOf('火爆')>-1){$.hotFlag = true}
 			}
