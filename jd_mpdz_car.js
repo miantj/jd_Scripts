@@ -3,7 +3,7 @@
 日常任务，助力，游戏
 第一个账号助力作者 其他依次助力CK1
 默认不做加购任务，如需要，请设置变量erport car_addsku='true'
-15 5,15 * * * jd_mpdz-car.js
+一起冲真瘠薄卡，定时自定义
 */
 
 const $ = new Env("头文字J");
