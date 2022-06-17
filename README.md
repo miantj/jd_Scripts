@@ -11,7 +11,9 @@
 
 ### 防走失[TG频道](https://t.me/dylan_jdpro)
 
-### 一键配置（2.11.3版本青龙，默认国内机拉库命令，建好后根据情况自行调整）
+### 一键部署（2.11.3版本青龙，默认国内机拉库命令，建好后根据情况自行调整）
+
+机上登录root用户运行下面一串命令，支持Centos/Ubuntu系统
 
 ```
 curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro/main/docker/ql1key.sh -o install.sh && bash install.sh
@@ -45,25 +47,20 @@ ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 任务定时建议 50 7-23/2 * * *  
 
-## 依赖安装
-
-拉库后，执行'依赖安装'任务安装此库脚本所需依赖，脚本名jd_indeps，首次拉库执行一次即可，有新依赖再次执行。
 
 
-## 互助指南
 
-1、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，会少依赖安装任务和获取互助任务）
+## 使用流程
 
-RepoFileExtensions="js py"修改为
+1、青龙部署。
 
-RepoFileExtensions="js py sh ts"
+2、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署忽略此处）
 
-保存
+RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存
 
+3、新建拉库任务，并执行，刷新浏览器即可看到添加的任务。
 
-2、执行拉库任务。
-
-3、执行'获取互助码'任务即可自动完成互助配置（脚本名jd_sharecode),互助码获取情况可查看任务运行日志（首次使用此库需等待任务运行一遍后产生日志才会获取到互助码，可以看jd_sharecode日志获取情况）
+4、添加CK环境变量
 
 
 
