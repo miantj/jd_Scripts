@@ -12,7 +12,7 @@
 2022-6-20
  */
  
-if ($.isNode() && process.env.DY_ZJD != 'true') {
+if (process.env.DY_ZJD != 'true') {
     console.log(`\n加密js不放心勿跑，如需运行请设置变量DY_ZJD='true'\n`);
     return;
 }
