@@ -47,7 +47,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
-      $.token = '';
+      $.token = undefined;
       message = '';
       $.tryCount = 0;
       await TotalBean();
@@ -81,12 +81,14 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 async function price() {
   let num = 0
   do {
-    $.token = $.jab.getToken() || ''
-    if ($.token) {
+    if ($.jab){
+      $.token = $.jab.getToken() || ''
+    }
+    if (($.jab && $.token)|| !$.jab) {
       await siteppM_skuOnceApply();
     }
     num++
-  } while (num < 3 && !$.token)
+  } while (num < 3 && (!$.token && $.jab))
   await showMsg()
 }
 
@@ -94,9 +96,11 @@ async function siteppM_skuOnceApply() {
   let body = {
     sid: "",
     type: "25",
-    forcebot: "",
-    token: $.token,
-    feSt: $.token ? "s" : "f"
+    forcebot: ""
+  }
+  if ($.jab){
+    body.token = $.token
+    body.feSt = $.token ? "s" : "f"
   }
   const time = Date.now();
   const h5st = await $.signWaap("d2f64", {
@@ -173,7 +177,7 @@ function siteppM_appliedSuccAmount() {
 }
 
 async function jstoken() {
-  if ($.jab && $.signWaap) {
+  if ($.signWaap) {
     return;
   }
 
@@ -200,14 +204,22 @@ async function jstoken() {
   <script src="https://static.360buyimg.com/siteppStatic/script/utils.js"></script>
   <script src="https://js-nocaptcha.jd.com/statics/js/main.min.js"></script>
   </body>`, options);
-  await $.wait(1000)
-  try {
-    $.jab = new dom.window.JAB({
-      bizId: 'jdjiabao',
-      initCaptcha: false
-    });
-    $.signWaap = dom.window.signWaap;
-  } catch (e) {}
+  let num = 0
+  do {
+    num+=1
+    await $.wait(1000)
+    try {
+        if (dom.window.JAB){
+            $.jab = new dom.window.JAB({
+                bizId: 'jdjiabao',
+                initCaptcha: false
+            });
+        }else{
+            $.jab = undefined
+        }
+        $.signWaap = dom.window.signWaap;
+  } catch (e) { }
+  }while ( !$.signWaap && num < 4)
 }
 
 function downloadUrl(url) {
