@@ -2006,16 +2006,25 @@ function serverNotify(text, desp, time = 2100) {
 function BarkNotify(text, desp, params = {}) {
     return new Promise((resolve) => {
         if (BARK_PUSH) {
+            let {scheme,host,token} = /(?<scheme>https?):\/\/(?<host>.*?)\/(?<token>\w+)/g.exec(BARK_PUSH).groups
+            let url = `${scheme}://${host}/push`
+            let body = {
+                title:text,
+                body:desp,
+                device_key:token,
+                sound:BARK_SOUND,
+                group:BARK_GROUP
+            }
+            body = Object.assign(body,params)
             const options = {
-                url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(
-          desp
-        )}?sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(params)}`,
+                url: url,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
+                json:body,
                 timeout,
             };
-            $.get(options, (err, resp, data) => {
+            $.post(options, (err, resp, data) => {
                 try {
                     if (err) {
                         console.log('Bark APP发送通知调用API失败！！\n');
