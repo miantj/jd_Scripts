@@ -154,7 +154,7 @@ message = ""
       }
     }
   }
-
+/*
   $.log("\n======汪汪乐园开始内部互助======\n")
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
@@ -197,6 +197,7 @@ message = ""
       }
     }
   }
+  */
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
