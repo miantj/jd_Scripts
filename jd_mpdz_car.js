@@ -94,8 +94,8 @@ async function run(){
                 case 'shareAct':    
                     break;
                 case 'viewCommodity':
+                case 'viewThemeConference':
                     for(let i=0;i<3;i++){
-                        $.missionType='viewCommodity';
                         await takePostRequest('doTask');
                         await $.wait(parseInt(Math.random()*1000+1000,10));
                     }
@@ -103,7 +103,6 @@ async function run(){
                 case 'collectShop':
                     for(let i=0;i<3;i++){
                         await takePostRequest('getCusShop');
-                        $.missionType='collectShop';
                         await takePostRequest('followShop');
                         await $.wait(parseInt(Math.random()*1000+1000,10));
                     }
@@ -112,7 +111,6 @@ async function run(){
                     if (process.env.car_addsku && process.env.car_addsku === 'true'){
                     for(let i=0;i<3;i++){
                         await takePostRequest('getCusShopProduct');
-                        $.missionType='addCart';
                         await takePostRequest('addCart');
                         await $.wait(parseInt(Math.random()*1000+1000,10));
                     }
