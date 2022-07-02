@@ -13,7 +13,7 @@
 
 ### 一键部署（2.11.3版本青龙，默认国内机拉库命令，建好后根据情况自行调整）
 
-机上登录root用户运行下面一串命令，支持Centos/Ubuntu系统
+使用root用户运行下面一串命令，支持Centos/Ubuntu系统
 
 ```
 curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro/main/docker/ql1key.sh -o install.sh && bash install.sh
@@ -128,7 +128,7 @@ jd_cfd.js （京喜财富岛，算法加密）
 jd_cfd_loop.js (京喜财富岛捡贝壳，算法加密）
 jd_speed_sign.js （极速版签到，算法加密）
 jd_speed_signred.js  （极速版红包，算法加密）
-开卡系列全部都有算法加密 
+开卡系列全部部分或全部加密 
 </code></pre>
 </details>
 
@@ -148,13 +148,13 @@ jd_speed_signred.js  （极速版红包，算法加密）
 |       `JD_UNSUB`             |      批量取消商品与店铺关注开关      | 非必须 | 控制jd_unsubscribe.js运行，默认为true取关，false不取关 |
 |       `JD_CART_REMOVE`       |      清空购物车      | 非必须 | 控制jd_clean_car.js运行 ，默认false不清空，true清空 |
 |   `MONEY_TREE_SELL_FRUIT`    |    摇钱树<br>是否卖出金果    | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认卖出 |
-|   `QCARD`    |    店铺退会链接<br>是否运行    | 非必须 | 按需运行，`true`运行，默认`false`不运行 |
 |   `Ev_Start`    |    自动评价<br>是否运行    | 非必须 | 选择运行，`true`运行，默认`false`不运行 |
-|   `exjxbeans`                |     临期京豆换喜豆     | 非必须 | 默认为false不换，设置true换7天内过期京豆换喜豆 |
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
 |   ` HelpType`           |     互助模式    | 非必须 | 默认顺序助力，0是全部一样顺序助力，1是均等机会助力，2是随机顺序助力，例： export HelpType=1 |
 |   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
 |   `DY_ZJD`           |     赚京豆     | 非必须 |默认不执行，设置变量DY_ZJD='true'执行 |
+
+线报监控脚本已全部移除，需要的到 https://github.com/6dylan6/jdm.git
 
 
 
