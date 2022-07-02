@@ -1,6 +1,6 @@
 /**
  * 签到领现金_Windfgg，每日2毛～5毛
- * "6 0,10 * * *" jd_cash.js
+ * "10 6,15 * * *" jd_cash.js
  * 活动入口：京东APP搜索领现金进入
  * 满30提现 目前有3、8、15、30的红包
  */
@@ -196,8 +196,13 @@
  async function appdoTask(type, taskInfo) {
      let functionId = 'cash_doTask'
      let body = { "type": type, "taskInfo": taskInfo }
-     let sign = await getSignfromPanda(functionId, body)
- 
+     let sign
+     for (i = 0; i < 3; i++){
+      sign = await getSignfromPanda(functionId, body)
+      if(sign)break;
+      await $.wait(3000)
+     }
+     if(!sign)return;
      return new Promise((resolve) => {
          $.post(apptaskUrl(functionId, sign), (err, resp, data) => {
              try {
@@ -270,8 +275,7 @@
          }
          $.post(url, async (err, resp, data) => {
              try {
-                 data = JSON.parse(data);
- 
+                 data  &&= JSON.parse(data);
                  if (data && data.code == 200) {
                      lnrequesttimes = data.request_times;
                      console.log("连接Windfgg服务成功，当前Token使用次数为" + lnrequesttimes);
@@ -279,8 +283,12 @@
                          strsign = data.data || '';
                      if (strsign != '')
                          resolve(strsign);
-                 }else if(data.code==201){
+                 }else if(data?.code==201){
                      console.log("签名获取失败,Token使用次数上限.");
+                 }else if(data?.msg){
+                     console.log(data.msg)
+                 }else {
+                     console.log('Null，哔了狗，换个时间再试试')
                  }
              } catch (e) {
                  $.logErr(e,resp)
