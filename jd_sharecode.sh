@@ -3,7 +3,7 @@
 #15 3,23 * * * jd_sharecode.sh 
 #new Env('获取互助码');
 
-grep '6dylan6_1124' /ql/config/task_before.sh >/dev/null 2>&1
+grep '6dylan6_1124' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_1124' /ql/config/task_before.sh
 if [[ $? != 0 ]];then
  cp /ql/repo/6dylan6_jdpro/docker/task_before.sh /ql/config/ >/dev/null 2>&1 || cp /ql/data/repo/6dylan6_jdpro/docker/task_before.sh /ql/data/config/
 fi
