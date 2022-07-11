@@ -67,7 +67,7 @@ RemainMessage += '【极速金币】京东极速版->我的->金币(可兑换无
 RemainMessage += '【京东赚赚】微信->京东赚赚小程序->底部赚好礼->提现无门槛红包(京东使用)\n';
 RemainMessage += '【京东秒杀】京东->首页京东秒杀->点立即签到->可兑换无门槛红包(京东使用)\n';
 RemainMessage += '【东东萌宠】京东->我的->东东萌宠,完成可兑换无门槛红包,可用于任意商品\n';
-RemainMessage += '【领现金】京东->搜玩一玩>领现金(可微信提现或兑换红包)\n';
+RemainMessage += '【领现金】京东->搜领现金(可微信提[需要抢]现或兑换红包)\n';
 RemainMessage += '【东东农场】京东->我的->东东农场,完成可兑换无门槛红包,可用于的任意商品\n';
 RemainMessage += '【京喜工厂】京喜->我的->京喜工厂,完成是指定商品红包(不兑换会过期)\n';
 RemainMessage += '【京东金融】京东金融app->我的->养猪猪,完成是白条支付券,支付方式选白条支付时立减.\n';
@@ -290,7 +290,23 @@ if(DisableIndex!=-1){
 	console.log("检测到设定关闭汪汪赛跑查询");
 	EnableJoyRun=false
 }
-	
+
+//E卡查询
+let EnableCheckEcard=true;
+DisableIndex=strDisableList.findIndex((item) => item === "E卡查询");
+if(DisableIndex!=-1){
+	console.log("检测到设定关闭E卡查询");
+	EnableCheckEcard=false
+}
+
+//京豆收益查询
+let EnableCheckBean=true;
+DisableIndex=strDisableList.findIndex((item) => item === "京豆收益");
+if(DisableIndex!=-1){
+	console.log("检测到设定关闭京豆收益查询");
+	EnableCheckBean=false
+}
+
 !(async() => {
 	if (!cookiesArr[0]) {
 		$.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {
@@ -352,7 +368,7 @@ if(DisableIndex!=-1){
 			$.YunFeiQuan2 = 0;
 			$.YunFeiQuanEndTime2 = "";
 			$.JoyRunningAmount = "";
-			
+			$.ECardinfo = "";
 			TempBaipiao = "";
 			strGuoqi="";
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
@@ -388,7 +404,8 @@ if(DisableIndex!=-1){
 		         jdCash(), //领现金
 		         GetJxBeaninfo(), //喜豆查询
 		         GetPigPetInfo(), //金融养猪
-				 GetJoyRuninginfo() //汪汪赛跑
+				 GetJoyRuninginfo(), //汪汪赛跑 
+				 CheckEcard() //E卡查询
 		     ])
 			
 			await showMsg();
@@ -673,21 +690,23 @@ async function showMsg() {
 		}
 
 	}
+	if (EnableCheckBean) {
+	    ReturnMessage += `【今日京豆】收${$.todayIncomeBean}豆`;
+	    strsummary += `【今日京豆】收${$.todayIncomeBean}豆`;
+	    if ($.todayOutcomeBean != 0) {
+	        ReturnMessage += `,支${$.todayOutcomeBean}豆`;
+	        strsummary += `,支${$.todayOutcomeBean}豆`;
+	    }
+	    ReturnMessage += `\n`;
+	    strsummary += `\n`;
+	    ReturnMessage += `【昨日京豆】收${$.incomeBean}豆`;
 
-	ReturnMessage += `【今日京豆】收${$.todayIncomeBean}豆`;
-	strsummary+= `【今日京豆】收${$.todayIncomeBean}豆`;
-	if ($.todayOutcomeBean != 0) {
-		ReturnMessage += `,支${$.todayOutcomeBean}豆`;
-		strsummary += `,支${$.todayOutcomeBean}豆`;
+	    if ($.expenseBean != 0) {
+	        ReturnMessage += `,支${$.expenseBean}豆`;
+	    }
+	    ReturnMessage += `\n`;
 	}
-	ReturnMessage += `\n`;
-	strsummary+= `\n`;
-	ReturnMessage += `【昨日京豆】收${$.incomeBean}豆`;
 	
-	if ($.expenseBean != 0) {
-		ReturnMessage += `,支${$.expenseBean}豆`;		
-	}
-	ReturnMessage += `\n`;	
 	
 	if ($.beanCount){		
 		ReturnMessage += `【当前京豆】${$.beanCount-$.beanChangeXi}豆(≈${(($.beanCount-$.beanChangeXi)/ 100).toFixed(2)}元)\n`;
@@ -729,6 +748,8 @@ async function showMsg() {
 	if ($.JdMsScore != 0) {
 		ReturnMessage += `【京东秒杀】${$.JdMsScore}币(≈${($.JdMsScore / 1000).toFixed(2)}元)\n`;
 	}
+	if($.ECardinfo)
+		ReturnMessage += `【礼卡余额】${$.ECardinfo}\n`;
 
 	if ($.joylevel || $.jdCash || $.JoyRunningAmount) {
 		ReturnMessage += `【其他信息】`;
@@ -1004,79 +1025,81 @@ async function showMsg() {
 	//$.msg($.name, '', ReturnMessage , {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
 async function bean() {
-	// console.log(`北京时间零点时间戳:${parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000}`);
-	// console.log(`北京时间2020-10-28 06:16:05::${new Date("2020/10/28 06:16:05+08:00").getTime()}`)
-	// 不管哪个时区。得到都是当前时刻北京时间的时间戳 new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000
+	if (EnableCheckBean) {
+	    // console.log(`北京时间零点时间戳:${parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000}`);
+	    // console.log(`北京时间2020-10-28 06:16:05::${new Date("2020/10/28 06:16:05+08:00").getTime()}`)
+	    // 不管哪个时区。得到都是当前时刻北京时间的时间戳 new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000
 
-	//前一天的0:0:0时间戳
-	const tm = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000 - (24 * 60 * 60 * 1000);
-	// 今天0:0:0时间戳
-	const tm1 = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000;
-	let page = 1,
-	t = 0,
-	yesterdayArr = [],
-	todayArr = [];
-	do {
-		let response = await getJingBeanBalanceDetail(page);
-		await $.wait(1000);
-		// console.log(`第${page}页: ${JSON.stringify(response)}`);
-		if (response && response.code === "0") {
-			page++;
-			let detailList = response.detailList;
-			if (detailList && detailList.length > 0) {
-				for (let item of detailList) {
-					const date = item.date.replace(/-/g, '/') + "+08:00";
-					if (new Date(date).getTime() >= tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
-						todayArr.push(item);
-					} else if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
-						//昨日的
-						yesterdayArr.push(item);
-					} else if (tm > new Date(date).getTime()) {
-						//前天的
-						t = 1;
-						break;
-					}
-				}
-			} else {
-				$.errorMsg = `数据异常`;
-				$.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
-				t = 1;
-			}
-		} else if (response && response.code === "3") {
-			console.log(`cookie已过期，或者填写不规范，跳出`)
-			t = 1;
-		} else {
-			console.log(`未知情况：${JSON.stringify(response)}`);
-			console.log(`未知情况，跳出`)
-			t = 1;
-		}
-	} while (t === 0);
-	for (let item of yesterdayArr) {
-		if (Number(item.amount) > 0) {
-			$.incomeBean += Number(item.amount);
-		} else if (Number(item.amount) < 0) {
-			$.expenseBean += Number(item.amount);
-		}
-	}
-	for (let item of todayArr) {
-		if (Number(item.amount) > 0) {
-			$.todayIncomeBean += Number(item.amount);
-		} else if (Number(item.amount) < 0) {
-			$.todayOutcomeBean += Number(item.amount);
-		}
-	}
-	$.todayOutcomeBean = -$.todayOutcomeBean;
-	$.expenseBean = -$.expenseBean;
-	
-	decExBean =0;
-	if (EnableOverBean) {
-	    await queryexpirejingdou(); //过期京豆
-	    if (decExBean && doExJxBeans == "true") {
-	        var jxbeans = await exchangejxbeans(decExBean);
-	        if (jxbeans) {
-	            $.beanChangeXi = decExBean;
-	            console.log(`已为您将` + decExBean + `临期京豆转换成喜豆！`);
-	            strGuoqi += `已为您将` + decExBean + `临期京豆转换成喜豆！\n`;
+	    //前一天的0:0:0时间戳
+	    const tm = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000 - (24 * 60 * 60 * 1000);
+	    // 今天0:0:0时间戳
+	    const tm1 = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000;
+	    let page = 1,
+	    t = 0,
+	    yesterdayArr = [],
+	    todayArr = [];
+	    do {
+	        let response = await getJingBeanBalanceDetail(page);
+	        await $.wait(1000);
+	        // console.log(`第${page}页: ${JSON.stringify(response)}`);
+	        if (response && response.code === "0") {
+	            page++;
+	            let detailList = response.detailList;
+	            if (detailList && detailList.length > 0) {
+	                for (let item of detailList) {
+	                    const date = item.date.replace(/-/g, '/') + "+08:00";
+	                    if (new Date(date).getTime() >= tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes("物流") && !item['eventMassage'].includes('扣赠'))) {
+	                        todayArr.push(item);
+	                    } else if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes("物流") && !item['eventMassage'].includes('扣赠'))) {
+	                        //昨日的
+	                        yesterdayArr.push(item);
+	                    } else if (tm > new Date(date).getTime()) {
+	                        //前天的
+	                        t = 1;
+	                        break;
+	                    }
+	                }
+	            } else {
+	                $.errorMsg = `数据异常`;
+	                $.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
+	                t = 1;
+	            }
+	        } else if (response && response.code === "3") {
+	            console.log(`cookie已过期，或者填写不规范，跳出`)
+	            t = 1;
+	        } else {
+	            console.log(`未知情况：${JSON.stringify(response)}`);
+	            console.log(`未知情况，跳出`)
+	            t = 1;
+	        }
+	    } while (t === 0);
+	    for (let item of yesterdayArr) {
+	        if (Number(item.amount) > 0) {
+	            $.incomeBean += Number(item.amount);
+	        } else if (Number(item.amount) < 0) {
+	            $.expenseBean += Number(item.amount);
+	        }
+	    }
+	    for (let item of todayArr) {
+	        if (Number(item.amount) > 0) {
+	            $.todayIncomeBean += Number(item.amount);
+	        } else if (Number(item.amount) < 0) {
+	            $.todayOutcomeBean += Number(item.amount);
+	        }
+	    }
+	    $.todayOutcomeBean = -$.todayOutcomeBean;
+	    $.expenseBean = -$.expenseBean;
+
+	    decExBean = 0;
+	    if (EnableOverBean) {
+	        await queryexpirejingdou(); //过期京豆
+	        if (decExBean && doExJxBeans == "true") {
+	            var jxbeans = await exchangejxbeans(decExBean);
+	            if (jxbeans) {
+	                $.beanChangeXi = decExBean;
+	                console.log(`已为您将` + decExBean + `临期京豆转换成喜豆！`);
+	                strGuoqi += `已为您将` + decExBean + `临期京豆转换成喜豆！\n`;
+	            }
 	        }
 	    }
 	}
@@ -1221,6 +1244,58 @@ async function jdCash() {
 			})
 		})
 }
+
+async function CheckEcard() {
+    if (!EnableCheckEcard)
+        return;
+    var balEcard = 0;
+    var body = "pageNo=1&queryType=1&cardType=-1&pageSize=20";
+    var stroption = {
+        url: 'https://mygiftcard.jd.com/giftcard/queryGiftCardItem/app?source=JDAP',
+        body,
+        headers: {
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, deflate, br",
+            "accept-language": "zh-CN,zh-Hans;q=0.9",
+            "content-length": "44",
+            "content-type": "application/x-www-form-urlencoded",
+            "cookie": cookie,
+            "origin": "https://mygiftcard.jd.com",
+            "referer": "https://mygiftcard.jd.com/giftcardForM.html?source=JDAP&sid=9f55a224c8286baa2fe3a7545bbd411w&un_area=16_1303_48712_48758",
+            "user-agent": "jdapp;iPhone;10.1.2;15.0;network/wifi;Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"
+        },
+        timeout: 10000
+    }
+    return new Promise((resolve) => {
+        $.post(stroption, async(err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`jdCash API请求失败，请检查网路重试`)
+                } else {
+                    //console.log(data);
+                    data = JSON.parse(data);
+                    let useable = data.couponVOList;
+                    if (useable) {
+                        for (let k = 0; k < useable.length; k++) {
+							if(useable[k].balance>0)
+								balEcard += useable[k].balance;
+                        }
+						if(balEcard)
+							$.ECardinfo = '共' + useable.length + '张E卡,合计' + parseFloat(balEcard).toFixed(2) + '元';
+                    }
+
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            }
+            finally {
+                resolve(data);
+            }
+        })
+    })
+}
+
 function apptaskUrl(functionId = "", body = "") {
   return {
     url: `${JD_API_HOST}?functionId=${functionId}`,

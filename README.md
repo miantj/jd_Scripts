@@ -25,7 +25,7 @@ curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro
 
 2.13版本以上拉库方式变了，到订阅管理添加订阅，请看配置[截图](https://github.com/6dylan6/jdpro/issues/251)
 
-国内机用下面指令（带代理，不要太频繁请求，会ban）：
+国内机用下面指令（带代理）：
 
 ```
 ql repo https://js.dayplus.xyz/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
@@ -38,16 +38,13 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ```
 
-怎么都拉不下来就用gitee版吧，用下面指令！(更新会慢点）
+Gitee版不能正常拉取，已停止维护！（20220711）
 
-```
-ql repo https://gitee.com/dylanote/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
-
-```
 
 任务定时建议 50 7-23/2 * * *  
 
 
+线报监控类脚本已移除，需要的看 https://github.com/6dylan6/jdm.git
 
 
 ## 使用流程
@@ -154,7 +151,6 @@ jd_speed_signred.js  （极速版红包，算法加密）
 |   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
 |   `DY_ZJD`           |     赚京豆     | 非必须 |默认不执行，设置变量DY_ZJD='true'执行 |
 
-线报监控脚本已全部移除，需要的到 https://github.com/6dylan6/jdm.git
 
 
 
