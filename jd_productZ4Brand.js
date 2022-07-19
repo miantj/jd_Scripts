@@ -84,7 +84,7 @@ async function main() {
     $.runFlag = false;
     $.activityInfo = {};
     await takeRequest('superBrandSecondFloorMainPage');
-    if(JSON.stringify($.activityInfo) === '{}'){
+    if($.bizCode == 'MP001'){
         console.log(`本期活动结束，期待下期。。。`);
 		$.flag = true
         return ;
@@ -215,6 +215,7 @@ function dealReturn(type, data) {
     }
     switch (type) {
         case 'superBrandSecondFloorMainPage':
+            $.bizCode = data.data.bizCode;
             if(data.code === '0' &&  data.data && data.data.result){
                 $.activityInfo = data.data.result;
             }
