@@ -22,8 +22,8 @@ let message = '', allMessage = '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-let appIdArr = ["1E1xZy6s","1EFRXxg","1EFRWxKuG","1FFVQyqw"];
-let appNameArr = ["PLUS生活特权","1","2","3"];
+let appIdArr = ["1E1NUxq2G","1E1xZy6s","1EFRXxg","1EFRWxKuG","1FFVQyqw"];
+let appNameArr = ["空投","PLUS生活特权","1","2","3"];
 let appId, appName;
 $.shareCode = [];
 if ($.isNode()) {
@@ -192,7 +192,7 @@ async function healthyDay_getHomeData(type = true) {
                         await harmony_collectScore({ "appId": appId, "taskToken": productInfoVos.taskToken, "taskId": vo.taskId, "actionType": "0" })
                       }
                     }
-                  } else if (vo.taskType === 3) {
+                  } else if (vo.taskType === 3 && vo.shoppingActivityVos) {
 					for (let key of Object.keys(vo.shoppingActivityVos)) {
                       let shoppingActivityVos = vo.shoppingActivityVos[key]
                       if (shoppingActivityVos.status !== 2) {
