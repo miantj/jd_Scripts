@@ -17,6 +17,7 @@ if (process.env.DY_OPENALL != "true") {
 }
 let opencard_addSku = "true"
 let opencard_draw = "0"
+let opencard_wtime = 0
 
 const $ = new Env('甜蜜七夕跨越时空中意你-开卡');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -98,7 +99,6 @@ let lz_cookie={}
     $.msg($.name, ``, `${allMessage}`);
     // if ($.isNode()) await notify.sendNotify(`${$.name}`, `${allMessage}`);
   }
-  console.log($.toStr(cookies))
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
@@ -249,10 +249,10 @@ async function run() {
       console.log(`后面的号都会助力:${$.shareUuid}`)
     }
     await $.wait(parseInt(Math.random() * 2000 + 5000, 10))
-    if(guaopenwait){
+    if(opencard_wtime){
       if($.index != cookiesArr.length){
-        console.log(`等待${guaopenwait}秒`)
-        await $.wait(parseInt(guaopenwait, 10) * 1000)
+        console.log(`等待${opencard_wtime}秒`)
+        await $.wait(parseInt(opencard_wtime, 10) * 1000)
       }
     }else{
       if($.index % 3 == 0) console.log('休息1分钟，别被黑ip了\n可持续发展')
