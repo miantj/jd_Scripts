@@ -1,8 +1,7 @@
 /**
- 特务Z
- 脚本没有自动开卡，会尝试领取开卡奖励
- cron 23 8,14,18 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_productZ4Brand.js
- 一天要跑2次
+特务Z，首页下拉
+不自动开卡，会尝试领取开卡奖励
+5 6,10,18 * * * jd_superBrandZII.js
  */
 const $ = new Env('特务Z-II');
 const notify = $.isNode() ? require('./sendNotify') : '';
