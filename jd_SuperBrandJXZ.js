@@ -50,10 +50,9 @@ if ($.isNode()) {
 })().catch((e) => { $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '') }).finally(() => { $.done(); })
 
 async function main() {
-    $.runFlag = false;
     $.activityInfo = {};
     await takeRequest('showBadgeInfo');
-    if($.bizCode == 'MP001'){
+    if ($.bizCode == 'MP001') {
         console.log(`本期活动结束，等待下期。。。`);
         $.flag = true
         return;
@@ -68,6 +67,20 @@ async function main() {
     await takeRequest('superBrandTaskList', { "source": "badge", "activityId": $.activityId });
     await $.wait(1000);
     await doTask();
+    if (new Date().getHours() >= 20) {
+        console.log(`去瓜分`);
+        if ($.activityInfo.activityBadgeInfo.allTaskStatus === 1) {
+            if ($.activityInfo.activityBadgeInfo.divideStatus === 0) {
+                await takeRequest('superBrandTaskLottery', { "source": "badge", "activityId": $.activityId, "encryptProjectId": $.encryptProjectId, "tag": "divide" });
+            } else {
+                $.log('已瓜分过啦！')
+            }
+        } else {
+            $.log('未获得瓜分资格');
+        }
+    } else {
+        console.log('未到瓜分时间！')
+    }
 }
 
 
@@ -80,18 +93,18 @@ async function doTask() {
         }
 
         if ($.oneTask.assignmentType === 1 || $.oneTask.assignmentType === 7 || $.oneTask.assignmentType === 5) {
-            let subInfo = $.oneTask.ext.productsInfo || $.oneTask.ext.shoppingActivity || $.oneTask.ext.brandMemberList|| $.oneTask.ext.sign2;
+            let subInfo = $.oneTask.ext.productsInfo || $.oneTask.ext.shoppingActivity || $.oneTask.ext.brandMemberList || $.oneTask.ext.sign2;
             if (subInfo && subInfo[0]) {
                 for (let j = 0; j < $.oneTask.assignmentTimesLimit; j++) {
                     $.runInfo = subInfo[j];
                     if ($.runInfo.status !== 1) {
                         continue;
                     }
-                    console.log(`任务：${$.runInfo.title || $.runInfo.shopName|| $.runInfo.skuName || $.runInfo.itemId},去执行`);
-                    if($.oneTask.assignmentType === 5){
-                    await takeRequest('superBrandDoTask', { "source": "badge", "activityId": $.activityId, "encryptProjectId": $.encryptProjectId, "encryptAssignmentId": $.oneTask.encryptAssignmentId, "assignmentType": $.oneTask.assignmentType, "itemId": $.runInfo.itemId, "actionType": 0 ,"dropDownChannel":1});
-                    }else{
-                    await takeRequest('superBrandDoTask', { "source": "badge", "activityId": $.activityId, "encryptProjectId": $.encryptProjectId, "encryptAssignmentId": $.oneTask.encryptAssignmentId, "assignmentType": $.oneTask.assignmentType, "itemId": $.runInfo.itemId, "actionType": 0 });
+                    console.log(`任务：${$.runInfo.title || $.runInfo.shopName || $.runInfo.skuName || $.runInfo.itemId},去执行`);
+                    if ($.oneTask.assignmentType === 5) {
+                        await takeRequest('superBrandDoTask', { "source": "badge", "activityId": $.activityId, "encryptProjectId": $.encryptProjectId, "encryptAssignmentId": $.oneTask.encryptAssignmentId, "assignmentType": $.oneTask.assignmentType, "itemId": $.runInfo.itemId, "actionType": 0, "dropDownChannel": 1 });
+                    } else {
+                        await takeRequest('superBrandDoTask', { "source": "badge", "activityId": $.activityId, "encryptProjectId": $.encryptProjectId, "encryptAssignmentId": $.oneTask.encryptAssignmentId, "assignmentType": $.oneTask.assignmentType, "itemId": $.runInfo.itemId, "actionType": 0 });
                     }
                     await $.wait(500);
 
@@ -160,7 +173,7 @@ function dealReturn(type, data) {
     switch (type) {
         case 'showBadgeInfo':
             $.bizCode = data.data.bizCode;
-            if (data.code === '0' && data.data && data.data.result) {
+            if (data.code === '0' &&  data.data?.result) {
                 $.activityInfo = data.data.result;
             }
             break;
@@ -171,13 +184,22 @@ function dealReturn(type, data) {
             break;
         case 'superBrandDoTask':
             if (data.code === '0') {
-                console.log(JSON.stringify(data.data.bizMsg));
+                console.log(data.data.bizMsg);
             } else {
-                console.log(JSON.stringify(data));
+                console.log(data);
+            }
+            break;
+        case 'superBrandTaskLottery':
+            if (data.data.success) {
+                if (data.data?.result?.rewardComponent?.successRewards) {
+                    console.log(`获得豆子：${data.data.result.rewardComponent.beanList[0].quantity}`)
+                }
+            } else {
+                console.log(data.bizMsg);
             }
             break;
         default:
-            console.log(JSON.stringify(data));
+            console.log(data);
     }
 }
 
