@@ -55,6 +55,10 @@ async function main() {
         $.flag = true
         return;
     }
+    if (JSON.stringify($.activityInfo) === '{}') {
+        console.log(`获取活动详情失败`);
+        return;
+    }
     console.log(`获取活动详情成功`);
     $.activityId = $.activityInfo.activityBaseInfo.activityId;
     $.activityName = $.activityInfo.activityBaseInfo.activityName;
