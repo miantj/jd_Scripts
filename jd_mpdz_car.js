@@ -4,6 +4,7 @@
 日常任务，助力，游戏
 第一个账号助力作者 其他依次助力CK1
 默认不做加购任务，如需要设置变量erport car_addsku='true'
+只跑前5个CK
 55 8,18 * * * jd_mpdz_car.js 
 */
 
@@ -36,7 +37,7 @@ let shareUuid=shareUuidArr[n]||'';
 	$.userId='10299171';
 	$.actId='1760007';
 	$.inviteNick=shareUuid;
-	for(let o=0;o<cookiesArr.length;o++){
+	for(let o=0; o < 5; o++){
 		cookie=cookiesArr[o];
 		if(cookie){
 			$.UserName=decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/)&&cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
