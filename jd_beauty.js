@@ -4,8 +4,7 @@
 https://raw.githubusercontent.com/aTenb/jdOpenSharePicker/master/jd_beautyStudy.js
 更新时间:2021-12-03
 活动入口：京东app首页-美妆馆-底部中间按钮
-20 3,19 * * * jd_beauty.js,
-定时自己调，集中访问可能炸掉
+定时自定义，集中访问可能炸
  */
 const $ = new Env('美丽研究院');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -595,7 +594,7 @@ async function getIsvToken2() {
   } 
   let config = {
     url: 'https://api.m.jd.com/client.action?functionId=isvObfuscator',
-    body: sign,
+    body: body,
     headers: {
       'Host': 'api.m.jd.com',
       'accept': '*/*',
