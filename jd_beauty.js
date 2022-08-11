@@ -4,7 +4,8 @@
 https://raw.githubusercontent.com/aTenb/jdOpenSharePicker/master/jd_beautyStudy.js
 更新时间:2021-12-03
 活动入口：京东app首页-美妆馆-底部中间按钮
-20 2,9,20 * * * jd_beauty.js, tag=美丽研究院, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+20 3,19 * * * jd_beauty.js,
+定时自己调，集中访问可能炸掉
  */
 const $ = new Env('美丽研究院');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -586,19 +587,25 @@ function getIsvToken() {
   })
 }
 
-function getIsvToken2() {
+async function getIsvToken2() {
+  for (let i=0; i<3; i++){
+  var body = await getSignfromDY('isvObfuscator',{"id":"","url":"https://xinruimz-isv.isvjcloud.com"})
+  if(body) break;
+  await $.wait(5000)
+  } 
   let config = {
     url: 'https://api.m.jd.com/client.action?functionId=isvObfuscator',
-    body: 'body=%7B%22url%22%3A%22https%3A%5C/%5C/xinruimz-isv.isvjcloud.com%22%2C%22id%22%3A%22%22%7D&build=167490&client=apple&clientVersion=9.3.2&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&sign=6eb3237cff376c07a11c1e185761d073&st=1610161927336&sv=102&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D',
+    body: sign,
     headers: {
       'Host': 'api.m.jd.com',
       'accept': '*/*',
       'user-agent': UA,
-      'accept-language': 'zh-Hans-JP;q=1, en-JP;q=0.9, zh-Hant-TW;q=0.8, ja-JP;q=0.7, en-US;q=0.6',
-      'content-type': 'application/x-www-form-urlencoded',
+      //'accept-language': 'zh-Hans-JP;q=1, en-JP;q=0.9, zh-Hant-TW;q=0.8, ja-JP;q=0.7, en-US;q=0.6',
+      //'content-type': 'application/x-www-form-urlencoded',
       'Cookie': cookie
     }
   }
+
   return new Promise(resolve => {
     $.post(config, async (err, resp, data) => {
       try {
@@ -620,11 +627,48 @@ function getIsvToken2() {
     })
   })
 }
-
+function getSignfromDY(functionId, body) {	
+var strsign = '';
+let data = `functionId=${functionId}&body=${encodeURIComponent(JSON.stringify(body))}`
+  return new Promise((resolve) => {
+      let opt = {
+          url: "https://jd.nbplay.xyz/dylan/getsign",
+          body: data,
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+      }
+      ,timeout: 30000
+      }
+      $.post(opt, async(err, resp, data) => {
+          try {
+            if (data){
+              data = JSON.parse(data);
+      if (data && data.code == 0) {
+                  console.log("连接DY服务成功" );
+                  if (data.data){
+                      strsign = data.data || '';
+        }
+                  if (strsign != ''){
+                      resolve(strsign);
+        }
+                  else
+                      console.log("签名获取失败,换个时间再试.");
+              } else {
+                  console.log(data.msg);
+              }
+            }else{console.log('连接连接DY服务失败，重试。。。')}	
+          }catch (e) {
+              $.logErr(e, resp);
+          }finally {
+      resolve(strsign);
+    }
+      })
+  })
+}
 function getToken() {
   let config = {
     url: 'https://xinruimz-isv.isvjcloud.com/api/auth',
-    body: JSON.stringify({"token":$.token2,"source":"01"}),
+    body: JSON.stringify({"token":$.token2,"source":"01","channel":"meizhuangguandibudaohang"}),
     headers: {
       'Host': 'xinruimz-isv.isvjcloud.com',
       'Accept': 'application/x.jd-school-island.v1+json',
