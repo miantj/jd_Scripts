@@ -520,7 +520,6 @@ function try_apply(title, activityId) {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         }
-        console.log(opt)
         $.get(opt, (err, resp, data) => {
             try {
                 if (err) {
