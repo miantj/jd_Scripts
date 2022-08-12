@@ -16,7 +16,7 @@ cron:1 5,9 12-26 8 *
 ============Quantumultx===============
 [task_local]
 #8.12-8.26 小米818瓜分百万京豆
-5 6,10,18 12-26 8 * jd_xiaomi.js, tag=8.12-8.26 小米818瓜分百万京豆, enabled=true
+5 6,10,18 12-26 8 * jd_opencardXM818.js, tag=8.12-8.26 小米818瓜分百万京豆, enabled=true
 
 */
 if (process.env.DY_OPENALL != "true") {
