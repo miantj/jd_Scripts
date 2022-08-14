@@ -518,6 +518,7 @@ function getFirstLZCK() {
     })
 }
 function getToken() {
+	let  body = await getSign('isvObfuscator',{"id":"","url":"https://xinruimz-isv.isvjcloud.com"})
     let opt = {
         url: `https://api.m.jd.com/client.action?functionId=isvObfuscator`,
         headers: {
@@ -530,7 +531,7 @@ function getToken() {
             'Accept-Language': 'zh-Hans-CN;q=1',
             'Accept-Encoding': 'gzip, deflate, br',
         },
-        body: `body=%7B%22url%22%3A%20%22https%3A//lzdz1-isv.isvjcloud.com%22%2C%20%22id%22%3A%20%22%22%7D&uuid=72124265217d48b7955781024d65bbc4&client=apple&clientVersion=9.4.0&st=1621796702000&sv=120&sign=14f7faa31356c74e9f4289972db4b988`
+        body
     }
     return new Promise(resolve => {
         $.post(opt, (err, resp, data) => {
@@ -559,6 +560,39 @@ function random(min, max) {
 
     return Math.floor(Math.random() * (max - min)) + min;
 
+}
+function getSign(functionId, body) {
+  let opt = {
+    url: "https://api.nolanstore.top/sign",
+    body: {
+      "body": body,
+      "fn": functionId
+    },
+    headers: {
+      'Content-Type': 'application/json',
+    }
+    , timeout: 30000
+  }
+  return new Promise((resolve) => {
+    $.post(opt, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(JSON.stringify(err));
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            data = data.body;
+          } else {
+            $.log('获取失败');
+          }
+        }
+      } catch (e) {
+        console.log(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 function getUUID(format = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', UpperCase = 0) {
     return format.replace(/[xy]/g, function (c) {
