@@ -16,7 +16,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
 // https://lzkj-isv.isvjcloud.com/sign/sevenDay/signActivity?activityId=
 let activityIdList = [
-    '4dba6f1f51f34d5a85a4bf03353d4517',
+    //'4dba6f1f51f34d5a85a4bf03353d4517',
     //'f3207d49ac8e4fcfbd542befc1338916',
     //'ba2d672b1fc44814aef1c3ee4c3ac5fa',
     //'f46601936b40496b97a85de2b5ab97eb',
