@@ -7,7 +7,7 @@
 ============Quantumultx===============
 [task_local]
 #京东超级盲盒
-5 20 1-9 9 * jd_618mohe.js, tag=京东超级盲盒, img-url=https://raw.githubusercontent.com/tsukasa007/icon/master/jd_joypark_task.png, enabled=true
+5 20 1-9 9 * jd_supermohe.js, tag=京东超级盲盒, img-url=https://raw.githubusercontent.com/tsukasa007/icon/master/jd_joypark_task.png, enabled=true
 */
 
 const $ = new Env('超级盲盒');
