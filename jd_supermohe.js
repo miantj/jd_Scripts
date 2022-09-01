@@ -1,7 +1,7 @@
 /*
 京东超级盲盒
 活动入口：京东APP --我的--超级盲盒
-更新时间：2022-06-03
+更新时间：2022-09-01
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
@@ -10,7 +10,7 @@
 5 20 1-9 9 * jd_618mohe.js, tag=京东超级盲盒, img-url=https://raw.githubusercontent.com/tsukasa007/icon/master/jd_joypark_task.png, enabled=true
 */
 
-const $ = new Env('618超级盲盒');
+const $ = new Env('超级盲盒');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
