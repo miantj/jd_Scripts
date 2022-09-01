@@ -151,7 +151,7 @@ async function all(cookie, jrBody) {
       break;
   }
   await Promise.all([
-    //TotalSteel(), //总钢镚查询
+    TotalSteel(), //总钢镚查询
     TotalCash(), //总红包查询
     TotalBean(), //总京豆查询
     TotalSubsidy(), //总金贴查询
@@ -184,7 +184,7 @@ function notify() {
         notify += merge[i].notify ? "\n" + merge[i].notify : ""
       }
       var Cash = merge.TotalCash && merge.TotalCash.TCash ? `${merge.TotalCash.TCash}红包` : ""
-      //var Steel = merge.TotalSteel && merge.TotalSteel.TSteel ? `${merge.TotalSteel.TSteel}钢镚` : ``
+      var Steel = merge.TotalSteel && merge.TotalSteel.TSteel ? `${merge.TotalSteel.TSteel}钢镚` : ``
       var beans = merge.TotalBean && merge.TotalBean.Qbear ? `${merge.TotalBean.Qbear}京豆${Steel?`, `:``}` : ""
       var Money = merge.TotalMoney && merge.TotalMoney.TMoney ? `${merge.TotalMoney.TMoney}现金${Cash?`, `:``}` : ""
       var Subsidy = merge.TotalSubsidy && merge.TotalSubsidy.TSubsidy ? `${merge.TotalSubsidy.TSubsidy}金贴${Money||Cash?", ":""}` : ""
