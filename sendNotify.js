@@ -84,7 +84,7 @@ let IGOT_PUSH_KEY = '';
 let PUSH_PLUS_TOKEN = '';
 let PUSH_PLUS_USER = '';
 let PUSH_PLUS_TOKEN_hxtrip = '';
-let PUSH_PLUS_USER_hxtrip = '';
+let PUSH_PLUS_USER_hxtrip = ''; 
 
 // ======================================= WxPusher 通知设置区域 ===========================================
 // 此处填你申请的 appToken. 官方文档：https://wxpusher.zjiecode.com/docs
