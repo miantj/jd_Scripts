@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#6dylan6_1124
+#6dylan6_924
 
 name_js=(
   fruit.js
