@@ -5,7 +5,7 @@
 
 ##############活动##############
 # 京东资产变动通知
-30 21 * * * node /scripts/jd_bean_change.js >> /scripts/logs/jd_bean_change.log 2>&1
+30 20 * * * node /scripts/jd_bean_change.js >> /scripts/logs/jd_bean_change.log 2>&1
 # 领京豆额外奖励
 23 1,18 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 详细版京东京豆统计
