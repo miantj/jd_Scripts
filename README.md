@@ -13,3 +13,22 @@
 
 <!-- ![](https://profile-counter.glitch.me/miantj/count.svg) -->
 
+
+拉库
+```
+ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|gua_|getJDCookie|wskey" "activity|backUp"
+```
+
+# maiark 使用方式
+
+docker pull kissyouhunter/maiark
+
+docker run -dit --name maiark -p 8082:8082 --restart always kissyouhunter/maiark
+
+docker exec -it maiark /bin/bash
+
+vi arkconfig.json #<修改maiark里面的青龙面版地址>
+
+vi arktemplates/index.html #修改网页源码 能看懂中文直接修改替换上去即可
+
+网页图片文件基本都在 static/ 文件夹下
