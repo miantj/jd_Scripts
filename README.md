@@ -16,7 +16,7 @@
 
 ## 拉库
 ```
-ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|gua_|getJDCookie|wskey" "activity|backUp"
+ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|ql|gua_|getJDCookie|wskey" "activity|backUp" "^jd[^_]|USER|utils|function|sign|sendNotify|ql|JDJR"
 ```
 
 # maiark 使用方式
