@@ -1,7 +1,7 @@
 
 ## DY
 
->全网可用，加密代码审查，测运行无重复，定期移除失效，默认无加购，内部互助(可选模式);
+>加密js审查，无重复，默认无加购，内部互助(可选模式);
 
  
 >欢迎大家issue、pr，会一一回复！
@@ -11,7 +11,7 @@
 
 ### 防走失[TG频道](https://t.me/dylan_jdpro)
 
-### 一键部署（2.11.3版本青龙，默认国内机拉库命令，建好后根据情况自行调整）
+### 一键部署（2.11.3版本青龙，默认国内机拉库命令，建好后根据自己情况调整）
 
 使用root用户运行下面一串命令，支持Centos/Ubuntu系统
 
@@ -44,7 +44,9 @@ Gitee版不能正常拉取，已停止维护！（20220711）
 任务定时建议 50 7-23/2 * * *  
 
 
-线报监控类脚本已移除，需要的看 https://github.com/6dylan6/jdm.git
+线报监控类脚本已移除，需要的到 https://github.com/6dylan6/jdm.git
+
+自动评价 需要的到 https://github.com/6dylan6/auto_comment.git
 
 
 ## 使用流程
@@ -103,29 +105,19 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 6、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
 
-7、本库开卡任务默认不执行，如需运行请设置变量export DY_OPENALL="true"，所有开卡任务通用。
+7、如果通知文件发现和库里的不一致，那是被青龙自带的覆盖了，手动拷贝一份到deps目录下。
 
-8、如果通知文件发现和库里的不一致，那是青龙自带的覆盖了，正常库里会自动覆盖掉青龙的通知文件，如果没有自动那就手动拷贝一份到deps目录下吧，或者直接删掉deps目录下的sendnotify.js
-
-9、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整。
+8、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整。
 </code></pre>
 </details>
 
 ## 加密脚本清单
 
 <details>
-<summary>加密脚本清单，已审查， 不放心可禁用</summary>
+<summary>加密脚本清单，不放心可禁用</summary>
 <pre><code>
-jd_zjd.js (赚京豆，全加密）
-jddj_fruit.js（到家果园，全加密）
-jd_fans.js （粉丝互动，全加密）
-jd_half_redrain.js (半点京豆雨，全加密）
-jd_jxmc.js （京喜牧场，算法加密）
-jd_cfd.js （京喜财富岛，算法加密）
-jd_cfd_loop.js (京喜财富岛捡贝壳，算法加密）
-jd_speed_sign.js （极速版签到，算法加密）
-jd_speed_signred.js  （极速版红包，算法加密）
-开卡系列全部部分或全部加密 
+加密的会在任务后添加加密标识
+开卡系列都加密 
 </code></pre>
 </details>
 
@@ -144,12 +136,9 @@ jd_speed_signred.js  （极速版红包，算法加密）
 |      `FRUIT_BEAN_CARD`       |    农场<br>使用水滴换豆卡    | 非必须 | 农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),<br>`true`表示换豆(不浇水),`false`表示不换豆(继续浇水),脚本默认是浇水 |
 |       `JD_UNSUB`             |      批量取消商品与店铺关注开关      | 非必须 | 控制jd_unsubscribe.js运行，默认为true取关，false不取关 |
 |       `JD_CART_REMOVE`       |      清空购物车      | 非必须 | 控制jd_clean_car.js运行 ，默认false不清空，true清空 |
-|   `MONEY_TREE_SELL_FRUIT`    |    摇钱树<br>是否卖出金果    | 非必须 | 控制摇钱树脚本是否自动卖出金果兑换成金币，`true`卖出，`false`不卖出，默认卖出 |
-|   `Ev_Start`    |    自动评价<br>是否运行    | 非必须 | 选择运行，`true`运行，默认`false`不运行 |
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
 |   ` HelpType`           |     互助模式    | 非必须 | 默认顺序助力，0是全部一样顺序助力，1是均等机会助力，2是随机顺序助力，例： export HelpType=1 |
-|   `DY_OPENALL`           |     开卡系列     | 非必须 |开卡系列任务默认不执行，设置变量DY_OPENALL='true'执行 |
-|   `DY_ZJD`           |     赚京豆     | 非必须 |默认不执行，设置变量DY_ZJD='true'执行 |
+|   `DY_DY_ZJDTOP`           |     赚京豆     | 非必须 |开团数量默认3，设置DY_ZJDTOP=10可修改开团数量 |
 
 
 
