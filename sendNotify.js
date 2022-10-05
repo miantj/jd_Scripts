@@ -86,6 +86,12 @@ let QYWX_KEY = '';
  */
 let QYWX_AM = '';
 
+// =======================================飞书机器人通知设置区域===========================================
+//此处填你飞书机器人的 webhook(详见文档 https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)
+//(环境变量名 FS_KEY)
+let FS_KEY = '';
+
+
 // =======================================iGot聚合推送通知设置区域===========================================
 //此处填您iGot的信息(推送key，例如：https://push.hellyw.com/XXXXXXXX)
 let IGOT_PUSH_KEY = '';
@@ -222,6 +228,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
         DD_BOT_SECRET = '';
         QYWX_KEY = '';
         QYWX_AM = '';
+        FS_KEY = '';
         IGOT_PUSH_KEY = '';
         PUSH_PLUS_TOKEN = '';
         PUSH_PLUS_USER = '';
@@ -239,6 +246,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
         var Use_ddBotNotify = true;
         var Use_qywxBotNotify = true;
         var Use_qywxamNotify = true;
+        var Use_fsBotNotify = true;
         var Use_iGotNotify = true;
         var Use_gobotNotify = true;
         var Use_pushPlushxtripNotify = true;
@@ -516,6 +524,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 		                    Use_tgBotNotify = false;
 		                    Use_ddBotNotify = false;
 		                    Use_qywxBotNotify = false;
+                            Use_fsBotNotify = false;
 		                    Use_qywxamNotify = false;
 		                    Use_iGotNotify = false;
 		                    Use_gobotNotify = false;
@@ -558,6 +567,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 		                        case "企业微信应用消息":
 		                            Use_qywxamNotify = true;
 		                            console.log("自定义设定启用企业微信应用消息进行通知...");
+		                            break;
+                                case "飞书机器人":
+                                    Use_fsBotNotify = true;
+		                            console.log("自定义设定启用飞书机器人进行通知...");
 		                            break;
 		                        case "iGotNotify":
 		                            Use_iGotNotify = true;
@@ -669,11 +682,15 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 		if (process.env["QYWX_KEY" + UseGroupNotify] && Use_qywxBotNotify) {
 		    QYWX_KEY = process.env["QYWX_KEY" + UseGroupNotify];
 		}
-
+        
 		if (process.env["QYWX_AM" + UseGroupNotify] && Use_qywxamNotify) {
 		    QYWX_AM = process.env["QYWX_AM" + UseGroupNotify];
 		}
 
+        if (process.env["FS_KEY" + UseGroupNotify] && Use_fsBotNotify) {
+		    FS_KEY = process.env["FS_KEY" + UseGroupNotify];
+		}
+        
 		if (process.env["IGOT_PUSH_KEY" + UseGroupNotify] && Use_iGotNotify) {
 		    IGOT_PUSH_KEY = process.env["IGOT_PUSH_KEY" + UseGroupNotify];
 		}
@@ -902,6 +919,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
             ddBotNotify(text, desp), //钉钉机器人
             qywxBotNotify(text, desp), //企业微信机器人
             qywxamNotify(text, desp, strsummary), //企业微信应用消息推送
+            fsBotNotify(text, params),   //飞书机器人
             iGotNotify(text, desp, params), //iGot
             gobotNotify(text, desp), //go-cqhttp
             gotifyNotify(text, desp), //gotify
@@ -1489,6 +1507,48 @@ function qywxBotNotify(text, desp) {
                         data = JSON.parse(data);
                         if (data.errcode === 0) {
                             console.log('企业微信发送通知消息成功🎉。\n');
+                        } else {
+                            console.log(`${data.errmsg}\n`);
+                        }
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                }
+                finally {
+                    resolve(data);
+                }
+            });
+        } else {
+            resolve();
+        }
+    });
+}
+
+function fsBotNotify(text, desp) {
+    return new Promise((resolve) => {
+        const options = {
+            url: `https://open.feishu.cn/open-apis/bot/v2/hook/${FS_KEY}`,
+            json: {
+                msg_type: 'text',
+                content: {
+                    text: ` ${text}\n\n${desp}`,
+                },
+            },
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            timeout,
+        };
+        if (FS_KEY) {
+            $.post(options, (err, resp, data) => {
+                try {
+                    if (err) {
+                        console.log('飞书发送通知消息失败！！\n');
+                        console.log(err);
+                    } else {
+                        data = JSON.parse(data);
+                        if (data.errcode === 0) {
+                            console.log('飞书发送通知消息成功🎉。\n');
                         } else {
                             console.log(`${data.errmsg}\n`);
                         }

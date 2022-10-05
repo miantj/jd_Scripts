@@ -3,6 +3,7 @@
 
 #Modify: Kirin
 
+from curses.ascii import FS
 import sys
 import os, re
 import requests
@@ -35,6 +36,7 @@ QQ_MODE = ''                # qq机器人的QQ_MODE; secrets可填
 QYWX_AM = ''                # 企业微信
 QYWX_KEY = ''                # 企业微信BOT
 PUSH_PLUS_TOKEN = ''        # 微信推送Plus+
+FS_KEY = ''                 #飞书群BOT
 
 notify_mode = []
 
@@ -74,6 +76,12 @@ if "QYWX_KEY" in os.environ:
         QYWX_KEY = os.environ["QYWX_KEY"]        
         # print("已获取并使用Env环境 QYWX_AM")
 
+#接入飞书webhook推送
+if "FS_KEY" in os.environ:
+    if len(os.environ["FS_KEY"]) > 1:
+        FS_KEY = os.environ["FS_KEY"]
+
+
 if BARK:
     notify_mode.append('bark')
     # print("BARK 推送打开")
@@ -104,6 +112,9 @@ if QYWX_KEY:
     notify_mode.append('wecom_key')
     # print("企业微信机器人 推送打开")
 
+if FS_KEY:
+    notify_mode.append('fs_key')
+    # print("飞书机器人 推送打开")
 
 def message(str_msg):
     global message_info
@@ -268,6 +279,26 @@ def wecom_key(title, content):
     response = requests.post(f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={QYWX_KEY}", json=data,headers=headers).json()
     print(response)
 
+# 飞书机器人推送
+def fs_key(title, content):
+    print("\n")
+    if not FS_KEY:
+        print("FS_KEY未设置!!\n取消推送")
+        return
+    print("FS_KEY服务启动")
+    print("content"+content)
+    headers = {'Content-Type': 'application/json'}
+    data = { 
+        "msg_type":"text",
+        "content":{
+            "text":title+"\n"+content.replace("\n", "\n\n")
+         }
+    }
+    
+    print(f"https://open.feishu.cn/open-apis/bot/v2/hook/{FS_KEY}")
+    response = requests.post(f"https://open.feishu.cn/open-apis/bot/v2/hook/{FS_KEY}", json=data,headers=headers).json()
+    print(response)
+
 
 # 企业微信 APP 推送
 def wecom_app(title, content):
@@ -358,7 +389,7 @@ class WeCom:
 
 def send(title, content):
     """
-    使用 bark, telegram bot, dingding bot, serverJ 发送手机推送
+    使用 bark, telegram bot, dingding bot, server, feishuJ 发送手机推送
     :param title:
     :param content:
     :return:
@@ -411,11 +442,15 @@ def send(title, content):
             if QYWX_KEY:
                 
                 for i in range(int(len(content)/2000)+1):
-                    wecom_key(title=title, content=content[i*2000:(i+1)*2000])
-                
-                
+                    wecom_key(title=title, content=content[i*2000:(i+1)*2000])     
             else:
                 print('未启用企业微信应用消息推送')
+            continue
+        elif i == 'fs_key':
+            if FS_KEY:
+                fs_key(title=title, content=content)
+            else:
+                print('未启用飞书机器人消息推送')
             continue
         else:
             print('此类推送方式不存在')
