@@ -47,11 +47,11 @@ if ($.isNode()) {
                 await $.wait(1000);
                 await dotask('taskFinish');
                 await $.wait(500);
-                await dotask('taskReward');
-                await $.wait(2000)
+                await dotask('taskReward'); 
             } else {
                 $.log('已领取过！')
             }
+			await $.wait(2000)
         }
     }
 })()
