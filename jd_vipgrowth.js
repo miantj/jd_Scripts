@@ -44,9 +44,9 @@ if ($.isNode()) {
             await $.wait(500);
             if ($.taskStatus !== 3) {
                 await dotask('taskReceive');
-                await $.wait(200);
+                await $.wait(1000);
                 await dotask('taskFinish');
-                await $.wait(200);
+                await $.wait(500);
                 await dotask('taskReward');
             } else {
                 $.log('已领取过！')
@@ -111,7 +111,7 @@ function dotask(fn) {
                     if (data.success) {
                         if(fn === 'taskReward') console.log('任务完成，获得5京豆');
                     } else {
-                        console.log(`fn , data.message`);
+                        console.log(`${fn} , ${data.message}`);
                     }
                 }
             } catch (e) {
