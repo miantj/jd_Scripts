@@ -5,7 +5,7 @@
 updateTime: 2022/10/5
  */
 
-const $ = new Env('京享值5豆');
+const $ = new Env('查看京享值权益');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;
@@ -44,9 +44,9 @@ if ($.isNode()) {
             await $.wait(500);
             if ($.taskStatus !== 3 && $.taskEncId === 'ifiWT91zw2w=') {
                 await dotask('taskReceive');
-                await $.wait(200);
+                await $.wait(1000);
                 await dotask('taskFinish');
-                await $.wait(200);
+                await $.wait(500);
                 await dotask('taskReward');
                 await $.wait(2000)
             } else {
