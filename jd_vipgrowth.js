@@ -5,7 +5,7 @@
 updateTime: 2022/10/5
  */
 
-const $ = new Env('查看京享值权益');
+const $ = new Env('京享值5豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;
@@ -42,16 +42,16 @@ if ($.isNode()) {
             }
             await info();
             await $.wait(500);
-            if ($.taskStatus !== 3) {
+            if ($.taskStatus !== 3 && $.taskEncId === 'ifiWT91zw2w=') {
                 await dotask('taskReceive');
-                await $.wait(1000);
+                await $.wait(200);
                 await dotask('taskFinish');
-                await $.wait(500);
+                await $.wait(200);
                 await dotask('taskReward');
+                await $.wait(2000)
             } else {
                 $.log('已领取过！')
             }
-			await $.wait(2000)
         }
     }
 })()
@@ -84,7 +84,7 @@ async function info() {
                 } else {
                     data = JSON.parse(data)
                     if (data.success) {
-                        $.taskStatus = data.data.floorData.jxScoreTaskList.taskInfoList[0].taskStatus
+                        $.taskStatus = data.data.floorData.jxScoreTaskList.taskInfoList[0].taskStatus;
                         $.taskEncId = data.data.floorData.jxScoreTaskList.taskInfoList[0].taskEncId;
                     } else {
                         console.log(data.message)
