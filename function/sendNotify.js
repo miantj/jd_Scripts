@@ -1,8 +1,8 @@
 /*
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-08-19 16:12:40
- * @Last Modified by: whyour
- * @Last Modified time: 2021-5-1 15:00:54
+ * @Last Modified by: Anye1844
+ * @Last Modified time: 2022-10-5 23:15:00
  * sendNotify 推送通知功能
  * @param text 通知头
  * @param desp 通知体
@@ -78,6 +78,13 @@ let QYWX_KEY = '';
 - 图文消息（mpnews）: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)或者(https://note.youdao.com/ynoteshare1/index.html?id=1a0c8aff284ad28cbd011b29b3ad0191&type=note)
  */
 let QYWX_AM = '';
+
+
+// =======================================飞书机器人通知设置区域===========================================
+//此处填你飞书机器人的 webhook(详见文档 https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)
+//(环境变量名 FS_KEY)
+let FS_KEY = '';
+
 
 // =======================================iGot聚合推送通知设置区域===========================================
 //此处填您iGot的信息(推送key，例如：https://push.hellyw.com/XXXXXXXX)
@@ -224,6 +231,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
         DD_BOT_SECRET = '';
         QYWX_KEY = '';
         QYWX_AM = '';
+        FS_KEY = '';
         IGOT_PUSH_KEY = '';
         PUSH_PLUS_TOKEN = '';
         PUSH_PLUS_USER = '';
@@ -241,6 +249,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
         var Use_ddBotNotify = true;
         var Use_qywxBotNotify = true;
         var Use_qywxamNotify = true;
+        var Use_fsBotNotify = true;
         var Use_iGotNotify = true;
         var Use_gobotNotify = true;
         var Use_pushPlushxtripNotify = true;
@@ -568,6 +577,7 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                             Use_ddBotNotify = false;
                             Use_qywxBotNotify = false;
                             Use_qywxamNotify = false;
+                            Use_fsBotNotify = false;
                             Use_iGotNotify = false;
                             Use_gobotNotify = false;
 
@@ -610,6 +620,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                                     Use_qywxamNotify = true;
                                     console.log("自定义设定启用企业微信应用消息进行通知...");
                                     break;
+                                case "飞书机器人":
+                                    Use_fsBotNotify = true;
+		                            console.log("自定义设定启用飞书机器人进行通知...");
+		                            break;
                                 case "iGotNotify":
                                     Use_iGotNotify = true;
                                     console.log("自定义设定启用iGot进行通知...");
@@ -721,6 +735,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 QYWX_AM = process.env.QYWX_AM;
             }
 
+            if (process.env.FS_KEY && Use_fsBotNotify) {
+                FS_KEY = process.env.FS_KEY;
+            }
+
             if (process.env.IGOT_PUSH_KEY && Use_iGotNotify) {
                 IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY;
             }
@@ -828,6 +846,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 
             if (process.env.QYWX_AM2 && Use_qywxamNotify) {
                 QYWX_AM = process.env.QYWX_AM2;
+            }
+
+            if (process.env.FS_KEY2 && Use_fsBotNotify) {
+                FS_KEY = process.env.FS_KEY2;
             }
 
             if (process.env.IGOT_PUSH_KEY2 && Use_iGotNotify) {
@@ -939,6 +961,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 QYWX_AM = process.env.QYWX_AM3;
             }
 
+            if (process.env.FS_KEY3 && Use_fsBotNotify) {
+                FS_KEY = process.env.FS_KEY3;
+            }
+
             if (process.env.IGOT_PUSH_KEY3 && Use_iGotNotify) {
                 IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY3;
             }
@@ -1046,6 +1072,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 
             if (process.env.QYWX_AM4 && Use_qywxamNotify) {
                 QYWX_AM = process.env.QYWX_AM4;
+            }
+
+            if (process.env.FS_KEY4 && Use_fsBotNotify) {
+                FS_KEY = process.env.FS_KEY4;
             }
 
             if (process.env.IGOT_PUSH_KEY4 && Use_iGotNotify) {
@@ -1156,6 +1186,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 QYWX_AM = process.env.QYWX_AM5;
             }
 
+            if (process.env.FS_KEY5 && Use_fsBotNotify) {
+                FS_KEY = process.env.FS_KEY5;
+            }
+
             if (process.env.IGOT_PUSH_KEY5 && Use_iGotNotify) {
                 IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY5;
             }
@@ -1264,6 +1298,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                 QYWX_AM = process.env.QYWX_AM6;
             }
 
+            if (process.env.FS_KEY6 && Use_fsBotNotify) {
+                FS_KEY = process.env.FS_KEY6;
+            }
+
             if (process.env.IGOT_PUSH_KEY6 && Use_iGotNotify) {
                 IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY6;
             }
@@ -1370,6 +1408,10 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 
             if (process.env.QYWX_AM7 && Use_qywxamNotify) {
                 QYWX_AM = process.env.QYWX_AM7;
+            }
+
+            if (process.env.FS_KEY7 && Use_fsBotNotify) {
+                FS_KEY = process.env.FS_KEY7;
             }
 
             if (process.env.IGOT_PUSH_KEY7 && Use_iGotNotify) {
@@ -2190,6 +2232,48 @@ function qywxBotNotify(text, desp) {
                         data = JSON.parse(data);
                         if (data.errcode === 0) {
                             console.log('企业微信发送通知消息成功🎉。\n');
+                        } else {
+                            console.log(`${data.errmsg}\n`);
+                        }
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                }
+                finally {
+                    resolve(data);
+                }
+            });
+        } else {
+            resolve();
+        }
+    });
+}
+
+function fsBotNotify(text, desp) {
+    return new Promise((resolve) => {
+        const options = {
+            url: `https://open.feishu.cn/open-apis/bot/v2/hook/${FS_KEY}`,
+            json: {
+                msg_type: 'text',
+                content: {
+                    text: ` ${text}\n\n${desp}`,
+                },
+            },
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            timeout,
+        };
+        if (FS_KEY) {
+            $.post(options, (err, resp, data) => {
+                try {
+                    if (err) {
+                        console.log('飞书发送通知消息失败！！\n');
+                        console.log(err);
+                    } else {
+                        data = JSON.parse(data);
+                        if (data.errcode === 0) {
+                            console.log('飞书发送通知消息成功🎉。\n');
                         } else {
                             console.log(`${data.errmsg}\n`);
                         }
