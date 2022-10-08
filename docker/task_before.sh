@@ -946,5 +946,7 @@ gen_pt_pin_array
 #JS_Deps_Replace
 TempBlock_CK
 #remove_void_ck
+if [[ -z $cookieStr ]];then
 Recombin_CK
+fi
 combine_only
