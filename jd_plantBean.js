@@ -1,6 +1,6 @@
 /*
 种豆得豆
-updatetime:2022-07-19
+updatetime:2022-10-11 做特价双签和万人团任务
 活动入口：京东APP我的-更多工具-种豆得豆
 已支持IOS京东多账号,云端多京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -255,10 +255,18 @@ async function doTask() {
                          await jxdoublesign1('https://m.jingxi.com/jxbfd/user/DoubleSignDeal?g_ty=h5&g_tk=&appCode=msd1188198&__t=1657108409440&dwEnv=7&strDeviceId=a3b4e844090b28d5c38e7529af8115172079be4d&strZone=jxbfd&bizCode=jxbfd&source=jxbfd&_cfd_t=1657108409190&_stk=__t%2C_cfd_t%2CbizCode%2CdwEnv%2Csource%2CstrDeviceId%2CstrZone&_ste=1&h5st=20220706195330228%3B1980457211661562%3B10032%3Btk02w78551ad830nuMcGB4Qsv9QxapLP7gZdOCYE5PVV%2Bna%2Bb4KU21drJq64oP82965Vdc1tGqVU%2Flp7ydcZ5XgH0Feh%3B241b6f1d21bf8e41f380a5dd29a7bac2a6f1f65a0c7ef1b1f751eaea4c40dd9c%3B3.0%3B1657108410228&sceneval=2');
                          await $.wait(2000);
                          await jxdoublesign1('https://wq.jd.com/jxjdsignin/SignedInfo?channel=jx_zdddsq&_t=1658021925021&h5st=20220717093845024%3B5548444396555217%3B0f6ed%3Btk02w9b851b9c18nin7CZjR7vNSlwRexAOGWbYAbl85d9DiQJ1SufW8ZQEQ%2FSygreq626CVRO2gT8DwUUTLBXGyK6wam%3B7eb86560860f8f60ad3b679c34f89aacf891b5a85580efd0a30c355537bfec54%3B3.0%3B1658021925024&_stk=_t%2Cchannel&_=1658021925027&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
-                         await $.wait(2000);
+                         await $.wait(1000);
                          await jxdoublesign1('https://wq.jd.com/jxjdsignin/IssueReward?channel=jx_zdddsq&_t=1658021926276&h5st=20220717093846279%3B5548444396555217%3B0f6ed%3Btk02w9b851b9c18nin7CZjR7vNSlwRexAOGWbYAbl85d9DiQJ1SufW8ZQEQ%2FSygreq626CVRO2gT8DwUUTLBXGyK6wam%3Be2d7b6810b3bd1b9d9692d354ecbb582e69afc64df19bd8d6c14632b1a65660c%3B3.0%3B1658021926279&_stk=_t%2Cchannel&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
-                         await $.wait(2000);
+                         await $.wait(1000);
                          continue;
+                case 96:
+                         await tjdoublesign('https://wq.jd.com/tjjdsignin/SignedInfo?channel=jx_zdddsq&_t=1665408290789&h5st=20221010212450810%3B6918147264530298%3B0f6ed%3Btk02wc5421cb218nIrUUKibebHSO9xcuoGghWvuYMwC0SFXJaDjbIH5j0m1wTODJ7fc1RtfXsa5cpPVqYaFcfWpgnN63%3Badb2b487bdc5153c21cdb5904f6341286fda615ab4ebcf9a3e88e2d6b82ae05e%3B3.1%3B1665408290810%3B62f4d401ae05799f14989d31956d3c5f0a269d1342e4ecb6ab00268fc69555cdc3295f00e681fd72cd76a48b9fb3faf3579d80b37c85b023e9e8ba94d8d2b852b9cbef42726bbe41ffd8c74540f4a1ced584468ba9e46bfbef62144b678f5532e02456edc95e6131cb12c2dd5fa5c6c0496017f4d3b47ccd5533601d6637bade7c708817b3649de05cdc0f31e890c46e&_stk=_t%2Cchannel&_=1665408290814&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
+                         await $.wait(2000);
+                         await tjdoublesign('https://wq.jd.com/tjjdsignin/IssueReward?channel=jx_zdddsq&_t=1665408290397&h5st=20221010212450410%3B6918147264530298%3B0f6ed%3Btk02wc5421cb218nIrUUKibebHSO9xcuoGghWvuYMwC0SFXJaDjbIH5j0m1wTODJ7fc1RtfXsa5cpPVqYaFcfWpgnN63%3Bbe06e2e3ebb5fde9e89c2126456346c7c8b75462d1d0e60c41f9e46c11838a6e%3B3.1%3B1665408290410%3B62f4d401ae05799f14989d31956d3c5f0a269d1342e4ecb6ab00268fc69555cdc3295f00e681fd72cd76a48b9fb3faf3579d80b37c85b023e9e8ba94d8d2b852b9cbef42726bbe41ffd8c74540f4a1ced584468ba9e46bfbef62144b678f5532e02456edc95e6131cb12c2dd5fa5c6c0496017f4d3b47ccd5533601d6637bade7c708817b3649de05cdc0f31e890c46e&_stk=_t%2Cchannel&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
+                         await $.wait(1000);
+                         await tjdoublesign('https://wq.jd.com/tjjdsignin/SignedInfo?channel=jx_zdddsq&_t=1665408290789&h5st=20221010212450810%3B6918147264530298%3B0f6ed%3Btk02wc5421cb218nIrUUKibebHSO9xcuoGghWvuYMwC0SFXJaDjbIH5j0m1wTODJ7fc1RtfXsa5cpPVqYaFcfWpgnN63%3Badb2b487bdc5153c21cdb5904f6341286fda615ab4ebcf9a3e88e2d6b82ae05e%3B3.1%3B1665408290810%3B62f4d401ae05799f14989d31956d3c5f0a269d1342e4ecb6ab00268fc69555cdc3295f00e681fd72cd76a48b9fb3faf3579d80b37c85b023e9e8ba94d8d2b852b9cbef42726bbe41ffd8c74540f4a1ced584468ba9e46bfbef62144b678f5532e02456edc95e6131cb12c2dd5fa5c6c0496017f4d3b47ccd5533601d6637bade7c708817b3649de05cdc0f31e890c46e&_stk=_t%2Cchannel&_=1665408290814&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
+                         await $.wait(1000);
+                         continue;                         
                 case 3:
                          console.log(`开始做 ${item.taskName}任务`);
                          let unFinishedShopNum = item.totalNum - item.gainedNum;
@@ -481,7 +489,7 @@ async function receivefruit(){
     "monitor_refer": "plant_receiveNutrientsTask",
     "monitor_source": "plant_app_plant_index",
     "awardType": "92",
-    "version": "9.2.4.1"
+    "version": "9.2.4.2"
 }
 await request('receiveNutrientsTask',body)
 }
@@ -557,6 +565,38 @@ function jxdoublesign1(url){
     resolve()
   })
 }
+
+function tjdoublesign(url){
+  let opt = {
+    url,
+    headers: {
+      'Accept':'application/json',
+      'Referer': 'https://wqs.jd.com/',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'Cookie': cookie
+    }
+  }
+  return new Promise(async resolve => {
+    $.get(opt, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`tjdoublesign 请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            //data = JSON.parse(data);
+            //console.log(data)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
 async function getReward() {
   const body = {
     "roundId": lastRoundId
@@ -740,7 +780,7 @@ function requireConfig() {
 }
 function requestGet(function_id, body = {}) {
   if (!body.version) {
-    body["version"] = "9.2.4.1";
+    body["version"] = "9.2.4.2";
   }
   body["monitor_source"] = "plant_app_plant_index";
   body["monitor_refer"] = "";
@@ -845,7 +885,7 @@ function request(function_id, body = {}){
   })
 }
 function taskUrl(function_id, body) {
-  body["version"] = "9.2.4.1";
+  body["version"] = "9.2.4.2";
   body["monitor_source"] = "plant_app_plant_index";
   if (!body["monitor_refer"]){
   body["monitor_refer"] = "";
