@@ -150,8 +150,9 @@ const {
 } = require('./ql');
 const fs = require('fs');
 let isnewql = fs.existsSync('/ql/data/config/auth.json');
-let strCKFile="";
-let strUidFile ="";
+let strCKFile = '../CK_WxPusherUid.json';
+let strUidFile = '../CK_WxPusherUid.json';
+
 if(isnewql){
 	strCKFile = '/ql/data/scripts/CKName_cache.json';
 	strUidFile = '/ql/data/scripts/CK_WxPusherUid.json';
@@ -885,6 +886,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ht
         console.log("PUSH_PLUS USER :" + PUSH_PLUS_USER);
     }
     PushErrorTime = 0;
+    console.log("text"+text,'desp'+desp);
     await pushPlusNotify(text, desp); //pushplus(推送加)
     if (PushErrorTime > 0) {
         console.log("等待1分钟后重试.....");
@@ -1003,7 +1005,7 @@ function getRemark(strRemark) {
 }
 
 async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 By KR仓库', strsummary = "") {
-
+    console.log("text:"+text+" strsummary:"+strsummary+" PtPin:"+PtPin+" author :" + author);
     try {
         var Uid = "";
         var UserRemark = "";
