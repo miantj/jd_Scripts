@@ -1,7 +1,7 @@
 /*
 领京豆额外奖励
 活动入口：京东APP首页-领京豆
-cron "25 2,14 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, tag=领京豆额外奖励
+cron "5 2,14 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, tag=领京豆额外奖励
 
  */
 const $ = new Env('领京豆额外奖励');

@@ -2,6 +2,7 @@
 /*
 10豆 
 入口：排行榜-宝藏榜
+10 10 * * * jd_TreasureRank.js
 updatetime: 2022/9/29
 author: https://github.com/6dylan6/jdpro
  */
@@ -32,7 +33,7 @@ if ($.isNode()) {
             $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';
-            // await TotalBean();
+            await TotalBean();
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             if (!$.isLogin) {
                 $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -103,7 +104,7 @@ function doTreasureInteractive(body, type) {
                                 if (data.result.rewardType === 20001) {
                                     console.log(data.result.rewardTitle, data.result.discount);
                                 } else {
-                                    $.log('今日已领取过！');
+                                    console.log(data);
                                 }
                                 break;
                         }
