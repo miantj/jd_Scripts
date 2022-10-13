@@ -44,8 +44,10 @@
 #40 1,17 * * * node /scripts/jd_fcwb_mfhelp.js >> /scripts/logs/jd_fcwb_mfhelp.log 2>&1
 # 东东农场日常任务
 12 2-22/10 * * * node /scripts/jd_fruit.js >> /scripts/logs/jd_fruit.log 2>&1
-# 东东农场日常任务
-7 7 7 7 7 node /scripts/jd_fruit_task.js >> /scripts/logs/jd_fruit_help.log 2>&1
+# 东东农场好友删减奖励
+10 2 * * * node /scripts/jd_fruit_friend.js >> /scripts/logs/jd_fruit_friend.log 2>&1
+# 东东农场好友删减奖励
+10 2 * * * node /scripts/jd_fruit_help.js >> /scripts/logs/jd_fruit_help.log 2>&1
 # 通用游戏任务
 5 6-18/6 * * * node /scripts/jd_game.js >> /scripts/logs/jd_game.log 2>&1
 # 金榜创造营
@@ -154,4 +156,6 @@
 12 5-10/1 * * * node /scripts/jd_moxigame.js >> /scripts/logs/jd_moxigame.log 2>&1
 # 京东宝藏榜
 10 13 * * * node /scripts/jd_TreasureRank.js >> /scripts/logs/jd_TreasureRank.log 2>&1
+# 京东宝藏榜
+10 3 * * * node /scripts/jd_tyt.js >> /scripts/logs/jd_tyt.log 2>&1
 
