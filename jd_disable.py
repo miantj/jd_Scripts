@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 30 0 0 * * *
+cron: 20 10 * * *
 new Env('禁用重复任务');
 """
 
@@ -28,7 +28,7 @@ if not ipport:
     ipport = "localhost:5700"
 else:
     ipport = ipport.lstrip("http://").rstrip("/")
-sub_str = os.getenv("RES_SUB", "miantj_jd_Scripts")
+sub_str = os.getenv("RES_SUB", "KingRan_KR")
 sub_list = sub_str.split("&")
 res_only = os.getenv("RES_ONLY", True)
 headers = {

@@ -64,17 +64,17 @@ let USER_AGENT = USER_AGENTS[getRandomNumberByRange(0, USER_AGENTS.length)]
 
 async function getBeanShareCode(cookie: string) {
   let {data}: any = await axios.post('https://api.m.jd.com/client.action',
-      `functionId=plantBeanIndex&body=${encodeURIComponent(
-          JSON.stringify({version: "9.0.0.1", "monitor_source": "plant_app_plant_index", "monitor_refer": ""})
-      )}&appid=ld&client=apple&area=5_274_49707_49973&build=167283&clientVersion=9.1.0`, {
-        headers: {
-          Cookie: cookie,
-          Host: "api.m.jd.com",
-          Accept: "*/*",
-          Connection: "keep-alive",
-          "User-Agent": USER_AGENT
-        }
-      })
+    `functionId=plantBeanIndex&body=${encodeURIComponent(
+      JSON.stringify({version: "9.0.0.1", "monitor_source": "plant_app_plant_index", "monitor_refer": ""})
+    )}&appid=ld&client=apple&area=5_274_49707_49973&build=167283&clientVersion=9.1.0`, {
+      headers: {
+        Cookie: cookie,
+        Host: "api.m.jd.com",
+        Accept: "*/*",
+        Connection: "keep-alive",
+        "User-Agent": USER_AGENT
+      }
+    })
   if (data.data?.jwordShareInfo?.shareUrl)
     return data.data.jwordShareInfo.shareUrl.split('Uuid=')![1]
   else
@@ -254,62 +254,6 @@ function randomWord(n: number = 1) {
   return rnd
 }
 
-async function getshareCodeHW(key: string) {
-  let shareCodeHW: string[] = []
-  for (let i = 0; i < 5; i++) {
-    try {
-      let {data}: any = await axios.get('https://api.jdsharecode.xyz/api/HW_CODES')
-      shareCodeHW = data[key] || []
-      if (shareCodeHW.length !== 0) {
-        break
-      }
-    } catch (e) {
-      console.log("getshareCodeHW Error, Retry...")
-      await wait(getRandomNumberByRange(2000, 6000))
-    }
-  }
-  return shareCodeHW
-}
-
-async function getShareCodePool(key: string, num: number) {
-  let shareCode: string[] = []
-  for (let i = 0; i < 2; i++) {
-    try {
-      let {data}: any = await axios.get(`https://api.jdsharecode.xyz/api/${key}/${num}`)
-      shareCode = data.data || []
-      console.log(`随机获取${num}个${key}成功：${JSON.stringify(shareCode)}`)
-      if (shareCode.length !== 0) {
-        break
-      }
-    } catch (e) {
-      console.log("getShareCodePool Error, Retry...")
-      await wait(getRandomNumberByRange(2000, 6000))
-    }
-  }
-  return shareCode
-}
-
-/*async function wechat_app_msg(title: string, content: string, user: string) {
-  let corpid: string = "", corpsecret: string = ""
-  let {data: gettoken} = await axios.get(`https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${corpid}&corpsecret=${corpsecret}`)
-  let access_token: string = gettoken.access_token
-
-  let {data: send} = await axios.post(`https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${access_token}`, {
-    "touser": user,
-    "msgtype": "text",
-    "agentid": 1000002,
-    "text": {
-      "content": `${title}\n\n${content}`
-    },
-    "safe": 0
-  })
-  if (send.errcode === 0) {
-    console.log('企业微信应用消息发送成功')
-  } else {
-    console.log('企业微信应用消息发送失败', send)
-  }
-}*/
-
 function obj2str(obj: object) {
   return JSON.stringify(obj)
 }
@@ -385,11 +329,9 @@ export {
   getRandomNumberByRange,
   requestAlgo,
   getJxToken,
-  exceptCookie,
   randomString,
   o2s,
   randomNumString,
-  getshareCodeHW,
   getShareCodePool,
   randomWord,
   obj2str,
