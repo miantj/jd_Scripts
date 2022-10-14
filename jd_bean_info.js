@@ -1,6 +1,6 @@
 /*
 定时自定义
-2 10 20 5 * jd_bean_info.js
+2 10 14 10 * jd_bean_info.js
  */
 
 const $ = new Env('京豆详情统计');
@@ -52,7 +52,7 @@ if ($.isNode()) {
       }
       await bean();
       await showMsg();
-
+      await $.wait(2000);
     }
   }
   allMessage += `\n今日全部账号收入：${allBean}个京豆 🐶\n`
@@ -94,13 +94,14 @@ async function bean() {
   do {
     let response = await getJingBeanBalanceDetail(page);
     // console.log(`第${page}页: ${JSON.stringify(response)}`);
+	await $.wait(1000);
     if (response && response.code === "0") {
       page++;
       let detailList = response.detailList;
       if (detailList && detailList.length > 0) {
         for (let item of detailList) {
           const date = item.date.replace(/-/g, '/') + "+08:00";
-          if (new Date(date).getTime() >= tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
+          if (new Date(date).getTime() >= tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes("物流") && !item['eventMassage'].includes('扣赠'))) {
             todayArr.push(item);
           } else if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
             //昨日的
@@ -120,8 +121,8 @@ async function bean() {
       // console.log(`cookie已过期，或者填写不规范，跳出`)
       t = 1;
     } else {
-      // console.log(`未知情况：${JSON.stringify(response)}`);
-      // console.log(`未知情况，跳出`)
+       console.log(`未知情况：${JSON.stringify(response)}`);
+       console.log(`未知情况，跳出`)
       t = 1;
     }
   } while (t === 0);
@@ -208,8 +209,8 @@ function getJingBeanBalanceDetail(page) {
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          // console.log(`${JSON.stringify(err)}`)
-          // console.log(`${$.name} API请求失败，请检查网路重试`)
+           console.log(`${JSON.stringify(err)}`)
+           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
             data = JSON.parse(data);
