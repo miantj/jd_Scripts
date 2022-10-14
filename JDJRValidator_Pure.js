@@ -522,11 +522,11 @@ function injectToRequest2(fn, scene = 'cww') {
           console.error('验证请求失败.');
           return;
         }
-        if (data.search('验证') > -1) {
+         if (data.search('验证') > -1) {
           console.log('JDJR验证中......');
           const res = await new JDJRValidator().run(scene);
           if (res) {
-            opts.url += `&validate=${res.validate}`;
+             opts.url += `&validate=${res.validate}`;
           }
           fn(opts, cb);
         } else {
@@ -542,7 +542,7 @@ function injectToRequest2(fn, scene = 'cww') {
 async function injectToRequest(scene = 'cww') {
   console.log('JDJR验证中......');
   const res = await new JDJRValidator().run(scene);
-  return `&validate=${res.validate}`
+  return res.validate;
 }
 
 module.exports = {
