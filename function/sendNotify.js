@@ -20,7 +20,7 @@ export CKNOWARNERROR="true"
 ## 屏蔽青龙登陆成功通知，登陆失败不屏蔽
 export NOTIFY_NOLOGINSUCCESS="true"
 ## 通知底部显示
-export NOTIFY_AUTHOR="来源于：https://github.com/KingRan/KR"
+export NOTIFY_AUTHOR="来源于：https://github.com/miantj/jd_Scripts"
 ## 增加NOTIFY_AUTHOR_BLANK 环境变量，控制不显示底部信息
 export NOTIFY_AUTHOR_BLANK="true"
 ## 增加NOTIFY_AUTOCHECKCK为true才开启通知脚本内置的自动禁用过期ck
@@ -201,7 +201,7 @@ if (process.env.NOTIFY_SHOWNAMETYPE) {
     if (ShowRemarkType == "4")
         console.log("检测到显示备注名称，格式为: 备注");
 }
-async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By https://github.com/KingRan/KR',strsummary="") {
+async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By https://github.com/miantj/jd_Scripts',strsummary="") {
     console.log(`开始发送通知...`);
 
     if (process.env.NOTIFY_FILTERBYFILE) {
@@ -1025,7 +1025,7 @@ async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 B
             if (tempEnv) {
                 cookie = tempEnv.value;
                 Uid = getuuid(tempEnv.remarks, PtPin);
-                UserRemark = getRemark(tempEnv.remarks);
+                // UserRemark = getRemark(tempEnv.remarks);
 
                 if (Uid) {
                     console.log("查询到Uid ：" + Uid);
@@ -1804,7 +1804,7 @@ function wxpusherNotifyByOne(text, desp, strsummary = "") {
             } else {
                 strsummary = text + "\n" + desp;
             }
-
+        
             if (strsummary.length > 96) {
                 strsummary = strsummary.substring(0, 95) + "...";
             }
