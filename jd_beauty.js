@@ -631,7 +631,7 @@ var strsign = '';
 let data = `functionId=${functionId}&body=${encodeURIComponent(JSON.stringify(body))}`
   return new Promise((resolve) => {
       let opt = {
-          url: "https://jd.nbplay.xyz/dylan/getsign",
+          url: "https://sign-hst-rxboogtocm.cn-hangzhou.fcapp.run/dylan/getsign",
           body: data,
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
