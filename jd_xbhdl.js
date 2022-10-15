@@ -2,7 +2,7 @@
 新百货大楼
 APP-主页-新百货频道-底部中间
 日常任务，签到，盖楼，离线奖励领取，每日抽奖
-8 8 8 10 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_xbhdl.js 
+8 8,20 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_xbhdl.js 
 默认定时不跑，自定义, 不要太频繁，主要收离线收益
 默认不抽奖，如需要设置变量XBHROLL='true'
 updatetime: 2022/10/15 改为默认不抽奖
