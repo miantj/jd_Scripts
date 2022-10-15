@@ -27,8 +27,8 @@ dir_code=$dir_log/6dylan6_jdpro_jd_sharecode
 ## 预设的仓库及默认调用仓库设置
 ## 将"repo=$repo1"改成repo=$repo2"或其他，以默认调用其他仓库脚本日志
 ## 也可自行搜索本脚本内的"name_js=("和"name_js_only",将"repo"改成"repo2"或其他，用以自由组合调用仓库的脚本日志
-repo1='6dylan6_jdpro'                       #预设的 panghu999 仓库
-repo=$repo1                                        #空值，表示遍历所有仓库脚本日志
+repo1='miantj_jd_Scripts'                       #预设的 miantj_jd_Scripts 仓库
+repo=$repo1                                     #空值，表示遍历所有仓库脚本日志
 
 ## 调试模式开关，默认是0，表示关闭；设置为1，表示开启
 DEBUG="1"
@@ -50,7 +50,7 @@ CLEANBAK_DAYS="2"
 ## 填 2 使用“随机顺序互助模板”，本套脚本内账号间随机顺序助力，每次生成的顺序都不一致。
 ## 填 3 使用“车头A模式互助模板”，本套脚本内指定前 N 个账号优先助力，N 个以后账号间随机助力(随机部分账号顺序随机)。
 ## 填 4 使用“车头B模式互助模板”，本套脚本内指定前 N 个账号优先助力，N 个以后账号间随机助力(随机部分账号顺序固定)。
-HelpType=""
+HelpType="3"
 
 ## 定义前 N 个账号优先助力，N 个以后账号间随机助力。front_num="N"，N 定义值小于账号总数，当HelpType 赋值 3 或 4 时有效
 front_num="5"

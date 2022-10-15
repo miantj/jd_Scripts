@@ -4,7 +4,7 @@
 日常任务，开宝箱，每日挑战，助力，转盘抽奖，游戏，新手福利领取，后续兑换
 新手福利3天内70星兑换京豆礼包
 默认定时不跑，自己改，一天5次就行，一起冲就炸了
-8 8 8 8 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_moxigame.js 
+8 8,20 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_moxigame.js 
 updatetime: 2022/9/27 领取7日签到奖励
 author: https://github.com/6dylan6/jdpro
 */
