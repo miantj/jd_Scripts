@@ -3,7 +3,7 @@
 入口： APP-个护馆-中间，目前兑换不用抢
 日常任务，助力，游戏
 默认定时不跑，自己改，一天5次
-8 8 8 8 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_gehugame.js 
+8 7,12,17,22 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_gehugame.js 
 updatetime:2022/9/12
 author: https://github.com/6dylan6/jdpro
 */

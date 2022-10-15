@@ -1,5 +1,5 @@
 /*
-cron "28 8,21 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
+cron "0 21 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
  */
 
 //详细说明参考 https://github.com/ccwav/QLScript2.
