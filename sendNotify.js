@@ -1038,7 +1038,7 @@ async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n=============
             if (tempEnv) {
                 cookie = tempEnv.value;
                 Uid = getuuid(tempEnv.remarks, PtPin);
-                UserRemark = getRemark(tempEnv.remarks);
+                // UserRemark = getRemark(tempEnv.remarks);
 
                 if (Uid) {
                     console.log("查询到Uid ：" + Uid);

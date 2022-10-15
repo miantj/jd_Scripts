@@ -32,7 +32,7 @@ for (let i = 0; i < CookieJDs.length; i++) {
   const index = (i + 1 === 1) ? '' : (i + 1);
   exports['CookieJD' + index] = CookieJDs[i].trim();
 }
-console.log('>>>>>>>>>>>>>>6Dylan6 提示：任务正常运行中>>>>>>>>>>>>>>>\n')
+console.log('>>>>>>>>>>>>>> 提示：任务正常运行中>>>>>>>>>>>>>>>\n')
 // 以下为注入互助码环境变量（仅nodejs内起效）的代码
 function SetShareCodesEnv(nameChinese = "", nameConfig = "", envName = "") {
     let rawCodeConfig = {}
