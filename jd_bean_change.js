@@ -427,7 +427,7 @@ if(DisableIndex!=-1){
 			TempBaipiao = "";
 			strGuoqi="";
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
-		
+		    $.UA = require('./USER_AGENTS').UARAM();
 			await TotalBean();			
 		    //await TotalBean2();
 			
@@ -1592,7 +1592,7 @@ function getJingBeanBalanceDetail(page) {
 			"url": `https://api.m.jd.com/client.action?functionId=getJingBeanBalanceDetail`,
 			"body": `body=${escape(JSON.stringify({"pageSize": "20", "page": page.toString()}))}&appid=ld`,
 			"headers": {
-				'User-Agent': "jdapp;android;11.0.1;;;Mozilla/5.0 (Linux; Android 11; Redmi K30 5G Build/RKQ1.200826.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/76.0.3809.89 MQQBrowser/6.2 TBS/045511 Mobile Safari/537.36",
+				'User-Agent': $.UA,
 				'Host': 'api.m.jd.com',
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Cookie': cookie,
