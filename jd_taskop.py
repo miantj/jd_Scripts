@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
-cron: 15 2 * * *
-new Env('重复任务优化');
+cron: 5 6 * * *
+new Env('禁用重复任务');
 """
 
 import json
