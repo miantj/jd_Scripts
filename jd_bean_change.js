@@ -121,7 +121,8 @@ let llPetError=false;
 let strGuoqi="";
 let RemainMessage = '\n';
 RemainMessage += "⭕提醒:⭕" + '\n';
-RemainMessage += '【极速金币】京东极速版->我的->金币(可兑换无门槛红包)\n';
+RemainMessage += '【签到免单】京东特价版->我的->签到免单(签到满后返还)\n';
+RemainMessage += '【特价金币】京东特价版->我的->金币(可兑换无门槛红包)\n';
 RemainMessage += '【京东赚赚】微信->京东赚赚小程序->底部赚好礼->提现无门槛红包(京东使用)\n';
 RemainMessage += '【京东秒杀】京东->首页京东秒杀->点立即签到->可兑换无门槛红包(京东使用)\n';
 RemainMessage += '【东东萌宠】京东->我的->东东萌宠,完成可兑换无门槛红包,可用于任意商品\n';
@@ -266,11 +267,11 @@ if(DisableIndex!=-1){
 	EnableJdFruit=false;	
 }
 
-//极速金币
+//特价金币
 let EnableJdSpeed=true;
-DisableIndex = strDisableList.findIndex((item) => item === "极速金币");
+DisableIndex = strDisableList.findIndex((item) => item === "特价金币");
 if(DisableIndex!=-1){
-	console.log("检测到设定关闭极速金币查询");
+	console.log("检测到设定关闭特价金币查询");
 	EnableJdSpeed=false;	
 }
 
@@ -504,7 +505,7 @@ if(DisableIndex!=-1){
 			        getJoyBaseInfo(), //汪汪乐园
 			        getJdZZ(), //京东赚赚
 			        getMs(), //京东秒杀			        
-			        cash(), //极速金币
+			        cash(), //特价金币
 			        jdJxMCinfo(), //京喜牧场
 			        bean(), //京豆查询
 			        getJxFactory(), //京喜工厂
@@ -861,7 +862,7 @@ async function showMsg() {
 		ReturnMessage += `【京喜牧场】${$.JDEggcnt}枚鸡蛋\n`;
 	}
 	if ($.JDtotalcash) {
-		ReturnMessage += `【极速金币】${$.JDtotalcash}币(≈${($.JDtotalcash / 10000).toFixed(2)}元)\n`;
+		ReturnMessage += `【特价金币】${$.JDtotalcash}币(≈${($.JDtotalcash / 10000).toFixed(2)}元)\n`;
 	}
 	if ($.JdzzNum) {
 		ReturnMessage += `【京东赚赚】${$.JdzzNum}币(≈${($.JdzzNum / 10000).toFixed(2)}元)\n`;
@@ -1751,7 +1752,7 @@ function redPacket() {
 								if (vo['endTime'] === t) {
 									$.jxRedExpire += parseFloat(vo.balance)
 								}
-							} else if (vo.activityName.includes("极速版") || vo.activityName.includes("京东特价")) {
+							} else if (vo.activityName.includes("特价版") || vo.activityName.includes("京东特价")) {
 								$.jsRed += parseFloat(vo.balance)
 								if (vo['endTime'] === t) {
 									$.jsRedExpire += parseFloat(vo.balance)
@@ -1778,7 +1779,7 @@ function redPacket() {
 						if ($.jxRed > 0)
 							$.message += `【京喜红包】${$.jxRed}(将过期${$.jxRedExpire.toFixed(2)})元 \n`;
 						if ($.jsRed > 0)
-							$.message += `【极速红包】${$.jsRed}(将过期${$.jsRedExpire.toFixed(2)})元 \n`;
+							$.message += `【特价红包】${$.jsRed}(将过期${$.jsRedExpire.toFixed(2)})元 \n`;
 						if ($.jdRed > 0)
 							$.message += `【京东红包】${$.jdRed}(将过期${$.jdRedExpire.toFixed(2)})元 \n`;
 						if ($.jdhRed > 0)
@@ -1868,7 +1869,7 @@ function getCoupon() {
 					    }
 
 					}
-                    if (useable[i].couponTitle.indexOf('极速版APP活动') > -1 && useable[i].limitStr=='仅可购买活动商品') {						
+                    if (useable[i].couponTitle.indexOf('特价版APP活动') > -1 && useable[i].limitStr=='仅可购买活动商品') {						
                         $.beginTime = useable[i].beginTime;
                         if ($.beginTime < new Date().getTime() && useable[i].coupontype === 1) {                            
 							if (useable[i].platFormInfo) 
@@ -1876,7 +1877,7 @@ function getCoupon() {
 							var decquota=parseFloat(useable[i].quota).toFixed(2);
 							var decdisc= parseFloat(useable[i].discount).toFixed(2);
 							
-							$.message += `【极速版券】满${decquota}减${decdisc}元`;
+							$.message += `【特价版券】满${decquota}减${decdisc}元`;
 							
 							if (useable[i].endTime < $.todayEndTime) {
 								$.message += `(今日过期,${$.platFormInfo})\n`;
