@@ -134,14 +134,14 @@ async function run(){
         }else{console.log('\n开始游戏：没有游戏币了，明天再来！')}
 		await takePostRequest('activity_load');
         await $.wait(1000);
-		console.log(`当前能量值：${$.totalPoint}\n`);
+		console.log(`当前剩余能量：${$.remainPoint}\n`);
 		await takePostRequest('missionInviteList');
         await $.wait(1000);
         console.log(`去助力：${$.inviteNick}`);
 		await takePostRequest('助力'); 
 		if($.index==1){
 			$.inviteNick=$.MixNick;
-			console.log(`后面的号都会助力：${$.inviteNick}`);
+			console.log(`后面的都会助力：${$.inviteNick}`);
 		}
 		await $.wait(parseInt(Math.random()*1000+2000,10));
 	}catch(e){
@@ -156,8 +156,9 @@ async function takePostRequest(type){
 	let admJson='';
 	switch(type){
 		case 'isvObfuscator':
+            let sign = await getSignfromDY('isvObfuscator', { "id": "", "url": "https://mpdz-car-dz.isvjcloud.com" })
 			url='https://api.m.jd.com/client.action?functionId=isvObfuscator';
-			body='body=%7B%22id%22%3A%22%22%2C%22url%22%3A%22https%3A%2F%2Fmpdz-car-dz.isvjcloud.com%2Fjdbeverage%2Fpages%2Fpaoku%2Fpaoku%3FpushWay%3D2%26collectionId%3D102%26tttparams%3DE1roDCIeyJkTGF0IjowLCJkTG5nIjowLCJnTGF0IjoiMzEuMTM5IiwiZ0xuZyI6IjEyMS40MjM4ODIiLCJncHNfYXJlYSI6IjJfMjgxM182MTEzMF8wIiwibGF0IjozMS4xMzgzOCwibG5nIjoxMjEuNDIzNjM5LCJtb2RlbCI6IkxZQS1BTDAwIiwicHJzdGF0ZSI6IjAiLCJ1bl9hcmVhIjoiMl8yODEzXzYxMTMwXzAifQ7%253D%253D%26sid%3D064681b1f54d7a776f9c0c12c26a2ecw%26un_area%3D2_2813_61130_0%22%7D&clientVersion=11.0.2&client=android&lang=zh_CN&ef=1&ep=%7B%22cipher%22%3A%7B%22uuid%22%3A%22ZwS1ZQC4ZwVrZJZuDzC0ZK%3D%3D%22%2C%22aid%22%3A%22ZwS1ZQC4ZwVrZJZuDzC0ZK%3D%3D%22%7D%2C%22ciphertype%22%3A5%2C%22version%22%3A%221.2.0%22%7D&st=1654963217789&sign=9f925500f3898b80c30ac396d524d5c8&sv=121';
+			body=sign;
             break;
 		case 'activity_load':
 			url=`${domain}/dm/front/jdCardRunning/activity/load?open_id=&mix_nick=${$.MixNick}&push_way=3&user_id=`;
@@ -398,6 +399,7 @@ async function dealReturn(type,data){
 								$.MixNick = res.data.missionCustomer.buyerNick || '';
 								$.hasCollectShop = res.data.missionCustomer.hasCollectShop || 0;
 								$.totalPoint = res.data.missionCustomer.totalPoint || 0;
+								$.remainPoint = res.data.missionCustomer.remainPoint || 0;
 								$.remainChance = res.data.missionCustomer.remainChance|| 0;
 							}
 						}else if(type=='missionInviteList'){
@@ -448,7 +450,42 @@ function getPostRequest(url,body,method='POST'){
 	}
 	return{'url':url,'method':method,'headers':headers,'body':body,'timeout':30000};
 }
-
+function getSignfromDY(functionId, body) {
+    var strsign = '';
+    let data = { 'fn': functionId, 'body': JSON.stringify(body) };
+    return new Promise((resolve) => {
+        let opt = {
+            url: "https://api.nolanstore.top/sign",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+            , timeout: 30000
+        }
+        $.post(opt, async (err, resp, data) => {
+            try {
+                if (data) {
+                    data = JSON.parse(data);
+                    if (data && data.body) {
+                        console.log("连接Nolan服务成功");
+                            strsign = data.body || '';
+                        if (strsign != '') {
+                            resolve(strsign);
+                        }
+                        else
+                            console.log("签名获取失败,换个时间再试.");
+                    } else {
+                        console.log(data.msg);
+                    }
+                } else { console.log('连接服务失败，重试。。。') }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve(strsign);
+            }
+        })
+    })
+}
 function randomString(e) {
     e = e || 32;
     let t = "abcdef0123456789", a = t.length, n = "";
