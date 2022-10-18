@@ -2,7 +2,7 @@
 活动入口：京东APP首页-领京豆-摇京豆
 京东APP首页超级摇一摇(不定时有活动)
 超级品牌日做任务及抽奖
-5 0,10 * * * jd_club_lottery.js
+5 5,10 * * * jd_club_lottery.js
 */
 
 const $ = new Env('摇京豆');
@@ -122,11 +122,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 
 async function clubLottery() {
   try {
-    await doTasks();//做任务
+    //await doTasks();//做任务
     //await getFreeTimes();//获取摇奖次数
-    await vvipclub_receive_lottery_times();//京东会员：领取一次免费的机会
-    await vvipclub_shaking_info();//京东会员：查询多少次摇奖次数
-    await shaking();//开始摇奖
+    //await vvipclub_receive_lottery_times();//京东会员：领取一次免费的机会
+    //await vvipclub_shaking_info();//京东会员：查询多少次摇奖次数
+    //await shaking();//开始摇奖
     await shakeSign();//京东会员签到
     await superShakeBean();//京东APP首页超级摇一摇
     //await superbrandShakeBean();//京东APP首页超级品牌日
@@ -179,6 +179,7 @@ async function shaking() {
   for (let i = 0; i < new Array($.leftShakingTimes).fill('').length; i++) {
     await $.wait(1000);
     const newShakeBeanRes = await vvipclub_shaking_lottery();
+    console.log(newShakeBeanRes)
     if (newShakeBeanRes.success) {
       console.log(`摇盒子剩余次数：${newShakeBeanRes.data.remainLotteryTimes}`)
       if (newShakeBeanRes.data && newShakeBeanRes.data.rewardBeanAmount) {
@@ -1107,6 +1108,7 @@ async function shakeSign() {
   await pg_channel_page_data();
   if ($.token && $.currSignCursor && $.signStatus === -1) {
     const body = {"floorToken": $.token, "dataSourceCode": "signIn", "argMap": { "currSignCursor": $.currSignCursor }};
+    //console.log(body);
     const signRes = await pg_interact_interface_invoke(body);
     console.log(`京东会员第${$.currSignCursor}天签到结果；${JSON.stringify(signRes)}`)
     let beanNum = 0;
@@ -1168,24 +1170,21 @@ function pg_channel_page_data() {
 function pg_interact_interface_invoke(body) {
   return new Promise(resolve => {
     const options = {
-      url: `https://api.m.jd.com/?appid=sharkBean&functionId=pg_interact_interface_invoke&body=${escape(JSON.stringify(body))}`,
+      url: `https://api.m.jd.com/?appid=sharkBean&functionId=pg_interact_interface_invoke&body=${encodeURIComponent(JSON.stringify(body))}`,
       headers: {
+        "Accept": "application/json",
         'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
         "Cookie": cookie,
-        "Accept": "application/json",
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "zh-cn",
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Host": "api.m.jd.com",
         "Origin": "https://spa.jd.com",
-        "Referer": "https://spa.jd.com/home"
+        "Referer": "https://spa.jd.com/"
       }
     }
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`)
+          console.log(`\n pg_interact_interface_invoke 请求失败 ‼️‼️`)
           $.logErr(err);
         } else {
           data = JSON.parse(data);
