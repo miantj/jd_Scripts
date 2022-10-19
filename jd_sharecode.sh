@@ -96,39 +96,39 @@ UpdateType="1"
 ## 需组合的环境变量列表，env_name需要和var_name一一对应，如何有新活动按照格式添加(不懂勿动)
 env_name=(
   FRUITSHARECODES
-#   PETSHARECODES
-#   PLANT_BEAN_SHARECODES
-#   DREAM_FACTORY_SHARE_CODES
-#   DDFACTORY_SHARECODES
+  PETSHARECODES
+  PLANT_BEAN_SHARECODES
+  DREAM_FACTORY_SHARE_CODES
+  DDFACTORY_SHARECODES
   #JDJOY_SHARECODES
   #JDZZ_SHARECODES
-#   JXNC_SHARECODES
+  JXNC_SHARECODES
   #BOOKSHOP_SHARECODES
   #JD_CASH_SHARECODES
-#   JDSGMH_SHARECODES
-#   JDCFD_SHARECODES
-#   JDHEALTH_SHARECODES
+  JDSGMH_SHARECODES
+  JDCFD_SHARECODES
+  JDHEALTH_SHARECODES
   #JD818_SHARECODES
   #CITY_SHARECODES
 #   MONEYTREE_SHARECODES
 )
 var_name=(
   ForOtherFruit
-#   ForOtherPet
-#   ForOtherBean
-#   ForOtherDreamFactory
-#   ForOtherJdFactory
+  ForOtherPet
+  ForOtherBean
+  ForOtherDreamFactory
+  ForOtherJdFactory
   #ForOtherJoy
   #ForOtherJdzz
-#   ForOtherJxnc
+  ForOtherJxnc
   #ForOtherBookShop
   #ForOtherCash
-#   ForOtherSgmh
-#   ForOtherCfd
-#   ForOtherHealth
+  ForOtherSgmh
+  ForOtherCfd
+  ForOtherHealth
   #ForOtherCarni
   #ForOtherCity
-#   ForOtherMoneyTree
+  ForOtherMoneyTree
 )
 
 ## name_js为脚本文件名，如果使用ql repo命令拉取，文件名含有作者名
@@ -136,61 +136,61 @@ var_name=(
 ## name_js、name_config 和 name_chinese 中的三个名称必须一一对应。
 name_js=(
   "$repo"_jd_fruit
-#   "$repo"_jd_pet
-#   "$repo"_jd_plantBean
-#   "$repo"_jd_dreamFactory
-#   "$repo"_jd_jdfactory
+  "$repo"_jd_pet
+  "$repo"_jd_plantBean
+  "$repo"_jd_dreamFactory
+  "$repo"_jd_jdfactory
   #"$repo"_jd_crazy_joy
   #"$repo"_jd_jdzz
-#   "$repo"_jd_jxnc
+  "$repo"_jd_jxnc
   #"$repo"_jd_bookshop
   #"$repo"_jd_cash
-#   "$repo"_jd_sgmh
-#   "$repo"_jd_cfd
-#   "$repo"_jd_health
+  "$repo"_jd_sgmh
+  "$repo"_jd_cfd
+  "$repo"_jd_health
   #"$repo"_jd_carnivalcity
   #"$repo"_jd_city
-#   "$repo"_jd_moneyTree_he?p
+  "$repo"_jd_moneyTree_he?p
   #"$repo"_jd_cfd
 )
 
 name_config=(
   Fruit
-#   Pet
-#   Bean
-#   DreamFactory
-#   JdFactory
+  Pet
+  Bean
+  DreamFactory
+  JdFactory
   #Joy
   #Jdzz
-#   Jxnc
+  Jxnc
   #BookShop
   #Cash
-#   Sgmh
-#   Cfd
-#   Health
+  Sgmh
+  Cfd
+  Health
   #Carni
   #City
-#   MoneyTree
+  MoneyTree
   #TokenJxnc
 )
 
 name_chinese=(
   东东农场
-#   东东萌宠
-#   京东种豆得豆
-#   京喜工厂
-#   东东工厂
+  东东萌宠
+  京东种豆得豆
+  京喜工厂
+  东东工厂
   #crazyJoy任务
   #京东赚赚
-#   京喜农场
+  京喜农场
   #口袋书店
   #签到领现金
-#   闪购盲盒
-#   京喜财富岛
-#   东东健康社区
+  闪购盲盒
+  京喜财富岛
+  东东健康社区
   #京东手机狂欢城
   #城城领现金
-#   摇钱树
+  摇钱树
   #京喜token
 )
 
