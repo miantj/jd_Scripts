@@ -186,7 +186,7 @@ let isLogin = false;
 if (process.env.NOTIFY_SHOWNAMETYPE) {
     ShowRemarkType = process.env.NOTIFY_SHOWNAMETYPE;
 }
-async function sendNotify(text, desp, params = {}, author = "\n================================\n好物推荐：https://u.jd.com/WLEVYTM",strsummary="") {
+async function sendNotify(text, desp, params = {}, author = "",strsummary="") {
     console.log(`开始发送通知...`); 
 	
 	//NOTIFY_FILTERBYFILE代码来自Ca11back.
