@@ -1017,7 +1017,7 @@ function getRemark(strRemark) {
     }
 }
 
-async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n================================\n好物推荐：<a href="https://u.jd.com/WLEVYTM">https://u.jd.com/WLEVYTM</a>', strsummary = "") {
+async function sendNotifybyWxPucher(text, desp, PtPin, author = '', strsummary = "") {
 
     try {
         var Uid = "";
