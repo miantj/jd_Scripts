@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#15 8,20 * * * jd_sharecode.sh 
+#56 8,20 * * * jd_sharecode.sh 
 #new Env('获取互助码');
 ## Build 20220325-001-test
 grep '6dylan6_1008' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_1008' /ql/config/task_before.sh > /dev/null 2>&1
