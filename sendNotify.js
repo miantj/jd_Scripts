@@ -186,7 +186,7 @@ let isLogin = false;
 if (process.env.NOTIFY_SHOWNAMETYPE) {
     ShowRemarkType = process.env.NOTIFY_SHOWNAMETYPE;
 }
-async function sendNotify(text, desp, params = {}, author = "",strsummary="") {
+async function sendNotify(text, desp, params = {}, author = "\n\n本通知 By Lyle_M https://github.com/miantj/jd_Scripts",strsummary="") {
     console.log(`开始发送通知...`); 
 	
 	//NOTIFY_FILTERBYFILE代码来自Ca11back.
@@ -1017,7 +1017,7 @@ function getRemark(strRemark) {
     }
 }
 
-async function sendNotifybyWxPucher(text, desp, PtPin, author = '', strsummary = "") {
+async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 By Lyle_M https://github.com/miantj/jd_Scripts', strsummary = "") {
 
     try {
         var Uid = "";
@@ -1574,7 +1574,7 @@ function buildLastDesp(desp, author = '') {
         if (!author.match(/本通知 By/)) {
             author = `\n\n${author}`
         }
-        return desp.trim() + author + "\n现在时刻: " + GetDateTime(new Date());
+        return desp.trim() + author + "\n通知时刻: " + GetDateTime(new Date());
     }
 }
 
