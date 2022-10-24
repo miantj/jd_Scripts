@@ -14,9 +14,8 @@ echo -e "安装脚本所需依赖，不一定一次全部安装成功，请自�
 echo -e "开始安装............\n"
 
 apk add g++ make pixman-dev pango-dev cairo-dev --no-cache
-pnpm config set registry https://registry.npm.taobao.org
+pnpm config set registry https://registry.npmmirror.com
 pnpm install -g
-pnpm install -g canvas
 pnpm install -g png-js
 pnpm install -g date-fns
 pnpm install -g axios@0.27.2
@@ -30,5 +29,6 @@ pnpm install -g moment
 pnpm install -g tough-cookie
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ jieba
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ requests
+pnpm install -g canvas
 
 echo -e "\n所需依赖安装完成，请检查有没有报错，可尝试再次运行"
