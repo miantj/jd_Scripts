@@ -919,7 +919,7 @@ async function sendNotify(text, desp, params = {}, author = "\n\n本通知 By Ly
             ddBotNotify(text, desp), //钉钉机器人
             qywxBotNotify(text, desp), //企业微信机器人
             qywxamNotify(text, desp, strsummary), //企业微信应用消息推送
-            fsBotNotify(text, params),   //飞书机器人
+            fsBotNotify(text, desp),   //飞书机器人
             iGotNotify(text, desp, params), //iGot
             gobotNotify(text, desp), //go-cqhttp
             gotifyNotify(text, desp), //gotify
