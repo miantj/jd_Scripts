@@ -38,6 +38,7 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
             $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';
+			$.flag = true;
             if (!$.isLogin) {
                 $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
                 continue
@@ -58,7 +59,7 @@ async function main() {
     if ($.allList){
         for (let i = 0; i < $.allList.length; i++){
             $.oneTask = $.allList[i];
-            if (["SIGN"].includes($.oneTask.taskType) ){
+            if (["SIGN"].includes($.oneTask.taskType) && $.oneTask.taskFinished === false){
                 await apDoTask({"taskId":$.allList[i].id,"taskType":$.allList[i].taskType,"linkId":linkId})
             };
             if (["BROWSE_CHANNEL"].includes($.oneTask.taskType) && $.oneTask.taskFinished === false){
