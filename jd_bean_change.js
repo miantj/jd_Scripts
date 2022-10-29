@@ -2662,8 +2662,8 @@ async function jxbean() {
                 }
             }
         } else {
-            $.errorMsg = `数据异常`;
-            $.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
+            //$.errorMsg = `数据异常`;
+            //$.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
         }
 
         for (let item of JxYesterdayArr) {
