@@ -84,7 +84,7 @@ function run(fn) {
 							if (data.data && data.data.bizCode === 0) {
 								if (fn === 'promote_pk_receiveAward') {
 									console.log('领取组队红包：' + data.data.result.value);
-								} else {
+								} else if (fn === 'promote_pk_divideScores'){
 									console.log('领取组队金币：' + data.data.result.produceScore)
 								}
 							} else {
