@@ -1706,7 +1706,7 @@ cron "45 0-23/2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sy
         "User-Agent": UA,
         "Accept-Language": "zh-CN,zh-Hans;q=0.9",
         "Referer": "https://st.jingxi.com/",
-        "Cookie": cookie + "cid=4",
+        "Cookie": "cid=4;" + cookie,
       }
     }
   }
