@@ -12,7 +12,7 @@
 15 2,14 * * * jd_speed_sign.js,
 ================Loon==============
 [Script]
-cron "15 2,14 * * *" script-path=jd_speed_sign.js,tag=京东极速版
+cron "15 12,14 * * *" script-path=jd_speed_sign.js,tag=京东极速版
 ===============Surge=================
 京东极速版 = type=cron,cronexp="15 2,14 * * *",wake-system=1,timeout=33600,script-path=jd_speed_sign.js
 ============小火箭=========
