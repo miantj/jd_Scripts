@@ -22,7 +22,7 @@ dir_code=$dir_log/6dylan6_jdpro_jd_sharecode
 [[ -d $dir_root/config ]] && dir_config=$dir_data/config
 [[ -d $dir_data/scripts ]] && dir_scripts=$dir_data/scripts
 [[ -d $dir_data/log ]] && dir_log=$dir_data/log
-[[ -d `echo /ql/data/log/6dylan6_jdpro_jd_sharecode*` ]] && dir_code=$dir_log/6dylan6_jdpro_jd_sharecode*
+[[ -d `echo /ql/data/log/6dylan6_jdpro_jd_sharecode*|awk '{print $1}'` ]]  && dir_code=`ls -dt /ql/data/log/6dylan6_jdpro_jd_sharecode*|awk '{print $1}'|head -1`
 
 ## 预设的仓库及默认调用仓库设置
 ## 将"repo=$repo1"改成repo=$repo2"或其他，以默认调用其他仓库脚本日志
@@ -718,6 +718,7 @@ kill_proc(){
 
 ## 执行并写入日志
 #kill_proc "code.sh" "grep|$$" >/dev/null 2>&1
+#echo $dir_code
 latest_log=$(ls -r $dir_code | head -1)
 latest_log_path="$dir_code/$latest_log"
 ps_num="$(ps | grep code.sh | grep -v grep | wc -l)"
