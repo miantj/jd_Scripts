@@ -100,8 +100,8 @@ env_name=(
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
   DDFACTORY_SHARECODES
-  #JDJOY_SHARECODES
-  #JDZZ_SHARECODES
+  JDJOY_SHARECODES
+  JDZZ_SHARECODES
   JXNC_SHARECODES
   #BOOKSHOP_SHARECODES
   #JD_CASH_SHARECODES
@@ -110,7 +110,7 @@ env_name=(
   JDHEALTH_SHARECODES
   #JD818_SHARECODES
   #CITY_SHARECODES
-#   MONEYTREE_SHARECODES
+  MONEYTREE_SHARECODES
 )
 var_name=(
   ForOtherFruit
@@ -118,8 +118,8 @@ var_name=(
   ForOtherBean
   ForOtherDreamFactory
   ForOtherJdFactory
-  #ForOtherJoy
-  #ForOtherJdzz
+  ForOtherJoy
+  ForOtherJdzz
   ForOtherJxnc
   #ForOtherBookShop
   #ForOtherCash
@@ -140,8 +140,8 @@ name_js=(
   "$repo"_jd_plantBean
   "$repo"_jd_dreamFactory
   "$repo"_jd_jdfactory
-  #"$repo"_jd_crazy_joy
-  #"$repo"_jd_jdzz
+  "$repo"_jd_crazy_joy
+  "$repo"_jd_jdzz
   "$repo"_jd_jxnc
   #"$repo"_jd_bookshop
   #"$repo"_jd_cash
@@ -151,7 +151,7 @@ name_js=(
   #"$repo"_jd_carnivalcity
   #"$repo"_jd_city
   "$repo"_jd_moneyTree_he?p
-  #"$repo"_jd_cfd
+  "$repo"_jd_cfd
 )
 
 name_config=(
@@ -160,8 +160,8 @@ name_config=(
   Bean
   DreamFactory
   JdFactory
-  #Joy
-  #Jdzz
+  Joy
+  Jdzz
   Jxnc
   #BookShop
   #Cash
@@ -171,7 +171,7 @@ name_config=(
   #Carni
   #City
   MoneyTree
-  #TokenJxnc
+  TokenJxnc
 )
 
 name_chinese=(
@@ -180,8 +180,8 @@ name_chinese=(
   京东种豆得豆
   京喜工厂
   东东工厂
-  #crazyJoy任务
-  #京东赚赚
+  crazyJoy任务
+  京东赚赚
   京喜农场
   #口袋书店
   #签到领现金
@@ -191,7 +191,7 @@ name_chinese=(
   #京东手机狂欢城
   #城城领现金
   摇钱树
-  #京喜token
+  京喜token
 )
 
 # 定义 json 数据查询工具
