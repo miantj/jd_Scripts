@@ -418,12 +418,18 @@ WxPusher_notify_api() {
     local summary=$4
     local content=$5
     local frontcontent=$6
-    local login_url="<a href='http://www.123uq.com:8082'>点击这里重新登录</a>"
+    local login_url="<a href='http://49.234.151.136:8082'>点击这里重新登录</a>"
     local summary=$(echo -e "$title\n\n$summary" | perl -pe '{s|(\")|'\\'\\1|g; s|\n|<br>|g}')
     [[ ${#summary} -ge 100 ]] && local summary="${summary:0:88} ……"
     local content=$(echo -e "$title\n\n$content" | perl -pe '{s|(\")|'\\'\\1|g; s|\n|<br>|g}')
     local url="http://wxpusher.zjiecode.com/api/send/message"
 
+    if [ "$ck_status_chinese" == "生效" ]
+    then
+        login_url=""
+    fi
+    echo =======${ck_status_chinese}======
+    echo =======${login_url}======
     local api=$(
         curl -s --noproxy "*" "$url" \
             -X 'POST' \
