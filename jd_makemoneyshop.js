@@ -25,7 +25,9 @@ if ($.isNode()) {
 if (process.env.DYJSHAREID) {
 	if (process.env.DYJSHAREID.indexOf('&') > -1) {
 		shareId = process.env.DYJSHAREID.split('&');
-	}
+	} else {
+        shareId = process.env.DYJSHAREID;
+    }
 }
 let helpinfo = {};
 !(async () => {
