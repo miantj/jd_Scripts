@@ -43,6 +43,7 @@ let helpinfo = {};
 			$.nickName = '';
 			$.canUseCoinAmount = 0;
 			helpinfo[$.UserName] = {};
+			UA = require('./USER_AGENTS').UARAM();
 			await TotalBean();
 			console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 			if (!$.isLogin) {
@@ -211,7 +212,7 @@ function taskUrl(fn, body) {
 		headers: {
 			'Origin': 'https://wq.jd.com',
 			'Referer': 'https://wqs.jd.com/sns/202210/20/make-money-shop/index.html?activeId=63526d8f5fe613a6adb48f03',
-			'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+			'User-Agent': UA,
 			'Cookie': cookie
 		}
 	}
@@ -224,7 +225,7 @@ function TotalBean() {
             headers: {
                 "Cookie": cookie,
                 "referer": "https://h5.m.jd.com/",
-                "User-Agent": $.UA,
+                "User-Agent": UA,
             },
             timeout: 10000
         }
