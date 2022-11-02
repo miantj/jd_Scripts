@@ -9,14 +9,14 @@
 ============Quantumultx===============
 [task_local]
 #京东极速版
-15 4,13,20 * * * jd_speed_sign.js,
+15 4,12,20 * * * jd_speed_sign.js,
 ================Loon==============
 [Script]
-cron "15 4,13,20 * * *" script-path=jd_speed_sign.js,tag=京东极速版
+cron "15 4,12,20 * * *" script-path=jd_speed_sign.js,tag=京东极速版
 ===============Surge=================
-京东极速版 = type=cron,cronexp="15 4,13,20 * * *",wake-system=1,timeout=33600,script-path=jd_speed_sign.js
+京东极速版 = type=cron,cronexp="15 4,12,20 * * *",wake-system=1,timeout=33600,script-path=jd_speed_sign.js
 ============小火箭=========
-京东极速版 = type=cron,script-path=jd_speed_sign.js, cronexpr="15 4,13,20 * * *", timeout=33600, enable=true
+京东极速版 = type=cron,script-path=jd_speed_sign.js, cronexpr="15 4,12,20 * * *", timeout=33600, enable=true
 */
 const $ = new Env('京东极速版');
 const notify = $.isNode() ? require('./sendNotify') : '';
