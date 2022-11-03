@@ -58,9 +58,9 @@ $.innerKeyWords =
 //下面很重要，遇到问题请把下面注释看一遍再来问
 let args_xh = {
     /*
-     * 控制一次最多跑几个号，默认10个
+     * 控制一次最多跑几个号，默认5个
      */
-    try_num: process.env.JD_TRY_NUM * 1 || 10,
+    try_num: process.env.JD_TRY_NUM * 1 || 5,
     /*
      * 控制是否输出当前环境变量设置，默认为false
      * 环境变量名称：XH_TRY_ENV
