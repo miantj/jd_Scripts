@@ -22,7 +22,7 @@ allMessage='';
 message='';
 $.hotFlag=false;
 $.outFlag=false;
-let shareUuidArr=['B2s863iFzsHJxGtOlrCXxsjNhNaYFy2HteErE6izlhTf9nrGY7gBkCdGU4C6z/xD','WoDXSUOIZFZbWchg5qcDb14tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','3KtP4oQOaF9hH0uFesDKL14tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','OsiH6Sic/uTxioPBG6hh5K9AMkY4oJ31vhy6nI5LWbOiIw7XUQOP/Btn03/M1TYH','8AIkpPYAb4jMiUQb+YijkcjNhNaYFy2HteErE6izlhTf9nrGY7gBkCdGU4C6z/xD'];
+let shareUuidArr=['94pKr7Altz4D61x7nN1KSV4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','l4+ohXzosO44BHS/TtlJnl4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','yhoB9u+OfyPZ8/raambw1WBUh0gimxufjFRMgNwy0cYiU+N6ZQy0LI2KZrs00RAY','qqN30Qb+w0y/KNTg69KZJV4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w=='];
 let n=0;
 n=Math.floor(Math.random()*shareUuidArr.length);
 let shareUuid=shareUuidArr[n]||'';
@@ -37,7 +37,7 @@ let shareUuid=shareUuidArr[n]||'';
 	$.userId='10299171';
 	$.actId='1760007';
 	$.inviteNick=shareUuid;
-	for(let o=0; o < 5; o++){
+	for(let o=0; o < 10; o++){
 		cookie=cookiesArr[o];
 		if(cookie){
 			$.UserName=decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/)&&cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -136,8 +136,8 @@ async function run(){
         await $.wait(1000);
 		console.log(`当前剩余能量：${$.remainPoint}\n`);
 		await $.wait(1000);
-		//console.log('开始兑换5豆。。。'):
-		//await takePostRequest('exchange');
+		console.log('开始兑换5豆。。。');
+		await takePostRequest('exchange');
 		await takePostRequest('missionInviteList');
         await $.wait(1000);
         console.log(`去助力：${$.inviteNick}`);
