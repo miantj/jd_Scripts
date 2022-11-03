@@ -1,7 +1,6 @@
 /*
 京东双11领红包
 变量 export CODE11='xxxxx'
-1 0,12,20 * * * jd_red.js
 */
 
 const $ = new Env('领红包 购痛快-加密');
