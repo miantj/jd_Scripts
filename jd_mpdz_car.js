@@ -5,7 +5,7 @@
 第一个账号助力作者 其他依次助力CK1
 默认不做加购任务，如需要设置变量erport car_addsku='true'
 只跑前5个CK
-55 8,18 * * * jd_mpdz_car.js 
+45 10,18 * * * jd_mpdz_car.js 
 */
 
 const $ = new Env("头文字JJJ");
@@ -135,6 +135,9 @@ async function run(){
 		await takePostRequest('activity_load');
         await $.wait(1000);
 		console.log(`当前剩余能量：${$.remainPoint}\n`);
+		await $.wait(1000);
+		//console.log('开始兑换5豆。。。'):
+		//await takePostRequest('exchange');
 		await takePostRequest('missionInviteList');
         await $.wait(1000);
         console.log(`去助力：${$.inviteNick}`);
@@ -224,6 +227,11 @@ async function takePostRequest(type){
 		    url=`${domain}/dm/front/jdCardRunning/carInfo/getCarInfo?open_id=&mix_nick=${$.MixNick}`;
 			body=_0x5338bf('/jdCardRunning/cusShop/getCusShop',{});
             break;
+		case 'exchange':
+		    url=`${domain}/dm/front/jdCardRunning/exchange/exchangeJdMarket?open_id=&mix_nick=${$.MixNick}`;
+			admJson={"awardId": "10082bd15b4703","method": "/jdCardRunning/exchange/exchangeJdMarket","userId": 10299171,"actId": 1760007,"buyerNick": $.inviteNick}
+			body=_0x5338bf('/jdCardRunning/cusShop/getCusShop',{});
+            break;			
 		default:
 			console.log('错误'+type);
 	}
@@ -371,6 +379,19 @@ async function dealReturn(type,data){
 					console.log(data);
 				}
 				break;
+			case 'exchange':
+				if(typeof res=='object'){
+				    if(res.success&&res.data){
+				        console.log(res.data.msg);
+				       }else if(res.message){
+				            console.log(`${type} ${res.message}`)
+				       }else{
+				            console.log(data);
+				       }
+				}else{
+					console.log(data);
+				}
+				break;				
 			case 'accessLogWithAD':
 			case 'drawContent':
 				break;
