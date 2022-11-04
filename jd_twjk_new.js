@@ -1,7 +1,7 @@
 /*
  特务集卡
  脚本没有自动开卡，会尝试领取开卡奖励
-10 10,18,20 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_twjk.jst
+10 10,17,19 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_twjk_new.js
 updatetime: 2022/11/4 fix
 * */
 const $ = new Env('特务集卡');
@@ -20,7 +20,7 @@ if ($.isNode()) {
         $.getdata("CookieJD2"),
         ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-console.log('\n活动地址：首页下拉，18点后还没集齐就做开卡任务吧，集齐晚上8点后自动瓜分\n')
+console.log('\n活动地址：首页下拉，1没集齐就做开卡任务，集齐晚上8点前瓜分\n')
 let shareList = [];
 $.flag = false
 !(async () => {
