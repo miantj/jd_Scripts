@@ -14,7 +14,9 @@ echo -e "安装脚本所需依赖，不一定一次全部安装成功，请自�
 echo -e "开始安装............\n"
 
 #apk add g++ make pixman-dev pango-dev cairo-dev pkgconf --no-cache
+apk add g++ make --no-cache
 pnpm config set registry https://registry.npm.taobao.org
+pnpm install -g
 pnpm install -g png-js
 pnpm install -g date-fns
 pnpm install -g axios@0.27.2
