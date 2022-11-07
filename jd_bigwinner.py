@@ -90,6 +90,7 @@ class Userinfo:
             self.shareUuid = home_res['data']['shareId']
             logger.info(f"车头账户[{self.name}]：已获取助力码[{self.shareUuid}]")
             logger.info(f"车头账户[{self.name}]：当前营业币约[{home_res['data']['canUseCoinAmount']}]元")
+        self.exchange_query()
         self.GetUserTaskStatusList()
         if self.need_help:
             logger.info(f"当前从{Userinfo.index}继续")
