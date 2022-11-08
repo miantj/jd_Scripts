@@ -1,8 +1,7 @@
 /*
 东东水果:脚本更新地址 jd_fruit.js
-更新时间：2021-11-7
-活动入口：京东APP我的-更多工具-东东农场
-东东农场活动链接：https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html
+更新时间：2022-11-8 
+活动入口：京东APP我的--东东农场
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 互助码shareCode请先手动运行脚本查看打印可看到
@@ -19,7 +18,9 @@ cron "5 6-18/6 * * *" script-path=jd_fruit.js,tag=东东农场
 =========================小火箭===========================
 东东农场 = type=cron,script-path=jd_fruit.js, cronexpr="5 6-18/6 * * *", timeout=3600, enable=true
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-export DO_TEN_WATER_AGAIN="" 默认再次浇水
+变量：
+export DO_TEN_WATER_AGAIN='true' 攒水滴只交10次水，默认不攒水滴
+export FRUIT_FAST_CARD='true' 使用快速浇水卡，水多可开启
 */
 const $ = new Env('东东农场');
 let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '';
@@ -29,6 +30,7 @@ let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, n
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
     ''
 ]
+
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
@@ -357,7 +359,7 @@ async function doTenWaterAgain() {
     }
     if (signCard > 0) {
         //使用加签卡
-        for (let i = 0; i < new Array(signCard).fill('').length; i++) {
+        for (let i = 0; i < 3; i++) {
             await userMyCardForFarm('signCard');
             console.log(`使用加签卡结果:${JSON.stringify($.userMyCardRes)}`);
         }
@@ -381,17 +383,24 @@ async function doTenWaterAgain() {
         } else {
             console.log(`您目前水滴:${totalEnergy}g,水滴换豆卡${$.myCardInfoRes.beanCard}张,暂不满足水滴换豆的条件,为您继续浇水`)
         }
+    }    
+
+    if (process.env.FRUIT_FAST_CARD && totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
+      //使用快速浇水卡
+          for (let i=0;i<new Array(fastCard).fill('').length;i++){
+                  await userMyCardForFarm('fastCard');
+                  console.log(`使用快速浇水卡结果:${JSON.stringify($.userMyCardRes)}`);
+                  if ($.userMyCardRes.code === '0') {
+                       console.log(`已使用快速浇水卡浇水${$.userMyCardRes.waterEnergy}g`);
+                  }  
+                  if ($.userMyCardRes.treeFinished){
+                       break;
+                  }
+                  await $.wait(500);
+                  await initForFarm();
+                  totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
+        }
     }
-    // if (totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
-    //   //使用快速浇水卡
-    //   await userMyCardForFarm('fastCard');
-    //   console.log(`使用快速浇水卡结果:${JSON.stringify($.userMyCardRes)}`);
-    //   if ($.userMyCardRes.code === '0') {
-    //     console.log(`已使用快速浇水卡浇水${$.userMyCardRes.waterEnergy}g`);
-    //   }
-    //   await initForFarm();
-    //   totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
-    // }
     // 所有的浇水(10次浇水)任务，获取水滴任务完成后，如果剩余水滴大于等于60g,则继续浇水(保留部分水滴是用于完成第二天的浇水10次的任务)
     let overageEnergy = totalEnergy - retainWater;
     if (totalEnergy >= ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy)) {
