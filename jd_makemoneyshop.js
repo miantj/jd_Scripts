@@ -115,6 +115,8 @@ let helpinfo = {};
 			}
 			console.log(`\n开始【账号${$.index}】${$.UserName}`);
 			//if (helpinfo[$.UserName].hot) continue;
+			await getinfo(1);	
+			await $.wait(200);			
 			await gettask();
 			await $.wait(500);
 			for (let item of $.tasklist) {
@@ -126,7 +128,6 @@ let helpinfo = {};
 					}
 				}
 			}
-			await getinfo(1);
 			await $.wait(1000);
 		}
 	}
