@@ -4,10 +4,6 @@ cron "22 15 * * *" jd_try_notify.js
 const $ = new Env('京东试用待领取通知')
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
-let trialActivityIdList = []
-let trialActivityTitleList = []
-let notifyMsg = ''
-let size = 1;
 $.isPush = true;
 $.isLimit = false;
 $.isForbidden = false;
@@ -60,7 +56,7 @@ if ($.isNode()) {
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             $.cookie = $.cookiesArr[i];
-            $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+            $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
             $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';

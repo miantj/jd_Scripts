@@ -169,10 +169,10 @@ let TempCKUid = [];
 if (UidFileexists) {
     //console.log("检测到一对一Uid文件WxPusherUid.json，载入...");
     TempCKUid = fs.readFileSync(strUidFile, 'utf-8');
-    if (TempCKUid) {
-        TempCKUid = TempCKUid.toString();
-        TempCKUid = JSON.parse(TempCKUid);
-    }
+    // if (TempCKUid) {
+    //     TempCKUid = TempCKUid.toString();
+    //     TempCKUid = JSON.parse(TempCKUid);
+    // }
 }
 
 let tempAddCK = {};
