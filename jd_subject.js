@@ -133,7 +133,7 @@ async function subject_interactive_get(cid, sid) {
 
 async function subject_interactive_done(cid, sid) {
 	return new Promise(async (resolve) => {
-		$.post(taskUrl('subject_interactive_done', `{"contentId": "${cid}","subjectId":"${sid}","monitorSurce": "videoDetail"}`), async (err, resp, data) => {
+		$.post(taskUrl('subject_interactive_done', `{"contentId": "${cid}","subjectId":"${sid}"}`), async (err, resp, data) => {
 			try {
 				if (err) {
 					console.log(`${JSON.stringify(err)}`)
