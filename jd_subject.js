@@ -54,13 +54,16 @@ let fff = Math.random()+1;
 				await $.wait(1000);
 				if ($.listData == null) continue;
 				for (let item of $.listData) {
-					if ($.hotnum > 1) fff = Math.random()+1;
+					if ($.hotnum > 0) fff = Math.random()+1;
+                    if ($.hotnum > 1) break;
 					if (item.remainGradNum == 0) continue;
 					console.log('\n开始主题：'+item.subjectTitle);
+                    UA = require('./USER_AGENTS').UARAM();
 					await channelBff_querySubject(y + 1, item.subjectId);
 					await $.wait(1000);
 					for (let j of $.contentList) {
-						if ($.hotnum > 1) fff = Math.random()+1;
+						if ($.hotnum > 0) fff = Math.random()+1;
+                        if ($.hotnum > 1) break;
 						//console.log(j.contentId, item.subjectId);
 						await subject_interactive_done(j.contentId, item.subjectId);
 						await $.wait(parseInt(Math.random() * 3000 + 3000, 10))
@@ -147,9 +150,10 @@ async function subject_interactive_done(cid, sid) {
 						} else {
 							console.log(data.message)
 						}
-						$.hotnum == 0;
+						$.hotnum = 0;
 					} else if (data.message.indexOf('火爆') > -1) {
 						console.log('火爆了，跳出');
+                        await $.wait(10000);
 						$.hotnum++;
 					} else {
 						console.log(data.message)
