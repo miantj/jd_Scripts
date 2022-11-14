@@ -41,7 +41,7 @@ let fp = '', eid = '', md5
 
 $nobyda.get = zooFaker.injectToRequest2($nobyda.get.bind($nobyda), 'channelSign')
 $nobyda.post = zooFaker.injectToRequest2($nobyda.post.bind($nobyda), 'channelSign')
-
+let UA = require('./USER_AGENTS').UARAM();
 async function all(cookie, jrBody) {
   KEY = cookie;
   merge = {};
@@ -151,11 +151,11 @@ async function all(cookie, jrBody) {
       break;
   }
   await Promise.all([
-    TotalSteel(), //总钢镚查询
-    TotalCash(), //总红包查询
-    TotalBean(), //总京豆查询
-    TotalSubsidy(), //总金贴查询
-    TotalMoney() //总现金查询
+    //TotalSteel(), //总钢镚查询
+    //TotalCash(), //总红包查询
+    //TotalBean(), //总京豆查询
+    //TotalSubsidy(), //总金贴查询
+    //TotalMoney() //总现金查询
   ]);
   await notify(); //通知模块
 }
@@ -199,20 +199,20 @@ function notify() {
       var one = `【签到概览】:  ${Ts+Tf+Te}${Ts||Tf||Te?`\n`:`获取失败\n`}`
       var two = Tbean || TSteel ? `【签到奖励】:  ${Tbean+TSteel}\n` : ``
       var three = TCash || TSubsidy || TMoney ? `【其他奖励】:  ${TCash+TSubsidy+TMoney}\n` : ``
-      var four = `【账号总计】:  ${beans+Steel}${beans||Steel?`\n`:`获取失败\n`}`
-      var five = `【其他总计】:  ${Subsidy+Money+Cash}${Subsidy||Money||Cash?`\n`:`获取失败\n`}`
+      //var four = `【账号总计】:  ${beans+Steel}${beans||Steel?`\n`:`获取失败\n`}`
+      //var five = `【其他总计】:  ${Subsidy+Money+Cash}${Subsidy||Money||Cash?`\n`:`获取失败\n`}`
       var DName = merge.TotalBean && merge.TotalBean.nickname ? merge.TotalBean.nickname : "获取失败"
       var cnNum = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
       const Name = DualKey || OtherKey.length > 1 ? `【签到号${cnNum[$nobyda.num]||$nobyda.num}】:  ${DName}\n` : ``
       const disables = $nobyda.read("JD_DailyBonusDisables")
       const amount = disables ? disables.split(",").length : 0
       const disa = !notify || amount ? `【温馨提示】:  检测到${$nobyda.disable?`上次执行意外崩溃, `:``}已禁用${notify?`${amount}个`:`所有`}接口, 如需开启请前往BoxJs或查看脚本内第118行注释.\n` : ``
-      $nobyda.notify("", "", Name + one + two + three + four + five + disa + notify, {
+      $nobyda.notify("", "", Name + one + two + three  + disa + notify, {
         'media-url': $nobyda.headUrl || 'https://cdn.jsdelivr.net/gh/NobyDa/mini@master/Color/jd.png'
       });
       $nobyda.headUrl = null;
       if ($nobyda.isJSBox) {
-        $nobyda.st = (typeof($nobyda.st) == 'undefined' ? '' : $nobyda.st) + Name + one + two + three + four + five + "\n"
+        $nobyda.st = (typeof($nobyda.st) == 'undefined' ? '' : $nobyda.st) + Name + one + two + three  + "\n"
       }
     } catch (eor) {
       $nobyda.notify("通知模块 " + eor.name + "‼️", JSON.stringify(eor), eor.message)
@@ -1828,7 +1828,7 @@ function nobyda() {
     return response
   }
   const get = (options, callback) => {
-    options.headers['User-Agent'] = 'JD4iPhone/167169 (iPhone; iOS 13.4.1; Scale/3.00)'
+    options.headers['User-Agent'] = UA
     if (isQuanX) {
       if (typeof options == "string") options = {
         url: options
@@ -1868,7 +1868,7 @@ function nobyda() {
     }
   }
   const post = (options, callback) => {
-    options.headers['User-Agent'] = 'JD4iPhone/167169 (iPhone; iOS 13.4.1; Scale/3.00)'
+    options.headers['User-Agent'] = UA
     if (options.body) options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     if (isQuanX) {
       if (typeof options == "string") options = {
