@@ -430,8 +430,14 @@ if(DisableIndex!=-1){
 		    $.UA = require('./USER_AGENTS').UARAM();
 			await TotalBean();			
 		    //await TotalBean2();
-			
 			if ($.beanCount == 0) {
+				console.log("数据获取失败，等待30秒后重试....")
+				await $.wait(30*1000);
+				await TotalBean();		
+			}
+			if ($.beanCount == 0) {
+				console.log("疑似获取失败,等待10秒后用第二个接口试试....")
+				await $.wait(10*1000);
 			    var userdata = await getuserinfo();
 			    if (userdata.code == 1) {
 			        $.beanCount = userdata.content.jdBean;
@@ -497,7 +503,7 @@ if(DisableIndex!=-1){
 			    TodayCache.push(tempAddCache);
 			}
 						
-			await getjdfruitinfo() //东东农场
+			await getjdfruitinfo(); //东东农场
 			await $.wait(1000);
 			
 			await Promise.all([
@@ -1173,7 +1179,7 @@ async function bean() {
 	        // console.log(`第${page}页: ${JSON.stringify(response)}`);
 	        if (response && response.code === "0") {
 	            page++;
-	            let detailList = response.detailList;
+	            let detailList = response.jingDetailList;
 	            if (detailList && detailList.length > 0) {
 	                for (let item of detailList) {
 	                    const date = item.date.replace(/-/g, '/') + "+08:00";
@@ -1268,7 +1274,7 @@ async function Monthbean() {
 		// console.log(`第${allpage}页: ${JSON.stringify(response)}`);
 		if (response && response.code === "0") {
 			allpage++;
-			let detailList = response.detailList;
+			let detailList = response.jingDetailList;
 			if (detailList && detailList.length > 0) {
 				for (let item of detailList) {
 					const date = item.date.replace(/-/g, '/') + "+08:00";
@@ -1589,11 +1595,10 @@ function isLoginByX1a0He() {
 function getJingBeanBalanceDetail(page) {
 	return new Promise(async resolve => {
 		const options = {
-			"url": `https://api.m.jd.com/client.action?functionId=getJingBeanBalanceDetail`,
-			"body": `body=${escape(JSON.stringify({"pageSize": "20", "page": page.toString()}))}&appid=ld`,
+      "url": `https://bean.m.jd.com/beanDetail/detail.json?page=${page}`,
+      "body": `body=${escape(JSON.stringify({"pageSize": "20", "page": page.toString()}))}&appid=ld`,
 			"headers": {
 				'User-Agent': $.UA,
-				'Host': 'api.m.jd.com',
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Cookie': cookie,
 			}
@@ -1710,6 +1715,7 @@ function getUUID(x = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", t = 0) {
     })
 }
 
+
 function redPacket() {
 	return new Promise(async resolve => {
 		const options = {
@@ -1737,41 +1743,60 @@ function redPacket() {
 						$.jsRed = 0,
 						$.jdRed = 0,
 						$.jdhRed = 0,
+						$.jdwxRed = 0,
+						$.jdGeneralRed = 0,
 						$.jxRedExpire = 0,
 						$.jsRedExpire = 0,
 						$.jdRedExpire = 0,
 						$.jdhRedExpire = 0;
+						$.jdwxRedExpire = 0,
+						$.jdGeneralRedExpire = 0
+						
 						let t = new Date();
 						t.setDate(t.getDate() + 1);
 						t.setHours(0, 0, 0, 0);
 						t = parseInt((t - 1) / 1000);
+						//console.log(JSON.stringify(data.useRedInfo.redList))
 						for (let vo of data.useRedInfo.redList || []) {
-							if (vo.orgLimitStr && vo.orgLimitStr.includes("京喜")) {
+							if (vo.limitStr && vo.limitStr.includes("京喜")) {
 								$.jxRed += parseFloat(vo.balance)
 								if (vo['endTime'] === t) {
 									$.jxRedExpire += parseFloat(vo.balance)
 								}
-							} else if (vo.activityName.includes("极速版") || vo.activityName.includes("京东特价")) {
+							} else if (vo.limitStr.includes("购物小程序")) {
+								$.jdwxRed += parseFloat(vo.balance)
+								if (vo['endTime'] === t) {
+									$.jdwxRedExpire += parseFloat(vo.balance)
+								}
+							} else if (vo.limitStr.includes("京东商城")) {
+								$.jdRed += parseFloat(vo.balance)
+								if (vo['endTime'] === t) {
+									$.jdRedExpire += parseFloat(vo.balance)
+								}
+							} else if (vo.limitStr.includes("极速版") || vo.limitStr.includes("京东特价")) {
 								$.jsRed += parseFloat(vo.balance)
 								if (vo['endTime'] === t) {
 									$.jsRedExpire += parseFloat(vo.balance)
 								}
-							} else if (vo.orgLimitStr && vo.orgLimitStr.includes("京东健康")) {
+							} else if (vo.limitStr && vo.limitStr.includes("京东健康")) {
 								$.jdhRed += parseFloat(vo.balance)
 								if (vo['endTime'] === t) {
 									$.jdhRedExpire += parseFloat(vo.balance)
 								}
 							} else {
-								$.jdRed += parseFloat(vo.balance)
+								$.jdGeneralRed += parseFloat(vo.balance)
 								if (vo['endTime'] === t) {
-									$.jdRedExpire += parseFloat(vo.balance)
+									$.jdGeneralRedExpire += parseFloat(vo.balance)
 								}
 							}
 						}
+				
 						$.jxRed = $.jxRed.toFixed(2);
 						$.jsRed = $.jsRed.toFixed(2);
-						$.jdRed = $.jdRed.toFixed(2);
+						$.jdRed = $.jdRed.toFixed(2);						
 						$.jdhRed = $.jdhRed.toFixed(2);
+						$.jdwxRed = $.jdwxRed.toFixed(2);
+						$.jdGeneralRed = $.jdGeneralRed.toFixed(2);
 						$.balance = data.balance;
 						$.expiredBalance = ($.jxRedExpire + $.jsRedExpire + $.jdRedExpire).toFixed(2);
 						$.message += `【红包总额】${$.balance}(总过期${$.expiredBalance})元 \n`;
@@ -1783,6 +1808,10 @@ function redPacket() {
 							$.message += `【京东红包】${$.jdRed}(将过期${$.jdRedExpire.toFixed(2)})元 \n`;
 						if ($.jdhRed > 0)
 							$.message += `【健康红包】${$.jdhRed}(将过期${$.jdhRedExpire.toFixed(2)})元 \n`;
+						if ($.jdwxRed > 0)
+							$.message += `【微信小程序】${$.jdwxRed}(将过期${$.jdwxRedExpire.toFixed(2)})元 \n`;
+						if ($.jdGeneralRed > 0)
+							$.message += `【全平台通用】${$.jdGeneralRed}(将过期${$.jdGeneralRedExpire.toFixed(2)})元 \n`;
 					} else {
 						console.log(`京东服务器返回空数据`)
 					}
@@ -1868,7 +1897,7 @@ function getCoupon() {
 					    }
 
 					}
-                    if (useable[i].couponTitle.indexOf('极速版APP活动') > -1 && useable[i].limitStr=='仅可购买活动商品') {						
+                    if (useable[i].couponTitle.indexOf('特价版APP活动') > -1 && useable[i].limitStr=='仅可购买活动商品') {						
                         $.beginTime = useable[i].beginTime;
                         if ($.beginTime < new Date().getTime() && useable[i].coupontype === 1) {                            
 							if (useable[i].platFormInfo) 
@@ -1876,7 +1905,7 @@ function getCoupon() {
 							var decquota=parseFloat(useable[i].quota).toFixed(2);
 							var decdisc= parseFloat(useable[i].discount).toFixed(2);
 							
-							$.message += `【极速版券】满${decquota}减${decdisc}元`;
+							$.message += `【特价版券】满${decquota}减${decdisc}元`;
 							
 							if (useable[i].endTime < $.todayEndTime) {
 								$.message += `(今日过期,${$.platFormInfo})\n`;
@@ -2030,9 +2059,14 @@ function jdfruitRequest(function_id, body = {}, timeout = 1000) {
 						console.log(`function_id:${function_id}`)
 						$.logErr(err);
 					} else {
-						if (safeGet(data)) {
+						if (safeGet(data)) {							
 							data = JSON.parse(data);
-							$.JDwaterEveryDayT = data.totalWaterTaskInit.totalWaterTaskTimes;
+							if (data.code=="400"){
+								console.log('东东农场: '+data.message);
+								llgeterror = true;
+							}
+							else
+								$.JDwaterEveryDayT = data.totalWaterTaskInit.totalWaterTaskTimes;
 						}
 					}
 				} catch (e) {
@@ -2055,7 +2089,10 @@ async function getjdfruitinfo() {
             "channel": 1,
             "babelChannel": "120"
         });
-
+		
+		if (llgeterror)
+			return
+		
         await getjdfruit();
         if (llgeterror) {
             console.log(`东东农场API查询失败,等待10秒后再次尝试...`)
@@ -2662,8 +2699,8 @@ async function jxbean() {
                 }
             }
         } else {
-            //$.errorMsg = `数据异常`;
-            //$.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
+            $.errorMsg = `数据异常`;
+            $.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
         }
 
         for (let item of JxYesterdayArr) {
@@ -3053,7 +3090,7 @@ async function queryScores() {
 }
 
 async function getuserinfo() {
-	var body={"pin": "$cooMrdGatewayUid$"};
+	var body=[{"pin": "$cooMrdGatewayUid$"}];
 	var ua = `jdapp;iPhone;${random(["11.1.0", "10.5.0", "10.3.6"])};${random(["13.5", "14.0", "15.0"])};${uuidRandom()};network/wifi;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone11,6;addressid/7565095847;supportBestPay/0;appBuild/167541;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`;
 
     let config = {
