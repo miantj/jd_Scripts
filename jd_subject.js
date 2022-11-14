@@ -52,6 +52,7 @@ let fff = Math.random()+1;
 				(i == 1) ? (x = 'joined', y = 1) : '';
 				await homepage(x);
 				await $.wait(1000);
+				if ($.listData) continue;
 				for (let item of $.listData) {
 					if ($.hotnum > 1) fff = Math.random()+1;
 					if (item.remainGradNum == 0) continue;
