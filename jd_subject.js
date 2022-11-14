@@ -21,6 +21,7 @@ if ($.isNode()) {
 } else {
 	cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
+let fff = Math.random()+1;
 !(async () => {
 	if (!cookiesArr[0]) {
 		$.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -45,20 +46,21 @@ if ($.isNode()) {
 			}
 			$.hotnum = 0;
 			for (let i = 0; i < 2; i++) {
-				if ($.hotnum > 2) break;
+				if ($.hotnum > 1) fff = Math.random()+1;
 				let x = 'recommend';
 				let y = 0;
 				(i == 1) ? (x = 'joined', y = 1) : '';
 				await homepage(x);
 				await $.wait(1000);
+				if ($.listData == null) continue;
 				for (let item of $.listData) {
-					if ($.hotnum > 2) break;
+					if ($.hotnum > 1) fff = Math.random()+1;
 					if (item.remainGradNum == 0) continue;
 					console.log('\n开始主题：'+item.subjectTitle);
 					await channelBff_querySubject(y + 1, item.subjectId);
 					await $.wait(1000);
 					for (let j of $.contentList) {
-						if ($.hotnum > 2) break;
+						if ($.hotnum > 1) fff = Math.random()+1;
 						//console.log(j.contentId, item.subjectId);
 						await subject_interactive_done(j.contentId, item.subjectId);
 						await $.wait(parseInt(Math.random() * 3000 + 3000, 10))
@@ -145,6 +147,7 @@ async function subject_interactive_done(cid, sid) {
 						} else {
 							console.log(data.message)
 						}
+						$.hotnum == 0;
 					} else if (data.message.indexOf('火爆') > -1) {
 						console.log('火爆了，跳出');
 						$.hotnum++;
@@ -198,7 +201,7 @@ async function homepage(type) {
 }
 
 function taskUrl(fn, body) {
-	body = dylan.getbody(fn, body, 0);
+	body = dylan.getbody(fn, body, fff);
 	//console.log(body)
 	return {
 		url: `https://api.m.jd.com/client.action?functionId=${fn}&${body}`,
