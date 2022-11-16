@@ -45,11 +45,12 @@ let fff = Math.random()+1;
 				continue
 			}
 			$.hotnum = 0;
-			for (let i = 0; i < 2; i++) {
-				if ($.hotnum > 1) fff = Math.random()+1;
+			for (let i = 0; i < 4; i++) {
+				if ($.hotnum > 0) fff = Math.random()+1;
+                if ($.hotnum > 1) break;
 				let x = 'recommend';
-				let y = 0;
-				(i == 1) ? (x = 'joined', y = 1) : '';
+				let y = Math.floor(Math.random()*20);
+				(i > 0) ? (x = 'joined') : '';
 				await homepage(x);
 				await $.wait(1000);
 				if ($.listData == null) continue;
