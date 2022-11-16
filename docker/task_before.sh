@@ -4,7 +4,7 @@
 ## 6dylan6_1008
 
 name_js=(
-  jd_fruit
+  jd_fruit_help
   jd_pet
   jd_plantBean
   jd_dreamFactory
