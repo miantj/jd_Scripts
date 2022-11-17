@@ -136,8 +136,9 @@ async function run(){
         await $.wait(1000);
 		console.log(`当前剩余能量：${$.remainPoint}\n`);
 		await $.wait(1000);
-		console.log('开始兑换5豆。。。'):
+		console.log('开始兑换5豆。。。');
 		await takePostRequest('exchange');
+		await $.wait(500);
 		await takePostRequest('missionInviteList');
         await $.wait(1000);
         console.log(`去助力：${$.inviteNick}`);
