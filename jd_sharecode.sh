@@ -252,7 +252,7 @@ export_codes_sub() {
         i=0
         pt_pin_in_log=()
         code=()
-        pt_pin_and_code=$(ls -t ./*$task_name*/*.log|head -7| xargs awk -v var="的$chinese_name好友互助码" 'BEGIN{FS="[（ ）】]+"; OFS="&"} $3~var {print $2,$4}')
+        pt_pin_and_code=$(ls -t ./*$task_name*/*.log|head -2| xargs awk -v var="的$chinese_name好友互助码" 'BEGIN{FS="[（ ）】]+"; OFS="&"} $3~var {print $2,$4}')
         for line in $pt_pin_and_code; do
             pt_pin_in_log[i]=$(echo $line | awk -F "&" '{print $1}')
             code[i]=$(echo $line | awk -F "&" '{print $2}')
