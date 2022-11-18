@@ -1,6 +1,6 @@
 /*
 东东水果助力和领取邀请奖励
-8 2,5 * * * jd_fruit_help.js
+8 2,5 * * * jd_farm_help.js
 updatetime:2022/11/16
 dlan
 */
