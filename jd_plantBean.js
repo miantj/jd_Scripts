@@ -578,7 +578,7 @@ function tjdoublesign(url) {
         headers: {
             'Accept': 'application/json',
             'Referer': 'https://wqs.jd.com/',
-            'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+            'User-Agent': getUA(),
             'Cookie': cookie
         }
     }
@@ -901,6 +901,20 @@ function getParam(url, name) {
     const r = url.match(reg)
     if (r != null) return unescape(r[2]);
     return null;
+}
+function getUA() {
+	getstr = function (x) {
+		let e = '', t = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		for (let i = 0; i < x; i++) {
+			let n = Math.round(Math.random() * (t.length - 1));
+			e += t.substring(n, n + 1);
+		}
+		return e;
+	}
+	let adod = Buffer.from(getstr(16), 'utf8').toString('base64');
+	let od = getstr(48);
+	ep = encodeURIComponent(JSON.stringify({ 'hdid': 'JM9F1ywUPwflvMIpYPok0tt5k9kW4ArJEU3lfLhxBqw=', 'ts': Date.now(), 'ridx': -1, 'cipher': { 'sv': 'EG==', 'ad': adod, 'od': od, 'ov': 'Ctq=', 'ud': adod }, 'ciphertype': 5, 'version': '1.2.0', 'appname': 'com.jingdong.app.mall' }));
+	return `jdapp;android;11.2.0;;;appBuild/98413;ef/1;ep/${ep};Mozilla/5.0 (Linux; Android 9; LYA-AL00 Build/HUAWEILYA-AL00L; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/89.0.4389.72 MQQBrowser/6.2 TBS/046033 Mobile Safari/537.36`;
 }
 function jsonParse(str) {
     if (typeof str == "string") {
