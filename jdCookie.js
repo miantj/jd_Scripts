@@ -6,6 +6,7 @@ let CookieJDs = [
   '',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
   '',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
 ]
+let IP='';
 // 判断环境变量里面是否有京东ck
 if (process.env.JD_COOKIE) {
   if (process.env.JD_COOKIE.indexOf('&') > -1) {
@@ -23,16 +24,48 @@ if (JSON.stringify(process.env).indexOf('GITHUB')>-1) {
     await process.exit(0);
   })()
 }
+!(async () => {
+	IP = await getIP();
+    IP=IP.match(/((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}/)[0];
+    console.log(`\n当前公网IP: ${IP}`);
+    console.log(`\n====================共${CookieJDs.length}个京东账号Cookie=================\n`);
+    console.log(`============脚本执行时间：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString('chinese',{hour12:false})}=============\n`)
+    console.log('>>>>>>>>>>>>>>6Dylan6 提示：任务正常运行中>>>>>>>>>>>>>>>\n')
+})()
 CookieJDs = [...new Set(CookieJDs.filter(item => !!item))]
-console.log(`\n====================共${CookieJDs.length}个京东账号Cookie=================\n`);
-console.log(`============脚本执行时间：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString('chinese',{hour12:false})}=============\n`)
 if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 for (let i = 0; i < CookieJDs.length; i++) {
   if (!CookieJDs[i].match(/pt_pin=(.+?);/) || !CookieJDs[i].match(/pt_key=(.+?);/)) console.log(`\n提示:京东cookie 【${CookieJDs[i]}】填写不规范,可能会影响部分脚本正常使用。正确格式为: pt_key=xxx;pt_pin=xxx;（分号;不可少）\n`);
   const index = (i + 1 === 1) ? '' : (i + 1);
   exports['CookieJD' + index] = CookieJDs[i].trim();
 }
-console.log('>>>>>>>>>>>>>>6Dylan6 提示：任务正常运行中>>>>>>>>>>>>>>>\n')
+
+
+function getIP() {
+    const https = require('https');
+    return new Promise((resolve, reject) => {
+        let opt = {
+            hostname: "www.cip.cc",
+            port: 443,
+            path: "/",
+            method: "GET",
+            headers: {
+                "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36',
+            },
+            timeout: 5000
+        }
+        const req = https.request(opt, (res) => {
+             res.setEncoding('utf-8');
+             let tmp = '';
+             res.on('error', reject);
+             res.on('data', d => tmp += d);
+             res.on('end',() => resolve(tmp));
+        });
+
+        req.on('error', reject);
+        req.end();
+    });
+}
 // 以下为注入互助码环境变量（仅nodejs内起效）的代码
 function SetShareCodesEnv(nameChinese = "", nameConfig = "", envName = "") {
     let rawCodeConfig = {}
