@@ -25,16 +25,17 @@ if (JSON.stringify(process.env).indexOf('GITHUB')>-1) {
   })()
 }
 !(async () => {
-	IP = await getIP();
-    IP=IP.match(/((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}/)[0];
-    console.log(`\n当前公网IP: ${IP}`);
-
+    try {
+        IP = await getIP();
+        IP=IP.match(/((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}/)[0];
+        console.log(`\n当前公网IP: ${IP}`);
+    } catch (error) {}
 })()
 CookieJDs = [...new Set(CookieJDs.filter(item => !!item))]
 if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 console.log(`\n====================共${CookieJDs.length}个京东账号Cookie=================\n`);
 console.log(`============脚本执行时间：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString('chinese',{hour12:false})}=============\n`)
-console.log('>>>>>>>>>>>>>>6Dylan6 提示：任务正常运行中>>>>>>>>>>>>>>>\n')
+console.log('>>>>>>>>>>>>>> 提示：任务正常运行中>>>>>>>>>>>>>>>\n')
 for (let i = 0; i < CookieJDs.length; i++) {
   if (!CookieJDs[i].match(/pt_pin=(.+?);/) || !CookieJDs[i].match(/pt_key=(.+?);/)) console.log(`\n提示:京东cookie 【${CookieJDs[i]}】填写不规范,可能会影响部分脚本正常使用。正确格式为: pt_key=xxx;pt_pin=xxx;（分号;不可少）\n`);
   const index = (i + 1 === 1) ? '' : (i + 1);
