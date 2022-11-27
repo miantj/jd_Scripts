@@ -26,9 +26,10 @@ if (JSON.stringify(process.env).indexOf('GITHUB')>-1) {
 }
 !(async () => {
 	IP = await getIP();
-    IP=IP.match(/((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}/)[0];
-    console.log(`\n当前公网IP: ${IP}`);
-
+    try {
+        IP = IP.match(/((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}/)[0];
+        console.log(`\n当前公网IP: ${IP}`);
+    } catch (e) { }
 })()
 CookieJDs = [...new Set(CookieJDs.filter(item => !!item))]
 if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
