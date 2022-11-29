@@ -2001,7 +2001,7 @@ function wxpusherNotify(text, desp) {
     });
 }
 
-function PushDeerNotify(text, desp, time = 2100) {
+function PushDeerNotify(text, desp) {
   return new Promise((resolve) => {
     if (PUSHDEER_KEY) {
       desp = encodeURI(desp);
@@ -2012,35 +2012,33 @@ function PushDeerNotify(text, desp, time = 2100) {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        timeout,
+        timeout: 5000,
       };
-      setTimeout(() => {
-        $.post(options, (err, resp, data) => {
-          try {
-            if (err) {
-              console.log('发送通知调用API失败！！\n');
-              console.log(err);
+      $.post(options, (err, resp, data) => {
+        try {
+          if (err) {
+            console.log('发送通知调用API失败！！\n');
+            console.log(err);
+          } else {
+            data = JSON.parse(data);
+            // 通过返回的result的长度来判断是否成功
+            if (
+              data.content.result.length !== undefined &&
+              data.content.result.length > 0
+            ) {
+              console.log('PushDeer发送通知消息成功🎉\n');
             } else {
-              data = JSON.parse(data);
-              // 通过返回的result的长度来判断是否成功
-              if (
-                data.content.result.length !== undefined &&
-                data.content.result.length > 0
-              ) {
-                console.log('PushDeer发送通知消息成功🎉\n');
-              } else {
-                console.log(
-                  `PushDeer发送通知消息异常\n${JSON.stringify(data)}`,
-                );
-              }
+              console.log(
+                `PushDeer发送通知消息异常\n${JSON.stringify(data)}`,
+              );
             }
-          } catch (e) {
-            $.logErr(e, resp);
-          } finally {
-            resolve(data);
           }
-        });
-      }, time);
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve(data);
+        }
+      });
     } else {
       resolve();
     }
