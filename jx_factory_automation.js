@@ -55,8 +55,7 @@ $.logic = async function () {
     }
 };
 
-$.run({filename: __filename, wait: [2000, 3000], random: true}).catch(
-    reason => console.log(reason));
+$.run({wait: [2000, 3000]}).catch(reason => $.log(reason));
 
 async function AddProduction(factoryId, deviceId, commodityDimId) {
     let url = `https://m.jingxi.com/dreamfactory/userinfo/AddProduction?zone=dream_factory&factoryId=${factoryId}&deviceId=${deviceId}&commodityDimId=${commodityDimId}&replaceProductionId=&_time=1637282973549&_ts=1637282973549&_=1637282973550&sceneval=2&g_login_type=1&callback=jsonpCBKGGG&g_ty=ls`;
