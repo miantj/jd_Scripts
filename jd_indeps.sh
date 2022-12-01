@@ -17,6 +17,7 @@ echo -e "开始安装............\n"
 apk add g++ make --no-cache
 pnpm config set registry https://registry.npm.taobao.org
 pnpm install -g
+pnpm install -g ds
 pnpm install -g png-js
 pnpm install -g date-fns
 pnpm install -g axios@0.27.2
