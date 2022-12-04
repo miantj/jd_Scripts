@@ -208,18 +208,16 @@ def get_beans_7days(ck):
 def get_total_beans(ck):
     try:
         headers = {
-            "Host": "wxapp.m.jd.com",
-            "Connection": "keep-alive",
-            "charset": "utf-8",
-            "User-Agent": "Mozilla/5.0 (Linux; Android 10; MI 9 Build/QKQ1.190825.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.62 XWEB/2797 MMWEBSDK/201201 Mobile Safari/537.36 MMWEBID/7986 MicroMessenger/8.0.1840(0x2800003B) Process/appbrand4 WeChat/arm64 Weixin NetType/4G Language/zh_CN ABI/arm64 MiniProgramEnv/android",
+            "Host": "wq.jd.com",
+            "User-Agent": "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
             "Content-Type": "application/x-www-form-urlencoded;",
-            "Accept-Encoding": "gzip, compress, deflate, br",
             "Cookie": ck,
+            "Referer": 'https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2'
         }
-        jurl = "https://wxapp.m.jd.com/kwxhome/myJd/home.json"
-        resp = session.get(jurl, headers=headers, timeout=100).text
+        jurl = "https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2"
+        resp = requests.post(jurl, headers=headers).text
         res = json.loads(resp)
-        return res['user']['jingBean']
+        return res['base']['jdNum']
     except Exception as e:
         printf(str(e))
 
