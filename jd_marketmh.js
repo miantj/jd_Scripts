@@ -135,8 +135,8 @@ function starShopDraw(body) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`starShopDraw 请求失败，请检查网路重试`)
                 } else {
+                    console.log(data)					
                     data = JSON.parse(data);
-                    console.log(data)
                     if (data.success) {
                         if (data.data.prizeType === 2) {
                             console.log('开启惊喜礼盒，获得红包：' + data.data.prizeValue);
