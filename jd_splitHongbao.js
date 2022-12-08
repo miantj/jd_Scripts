@@ -1,7 +1,7 @@
 
 /*
 任务+抽奖
-16 16 * * * jd_splitHongbao.js
+16 5,16 * * * jd_splitHongbao.js
  */
 
 const $ = new Env('年终奖补贴-加密');
