@@ -3,6 +3,7 @@
 默认前6个ck开团，变量CITYNUM='10'
 31 3,20 * * * jd_city.js
  */
+
 const $ = new Env('城城领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -122,7 +123,18 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       UA = `jdapp;iPhone;10.2.0;13.1.2;${randomString(40)};M/5.0;network/wifi;ADID/;model/iPhone8,1;addressid/2308460611;appBuild/167853;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1;`
       uuid = UA.split(';')[4];
       console.log(`\开始【账号${$.index}】${$.nickName || $.UserName}\n`);
-      dotaskmode();
+      await tasklist();
+      for (let item of $.tasklist) {
+        if (item.status === 1) {
+          await dotask(item.taskId, item.shoppingActivityVos[0].taskToken, 1);
+          console.log(`等待${item.waitDuration}秒`)
+          await $.wait(item.waitDuration * 1000);
+          await dotask(item.taskId, item.shoppingActivityVos[0].taskToken, 0);
+          await $.wait(500);
+        }
+      }
+      await $.wait(1000);
+      await receiveCash('', '6');
       await $.wait(1000);
     }
   }
@@ -134,21 +146,6 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   .finally(() => {
     $.done();
   })
-
-async function dotaskmode() {
-  await tasklist();
-  for (let item of $.tasklist) {
-    if (item.status === 1) {
-      await dotask(item.taskId, item.shoppingActivityVos[0].taskToken, 1);
-      console.log(`等待${item.waitDuration}秒`)
-      await $.wait(item.waitDuration * 1000);
-      await dotask(item.taskId, item.shoppingActivityVos[0].taskToken, 0);
-      await $.wait(500);
-    }
-  }
-  await $.wait(1000);
-  await receiveCash('', '6');
-}
 
 function getInfo(inviteId, flag = false) {
   let body = { "lbsCity": "15", "realLbsCity": "1233", "inviteId": inviteId, "headImg": "", "userName": "", "taskChannel": "1", "location": "", "safeStr": "" }
@@ -185,7 +182,7 @@ function getInfo(inviteId, flag = false) {
                   }
                 }
               } else {
-                console.log(`\n\n${inviteId ? '助力好友' : '获取邀请码'}失败:${data.data.bizMsg}`)
+                console.log(`${inviteId ? '助力好友' : '获取邀请码'}失败:${data.data.bizMsg}\n`)
                 if (flag) {
                   if (data.data && !data.data.result.userActBaseInfo.inviteId) {
                     console.log(`账号已黑，看不到邀请码\n`);
