@@ -275,13 +275,12 @@ function JingDongBean(s) {
     if (disable("JDBean")) return resolve()
     setTimeout(() => {
       const JDBUrl = {
-        url: 'https://api.m.jd.com/client.action',
+        url: 'https://api.m.jd.com/client.action?functionId=signBeanAct&body=%7B%22fp%22%3A%22-1%22%2C%22shshshfp%22%3A%22-1%22%2C%22shshshfpa%22%3A%22-1%22%2C%22referUrl%22%3A%22-1%22%2C%22userAgent%22%3A%22-1%22%2C%22jda%22%3A%22-1%22%2C%22rnVersion%22%3A%223.9%22%7D&appid=ld&client=android&clientVersion=11.3.6',
         headers: {
           Cookie: KEY
-        },
-        body: 'functionId=signBeanIndex&appid=ld'
+        }
       };
-      $nobyda.post(JDBUrl, function(error, response, data) {
+      $nobyda.get(JDBUrl, function(error, response, data) {
         try {
           if (error) {
             throw new Error(error)
