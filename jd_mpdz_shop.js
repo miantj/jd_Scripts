@@ -5,7 +5,7 @@
 55 9 * * * jd_mpdz_shop.js 
 */
 
-const $ = new Env("头文字JJJ-兑换");
+const $ = new Env("头文字J-兑换");
 const jdCookieNode = $.isNode() ? require('./miantj_jd_Scripts/jdCookie.js') : '';
 const notify = $.isNode() ? require('./miantj_jd_Scripts/sendNotify') : '';
 let count = 10;  //兑换人数
