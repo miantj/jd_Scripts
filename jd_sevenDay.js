@@ -78,7 +78,7 @@ if ($.isNode()) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
-    $.actList = activityIdList.length + activityIdList.length + activityIdList.length
+    $.actList = activityIdList.length + activityIdList2.length + activityIdList3.length
 
     for (let i = 0; i < runnum; i++) {
         if ($.actList === 0) {
