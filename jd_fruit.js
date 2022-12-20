@@ -395,9 +395,10 @@ async function doTenWaterAgain() {
                   if ($.userMyCardRes.treeFinished){
                        break;
                   }
-                  await $.wait(500);
+                  await $.wait(1000);
                   await initForFarm();
                   totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
+				  if (totalEnergy < 100) break;
         }
     }
     // 所有的浇水(10次浇水)任务，获取水滴任务完成后，如果剩余水滴大于等于60g,则继续浇水(保留部分水滴是用于完成第二天的浇水10次的任务)
