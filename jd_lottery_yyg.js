@@ -1,6 +1,6 @@
 /*
 入口：https://prodev.m.jd.com/mall/active/2u1ZhLtcmRWeBPLf8mWqPRWwvXQV/index.html
-32 1 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_lotty_yyg.js
+32 1 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_lottery_yyg.js
 updatetime:2022/12/20
  */
 const $ = new Env('医药馆抽豆');
