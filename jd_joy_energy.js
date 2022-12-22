@@ -1,7 +1,7 @@
 /*
 领2-5个能量棒
 汪汪乐园可能会黑，自己决定！
-1 1 1 12 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_joy_energy.js
+0 8,14 * * * jd_joy_energy.js
 updatetime: 2022/12/1
 */
 

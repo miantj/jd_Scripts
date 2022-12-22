@@ -1,8 +1,7 @@
 /*
 默认0.04倍，9点后自动0.01倍
 倍数变量JOY_RUN_ASSETS='0.01'
-https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_joy_run.js
-定时自定义
+10 0-23/1 * * *  jd_joy_run.js
 updatetime: 2022/12/4 fix
 */
 
