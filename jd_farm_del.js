@@ -47,7 +47,7 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
             subTitle = '';
             option = {};
             $.UA = require('./USER_AGENTS').UARAM();
-            //await shareCodesFormat();
+            await shareCodesFormat();
             await jdFruit();
         }
     }
@@ -1132,7 +1132,7 @@ function shareCodesFormat() {
             //newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
             newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
         }
-        console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
+        //console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
         resolve();
     })
 }
