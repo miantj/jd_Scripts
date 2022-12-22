@@ -1,6 +1,6 @@
 /*
 东东农场助力
-20 2,5 * * * jd_farm_help.js
+0 1,4 * * * jd_farm_help.js
 updatetime:2022/12/22
 dlan
 */

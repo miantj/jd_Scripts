@@ -8,7 +8,7 @@
 ==========================Quantumultx=========================
 [task_local]
 #jd免费水果
-15 6-18/6 * * * jd_fruit.js, tag=东东农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png, enabled=true
+5 6-18/6 * * * jd_fruit.js, tag=东东农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png, enabled=true
 =========================Loon=============================
 [Script]
 cron "15 6-18/6 * * *" script-path=jd_fruit.js,tag=东东农场

@@ -8,7 +8,7 @@ cron:7 7 7 7 *
 ============Quantumultx===============
 [task_local]
 #东东萌宠红包领取
-cron:7 7 7 7 * jd_pet_red.js, tag=东东萌宠, enabled=true
+cron:7 2,7 * * * jd_pet_red.js, tag=东东萌宠, enabled=true
 
  */
 const $ = new Env('东东萌宠红包领取');
