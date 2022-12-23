@@ -23,12 +23,16 @@ let shopname=''
 
 let dptoken = [];
 if (process.env.DPSTOKEN) {
-    if (process.env.DPSTOKEN.indexOf('&')){
+    console.log('flag')
+    if (process.env.DPSTOKEN.indexOf('\n') > -1) {
+        dptoken = process.env.DPSTOKEN.split('\n');
+    } else if (process.env.DPSTOKEN.indexOf('&') > -1) {
         dptoken = process.env.DPSTOKEN.split('&');
     } else {
         dptoken.push(process.env.DPSTOKEN);
     }
 }
+dptoken = dptoken.filter(x => x !== '')
 
 const token=[
 
