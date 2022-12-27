@@ -1,6 +1,6 @@
 /*
 膨胀红包助力
-变量ZNSPZCODE='',多个&分隔
+变量PZCODE='',多个&分隔
 12 12 12 12 * jd_zns_pzhelp.js
 updatetime:2022/12/26 
 */
