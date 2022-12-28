@@ -1,6 +1,6 @@
 
 /*
-3 1 * * * jd_gwxj.js 
+3 2 */3 * * jd_gwxj_v.js 
  */
 
 const $ = new Env('购物抵现金20豆');
