@@ -2,13 +2,14 @@
 头文字J 
 活动快捷入口： 11:/参与头文字J，集能量兑换京豆，【Jιιngヵ栋】 ￥Z9yfjBqzLWt￥
 只跑前10个CK
-55 9 * * * jd_mpdz_shop.js 
+58 9 * * * jd_mpdz_shop.js 
 */
 
 const $ = new Env("头文字J-兑换");
-const jdCookieNode = $.isNode() ? require('./miantj_jd_Scripts/jdCookie.js') : '';
-const notify = $.isNode() ? require('./miantj_jd_Scripts/sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 let count = 10;  //兑换人数
+
 let cookiesArr = [], cookie = '';
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => { cookiesArr.push(jdCookieNode[item]) })
