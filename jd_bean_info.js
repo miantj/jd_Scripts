@@ -1,6 +1,6 @@
 /*
 定时自定义
-2 10 14 10 * jd_bean_info.js
+2 20 14 12 * jd_bean_info.js
  */
 
 const $ = new Env('京豆详情统计');
@@ -40,7 +40,8 @@ if ($.isNode()) {
       $.message = '';
       $.balance = 0;
       $.expiredBalance = 0;
-      await TotalBean();
+	  $.UA=require('./USER_AGENTS').UARAM();
+      //await TotalBean();
       //console.log(`\n********开始【京东账号${$.index}】${$.nickName || $.UserName}******\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -58,7 +59,7 @@ if ($.isNode()) {
   allMessage += `\n今日全部账号收入：${allBean}个京豆 🐶\n`
   console.log(`${allMessage}`)
   if ($.isNode() && allMessage) {
-    //await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
+    await notify.sendNotify(`${$.name}`, `${allMessage}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   }
 })()
     .catch((e) => {
@@ -200,7 +201,7 @@ function getJingBeanBalanceDetail(page) {
       "url": `https://api.m.jd.com/client.action?functionId=getJingBeanBalanceDetail`,
       "body": `body=${escape(JSON.stringify({"pageSize": "20", "page": page.toString()}))}&appid=ld`,
       "headers": {
-        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        'User-Agent': $.UA,
         'Host': 'api.m.jd.com',
         'Content-Type': 'application/x-www-form-urlencoded',
         'Cookie': cookie,
