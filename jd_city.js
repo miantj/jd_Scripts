@@ -1,6 +1,7 @@
 /*
 城城分现金
 默认前6个ck开团，变量CITYNUM='10'
+12 12 12 12 * jd_city.js
  */
 
 const $ = new Env('城城分现金');
