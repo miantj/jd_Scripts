@@ -25,7 +25,7 @@ if ($.isNode()) {
   await $.wait(1000);
   for (let o = 0; o < cookiesArr.length; o++) {
       cookie = cookiesArr[o];
-      UA = require('./miantj_jd_Scripts/USER_AGENTS').UARAM();
+      UA = require('./USER_AGENTS').UARAM();
       if (cookie) {
           $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
           $.index = o + 1;
