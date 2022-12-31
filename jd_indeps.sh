@@ -29,6 +29,7 @@ pnpm install -g request
 pnpm install -g jsdom
 pnpm install -g moment
 pnpm install -g tough-cookie
+pnpm install -g https-proxy-agent
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ jieba
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ requests
 rm -rf /usr/local/pnpm-global/5/node_modules/.pnpm/canvas*
