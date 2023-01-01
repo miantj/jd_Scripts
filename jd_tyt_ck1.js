@@ -17,7 +17,7 @@ let tytpacketId = '';
 // if (process.env.tytpacketId) {
 //   tytpacketId = process.env.tytpacketId;
 // }
-let acid='3075b6eab065464dad1c4042d345ac97'
+let acid='ccd0447255384f06ae26690993be27f1'
 //兼容elecV2P
 tytpacketId = $.getdata('TYT_PACKETID') ? $.getdata('TYT_PACKETID') : '';
 if ($.isNode() && process.env.TYT_PACKETID) {
