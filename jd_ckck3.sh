@@ -418,7 +418,7 @@ WxPusher_notify_api() {
     local summary=$4
     local content=$5
     local frontcontent=$6
-    local login_url="<a href='http://49.234.151.136:8082'>点击这里重新登录</a>"
+    # local login_url="<a href='http://49.234.151.136:8082'>点击这里重新登录</a>"
     local summary=$(echo -e "$title\n\n$summary" | perl -pe '{s|(\")|'\\'\\1|g; s|\n|<br>|g}')
     [[ ${#summary} -ge 100 ]] && local summary="${summary:0:88} ……"
     local content=$(echo -e "$title\n\n$content" | perl -pe '{s|(\")|'\\'\\1|g; s|\n|<br>|g}')
