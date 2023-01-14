@@ -1,7 +1,7 @@
 
 /*
 击鼓迎春抽红包
-入口：https://h5.m.jd.com/pb/014202260/3DErZ1Fjkvdo3Gt9ehbGrFJT1pLb/index.html
+入口：https://h5.m.jd.com/pb/014182900/46nLG86c4z4z7Na48CBoC6oX3MVd/index.html
 18 18 * * * jd_welcomechun.js
  */
 
