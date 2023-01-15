@@ -1,6 +1,6 @@
 
 /*
-18 22 * * * jd_ppdt.js
+18 10 * * * jd_ppdt.js
  */
 
 const $ = new Env('超级品牌殿堂');
