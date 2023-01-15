@@ -1,11 +1,10 @@
 
 /*
-炸年兽组队奖励领取
-12 12 12 12 * jd_zns_award.js
-updatetime：2022/12/26
+炸年兽瓜分红包
+12 12 12 12 * jd_zns_red.js
  */
 
-const $ = new Env('炸年兽组队奖励领取');
+const $ = new Env('炸年兽瓜分红包');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;
@@ -40,11 +39,7 @@ if ($.isNode()) {
 				}
 				continue;
 			}
-			await run('promote_pk_getAmountForecast');
-			await $.wait(1000);
-			await run('promote_pk_receiveAward');
-			await $.wait(1000);
-			await run('promote_pk_divideScores');
+			await run('promote_mainDivideRedPacket');
 			await $.wait(2000)
 		}
 	}
@@ -79,14 +74,11 @@ function run(fn) {
 					console.log(`请求失败，请检查网路重试`)
 				} else {
 					if (safeGet(data)) {
+						//console.log(data);
 						data = JSON.parse(data);
 						if (data.code === 0) {
 							if (data.data && data.data.bizCode === 0) {
-								if (fn === 'promote_pk_receiveAward') {
-									console.log('领取组队红包：' + data.data.result.value);
-								} else if (fn === 'promote_pk_divideScores'){
-									console.log('领取组队金币：' + data.data.result.produceScore)
-								}
+								console.log(`瓜分成功：${data.data.result.value}`);
 							} else {
 								console.log(data.data.bizMsg);
 
