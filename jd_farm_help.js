@@ -729,6 +729,7 @@ async function receiveFriendInvite() {
             console.log('自己不能邀请自己成为好友噢\n')
             continue
         }
+		if (newShareCodes.findIndex(code)>=5) break;
         await inviteFriend(code);
         // console.log(`接收邀请成为好友结果:${JSON.stringify($.inviteFriendRes)}`)
         if ($.inviteFriendRes && $.inviteFriendRes.helpResult && $.inviteFriendRes.helpResult.code === '0') {
