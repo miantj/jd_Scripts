@@ -37,6 +37,7 @@ let jdFruitBeanCard = false;//农场使用水滴换豆卡(如果出现限时活�
 let randomCount = $.isNode() ? 20 : 5;
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html%22%20%7D`;
+$.reqnum = 1;
 !(async () => {
     await requireConfig();
     if (!cookiesArr[0]) {
@@ -51,6 +52,7 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
             $.isLogin = true;
             $.nickName = '';
             await TotalBean();
+
             console.log(`开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
             if (!$.isLogin) {
                 $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -1436,6 +1438,8 @@ function TotalBean() {
     });
 }
 function request(function_id, body = {}, timeout = 1000) {
+    if($.reqnum % 5 == 0 ) {console.log('\n等待1分钟......\n');timeout=60000};
+    $.reqnum++;        
     return new Promise(resolve => {
         setTimeout(() => {
             $.get(taskUrl(function_id, body), (err, resp, data) => {
@@ -1447,6 +1451,7 @@ function request(function_id, body = {}, timeout = 1000) {
                         $.logErr(err);
                     } else {
                         if (safeGet(data)) {
+
                             data = JSON.parse(data);
                         }
                     }
