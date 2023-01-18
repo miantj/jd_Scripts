@@ -37,7 +37,7 @@ let shareUuid=shareUuidArr[n]||'';
 	$.userId='10299171';
 	$.actId='1760007';
 	$.inviteNick=shareUuid;
-	for(let o=0; o < 10; o++){
+	for(let o=0; o < 5; o++){
 		cookie=cookiesArr[o];
 		if(cookie){
 			$.UserName=decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/)&&cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
