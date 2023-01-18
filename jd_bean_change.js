@@ -251,7 +251,7 @@ if(DisableIndex!=-1){
 }
 
 //京东秒杀
-let EnableJdMs=true;
+let EnableJdMs=false;
 DisableIndex = strDisableList.findIndex((item) => item === "京东秒杀");
 if(DisableIndex!=-1){
 	console.log("检测到设定关闭京东秒杀查询");
