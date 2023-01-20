@@ -57,8 +57,8 @@ if ($.isNode()) {
 async function sign() {
   await JDSecClothes() // 京东服饰签到
   await $.wait(1000);
-  await JDSecSecondHand(); // 拍拍二手签到
-  await $.wait(1000);
+//   await JDSecSecondHand(); // 拍拍二手签到
+//   await $.wait(1000);
 }
 
 // 拍拍二手签到
