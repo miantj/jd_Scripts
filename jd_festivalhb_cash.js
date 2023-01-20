@@ -1,9 +1,15 @@
 
 /*
-18 10,18 * * * jd_ppdt.js
- */
-
-const $ = new Env('超级品牌殿堂');
+1 1 1 1 * jd_festivalhb_cash.js
+默认提现1元，可多次提现
+其他金额id，自己改id
+c47654fb387a2b2d84ffc19f16b52690  20元
+6e53192e506af5d1fe5718867ee0ba1c  0.5元
+e55648727819d44b09a414aa99c10b48  0.38元
+559967f159d4fbd39d58bbd690875fc8  0.3元
+*/
+let id='a3595d5c3b107a912ba368b3ebc70ffa';//一元
+const $ = new Env('团圆红包提现');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;
@@ -30,25 +36,8 @@ if ($.isNode()) {
             $.isLogin = true;
             $.nickName = '';
             $.UA = require('./USER_AGENTS').UARAM();
-            //await TotalBean();
-            console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
-            if (!$.isLogin) {
-                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
-                if ($.isNode()) {
-                    await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-                }
-                continue
-            }
-            await xxx1();
-            await $.wait(500);
-            //await xxx2();
-			//await $.wait(500);
-            //await xxx4();			
-            //await $.wait(500);
-            await xxx3();     
-            await $.wait(2000);
-			
-
+            await cashout(id);
+            await $.wait(2000)
         }
     }
 })()
@@ -60,82 +49,30 @@ if ($.isNode()) {
     })
 
 
-async function xxx1() {
+
+async function cashout(id) {
     let opt = {
-        url: `https://api.m.jd.com/api?functionId=superBrandDoTask&appid=ProductZ4Brand&client=wh5&t=1674098907204&body=%7B%22source%22%3A%22hall_1111%22%2C%22activityId%22%3A1012465%2C%22encryptProjectId%22%3A%22JFMx7ke6h6KejTzCXQTfpNi8v1L%22%2C%22completionFlag%22%3A1%2C%22encryptAssignmentId%22%3A%22ZoP5xcMECBmUDGUxCzgEqauHHqw%22%2C%22assignmentType%22%3A0%2C%22actionType%22%3A0%7D`,
+        url: `https://api.m.jd.com/api?functionId=jxPrmtExchange_exchange&appid=cs_h5&t=1674029812147&channel=jxh5&cv=1.2.5&clientVersion=1.2.5&client=jxh5&uuid=7296248594457&cthr=1&loginType=2&h5st=20230118161652120%3Bzmngn956qqctu1q5%3Baf89e%3Btk02wf6811d3118nI9e6wfteqkATwcZtrxdhtYq8EuqdvTefye%2B3wdx4jV47dTyh5p9w0QJhy0jW3C2SNRNKIHgAei7z%3B4e8eae376746a1201de5fe83166665063aabf725e5a47eb18c9ad8f412179c59%3B400%3B1674029812120%3B234d597e4bbee03fed04c11bddbceda56c28b9f38e03d90d5e300b95750f47df4206442e06e95f59b5a61da07c5731f7a4eeffa21ea3449ebc3671be48a9d1f080ef01c140a6125f7df6c6c59a60547797665043f6ea4cf8b0b02ffb43e617a14efac1e782764db638a957155545faa6c99369f42a61c15a88bd3b4b3a94169fe9e24db55876ee7cee9079e3e4160abf4e909fbd5011ef7b3c57700661a42d88b63fe431f1eba3032cf7883bac784312&body=%7B%22bizCode%22%3A%22festivalhb%22%2C%22ruleId%22%3A%22${id}%22%2C%22sceneval%22%3A2%2C%22buid%22%3A325%2C%22appCode%22%3A%22ms2362fc9e%22%2C%22time%22%3A1674029812147%2C%22signStr%22%3A%2215a5143f4b6d60a74d59cda5b98bc0c5%22%7D`,
         headers: {
-            'Origin': 'https://prodev.m.jd.com',
+            'Host': 'api.m.jd.com',
+            'Origin': 'https://wqs.jd.com',
+            //'Content-Type': 'application/x-www-form-urlencoded',
             'User-Agent': $.UA,
             'Cookie': cookie
         }
     }
     return new Promise(async (resolve) => {
-        $.post(opt, async (err, resp, data) => {
+        $.get(opt, async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(` API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data)
-                    if (data.code == 0) {
-                        if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
-                                if (data.data?.result?.rewards[0].awardType === 3) {
-                                    console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
-                                } else {
-                                    console.log(JSON.stringify(data.data?.result?.rewards));
-                                }
-                            } else {
-                                console.log(JSON.stringify(data.data?.result));
-                            }
-                        } else {
-                            console.log(data.data.bizMsg);
-                        }
+                    if (data.ret == 0) {
+                        console.log('提现成功！');
                     } else {
-                        console.log(data.msg)
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data)
-            }
-        })
-    })
-}
-async function xxx2() {
-    let opt = {
-        url: `https://api.m.jd.com/api?functionId=superBrandDoTask&appid=ProductZ4Brand&client=wh5&t=1673920844810&body=%7B%22source%22%3A%22hall_1111%22%2C%22activityId%22%3A1012333%2C%22encryptProjectId%22%3A%222aZfauURe2aNSkpWhRgJYi2SgSJc%22%2C%22completionFlag%22%3A1%2C%22encryptAssignmentId%22%3A%223S59eXDjPwQAH4QbUkFjJg4KztmC%22%2C%22assignmentType%22%3A0%2C%22actionType%22%3A0%7D`,
-        headers: {
-            'Origin': 'https://prodev.m.jd.com',
-            'User-Agent': $.UA,
-            'Cookie': cookie
-        }
-    }
-    return new Promise(async (resolve) => {
-        $.post(opt, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(` API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data)
-                    if (data.code == 0) {
-                        if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
-                                if (data.data?.result?.rewards[0].awardType === 3) {
-                                    console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
-                                } else {
-                                    console.log(JSON.stringify(data.data?.result?.rewards));
-                                }
-                            } else {
-                                console.log(JSON.stringify(data.data?.result));
-                            }
-                        } else {
-                            console.log(data.data.bizMsg);
-                        }
-                    } else {
-                        console.log(data.msg)
+                        console.log(data.msg);
                     }
                 }
             } catch (e) {
@@ -147,93 +84,6 @@ async function xxx2() {
     })
 }
 
-async function xxx4() {
-    let opt = {
-        url: `https://api.m.jd.com/api?functionId=superBrandDoTask&appid=ProductZ4Brand&client=wh5&t=1673920844963&body=%7B%22source%22%3A%22hall_1111%22%2C%22activityId%22%3A1012333%2C%22encryptProjectId%22%3A%222aZfauURe2aNSkpWhRgJYi2SgSJc%22%2C%22completionFlag%22%3A1%2C%22encryptAssignmentId%22%3A%2231EmJRrCLjTuCVq9caCNfgKKhomF%22%2C%22assignmentType%22%3A0%2C%22actionType%22%3A0%7D`,
-        headers: {
-            'Origin': 'https://prodev.m.jd.com',
-            'User-Agent': $.UA,
-            'Cookie': cookie
-        }
-    }
-    return new Promise(async (resolve) => {
-        $.post(opt, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(` API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data)
-                    if (data.code == 0) {
-                        if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
-                                if (data.data?.result?.rewards[0].awardType === 3) {
-                                    console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
-                                } else {
-                                    console.log(JSON.stringify(data.data?.result?.rewards));
-                                }
-                            } else {
-                                console.log(JSON.stringify(data.data?.result));
-                            }
-                        } else {
-                            console.log(data.data.bizMsg);
-                        }
-                    } else {
-                        console.log(data.msg)
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data)
-            }
-        })
-    })
-}
-
-async function xxx3() {
-    let opt = {
-        url: `https://api.m.jd.com/api?functionId=superBrandDoTask&appid=ProductZ4Brand&client=wh5&t=1673920845164&body=%7B%22source%22%3A%22hall_1111%22%2C%22activityId%22%3A%221012353%22%2C%22encryptProjectId%22%3A%22mCqqcvGW1LKeAWqJtc6NwHGXK2u%22%2C%22completionFlag%22%3A1%2C%22encryptAssignmentId%22%3A%22H8VttZkAwM83dpETucHznqaNGAc%22%2C%22assignmentType%22%3A0%2C%22actionType%22%3A0%7D`,
-        headers: {
-            'Origin': 'https://prodev.m.jd.com',
-            'User-Agent': $.UA,
-            'Cookie': cookie
-        }
-    }
-    return new Promise(async (resolve) => {
-        $.post(opt, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(` API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data)
-                    if (data.code == 0) {
-                        if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
-                                if (data.data?.result?.rewards[0].awardType === 3) {
-                                    console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
-                                } else {
-                                    console.log(JSON.stringify(data.data?.result?.rewards));
-                                }
-                            } else {
-                                console.log(JSON.stringify(data.data?.result));
-                            }
-                        } else {
-                            console.log(data.data.bizMsg);
-                        }
-                    } else {
-                        console.log(data.msg)
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data)
-            }
-        })
-    })
-}
 
 function TotalBean() {
     return new Promise((resolve) => {
