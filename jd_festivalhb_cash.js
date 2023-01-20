@@ -1,6 +1,6 @@
 
 /*
-1 1 1 1  jd_festivalhb_cash.js
+1 1 1 1 * jd_festivalhb_cash.js
 默认提现1元，可多次提现
 其他金额id，自己改id
 c47654fb387a2b2d84ffc19f16b52690  20元
