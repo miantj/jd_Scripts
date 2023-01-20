@@ -9,20 +9,20 @@ e55648727819d44b09a414aa99c10b48  0.38元
 559967f159d4fbd39d58bbd690875fc8  0.3元
 */
 
-let id='a3595d5c3b107a912ba368b3ebc70ffa';一元
+let id='a3595d5c3b107a912ba368b3ebc70ffa';//一元
 const $ = new Env('团圆红包提现');
-const notify = $.isNode()  require('.sendNotify')  '';
-const jdCookieNode = $.isNode()  require('.jdCookie.js')  '';
+const notify = $.isNode() ? require('./sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;
-IOS等用户直接用NobyDa的jd cookie
+//IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '';
 if ($.isNode()) {
-    Object.keys(jdCookieNode).forEach((item) = {
+    Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
     })
-    if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () = { };
+    if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => { };
 } else {
-    cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonfomat($.getdata('CookiesJD')  []).map(item = item.cookie)].filter(item = !!item);
+    cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonfomat($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 !(async () = {
     if (!cookiesArr[0]) {
