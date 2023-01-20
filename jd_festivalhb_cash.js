@@ -36,6 +36,7 @@ if ($.isNode()) {
             $.isLogin = true;
             $.nickName = '';
             $.UA = require('./USER_AGENTS').UARAM();
+			console.log(`\n******开始【账号${$.index}】${$.nickName || $.UserName}*********\n`);
             await cashout(id);
             await $.wait(2000)
         }
