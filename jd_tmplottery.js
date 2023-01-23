@@ -1,6 +1,6 @@
 
 /*
-16 2,16 * * * jd_tmplottey.js 
+16 2,16 * * * jd_tmplottery.js 
  */
 
 const $ = new Env('连连消抽豆');
