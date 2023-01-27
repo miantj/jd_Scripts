@@ -85,7 +85,7 @@ async function xxx1() {
                     data = JSON.parse(data)
                     if (data.code == 0) {
                         if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
+                            if (data.data?.result?.rewards.length != 0) {
                                 if (data.data?.result?.rewards[0].awardType === 3) {
                                     console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
                                 } else {
@@ -131,7 +131,7 @@ async function xxx2() {
                     data = JSON.parse(data)
                     if (data.code == 0) {
                         if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
+                            if (data.data?.result?.rewards.length != 0) {
                                 if (data.data?.result?.rewards[0].awardType === 3) {
                                     console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
                                 } else {
@@ -175,7 +175,7 @@ async function xxx4() {
                     data = JSON.parse(data)
                     if (data.code == 0) {
                         if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
+                            if (data.data?.result?.rewards.length != 0) {
                                 if (data.data?.result?.rewards[0].awardType === 3) {
                                     console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
                                 } else {
@@ -219,7 +219,7 @@ async function xxx3() {
                     data = JSON.parse(data)
                     if (data.code == 0) {
                         if (data.data.bizCode == 0) {
-                            if (data.data?.result?.rewards) {
+                            if (data.data?.result?.rewards.length != 0) {
                                 if (data.data?.result?.rewards[0].awardType === 3) {
                                     console.log(` 恭喜获得 ${data.data?.result?.rewards[0].beanNum} 京豆`);
                                 } else {
