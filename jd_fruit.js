@@ -38,7 +38,7 @@ let jdFruitBeanCard = false;//农场使用水滴换豆卡(如果出现限时活�
 let randomCount = $.isNode() ? 20 : 5;
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html%22%20%7D`;
-const delay = process.env.FRUIT_DELAY||60000;
+const delay = process.env.FRUIT_DELAY || 60000;
 $.reqnum = 1;
 !(async () => {
     await requireConfig();
@@ -161,8 +161,8 @@ async function doDailyTask() {
             // message += `【被水滴砸中】获得${$.goalResult.addEnergy}g💧\n`
         }
     }
-    console.log(`签到结束,开始广告浏览任务`);
-    if (!$.farmTask.gotBrowseTaskAdInit.f) {
+    console.log(`签到结束,开始浏览任务`);
+    if (1) {
         let adverts = $.farmTask.gotBrowseTaskAdInit.userBrowseTaskAds
         let browseReward = 0
         let browseSuccess = 0
@@ -224,6 +224,13 @@ async function doDailyTask() {
     } else {
         console.log(`给${$.farmTask.waterFriendTaskInit.waterFriendMax}个好友浇水任务已完成\n`)
     }
+    if ($.farmTask['treasureBoxInit-getBean'] && !$.farmTask['treasureBoxInit-getBean'].f) {
+        console.log(`${$.farmTask['treasureBoxInit-getBean'].taskMainTitle}`);
+        await ddnc_getTreasureBoxAward();
+    } else {
+        console.log(`逛领京豆任务已完成\n`)
+    }
+
     // await Promise.all([
     //   clockInIn(),//打卡领水
     //   executeWaterRains(),//水滴雨
@@ -386,23 +393,23 @@ async function doTenWaterAgain() {
         } else {
             console.log(`您目前水滴:${totalEnergy}g,水滴换豆卡${$.myCardInfoRes.beanCard}张,暂不满足水滴换豆的条件,为您继续浇水`)
         }
-    }    
+    }
 
     if (process.env.FRUIT_FAST_CARD && totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
-      //使用快速浇水卡
-          for (let i=0;i<new Array(fastCard).fill('').length;i++){
-                  await userMyCardForFarm('fastCard');
-                  console.log(`使用快速浇水卡结果:${JSON.stringify($.userMyCardRes)}`);
-                  if ($.userMyCardRes.code === '0') {
-                       console.log(`已使用快速浇水卡浇水${$.userMyCardRes.waterEnergy}g`);
-                  }  
-                  if ($.userMyCardRes.treeFinished){
-                       break;
-                  }
-                  await $.wait(1000);
-                  await initForFarm();
-                  totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
-				  if (totalEnergy < 100) break;
+        //使用快速浇水卡
+        for (let i = 0; i < new Array(fastCard).fill('').length; i++) {
+            await userMyCardForFarm('fastCard');
+            console.log(`使用快速浇水卡结果:${JSON.stringify($.userMyCardRes)}`);
+            if ($.userMyCardRes.code === '0') {
+                console.log(`已使用快速浇水卡浇水${$.userMyCardRes.waterEnergy}g`);
+            }
+            if ($.userMyCardRes.treeFinished) {
+                break;
+            }
+            await $.wait(1000);
+            await initForFarm();
+            totalEnergy = $.farmInfo.farmUserPro.totalEnergy;
+            if (totalEnergy < 100) break;
         }
     }
     // 所有的浇水(10次浇水)任务，获取水滴任务完成后，如果剩余水滴大于等于60g,则继续浇水(保留部分水滴是用于完成第二天的浇水10次的任务)
@@ -1235,26 +1242,16 @@ async function initForFarm() {
     await $.wait(500);
     return new Promise(resolve => {
         const option = {
-            url: `${JD_API_HOST}?functionId=initForFarm`,
-            body: `body=${escape(JSON.stringify({ "version": 4 }))}&appid=wh5&clientVersion=9.1.0`,
+            url: `https://api.m.jd.com/client.action?functionId=initForFarm&body=%7B%22babelChannel%22%3A%22121%22%2C%22sid%22%3A%22%2C%22un_area%22%3A%22%22%2C%22version%22%3A19%2C%22channel%22%3A1%2C%22lat%22%3A%22%2C%22lng%22%3A%22%7D&appid=wh5&timestamp=${Date.now()}&client=android&clientVersion=11.4.4`,
             headers: {
-                "accept": "*/*",
-                "accept-encoding": "gzip, deflate, br",
-                "accept-language": "zh-CN,zh;q=0.9",
-                "cache-control": "no-cache",
                 "cookie": cookie,
-                "origin": "https://home.m.jd.com",
-                "pragma": "no-cache",
-                "referer": "https://home.m.jd.com/myJd/newhome.action",
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "same-site",
+                "origin": "https://carry.m.jd.com",
+                "referer": "https://carry.m.jd.com/",
                 "User-Agent": $.UA,
-                "Content-Type": "application/x-www-form-urlencoded"
             },
             timeout: 10000,
         };
-        $.post(option, (err, resp, data) => {
+        $.get(option, (err, resp, data) => {
             try {
                 if (err) {
                     console.log('\n东东农场: API查询请求失败 ‼️‼️');
@@ -1278,11 +1275,11 @@ async function initForFarm() {
 async function taskInitForFarm() {
     console.log('\n初始化任务列表')
     const functionId = arguments.callee.name.toString();
-    $.farmTask = await request(functionId, { "version": 14, "channel": 1, "babelChannel": "120" });
+    $.farmTask = await request(functionId, {"version":19,"channel":1,"babelChannel":"121","lat":"","lng":""});
 }
 //获取好友列表API
 async function friendListInitForFarm() {
-    $.friendList = await request('friendListInitForFarm', { "version": 4, "channel": 1 });
+    $.friendList = await request('friendListInitForFarm', {"version":19,"channel":1,"babelChannel":"121","lat":"","lng":""});
     // console.log('aa', aa);
 }
 // 领取邀请好友的奖励API
@@ -1410,6 +1407,33 @@ function requireConfig() {
         resolve()
     })
 }
+async function ddnc_getTreasureBoxAward() {
+    await request('ddnc_getTreasureBoxAward', { "type": 1, "babelChannel": "121", "line": "getBean", "version": 19, "channel": 1, "lat": "", "lng": "" });
+    await $.wait(500);
+    await beanlist();
+    await $.wait(2000);
+    let res = await request('ddnc_getTreasureBoxAward', { "type": 2, "babelChannel": "121", "line": "getBean", "version": 19, "channel": 1, "lat": "", "lng": "" });
+    if (res.code == 0) {
+        $.log(`完成，获得${res.waterGram}g💧\n`);
+    }
+}
+function beanlist() {
+    return new Promise((resolve) => {
+        const options = {
+            url: `https://api.m.jd.com/client.action?functionId=beanTaskList&body=%7B%22viewChannel%22%3A%22AppHome%22%2C%22beanVersion%22%3A1%2C%22lng%22%3A%22%22%2C%22lat%22%3A%22%22%7D&appid=ld`,
+            headers: {
+                "Cookie": cookie,
+                "referer": "https://h5.m.jd.com/",
+                "User-Agent": $.UA,
+            },
+            timeout: 10000
+        }
+        $.get(options, (err, resp, data) => {
+            resolve();
+        });
+    });
+}
+
 function TotalBean() {
     return new Promise((resolve) => {
         const options = {
@@ -1439,9 +1463,11 @@ function TotalBean() {
         });
     });
 }
+
+
 function request(function_id, body = {}, timeout = 1000) {
-    if(process.env.FRUIT_DELAY && $.reqnum % 5 == 0 ) {console.log(`\n等待${delay/1000}秒......\n`);timeout=delay};
-    $.reqnum++;        
+    if (process.env.FRUIT_DELAY && $.reqnum % 5 == 0) { console.log(`\n等待${delay / 1000}秒......\n`); timeout = delay };
+    $.reqnum++;
     return new Promise(resolve => {
         setTimeout(() => {
             $.get(taskUrl(function_id, body), (err, resp, data) => {
@@ -1494,6 +1520,7 @@ function taskUrl(function_id, body = {}) {
         timeout: 10000
     }
 }
+
 function jsonParse(str) {
     if (typeof str == "string") {
         try {
