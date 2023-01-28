@@ -48,7 +48,7 @@ if ($.isNode()) {
             await xxx1();
             if ($.ban) { console.log('风控，跳出'); continue };
             await $.wait(500);
-            if ($.done) continue;
+            if ($.donep) continue;
             await xxx2();
             await $.wait(500);
             await xxx4();
@@ -106,7 +106,7 @@ async function xxx1() {
                             $.ban = true;
                         } else if (data.data.bizMsg.indexOf('完成') > -1) {
                             console.log(data.data.bizMsg);
-                            $.done = true;
+                            $.donep = true;
                         } else {
                             console.log(data.data.bizMsg);
                         }
