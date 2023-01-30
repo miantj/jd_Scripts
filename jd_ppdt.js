@@ -429,7 +429,7 @@ async function xxx8() {
     })
 }
 
-fuasync function xxx9() {
+async function xxx9() {
     let opt = {
         url: `https://api.m.jd.com/?client=wh5&appid=ProductZ4Brand&functionId=superBrandDoTask&t=1674924479339&body=%7B%22source%22:%22hall_1111%22,%22activityId%22:1012484,%22completionFlag%22:1,%22encryptProjectId%22:%222AN5xMLxaTnvp8ienwesrM8d3ksF%22,%22encryptAssignmentId%22:%223V5ANrek6PQBNSkjtgwPBhyGNey7%22,%22assignmentType%22:0,%22actionType%22:0%7D`,
         headers: {
