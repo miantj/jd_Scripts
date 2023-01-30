@@ -471,7 +471,9 @@ async function xxx9() {
             }
         })
     })
-}nction TotalBean() {
+}
+
+function TotalBean() {
     return new Promise((resolve) => {
         const options = {
             url: 'https://plogin.m.jd.com/cgi-bin/ml/islogin',
