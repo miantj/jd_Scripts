@@ -25,7 +25,7 @@ All变量适用
 请求太频繁会被黑ip
 过10分钟再执行
 
-cron: 1,1,1,1 * jd_opencard86.js
+cron: 1 1 1 1 * jd_opencard86.js
 
 */
 let guaopencard_addSku = 'false' // 加购
