@@ -11,6 +11,7 @@
 const $ = new Env("头文字JJJ");
 const jdCookieNode=$.isNode()?require('./jdCookie.js'):'';
 const notify=$.isNode()?require('./sendNotify'):'';
+const moment = require("moment");
 const dy = require('./function/dylanx.js');
 let cookiesArr=[],cookie='';
 if ($.isNode()) {
@@ -23,7 +24,7 @@ allMessage='';
 message='';
 $.hotFlag=false;
 $.outFlag=false;
-let shareUuidArr=['94pKr7Altz4D61x7nN1KSV4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','l4+ohXzosO44BHS/TtlJnl4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','yhoB9u+OfyPZ8/raambw1WBUh0gimxufjFRMgNwy0cYiU+N6ZQy0LI2KZrs00RAY','qqN30Qb+w0y/KNTg69KZJV4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w=='];
+let shareUuidArr=['94pKr7Altz4D61x7nN1KSV4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','l4+ohXzosO44BHS/TtlJnl4tLNYA4seuA67MOIYQxEk3Vl9+AVo4NF+tgyeIc6A6kdK3rLBQpEQH9V4tdrrh0w==','yhoB9u+OfyPZ8/raambw1WBUh0gimxufjFRMgNwy0cYiU+N6ZQy0LI2KZrs00RAY','vc6aKkxbzyayO6pKGPWh/O2eeeAAy+Z4dS9uCTK4WDbpzoLrW7NWpeN+ekvNaPF4','E3FGJgkkzHsUpa9phYh4F87TwJCmNe8NFvhpI0XmJDULVU108+UxlHw7qoUuHA4F'];
 let n=0;
 n=Math.floor(Math.random()*shareUuidArr.length);
 let shareUuid=shareUuidArr[n]||'';
@@ -424,6 +425,8 @@ async function dealReturn(type,data){
 								$.totalPoint = res.data.missionCustomer.totalPoint || 0;
 								$.remainPoint = res.data.missionCustomer.remainPoint || 0;
 								$.remainChance = res.data.missionCustomer.remainChance|| 0;
+								let showClearDate = res.data.missionCustomer.showClearDate|| 0;
+								if(showClearDate)console.log(`下次能量清零时间为:${moment(showClearDate).format("YYYY-MM-DD HH:mm:ss")}`)
 							}
 						}else if(type=='missionInviteList'){
 							console.log(`本月已邀请助力(${res.data.total})`);
