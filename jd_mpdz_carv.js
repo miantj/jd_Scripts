@@ -1,6 +1,6 @@
 /*
 头文字J 
-活动快捷入口： 11:/参与头文字J，集能量兑换京豆，【Jιιngヵ栋】 ￥Z9yfjBqzLWt￥
+活动快捷入口： 19:/参与头文字J，集能量兑换京豆！P5loICDei3！⇥Jℹ️ng◼倲
 日常任务，助力，游戏
 第一个账号助力作者 其他依次助力CK1
 默认不做加购任务，如需要设置变量erport car_addsku='true'
@@ -28,7 +28,7 @@ let n=0;
 n=Math.floor(Math.random()*shareUuidArr.length);
 let shareUuid=shareUuidArr[n]||'';
 !(async()=>{
-	console.log('活动快捷入口： 11:/参与头文字J，集能量兑换京豆，【Jιιngヵ栋】 ￥Z9yfjBqzLWt￥');
+	console.log('活动快捷入口： 19:/参与头文字J，集能量兑换京豆！P5loICDei3！⇥Jℹ️ng◼倲');
     if (!cookiesArr[0]) {
       $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
         "open-url": "https://bean.m.jd.com/"
@@ -92,7 +92,8 @@ async function run(){
             switch($.missionType){
                 case 'bingCar':
                 case 'openCard':
-                case 'shareAct':    
+                case 'shareAct':   
+                case 'viewChannelCommodity':   				
                     break;
                 case 'viewCommodity':
                 case 'viewThemeConference':
