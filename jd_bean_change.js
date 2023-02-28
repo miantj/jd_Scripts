@@ -753,6 +753,8 @@ async function showMsg() {
 	            ReturnMessage += `(${$.PlustotalScore}分)`
 	    } else {
 	        ReturnMessage += `普通会员`;
+	        if ($.PlustotalScore)
+	            ReturnMessage += `(${$.PlustotalScore}分)`			
 	    }  
 	    ReturnMessage += `,京享值${$.JingXiang}\n`;	    
 	}else{
@@ -2829,8 +2831,8 @@ function GetDateTime(date) {
 }
 
 async function queryScores() {
-	if (!$.isPlusVip)
-		return
+	//if (!$.isPlusVip)
+	//	return
     let res = ''
     let url = {
       url: `https://rsp.jd.com/windControl/queryScore/v1?lt=m&an=plus.mobile&stamp=${Date.now()}`,
