@@ -264,14 +264,6 @@ if(DisableIndex!=-1){
 	EnableJdSpeed=false;	
 }
 
-//京喜牧场
-let EnableJxMC=true;
-DisableIndex= strDisableList.findIndex((item) => item === "京喜牧场");
-if(DisableIndex!=-1){
-	console.log("检测到设定关闭京喜牧场查询");
-	EnableJxMC=false;	
-}
-
 // 京东工厂
 let EnableJDGC=true;
 DisableIndex=strDisableList.findIndex((item) => item === "京东工厂");
@@ -495,7 +487,6 @@ if(DisableIndex!=-1){
 			        getJoyBaseInfo(), //汪汪乐园
 			        getJdZZ(), //京东赚赚		        
 			        cash(), //特价金币
-			        jdJxMCinfo(), //京喜牧场
 			        bean(), //京豆查询
 			        getDdFactoryInfo(), // 京东工厂
 			        jdCash(), //领现金
@@ -1229,19 +1220,6 @@ async function Monthbean() {
 
 }
 
-async function jdJxMCinfo(){
-    if (EnableJxMC) {
-        llgeterror = false;
-        await requestAlgo();
-        if (llgeterror) {
-            console.log(`等待10秒后再次尝试...`)
-            await $.wait(10 * 1000);
-            await requestAlgo();
-        }
-        await JxmcGetRequest();
-    }
-	return;
-}
 
 async function jdCash() {
 	if (!EnableCash)
@@ -2212,37 +2190,6 @@ function taskcashUrl(_0x7683x2, _0x7683x3 = {}) {
 	}
 })({})
 
-async function JxmcGetRequest() {
-	let url = ``;
-	let myRequest = ``;
-	url = `https://m.jingxi.com/jxmc/queryservice/GetHomePageInfo?channel=7&sceneid=1001&activeid=null&activekey=null&isgift=1&isquerypicksite=1&_stk=channel%2Csceneid&_ste=1`;
-	url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
-	myRequest = getGetRequest(`GetHomePageInfo`, url);
-
-	return new Promise(async resolve => {
-		$.get(myRequest, (err, resp, data) => {
-			try {
-				if (err) {
-					console.log(`${JSON.stringify(err)}`)
-					console.log(`JxmcGetRequest API请求失败，请检查网路重试`)
-					$.runFlag = false;
-					console.log(`请求失败`)
-				} else {
-					data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
-					if (data.ret === 0) {
-						$.JDEggcnt = data.data.eggcnt;
-					}
-				}
-			} catch (e) {
-				console.log(data);
-				$.logErr(e, resp)
-			}
-			finally {
-				resolve();
-			}
-		})
-	})
-}
 
 // 东东工厂信息查询
 async function getDdFactoryInfo() {
@@ -2628,68 +2575,6 @@ function decrypt(time, stk, type, url) {
 		}
 }
 
-async function requestAlgo() {
-	$.fingerprint = await generateFp();
-	$.appId = 10028;
-	const options = {
-		"url": `https://cactus.jd.com/request_algo?g_ty=ajax`,
-		"headers": {
-			'Authority': 'cactus.jd.com',
-			'Pragma': 'no-cache',
-			'Cache-Control': 'no-cache',
-			'Accept': 'application/json',
-			'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-			//'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
-			'Content-Type': 'application/json',
-			'Origin': 'https://st.jingxi.com',
-			'Sec-Fetch-Site': 'cross-site',
-			'Sec-Fetch-Mode': 'cors',
-			'Sec-Fetch-Dest': 'empty',
-			'Referer': 'https://st.jingxi.com/',
-			'Accept-Language': 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7'
-		},
-		'body': JSON.stringify({
-			"version": "1.0",
-			"fp": $.fingerprint,
-			"appId": $.appId.toString(),
-			"timestamp": Date.now(),
-			"platform": "web",
-			"expandParams": ""
-		})
-	}
-	new Promise(async resolve => {
-		$.post(options, (err, resp, data) => {
-			try {
-				if (err) {
-					console.log(`${JSON.stringify(err)}`)
-					console.log(`request_algo 签名参数API请求失败，请检查网路重试`)
-					llgeterror = true;
-				} else {
-					if (data) {
-						data = JSON.parse(data);
-						if (data['status'] === 200) {
-							$.Jxmctoken = data.data.result.tk;
-							let enCryptMethodJDString = data.data.result.algo;
-							if (enCryptMethodJDString)
-								$.enCryptMethodJD = new Function(`return ${enCryptMethodJDString}`)();
-						} else {
-							console.log('request_algo 签名参数API请求失败:')
-						}
-					} else {
-						llgeterror = true;
-						console.log(`京东服务器返回空数据`)
-					}
-				}
-			} catch (e) {
-				llgeterror = true;
-				$.logErr(e, resp)
-			}
-			finally {
-				resolve();
-			}
-		})
-	})
-}
 
 function generateFp() {
 	let e = "0123456789";
