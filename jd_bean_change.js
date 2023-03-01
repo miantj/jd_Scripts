@@ -369,7 +369,6 @@ if(DisableIndex!=-1){
 			$.JdwaterD = 0;
 			$.JDwaterEveryDayT = 0;
 			$.JDtotalcash = 0;
-			$.JDEggcnt = 0;
 			$.Jxmctoken = '';
 			$.DdFactoryReceive = '';
 			$.jxFactoryInfo = '';
@@ -840,9 +839,6 @@ async function showMsg() {
 	}
 
 
-	if ($.JDEggcnt) {		
-		ReturnMessage += `【京喜牧场】${$.JDEggcnt}枚鸡蛋\n`;
-	}
 	if ($.JDtotalcash) {
 		ReturnMessage += `【特价金币】${$.JDtotalcash}币(≈${($.JDtotalcash / 10000).toFixed(2)}元)\n`;
 	}
