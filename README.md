@@ -1,7 +1,7 @@
 
-## DY
+## 6DY
 
->加密js审查，无重复，默认无加购，内部互助(可选模式);
+>加密审查，无重复，默认不开卡加购，内部互助(可调模式);
 
  
 >欢迎大家issue、pr，会一一回复！
@@ -23,7 +23,7 @@ curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro
 
 【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/ （差不在多19行）" 修改为GithubProxyUrl=""，否则拉取失败，以上版本无需配置。
 
-2.13版本以上拉库方式变了，到订阅管理添加订阅，请看配置[截图](https://github.com/6dylan6/jdpro/issues/251)
+2.13版本以上拉库方式变了，到订阅管理新建，看配置[截图](https://github.com/6dylan6/jdpro/issues/251)
 
 国内机用下面指令（带代理）：
 
@@ -46,9 +46,9 @@ Gitee版不能正常拉取，已停止维护！（20220711）
 任务定时建议 50 7-23/2 * * *  
 
 
-线报监控类脚本已移除，需要的到 https://github.com/6dylan6/jdm.git
+线报监控类脚本，需要的到 https://github.com/6dylan6/jdm.git
 
-自动评价 需要的到 https://github.com/6dylan6/auto_comment.git
+自动带图评价（PC版CK）需要的到 https://github.com/6dylan6/auto_comment.git
 
 
 ## 使用流程
@@ -109,19 +109,10 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 7、如果通知文件发现和库里的不一致，那是被青龙自带的覆盖了，手动拷贝一份到deps目录下。
 
-8、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己的号数量调整。
+8、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己ck数量调整。
 </code></pre>
 </details>
 
-## 加密脚本说明
-
-<details>
-<summary>加密脚本，不放心可禁用</summary>
-<pre><code>
-加密的会在任务后添加加密标识
-开卡系列都加密 
-</code></pre>
-</details>
 
 ## 互助模式使用说明
 
@@ -138,13 +129,12 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 其他用法具体参考[文档](https://docs.qq.com/doc/DTXh6QUVjRXJ1TFdN)
 
 
-## 部分脚本环境变量
+## 部分环境变量(具体看脚本注释)
 
 [Wskey转换环境变量](https://github.com/Zy143L/wskey)
 
 |             Name             |             归属             |  属性  | 说明                                                         |
 | :--------------------------: | :--------------------------: | :----: | ------------------------------------------------------------ |
-|     `PET_NOTIFY_CONTROL`     |     东东萌宠<br>推送开关     | 非必须 | 控制京东萌宠是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `FRUIT_NOTIFY_CONTROL`    |     东东农场<br>推送开关     | 非必须 | 控制京东农场是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `NOTIFY_AUTOCHECKCK`    |       自动禁用失效CK开关  | 非必须 | 有CK失效自动禁用并通知，true为自动禁用，false不自动禁用，默认false |
 |       `JOY_FEED_COUNT`       |        宠汪汪喂食数量        | 非必须 | 控制`jd_joy_feedPets.js`脚本喂食数量,可以填的数字10,20,40,80,其他数字不可. |
