@@ -1216,7 +1216,6 @@ async function Monthbean() {
 
 }
 
-
 async function jdCash() {
 	if (!EnableCash)
 		return;
@@ -1710,37 +1709,39 @@ function redPacket() {
 						t = parseInt((t - 1) / 1000);
 						//console.log(JSON.stringify(data.useRedInfo.redList))
 						for (let vo of data.useRedInfo.redList || []) {
-							if (vo.limitStr && vo.limitStr.includes("京喜")) {
-								$.jxRed += parseFloat(vo.balance)
-								if (vo['endTime'] === t) {
-									$.jxRedExpire += parseFloat(vo.balance)
-								}
-							} else if (vo.limitStr.includes("购物小程序")) {
-								$.jdwxRed += parseFloat(vo.balance)
-								if (vo['endTime'] === t) {
-									$.jdwxRedExpire += parseFloat(vo.balance)
-								}
-							} else if (vo.limitStr.includes("京东商城")) {
-								$.jdRed += parseFloat(vo.balance)
-								if (vo['endTime'] === t) {
-									$.jdRedExpire += parseFloat(vo.balance)
-								}
-							} else if (vo.limitStr.includes("极速版") || vo.limitStr.includes("京东特价")) {
-								$.jsRed += parseFloat(vo.balance)
-								if (vo['endTime'] === t) {
-									$.jsRedExpire += parseFloat(vo.balance)
-								}
-							} else if (vo.limitStr && vo.limitStr.includes("京东健康")) {
-								$.jdhRed += parseFloat(vo.balance)
-								if (vo['endTime'] === t) {
-									$.jdhRedExpire += parseFloat(vo.balance)
-								}
-							} else {
-								$.jdGeneralRed += parseFloat(vo.balance)
-								if (vo['endTime'] === t) {
-									$.jdGeneralRedExpire += parseFloat(vo.balance)
-								}
-							}
+						    if (vo.limitStr) {
+						        if (vo.limitStr.includes("京喜") && !vo.limitStr.includes("特价")) {
+						            $.jxRed += parseFloat(vo.balance)
+						            if (vo['endTime'] === t) {
+						                $.jxRedExpire += parseFloat(vo.balance)
+						            }
+						        } else if (vo.limitStr.includes("购物小程序")) {
+						            $.jdwxRed += parseFloat(vo.balance)
+						            if (vo['endTime'] === t) {
+						                $.jdwxRedExpire += parseFloat(vo.balance)
+						            }
+						        } else if (vo.limitStr.includes("京东商城")) {
+						            $.jdRed += parseFloat(vo.balance)
+						            if (vo['endTime'] === t) {
+						                $.jdRedExpire += parseFloat(vo.balance)
+						            }
+						        } else if (vo.limitStr.includes("极速") || vo.limitStr.includes("京东特价") || vo.limitStr.includes("京喜特价")) {
+						            $.jsRed += parseFloat(vo.balance)
+						            if (vo['endTime'] === t) {
+						                $.jsRedExpire += parseFloat(vo.balance)
+						            }
+						        } else if (vo.limitStr && vo.limitStr.includes("京东健康")) {
+						            $.jdhRed += parseFloat(vo.balance)
+						            if (vo['endTime'] === t) {
+						                $.jdhRedExpire += parseFloat(vo.balance)
+						            }
+						        } else {
+						            $.jdGeneralRed += parseFloat(vo.balance)
+						            if (vo['endTime'] === t) {
+						                $.jdGeneralRedExpire += parseFloat(vo.balance)
+						            }
+						        }
+						    }
 						}
 				
 						$.jxRed = $.jxRed.toFixed(2);
@@ -1755,7 +1756,7 @@ function redPacket() {
 						if ($.jxRed > 0)
 							$.message += `【京喜红包】${$.jxRed}(将过期${$.jxRedExpire.toFixed(2)})元 \n`;
 						if ($.jsRed > 0)
-							$.message += `【特价红包】${$.jsRed}(将过期${$.jsRedExpire.toFixed(2)})元 \n`;
+							$.message += `【京喜特价】${$.jsRed}(将过期${$.jsRedExpire.toFixed(2)})元(原极速版) \n`;
 						if ($.jdRed > 0)
 							$.message += `【京东红包】${$.jdRed}(将过期${$.jdRedExpire.toFixed(2)})元 \n`;
 						if ($.jdhRed > 0)
@@ -2186,7 +2187,6 @@ function taskcashUrl(_0x7683x2, _0x7683x3 = {}) {
 	}
 })({})
 
-
 // 东东工厂信息查询
 async function getDdFactoryInfo() {
 	if (!EnableJDGC)
@@ -2495,29 +2495,6 @@ function randomString(e) {
 	return n
 }
 
-function getGetRequest(type, url) {
-	UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
-
-		const method = `GET`;
-	let headers = {
-		'Origin': `https://st.jingxi.com`,
-		'Cookie': cookie,
-		'Connection': `keep-alive`,
-		'Accept': `application/json`,
-		'Referer': `https://st.jingxi.com/pingou/jxmc/index.html`,
-		'Host': `m.jingxi.com`,
-		'User-Agent': UA,
-		'Accept-Encoding': `gzip, deflate, br`,
-		'Accept-Language': `zh-cn`
-	};
-	return {
-		url: url,
-		method: method,
-		headers: headers,
-		timeout: 10000
-	};
-}
-
 Date.prototype.Format = function (fmt) {
 	var e,
 	n = this,
@@ -2570,7 +2547,6 @@ function decrypt(time, stk, type, url) {
 			return '20210318144213808;8277529360925161;10001;tk01w952a1b73a8nU0luMGtBanZTHCgj0KFVwDa4n5pJ95T/5bxO/m54p4MtgVEwKNev1u/BUjrpWAUMZPW0Kz2RWP8v;86054c036fe3bf0991bd9a9da1a8d44dd130c6508602215e50bb1e385326779d'
 		}
 }
-
 
 function generateFp() {
 	let e = "0123456789";
