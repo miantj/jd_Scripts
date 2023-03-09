@@ -1709,7 +1709,7 @@ function redPacket() {
 						t = parseInt((t - 1) / 1000);
 						//console.log(JSON.stringify(data.useRedInfo.redList))
 						for (let vo of data.useRedInfo.redList || []) {
-						    if (vo.limitStr) {
+						    if (vo.limitStr||1) {
 						        if (vo.limitStr.includes("京喜") && !vo.limitStr.includes("特价")) {
 						            $.jxRed += parseFloat(vo.balance)
 						            if (vo['endTime'] === t) {
