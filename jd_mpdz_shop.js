@@ -2,7 +2,7 @@
 头文字J 
 活动快捷入口： 11:/参与头文字J，集能量兑换京豆，【Jιιngヵ栋】 ￥Z9yfjBqzLWt￥
 只跑前10个CK
-58 9 * * * jd_mpdz_shop.js 
+0 10 * * * jd_mpdz_shop.js 
 */
 
 const $ = new Env("头文字J-兑换");
