@@ -224,7 +224,7 @@ def_sub(){
 ## 生成pt_pin清单
 gen_pt_pin_array() {
   local envs=$(eval echo "\$JD_COOKIE")
-  local array=($(echo $envs | sed 's/&/ /g'))
+  local array=($(echo ${envs// /} | sed 's/&/ /g'))
   local tmp1 tmp2 i pt_pin_temp pin_arr_tmp j keywords
   keywords="pt_pin="
   j=0
@@ -250,7 +250,7 @@ export_codes_sub() {
     local BreakHelpNumVerify=$(echo $BreakHelpNum | sed 's/ //g' | perl -pe "{s|-||; s|~||; s|_||}" | sed 's/^\d\+$//g')
     local i j k m n t pt_pin_in_log code tmp_grep tmp_my_code tmp_for_other user_num tmp_helptype HelpTemp random_num_list
     local envs=$(eval echo "\$JD_COOKIE")
-    local array=($(echo $envs | sed 's/&/ /g'))
+    local array=($(echo ${envs// /} | sed 's/&/ /g'))
     local user_sum=${#array[*]}
     if cd $dir_log &>/dev/null && [[ $(ls ./*$task_name*/*.log 2> /dev/null | wc -l) -gt 0 ]]; then
         ## 寻找所有互助码以及对应的pt_pin
@@ -500,7 +500,7 @@ export_all_codes() {
 #更新配置文件中互助码的函数
 help_codes(){
 local envs=$(eval echo "\$JD_COOKIE")
-local array=($(echo $envs | sed 's/&/ /g'))
+local array=($(echo ${envs// /} | sed 's/&/ /g'))
 local user_sum=${#array[*]}
 local config_name=$1
 local chinese_name=$2
@@ -546,7 +546,7 @@ sed -i "1c ## 上次导入时间：$(date +%Y年%m月%d日\ %X)" $ShareCode_log
 #更新配置文件中互助规则的函数
 help_rules(){
 local envs=$(eval echo "\$JD_COOKIE")
-local array=($(echo $envs | sed 's/&/ /g'))
+local array=($(echo ${envs// /} | sed 's/&/ /g'))
 local user_sum=${#array[*]}
 local config_name=$1
 local chinese_name=$2
@@ -595,7 +595,7 @@ export_codes_sub_only(){
     local chinese_name=$3
     local i j k m n pt_pin_in_log code tmp_grep tmp_my_code tmp_for_other user_num random_num_list
     local envs=$(eval echo "\$JD_COOKIE")
-    local array=($(echo $envs | sed 's/&/ /g'))
+    local array=($(echo ${envs// /} | sed 's/&/ /g'))
     local user_sum=${#array[*]}
     if cd $dir_log &>/dev/null && [[ $(ls ./*$task_name*/*.log 2> /dev/null | wc -l) -gt 0 ]]; then
         ## 寻找所有互助码以及对应的pt_pin
@@ -688,7 +688,7 @@ check_jd_cookie(){
 dump_user_info(){
 echo -e "\n## 账号用户名及 COOKIES 整理如下："
 local envs=$(eval echo "\$JD_COOKIE")
-local array=($(echo $envs | sed 's/&/ /g'))
+local array=($(echo ${envs// /} | sed 's/&/ /g'))
     for ((i = 0; i < ${#pt_pin[*]}; i++)); do
         remarks[i]="$(def_json JD_COOKIE remarks "pin=${pin[i]};" | head -1)"
         if [[ ${remarks[i]} == *@@* ]]; then

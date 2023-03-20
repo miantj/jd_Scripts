@@ -21,7 +21,7 @@ const querystring = require('querystring');
 const exec = require('child_process').exec;
 const $ = new Env();
 const timeout = 15000; //超时时间(单位毫秒)
-console.log("加载sendNotify，当前版本: 20230309");
+console.log("加载sendNotify，当前版本: 20230314");
 // =======================================go-cqhttp通知设置区域===========================================
 //gobot_url 填写请求地址http://127.0.0.1/send_private_msg
 //gobot_token 填写在go-cqhttp文件设置的访问密钥
@@ -940,13 +940,12 @@ function getQLinfo(strCK, intcreated, strTimestamp, strRemark) {
 		//过期时间
         var UseDay = Math.ceil((DateToday.getTime() - DateCreated.getTime()) / 86400000);
         var LogoutDay = 30 - Math.ceil((DateToday.getTime() - DateTimestamp.getTime()) / 86400000);
-        if (LogoutDay < 1) {
-            strReturn = "\n【登录信息】已服务" + UseDay + "天"
-            // strReturn = "\n【登录信息】已服务" + UseDay + "天(账号即将到期，请重登续期)"
-        } else {
-            strReturn = "\n【登录信息】已服务" + UseDay + "天"
-            // strReturn = "\n【登录信息】已服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
-        }
+		let Loginday = Math.ceil((DateToday.getTime() - DateTimestamp.getTime()) / 86400000)
+        //if (LogoutDay < 1) {
+            strReturn = "\n【登录信息】已服务" + UseDay + "天(已登录" + Loginday + "天)"
+        //} else {
+        //    strReturn = "\n【登录信息】已服务" + UseDay + "天(有效期约剩" + LogoutDay + "天)"
+        //}
 
     }
     return strReturn
@@ -1273,41 +1272,45 @@ function serverNotify(text, desp, time = 2100) {
 }
 
 function BarkNotify(text, desp, params = {}) {
-    return new Promise((resolve) => {
-        if (BARK_PUSH) {
-            const options = {
-                url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(
-          desp
-        )}?sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(params)}`,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                timeout,
-            };
-            $.get(options, (err, resp, data) => {
-                try {
-                    if (err) {
-                        console.log('Bark APP发送通知调用API失败！！\n');
-                        console.log(err);
-                    } else {
-                        data = JSON.parse(data);
-                        if (data.code === 200) {
-                            console.log('Bark APP发送通知消息成功🎉\n');
-                        } else {
-                            console.log(`${data.message}\n`);
-                        }
-                    }
-                } catch (e) {
-                    $.logErr(e, resp);
-                }
-                finally {
-                    resolve();
-                }
-            });
-        } else {
-            resolve();
+  return new Promise((resolve) => {
+    if (BARK_PUSH) {
+      const options = {
+        url: `${BARK_PUSH}`,
+        json: {
+            title: text,
+            body: desp,
+            group: `${BARK_GROUP}`,
+            icon: `${BARK_ICON}`,
+            sound: `${BARK_SOUND}`,
+        },
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        timeout,
+      };
+      $.post(options, (err, resp, data) => {
+        try {
+          if (err) {
+            console.log('Bark APP发送通知调用API失败！！\n');
+            console.log(err);
+          } else {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              console.log('Bark APP发送通知消息成功🎉\n');
+            } else {
+              console.log(`${data.message}\n`);
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve();
         }
-    });
+      });
+    } else {
+      resolve();
+    }
+  });
 }
 
 function tgBotNotify(text, desp) {
