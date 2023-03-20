@@ -7,13 +7,15 @@
 >欢迎大家issue、pr，会一一回复！
 
 
-### 上车注意安全，不用不明js，app，exe！
+### 注意ck安全，谨慎执行不明来历的js、app、exe、插件等，过期ck都能复活（还有其他不为人知的手段。。。），别想着过期就没事了，后果不限于花光你账号豆子红包优惠券下单，提现等。。！
+
+### 云服务器ip段已经被限制，很多活动跑不动的，上代理或用本地网络吧。
 
 ### 防走失[TG频道](https://t.me/dylan_jdpro)
 
 ### 一键部署（2.11.3版本青龙，默认国内机拉库命令，建好后根据自己情况调整）
 
-使用root用户运行下面一串命令，支持Centos/Ubuntu系统
+使用root用户运行下面一串命令，仅在Centos/Ubuntu系统测试，其他系统自测
 
 ```
 curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro/main/docker/ql1key.sh -o install.sh && bash install.sh
@@ -43,19 +45,19 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 Gitee版不能正常拉取，已停止维护！（20220711）
 
 
-任务定时建议 50 7-23/2 * * *  
+任务定时建议 45 7-23/2 * * *  
 
 
 线报监控类脚本，需要的到 https://github.com/6dylan6/jdm.git
 
-自动带图评价（PC版CK）需要的到 https://github.com/6dylan6/auto_comment.git
+带图自动评价（PC版CK）需要的到 https://github.com/6dylan6/auto_comment.git
 
 
 ## 使用流程
 
 1、青龙部署。
 
-2、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署忽略此处）
+2、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署可忽略此处）
 
 RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存
 
