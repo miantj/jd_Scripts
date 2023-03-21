@@ -2073,9 +2073,9 @@ function GetnickName2() {
 }
 const got = require('got');
 require('dotenv').config();
-let Fileexists = fs.existsSync('/ql/data/config/auth.json');
+let exists = fs.existsSync('/ql/data/config/auth.json');
 let authFile="";
-if (Fileexists) 
+if (exists) 
 	authFile="/ql/data/config/auth.json"
 else
 	authFile="/ql/config/auth.json"
