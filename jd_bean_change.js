@@ -122,9 +122,8 @@ let strGuoqi="";
 let RemainMessage = '\n';
 RemainMessage += "⭕提醒:⭕" + '\n';
 RemainMessage += '【特价金币】京东特价版->我的->金币(可兑换无门槛红包)\n';
-RemainMessage += '【京东赚赚】微信->京东赚赚小程序->底部赚好礼->提现无门槛红包(京东使用)\n';
+RemainMessage += '【京东赚赚】微信->京东赚赚小程序->底部赚好礼->兑换红包(京东使用)4月中旬下线，尽快兑换\n';
 RemainMessage += '【领现金】京东->搜领现金(可微信提现或兑换红包)\n';
-RemainMessage += '【点点券】京东首页->领券->领点点券->兑无门槛红包\n';
 RemainMessage += '【东东农场】京东->我的->东东农场,完成可兑换无门槛红包,可用于任意商品\n';
 RemainMessage += '【京东金融】京东金融app->我的->养猪猪,完成是白条支付券,支付方式选白条支付时立减\n';
 RemainMessage += '【其他】不同类别红包不能叠加使用，自测';
@@ -325,13 +324,6 @@ if(DisableIndex!=-1){
 	EnableCheckBean=false
 }
 
-//点点券
-let EnableCoupon=true;
-DisableIndex=strDisableList.findIndex((item) => item === "点点券");
-if(DisableIndex!=-1){
-	console.log("检测到设定关闭点点券查询");
-	EnableCoupon=false
-}
 
 
 !(async() => {
@@ -400,7 +392,6 @@ if(DisableIndex!=-1){
 			$.beanCache=0;			
 			TempBaipiao = "";
 			strGuoqi="";
-			$.CoupontotalAmount=0;
 			
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
 		    $.UA = require('./USER_AGENTS').UARAM();
@@ -492,7 +483,6 @@ if(DisableIndex!=-1){
 			        GetJxBeaninfo(), //喜豆查询
 			        GetPigPetInfo(), //金融养猪
 			        GetJoyRuninginfo(), //汪汪赛跑
-					getCouponConfig(), //点点券
 			        queryScores()
 			    ])
 				
@@ -971,7 +961,7 @@ async function showMsg() {
 
 	}	
 	
-	if ($.joylevel || $.jdCash || $.CoupontotalAmount) {
+	if ($.joylevel || $.jdCash ) {
 		ReturnMessage += `【其他信息】`;
 		if ($.joylevel) {
 			ReturnMessage += `汪汪:${$.joylevel}级`;			
@@ -983,12 +973,6 @@ async function showMsg() {
 			ReturnMessage += `领现金:${$.jdCash}元`;
 		}
 		
-		if ($.CoupontotalAmount) {	
-			if ($.joylevel || $.jdCash) {
-				ReturnMessage += ",";
-			}
-			ReturnMessage += `点点券:${$.CoupontotalAmount}元`;
-		}
 		ReturnMessage += `\n`;
 
 	}
@@ -1262,43 +1246,6 @@ function apptaskUrl(functionId = "", body = "") {
     },
     timeout: 10000
   }
-}
-
-async function getCouponConfig() {
-    if (!EnableCoupon)
-        return;
-    let functionId = `getCouponConfig`;
-    let body = {
-        "childActivityUrl": "openapp.jdmobile://virtual?params={\"category\":\"jump\",\"des\":\"couponCenter\"}",
-        "incentiveShowTimes": 0,
-        "monitorRefer": "",
-        "monitorSource": "ccresource_android_index_config",
-        "pageClickKey": "Coupons_GetCenter",
-        "rewardShowTimes": 0,
-        "sourceFrom": "1"
-    }
-    let sign = await getSign(functionId, body);
-    return new Promise(async resolve => {
-        $.post(CoupontaskUrl(functionId, sign), async(err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`);
-                    console.log(`${$.name} getCouponConfig API请求失败，请检查网路重试`);
-                } else {
-                    if (data) {
-                        data = JSON.parse(data);
-                        if (data?.result?.couponConfig?.signNecklaceDomain?.roundData?.totalScore)
-                            $.CoupontotalAmount = data.result.couponConfig.signNecklaceDomain.roundData.totalScore;						
-							$.CoupontotalAmount=($.CoupontotalAmount/1000).toFixed(2)
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve();
-            }
-        })
-    })
 }
 
 function getSign(functionId, body) {	
