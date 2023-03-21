@@ -14,16 +14,20 @@ fi
 dir_root=/ql
 dir_config=$dir_root/config
 dir_scripts=$dir_root/scripts
+dir_repo=$dir_root/repo
+dir_deps=$dir_root/deps
 dir_log=$dir_root/log
 dir_code=$dir_log/6dylan6_jdpro_jd_sharecode
 
 [[ $QL_DIR == /ql ]] && dir_root=$QL_DIR
 [[ -d $dir_root/data ]] && dir_data=$dir_root/data
-[[ -d $dir_root/config ]] && dir_config=$dir_data/config
+[[ -d $dir_data/config ]] && dir_config=$dir_data/config
 [[ -d $dir_data/scripts ]] && dir_scripts=$dir_data/scripts
+[[ -d $dir_data/repo ]] && dir_repo=$dir_data/repo
+[[ -d $dir_data/deps ]] && dir_deps=$dir_data/deps
 [[ -d $dir_data/log ]] && dir_log=$dir_data/log
 [[ -d `echo /ql/data/log/6dylan6_jdpro_jd_sharecode*|awk '{print $1}'` ]]  && dir_code=`ls -dt /ql/data/log/6dylan6_jdpro_jd_sharecode*|awk '{print $1}'|head -1`
-
+cp $dir_repo/6dylan6_jdpro/sendNotify.js $dir_deps/ > /dev/null 2>&1
 ## 预设的仓库及默认调用仓库设置
 ## 将"repo=$repo1"改成repo=$repo2"或其他，以默认调用其他仓库脚本日志
 ## 也可自行搜索本脚本内的"name_js=("和"name_js_only",将"repo"改成"repo2"或其他，用以自由组合调用仓库的脚本日志
