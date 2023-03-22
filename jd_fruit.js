@@ -1,6 +1,5 @@
 /*
-东东水果:脚本更新地址 jd_fruit.js
-更新时间：2022-11-8 
+更新时间：2023-3-22 
 活动入口：京东APP我的--东东农场
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -8,14 +7,14 @@
 ==========================Quantumultx=========================
 [task_local]
 #jd免费水果
-15 6-18/6 * * * jd_fruit.js, tag=东东农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png, enabled=true
+10 6-18/6 * * * jd_fruit.js, tag=东东农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png, enabled=true
 =========================Loon=============================
 [Script]
-cron "15 6-18/6 * * *" script-path=jd_fruit.js,tag=东东农场
+cron "10 6-18/6 * * *" script-path=jd_fruit.js,tag=东东农场
 =========================Surge============================
-东东农场 = type=cron,cronexp="15 6-18/6 * * *",wake-system=1,timeout=3600,script-path=jd_fruit.js
+东东农场 = type=cron,cronexp="10 6-18/6 * * *",wake-system=1,timeout=3600,script-path=jd_fruit.js
 =========================小火箭===========================
-东东农场 = type=cron,script-path=jd_fruit.js, cronexpr="15 6-18/6 * * *", timeout=3600, enable=true
+东东农场 = type=cron,script-path=jd_fruit.js, cronexpr="10 6-18/6 * * *", timeout=3600, enable=true
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
 变量：
 export DO_TEN_WATER_AGAIN='true' 攒水滴只交10次水，默认不攒水滴
@@ -31,7 +30,7 @@ let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
     ''
 ]
 
-let message = '', subTitle = '', option = {}, isFruitFinished = false;
+let message = '', subTitle = '', option = {}, isFruitFinished = false, ct = 0;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
 let jdFruitBeanCard = false;//农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),true表示换豆(不浇水),false表示不换豆(继续浇水),脚本默认是浇水
@@ -39,6 +38,7 @@ let randomCount = $.isNode() ? 20 : 5;
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html%22%20%7D`;
 const delay = process.env.FRUIT_DELAY || 60000;
+const ua = require('./USER_AGENTS');
 $.reqnum = 1;
 !(async () => {
     await requireConfig();
@@ -70,7 +70,7 @@ $.reqnum = 1;
             message = '';
             subTitle = '';
             option = {};
-            $.UA = require('./USER_AGENTS').UARAM();
+            $.UA = ua.UARAM ? ua.UARAM() : ua.USER_AGENT;      
             //await shareCodesFormat();
             await jdFruit();
         }
@@ -126,6 +126,7 @@ async function jdFruit() {
             } else {
                 console.log('不执行再次浇水，攒水滴');
             }
+            await $.wait(3000);
             await predictionFruit();//预测水果成熟时间
         } else {
             console.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify($.farmInfo)}`);
@@ -249,7 +250,7 @@ async function doDailyTask() {
 }
 async function predictionFruit() {
     console.log('开始预测水果成熟时间\n');
-    await initForFarm();
+    await initForFarm();    
     await taskInitForFarm();
     let waterEveryDayT = $.farmTask.firstWaterInit.totalWaterTimes;//今天到到目前为止，浇了多少次水
     message += `【今日共浇水】${waterEveryDayT}次\n`;
@@ -1243,6 +1244,7 @@ async function signForFarm() {
  */
 async function initForFarm() {
     await $.wait(500);
+    if (ct > '1') return;
     return new Promise(resolve => {
         const option = {
             url: `https://api.m.jd.com/client.action?functionId=initForFarm&body=%7B%22babelChannel%22%3A%22121%22%2C%22sid%22%3A%22%2C%22un_area%22%3A%22%22%2C%22version%22%3A19%2C%22channel%22%3A1%2C%22lat%22%3A%22%2C%22lng%22%3A%22%7D&appid=wh5&timestamp=${Date.now()}&client=android&clientVersion=11.4.4`,
@@ -1254,15 +1256,20 @@ async function initForFarm() {
             },
             timeout: 10000,
         };
-        $.get(option, (err, resp, data) => {
+        $.get(option, async (err, resp, data) => {
             try {
                 if (err) {
-                    console.log('\n东东农场: API查询请求失败 ‼️‼️');
+                    console.log('initForFarm: 请求失败 ‼️‼️');
                     console.log(JSON.stringify(err));
-                    $.logErr(err);
                 } else {
                     if (safeGet(data)) {
-                        $.farmInfo = JSON.parse(data)
+                        $.farmInfo = JSON.parse(data);                        
+                        if ($.farmInfo.code != 0){
+                            ct++;                  
+                            await initForFarm();
+
+                        }
+                        ct = 0;
                     }
                 }
             } catch (e) {
