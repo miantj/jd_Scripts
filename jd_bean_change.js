@@ -1919,7 +1919,7 @@ function jdfruitRequest(function_id, body = {}, timeout = 1000) {
 								llgeterror = true;
 							}
 							else
-								$.JDwaterEveryDayT = data.totalWaterTaskInit.totalWaterTaskTimes;
+								$.JDwaterEveryDayT = data.firstWaterInit.totalWaterTimes;
 						}
 					}
 				} catch (e) {
@@ -2006,7 +2006,7 @@ async function getjdfruit() {
 								$.JdtreeTotalEnergy = $.farmInfo.farmUserPro.treeTotalEnergy;
 								$.treeState = $.farmInfo.treeState;
 								let waterEveryDayT = $.JDwaterEveryDayT;
-								let waterTotalT = ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy - $.farmInfo.farmUserPro.totalEnergy) / 10; //一共还需浇多少次水
+								let waterTotalT = ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy) / 10; //一共还需浇多少次水
 								let waterD = Math.ceil(waterTotalT / waterEveryDayT);
 
 								$.JdwaterTotalT = waterTotalT;
