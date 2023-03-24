@@ -1,6 +1,6 @@
 /**
-汪汪赛跑-提现10元
-0 0 * * 5 jd_joy_run_reward.ts
+汪汪赛跑-提现10元,周五9点
+59 59 8 * * 5 jd_joy_run_reward.ts
 new Env('汪汪赛跑提现')
 updateTime：2022-07-09
 **/
