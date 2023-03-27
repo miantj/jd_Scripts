@@ -23,7 +23,7 @@ ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|ql|gua_|getJDCoo
 
 RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存
 
-3、新建拉库任务，并执行，刷新浏览器即可看到添加的任务。
+3、新建拉库任务或订阅，并执行，刷新浏览器即可看到添加的任务。
 
 4、添加CK环境变量，多CK不要写在一起，每个都新建JD_COOKIE变量；
 
@@ -33,7 +33,7 @@ RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存
 <summary>使用技巧与问题解答</summary>
 <pre><code>
 
-1、涉及兑换或需要抢的可以配置任务并发，就是全部一起跑。
+1、任务并发和分组
 
 并发配置方法：
 
@@ -47,15 +47,7 @@ RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存
 
 如 task XXXX.js desi JD_COOKIE 1-10  前10个一组运行，2 8 9就是第2/8/9序号的ck执行，以此类推。
 
-2、极速版签到建议并发，号多跑很久的，一个号要30多分钟。。
-
-task 6dylan6_jdpro_jd_speed_sign.js conc JD_COOKIE （具体任务路径不同版本不一样，按自己的写）
-
-3、保价建议并发，否则可能前几个号正常跑，后面会报频繁！
-
-task 6dylan6_jdpro_jd_price.js conc JD_COOKIE
-
-4、通知支持一对一推送和显示备注，还有分组通知等用法参考[notify.md](./notify.md)
+2、通知支持一对一推送和显示备注（需用本库sendnotify文件），还有分组通知等用法参考[notify.md](./notify.md)
 
 备注显示变量如下
 
@@ -67,13 +59,13 @@ export NOTIFY_SHOWNAMETYPE="3"    效果是 :  账号名称：pin(备注)
 
 export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
-5、因为青龙有随机延时（可以在配置文件设置为0，默认300秒），所以涉及准点运行的任务，最后加now，如果是desi或conc不用加也会准时跑。
+3、因为青龙有随机延时（可以在配置文件设置为0，默认300秒），所以涉及准点运行的任务，最后加now，如果是desi或conc不用加也会准时跑。
 
-6、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
+4、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
 
-7、如果通知文件发现和库里的不一致，那是被青龙自带的覆盖了，手动拷贝一份到deps目录下。
+5、如果通知文件发现和库里的不一致，那是被青龙自带的覆盖了，手动拷贝一份到deps目录下。
 
-8、建议调整任务运行超时时间，青龙默认1小时有些脚本跑不完就被强制kill，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己ck数量调整。
+6、建议调整任务运行超时时间，青龙默认1小时有些跑不完就被强制结束，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己ck数量调整。
 </code></pre>
 </details>
 
