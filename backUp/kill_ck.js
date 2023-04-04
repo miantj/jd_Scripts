@@ -1,5 +1,6 @@
 /*
 CK作废，不时之需，希望大家用不到！！！
+最好改密码！！!
 */
 const $ = new Env('作废CK');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -8,6 +9,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
+let flg = process.env.killck?process.env.killck:false;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -21,6 +23,10 @@ if ($.isNode()) {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
+  }
+  if (!flg){
+	  console.log(`请设置变量killck='true'来运行!!!`);
+      return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
