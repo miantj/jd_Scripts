@@ -20,13 +20,15 @@ ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|ql|gua_|getJDCoo
 
 1、青龙部署。
 
-2、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署可忽略此处）
+2、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署可忽略此处）；
 
-RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存
+RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存；
 
-3、新建拉库任务或订阅，并执行，刷新浏览器即可看到添加的任务。
+3、新建拉库任务或订阅，并执行，刷新浏览器即可看到添加的任务；
 
 4、添加CK环境变量，多CK不要写在一起，每个都新建JD_COOKIE变量；
+
+5，通知key变量请添加到配置管理config.sh文件，否则收不到通知；
 
 
 
