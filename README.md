@@ -143,6 +143,8 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 |   `WSKEY_DISCHECK`           |     wskey转换     | 非必须 | 默认为false检查，设置true为不检查直接转换 |
 |   `DPSTOKEN`           |     店铺签到     | 非必须 | 多个&隔开 |
 
+## 支持的通知方式
 
+server酱，go-cqhttp，pushdeer，Bark App，tg bot，钉钉bot，企业微信bot，企业微信应用消息，飞书，iGot，push plus，WxPusher，gotify
 
-
+请在配置管理config文件里写变量
