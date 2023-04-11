@@ -85,3 +85,9 @@ vi arkconfig.json #<修改maiark里面的青龙面版地址>
 vi arktemplates/index.html #修改网页源码 能看懂中文直接修改替换上去即可
 
 网页图片文件基本都在 static/ 文件夹下
+
+## 支持的通知方式
+
+server酱，go-cqhttp，pushdeer，Bark App，tg bot，钉钉bot，企业微信bot，企业微信应用消息，飞书，iGot，push plus，WxPusher，gotify
+
+请在配置管理config文件里写变量
