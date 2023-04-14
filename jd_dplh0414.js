@@ -1,7 +1,7 @@
 /*
 大牌联合0414期
 
-活动地址：https://mpdz-dz.isvjcloud.com/jdbeverage/pages/oC20230410cxc/oC20230410cxc?actId=f8c1494f726e49579d58d_230410
+活动地址： https://mpdz-dz.isvjcloud.com/jdbeverage/pages/oC20230414aba/oC20230414aba?actId=e4a3b57e712d4e1ab19e_230414
 
 自行运行，有水无水自测。
 
