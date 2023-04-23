@@ -120,7 +120,7 @@ if [ -x "$(command -v docker-compose)" ]; then
 ok "docker-compose已安装"
 else
 ing "开始安装docker-compose..."
-curl -L curl -L https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+curl -L curl -L https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ok "安装docker-compose...完成"
 fi
