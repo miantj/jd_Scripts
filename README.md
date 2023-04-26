@@ -27,7 +27,7 @@ curl -sSL https://js.dayplus.xyz/https://raw.githubusercontent.com/6dylan6/jdpro
 
 【注意】2.11.1前版本青龙config.sh配置把GithubProxyUrl="https://ghproxy.com/ （差不在多19行）" 修改为GithubProxyUrl=""，否则拉取失败，以上版本无需配置。
 
-2.13版本以上青龙拉库方式变了，到订阅管理新建订阅，复制拉库命令到名称会自动填写订阅规则，正确配置参考[截图](https://github.com/6dylan6/jdpro/issues/251)
+2.13版本以上青龙拉库方式变了，到订阅管理新建订阅，正确配置[参考](https://github.com/6dylan6/jdpro/discussions/680)
 
 国内机用下面指令（带代理）：
 
@@ -47,7 +47,9 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 Gitee版不能正常拉取，已停止维护！（20220711）
 
 
-任务定时建议 45 7-23/2 * * *  
+任务定时建议（每2小时的45分更新） 45 7-23/2 * * *  
+
+（定时可随意，不一定按这个来，但不要设置为每秒或每分钟）
 
 
 线报监控类脚本，需要的到 https://github.com/6dylan6/jdm.git
