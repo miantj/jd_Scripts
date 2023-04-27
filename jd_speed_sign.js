@@ -186,7 +186,7 @@ async function taskList() {
                                 $.taskName = task.taskInfo.mainTitle
                                 if (task.taskInfo.status === 0) {
                                     if (task.taskType >= 1000) {
-                                        await $.wait(500);
+                                        await $.wait(800);
                                         await doTask(task.taskType)
                                         await $.wait(500);
                                     } else {
