@@ -1,6 +1,5 @@
 /*
 赚金币任务
-⚠️⚠️⚠️一个号需要运行5分钟左右
 活动时间：长期
 活动入口：京喜特价app-百元生活费-赚金币
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -79,13 +78,13 @@ async function jdGlobal() {
         //await richManIndex()
 
         //await wheelsHome()
-        await apTaskList()
+        //await apTaskList()
         //await wheelsHome()
 
         // await signInit()
         // await sign()
         //await invite()
-        await invite2()
+        //await invite2()
         $.score = 0
         $.total = 0
         await taskList()
@@ -171,7 +170,7 @@ function showMsg() {
 async function taskList() {
     return new Promise(resolve => {
         $.get(taskUrl('ClientHandleService.execute', {
-            "version": "3.1.0",
+            //"version": "3.1.0",
             "method": "newTaskCenterPage",
             "data": { "channel": 1 }
         }),
@@ -187,15 +186,20 @@ async function taskList() {
                                 $.taskName = task.taskInfo.mainTitle
                                 if (task.taskInfo.status === 0) {
                                     if (task.taskType >= 1000) {
+                                        await $.wait(800);
                                         await doTask(task.taskType)
-                                        await $.wait(1000)
+                                        await $.wait(500);
                                     } else {
                                         $.canStartNewItem = true
                                         while ($.canStartNewItem) {
                                             if (task.taskType !== 3) {
-                                                await queryItem(task.taskType)
+                                                await $.wait(500);
+                                                await queryItem(task.taskType);
+                                                await $.wait(500);
                                             } else {
-                                                await startItem("", task.taskType)
+                                                await $.wait(500);
+                                                await startItem("", task.taskType);
+                                                await $.wait(500);
                                             }
                                         }
                                     }
@@ -233,7 +237,7 @@ async function doTask(taskId) {
                     if (safeGet(data)) {
                         data = JSON.parse(data);
                         if (data.code === 0) {
-                            console.log(`${data.data.taskInfo.mainTitle}任务完成成功，预计获得${data.data.reward}金币`)
+                            console.log(`${data.data.taskInfo.mainTitle}任务完成成功，获得${data.data.reward}金币`)
                         } else {
                             console.log(`任务完成失败，${data.message}`)
                         }
@@ -261,8 +265,9 @@ async function queryJoy() {
                             data = JSON.parse(data);
                             if (data.data.taskBubbles)
                                 for (let task of data.data.taskBubbles) {
-                                    await rewardTask(task.id, task.activeType)
-                                    await $.wait(500)
+                                    await $.wait(500);
+                                    await rewardTask(task.id, task.activeType);
+                                    await $.wait(500);
                                 }
                         }
                     }
@@ -314,13 +319,16 @@ async function queryItem(activeType = 1) {
         }), async (err, resp, data) => {
             try {
                 if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                    console.log(`${JSON.stringify(err)}`);
+                    console.log(`${$.name} API请求失败，请检查网路重试`);
+                    await $.wait(1000);
                 } else {
                     if (safeGet(data)) {
                         data = JSON.parse(data);
                         if (data.code === 0 && data.data) {
-                            await startItem(data.data.nextResource, activeType)
+                            await $.wait(800);
+                            await startItem(data.data.nextResource, activeType);
+                            await $.wait(500);
                         } else {
                             console.log(`商品任务开启失败，${data.message}`)
                             $.canStartNewItem = false
@@ -364,7 +372,8 @@ async function startItem(activeId, activeType) {
                                     videoBrowsing = activeType === 1 ? 5 : 10
                                 console.log(`【${taskCompletionProgress + 1}/${taskCompletionLimit}】浏览商品任务记录成功，等待${videoBrowsing}秒`)
                                 await $.wait(videoBrowsing * 1000)
-                                await endItem(data.data.uuid, activeType, activeId, activeType === 3 ? videoBrowsing : "")
+                                await endItem(data.data.uuid, activeType, activeId, activeType === 3 ? videoBrowsing : "");
+                                await $.wait(1000);
                             } else {
                                 console.log(`${$.taskName}任务已达上限`)
                                 $.canStartNewItem = false
@@ -407,7 +416,9 @@ async function endItem(uuid, activeType, activeId = "", videoTimeLength = "") {
                         if (safeGet(data)) {
                             data = JSON.parse(data);
                             if (data.code === 0 && data.isSuccess) {
-                                await rewardItem(uuid, activeType, activeId, videoTimeLength)
+                                await $.wait(500);
+                                await rewardItem(uuid, activeType, activeId, videoTimeLength);
+                                await $.wait(500);
                             } else {
                                 console.log(`${$.taskName}任务结束失败，${data.message}`)
                             }
