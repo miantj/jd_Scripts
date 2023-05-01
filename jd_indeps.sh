@@ -28,6 +28,7 @@ pnpm install -g @types/node
 pnpm install -g request
 pnpm install -g jsdom
 pnpm install -g moment
+pnpm install -g cheerio
 pnpm install -g tough-cookie
 pnpm install -g https-proxy-agent
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ jieba
