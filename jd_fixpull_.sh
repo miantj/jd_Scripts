@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#15 3 * * 7 jd_fixpull.sh 
+#15 3 * * 3 jd_fixpull_.sh 
 #new Env('拉库失败修复');
 ## Build 20230429
 echo -e '\n开始修复。。。\n'
