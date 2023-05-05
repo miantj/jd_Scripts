@@ -855,7 +855,7 @@ async function showMsg() {
       let dwappex = await dwappexpire();
       ReturnMessage += `【话费积分】${dwscore}`;
       if (dwappex){
-        ReturnMessage += `（最近过期日期：${dwappex}）`;
+        ReturnMessage += `（最近已过期：${dwappex}）`;
       }
       ReturnMessage += `\n`;
     }
