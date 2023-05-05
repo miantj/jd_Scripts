@@ -18,6 +18,7 @@ if ($.isNode() && process.env.BEANCHANGE_BEANDETAILMODE){
 }
 
 const fs = require('fs');
+const CR = require('crypto-js');
 let matchtitle="昨日";
 let yesterday="";
 let TodayDate="";
@@ -121,6 +122,7 @@ let RemainMessage = '\n';
 RemainMessage += "⭕提醒:⭕" + '\n';
 RemainMessage += '【京喜特价金币】京东特价版->我的->金币(可兑换无门槛红包)\n';
 RemainMessage += '【领现金】京东->搜领现金(可微信提现或兑换红包)\n';
+RemainMessage += '【话费积分】京东->充值中心-赚积分兑话费（180天效期）\n';
 RemainMessage += '【东东农场】京东->我的->东东农场,完成可兑换无门槛红包,可用于任意商品\n';
 RemainMessage += '【其他】不同类别红包不能叠加使用，自测';
 
@@ -848,7 +850,15 @@ async function showMsg() {
 			}
 		}
 	}
-	
+    let dwscore = await dwappinfo();
+    if (dwscore){
+      let dwappex = await dwappexpire();
+      ReturnMessage += `【话费积分】${dwscore}`;
+      if (dwappex){
+        ReturnMessage += `（最近已过期：${dwappex}）`;
+      }
+      ReturnMessage += `\n`;
+    }
 	if ($.jdCash) {
 		ReturnMessage += `【其他信息】`;
 		
@@ -2176,6 +2186,72 @@ async function getuserinfo() {
             }
             finally {
                 resolve(data || '');
+            }
+        })
+    })
+}
+function dwappinfo() {
+    let ts = Date.now();
+    let opt = {
+        url: `https://dwapp.jd.com/user/dwSignInfo`,
+        body: JSON.stringify({ "t": ts, "channelSource": "txzs", "encStr": CR.MD5(ts + 'e9c398ffcb2d4824b4d0a703e38yffdd').toString() }),
+        headers: {
+            'Origin': 'https://txsm-m.jd.com',
+            'Content-Type': 'application/json',
+            'User-Agent': $.UA,
+            'Cookie': cookie
+        }
+    }
+    return new Promise(async (resolve) => {
+        $.post(opt, async (err, resp, data) => {
+            let ccc = '';
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`dwappinfo 请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                    if (data.code == 200) {
+                        ccc = data.data.balanceNum;
+                    } else {
+                        console.log(data.msg);
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve(ccc);
+            }
+        })
+    })
+}
+function dwappexpire() {
+    let opt = {
+        url: `https://dwapp.jd.com/user/scoreDetail?pageNo=1&pageSize=10&scoreType=16&t=1637`,
+        headers: {
+
+            'User-Agent': $.UA,
+            'Cookie': cookie
+        }
+    }
+    return new Promise(async (resolve) => {
+        $.get(opt, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(` API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data)
+                    if (data.code == 200) {
+                        data = data.data.userOperateList.length !== 0 ? new Date(data.data.userOperateList[0].time).toLocaleDateString() : '';
+                    } else {
+                        console.log(data.msg);
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data)
             }
         })
     })
