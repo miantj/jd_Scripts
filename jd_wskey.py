@@ -610,6 +610,7 @@ if __name__ == '__main__':  # Python主函数执行入口
     s.headers.update({"Content-Type": "application/json;charset=UTF-8"})  # 增加 HTTP头 json 类型
     ql_id = check_id()  # 调用方法 [check_id] 并赋值 [ql_id]
     url_t = check_cloud()  # 调用方法 [check_cloud] 并赋值 [url_t]
+    flag = ''
     if url_t == 403:
         logger.info("\n尝试使用nolan接口请求\n")
         ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
