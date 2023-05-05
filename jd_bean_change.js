@@ -18,6 +18,7 @@ if ($.isNode() && process.env.BEANCHANGE_BEANDETAILMODE){
 }
 
 const fs = require('fs');
+const CR = require('crypto-js');
 let matchtitle="昨日";
 let yesterday="";
 let TodayDate="";
@@ -848,7 +849,15 @@ async function showMsg() {
 			}
 		}
 	}
-	
+    let dwscore = await dwappinfo();
+    if (dwscore){
+      let dwappex = await dwappexpire();
+      ReturnMessage += `【话费积分】${dwscore}`;
+      if (dwappex){
+        ReturnMessage += `（最近过期日期：${dwappex}）`;
+      }
+      ReturnMessage += `\n`;
+    }
 	if ($.jdCash) {
 		ReturnMessage += `【其他信息】`;
 		
@@ -2176,6 +2185,72 @@ async function getuserinfo() {
             }
             finally {
                 resolve(data || '');
+            }
+        })
+    })
+}
+function dwappinfo() {
+    let ts = Date.now();
+    let opt = {
+        url: `https://dwapp.jd.com/user/dwSignInfo`,
+        body: JSON.stringify({ "t": ts, "channelSource": "txzs", "encStr": CR.MD5(ts + 'e9c398ffcb2d4824b4d0a703e38yffdd').toString() }),
+        headers: {
+            'Origin': 'https://txsm-m.jd.com',
+            'Content-Type': 'application/json',
+            'User-Agent': $.UA,
+            'Cookie': cookie
+        }
+    }
+    return new Promise(async (resolve) => {
+        $.post(opt, async (err, resp, data) => {
+            let ccc = '';
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`dwappinfo 请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                    if (data.code == 200) {
+                        ccc = data.data.balanceNum;
+                    } else {
+                        console.log(data.msg);
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve(ccc);
+            }
+        })
+    })
+}
+function dwappexpire() {
+    let opt = {
+        url: `https://dwapp.jd.com/user/scoreDetail?pageNo=1&pageSize=10&scoreType=16&t=1637`,
+        headers: {
+
+            'User-Agent': $.UA,
+            'Cookie': cookie
+        }
+    }
+    return new Promise(async (resolve) => {
+        $.get(opt, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(` API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data)
+                    if (data.code == 200) {
+                        data = data.data.userOperateList.length !== 0 ? new Date(data.data.userOperateList[0].time).toLocaleDateString() : '';
+                    } else {
+                        console.log(data.msg);
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data)
             }
         })
     })
