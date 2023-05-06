@@ -1332,7 +1332,7 @@ function BarkNotify(text, desp, params = {}) {
                     title: text,
                     body: desp,
                     group: `${BARK_GROUP}`,
-                    icon: `${BARK_ICON}`,
+                    //icon: `${BARK_ICON}`,
                     sound: `${BARK_SOUND}`,
                 },
                 headers: {
