@@ -2263,12 +2263,13 @@ function dwappexpire() {
                         data = data.data.userOperateList.length !== 0 ? new Date(data.data.userOperateList[0].time).toLocaleDateString() : '';
                     } else {
                         console.log(data.msg);
+						data = '';
                     }
                 }
             } catch (e) {
-                $.logErr(e, resp)
+                $.logErr(e, resp);
             } finally {
-                resolve(data)
+                resolve(data);
             }
         })
     })
