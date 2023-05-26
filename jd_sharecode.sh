@@ -61,10 +61,10 @@ CLEANBAK_DAYS="2"
 ## 填 2 使用“随机顺序互助模板”，本套脚本内账号间随机顺序助力，每次生成的顺序都不一致。
 ## 填 3 使用“车头A模式互助模板”，本套脚本内指定前 N 个账号优先助力，N 个以后账号间随机助力(随机部分账号顺序随机)。
 ## 填 4 使用“车头B模式互助模板”，本套脚本内指定前 N 个账号优先助力，N 个以后账号间随机助力(随机部分账号顺序固定)。
-HelpType="3"
+HelpType=""
 
 ## 定义前 N 个账号优先助力，N 个以后账号间随机助力。front_num="N"，N 定义值小于账号总数，当HelpType 赋值 3 或 4 时有效
-front_num="10"
+front_num="5"
 
 ## 定义指定活动采用指定的互助模板。
 ## 设定值为 DiyHelpType="1" 表示启用功能；不填或填其他内容表示不开启功能。
@@ -111,8 +111,8 @@ env_name=(
   PLANT_BEAN_SHARECODES
   DREAM_FACTORY_SHARE_CODES
   DDFACTORY_SHARECODES
-  JDJOY_SHARECODES
-  JDZZ_SHARECODES
+  #JDJOY_SHARECODES
+  #JDZZ_SHARECODES
   JXNC_SHARECODES
   #BOOKSHOP_SHARECODES
   #JD_CASH_SHARECODES
@@ -129,8 +129,8 @@ var_name=(
   ForOtherBean
   ForOtherDreamFactory
   ForOtherJdFactory
-  ForOtherJoy
-  ForOtherJdzz
+  #ForOtherJoy
+  #ForOtherJdzz
   ForOtherJxnc
   #ForOtherBookShop
   #ForOtherCash
@@ -151,8 +151,8 @@ name_js=(
   "$repo"_jd_plantBean
   "$repo"_jd_dreamFactory
   "$repo"_jd_jdfactory
-  "$repo"_jd_crazy_joy
-  "$repo"_jd_jdzz
+  #"$repo"_jd_crazy_joy
+  #"$repo"_jd_jdzz
   "$repo"_jd_jxnc
   #"$repo"_jd_bookshop
   #"$repo"_jd_cash
@@ -162,7 +162,7 @@ name_js=(
   #"$repo"_jd_carnivalcity
   #"$repo"_jd_city
   "$repo"_jd_moneyTree_he?p
-  "$repo"_jd_cfd
+  #"$repo"_jd_cfd
 )
 
 name_config=(
@@ -171,8 +171,8 @@ name_config=(
   Bean
   DreamFactory
   JdFactory
-  Joy
-  Jdzz
+  #Joy
+  #Jdzz
   Jxnc
   #BookShop
   #Cash
@@ -182,7 +182,7 @@ name_config=(
   #Carni
   #City
   MoneyTree
-  TokenJxnc
+  #TokenJxnc
 )
 
 name_chinese=(
@@ -191,8 +191,8 @@ name_chinese=(
   京东种豆得豆
   京喜工厂
   东东工厂
-  crazyJoy任务
-  京东赚赚
+  #crazyJoy任务
+  #京东赚赚
   京喜农场
   #口袋书店
   #签到领现金
@@ -202,7 +202,7 @@ name_chinese=(
   #京东手机狂欢城
   #城城领现金
   摇钱树
-  京喜token
+  #京喜token
 )
 
 # 定义 json 数据查询工具

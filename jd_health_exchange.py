@@ -126,16 +126,16 @@ class getJDCookie(object):
                     pinName = r.findall(i)
                     pinName = unquote(pinName[0])
                     # 获取账号名
-                    ck, nickname = self.getUserInfo(i, pinName, u)
-                    if nickname != False:
-                        cookiesList.append(ck)
-                        userNameList.append(nickname)
-                        pinNameList.append(pinName)
-                    else:
-                        u += 1
-                        continue
-                    u += 1
-                if len(cookiesList) > 0 and len(userNameList) > 0:
+                    #ck, nickname = self.getUserInfo(i, pinName, u)
+                    #if nickname != False:
+                    cookiesList.append(i)
+                    #userNameList.append(nickname)
+                    pinNameList.append(pinName)
+                    #else:
+                    #    u += 1
+                    #    continue
+                    #u += 1
+                if len(cookiesList) > 0:
                     return cookiesList, userNameList, pinNameList
                 else:
                     printT("没有可用Cookie，已退出")
@@ -212,7 +212,16 @@ def userAgent():
         return f'jdapp;iPhone;10.0.4;{iosVer};{uuid};network/wifi;ADID/{ADID};supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone{iPhone},1;addressid/{addressid};supportBestPay/0;appBuild/167629;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS {iosV} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1'
     else:
         return UserAgent
-
+def difftime():
+    heard={
+        'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
+    }
+    url="https://wq.jd.com/mcoss/servertime/getservertime?_=1664872855968&sceneval=2&g_login_type=1&callback=cb8216634&g_ty=ls&appCode=msc588d6d5"
+    resp=requests.get(url,headers=heard).text
+    res=re.match('.*\"serverTime\":\"(.*)\".*',resp).group(1)
+    sertime=int(time.mktime(time.strptime(res, '%Y/%m/%d %H:%M:%S'))*1000)
+    loctime=int(time.time()*1000)
+    return loctime-sertime
 ## 获取通知服务
 class msg(object):
     def __init__(self, m=''):
@@ -404,6 +413,11 @@ def start():
     cookiesList, userNameList, pinNameList = getCk.iscookie ()
     cookies1 = checkUser (cookiesList)  # 将够钱兑换的账号保存下来给cookies，其余不够钱的账号剔除在外，不执行兑换
     final = 1
+    diff=difftime()
+    tomorrow=datetime.date.today() + datetime.timedelta(days=1)
+    tomorrow=int(time.mktime(time.strptime(str(tomorrow), '%Y-%m-%d'))*1000)
+    print((tomorrow - int(time.time()*1000) + diff)/1000)
+    time.sleep((tomorrow - int(time.time()*1000) + diff)/1000)
     while True:
         print (f"\n【准备开始...】\n")
         user_num = 1

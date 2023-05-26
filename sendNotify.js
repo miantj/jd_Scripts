@@ -174,10 +174,10 @@ let TempCKUid = [];
 if (UidFileexists) {
     //console.log("检测到一对一Uid文件WxPusherUid.json，载入...");
     TempCKUid = fs.readFileSync(strUidFile, 'utf-8');
-    // if (TempCKUid) {
-    //     TempCKUid = TempCKUid.toString();
-    //     TempCKUid = JSON.parse(TempCKUid);
-    // }
+    if (TempCKUid) {
+        TempCKUid = TempCKUid.toString();
+        TempCKUid = JSON.parse(TempCKUid);
+    }
 }
 
 let tempAddCK = {};
@@ -1004,7 +1004,7 @@ async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 B
             if (tempEnv) {
                 cookie = tempEnv.value;
                 Uid = getuuid(tempEnv.remarks, PtPin);
-                // UserRemark = getRemark(tempEnv.remarks);
+                UserRemark = getRemark(tempEnv.remarks);
 
                 if (Uid) {
                     console.log("查询到Uid ：" + Uid);
@@ -1581,7 +1581,7 @@ function buildLastDesp(desp, author = '') {
         if (!author.match(/本通知 By/)) {
             author = `\n\n${author}`
         }
-        return desp.trim() + author + "\n通知时刻: " + GetDateTime(new Date());
+        return desp.trim() + author + "\n现在时刻: " + GetDateTime(new Date());
     }
 }
 

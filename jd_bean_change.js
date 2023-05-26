@@ -141,7 +141,7 @@ if ($.isNode()) {
 //else
 	//console.log(`检测到未配置Wxpusher的Token，禁用一对一推送...`);
 
-let jdSignUrl = 'https://api.nolanstore.top/sign'
+let jdSignUrl = 'https://api.nolanstore.cc/sign'
 if (process.env.SIGNURL)
 	jdSignUrl = process.env.SIGNURL;
 
@@ -227,7 +227,7 @@ if(DisableIndex!=-1){
 
 //特价金币
 let EnableJdSpeed=true;
-DisableIndex = strDisableList.findIndex((item) => item === "特价金币");
+DisableIndex = strDisableList.findIndex((item) => item === "极速金币");
 if(DisableIndex!=-1){
 	console.log("检测到设定关闭特价金币查询");
 	EnableJdSpeed=false;	
