@@ -20,7 +20,7 @@ ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|ql|gua_|getJDCoo
 
 1、青龙部署。
 
-2、修改青龙config.sh配置，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署可忽略此处）；
+2、登录青龙配置管理config.sh修改，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署可忽略此处）；
 
 RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存；
 
