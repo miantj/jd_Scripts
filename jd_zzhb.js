@@ -2,7 +2,7 @@
 /*
 转赚红包
 执行流程，车头输出助力码--助力--抽奖--检查提现
-可指定PIN车头，不指定默认CK1， 变量JXCTOPPIN='jdpin'
+可指定PIN车头，不指定默认CK1， 变量 JDZHBTOPPIN='jdpin'
 多少助力换下一个车头，默认999个 ，控制变量 JDZHBNUM='100';
 运行一次抽奖次数,默认抽完，控制变量 JDZHBLTNUM='200'
 每次抽奖间隔，默认1秒，控制变量 JDZHBDELAY='3'
