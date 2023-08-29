@@ -63,7 +63,26 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 </code></pre>
 </details>
 
+## 互助模式使用说明
+
 如需禁止某些CK参加所有活动或某些活动功能，实现重组CK顺序功能，包括随机、优先、轮换、组队、分段等功能，把[task_before](./docker/task_before.sh)文件内容复制到配置管理task_before.sh保存
+
+常用变量举例：
+
+Recombin_CK_Mode="1"  全部顺序随机
+
+Recombin_CK_Mode="2" Recombin_CK_ARG1="15" 假设有100个CK，前15个CK按正常顺序靠前，其余CK随机乱序
+
+Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个CK，希望前5个账号始终保持在前部，剩余95个账号按照轮换模式每天轮换5个
+
+其他用法具体参考[文档](https://docs.qq.com/doc/DTXh6QUVjRXJ1TFdN)
+
+
+## 支持的通知方式
+
+server酱，go-cqhttp，pushdeer，Bark App，tg bot，钉钉bot，企业微信bot，企业微信应用消息，飞书，iGot，push plus，WxPusher，gotify
+
+请在配置管理config文件里写变量
 
 <!-- # maiark 使用方式
 
@@ -79,8 +98,5 @@ vi arktemplates/index.html #修改网页源码 能看懂中文直接修改替换
 
 网页图片文件基本都在 static/ 文件夹下
 
-## 支持的通知方式
 
-server酱，go-cqhttp，pushdeer，Bark App，tg bot，钉钉bot，企业微信bot，企业微信应用消息，飞书，iGot，push plus，WxPusher，gotify
 
-请在配置管理config文件里写变量
