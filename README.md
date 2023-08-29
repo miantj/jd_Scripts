@@ -63,6 +63,8 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 </code></pre>
 </details>
 
+如需禁止某些CK参加所有活动或某些活动功能，实现重组CK顺序功能，包括随机、优先、轮换、组队、分段等功能，把[task_before](./docker/task_before.sh)文件内容复制到配置管理task_before.sh保存
+
 <!-- # maiark 使用方式
 
 docker pull kissyouhunter/maiark
