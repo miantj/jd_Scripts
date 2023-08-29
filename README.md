@@ -25,9 +25,8 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 ```
 
-任务定时建议（每2小时的45分更新） 45 7-23/2 * * *  
 
-（定时可随意，不一定按这个来，但不要设置为每秒或每分钟）
+定时随意，但不要设置为每秒或每分钟
 
 
 线报监控类脚本，需要的到 https://github.com/6dylan6/jdm.git
@@ -94,7 +93,7 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 ## 互助模式使用说明
 
-如需禁止某些CK参加所有活动或某些活动功能，实现重组CK顺序功能，包括随机、优先、轮换、组队、分段等功能，把[task_before](.docker/task_before.sh)文件内容复制到配置管理task_before.sh保存
+如需禁止某些CK参加所有活动或某些活动功能，实现重组CK顺序功能，包括随机、优先、轮换、组队、分段等功能，把[task_before](./docker/task_before.sh)文件内容复制到配置管理task_before.sh保存
 
 常用变量举例：
 
