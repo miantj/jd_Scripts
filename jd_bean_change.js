@@ -418,7 +418,7 @@ if(DisableIndex!=-1){
 			await Promise.all([        
 			        cash(), //特价金币
 			        bean(), //京豆查询
-			        jdCash(), //领现金
+			        //jdCash(), //领现金
 			        GetJoyRuninginfo(), //汪汪赛跑
 			        queryScores()
 			    ])
