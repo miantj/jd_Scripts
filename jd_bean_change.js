@@ -337,6 +337,7 @@ if(DisableIndex!=-1){
 			
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
 		    $.UA = require('./USER_AGENTS').UARAM();
+			await checkplus();
 			await TotalBean();			
 		    //await TotalBean2();
 			if ($.beanCount == 0) {
@@ -414,7 +415,7 @@ if(DisableIndex!=-1){
 						
 			await getjdfruitinfo(); //东东农场
 			await $.wait(1000);
-			
+			await checkplus();
 			await Promise.all([        
 			        cash(), //特价金币
 			        bean(), //京豆查询
@@ -1143,7 +1144,7 @@ function TotalBean() {
                         }
                         if (data['retcode'] === 0) {
                             $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
-							$.isPlusVip=data['isPlusVip'];
+							//$.isPlusVip=data['isPlusVip'];
 							$.isRealNameAuth=data['isRealNameAuth'];
 							$.beanCount=(data['base'] && data['base'].jdNum) || 0 ;		
 							$.JingXiang = (data['base'] && data['base'].jvalue) || 0 ;						
@@ -2154,6 +2155,38 @@ function dwappexpire() {
                 $.logErr(e, resp);
             } finally {
                 resolve(data);
+            }
+        })
+    })
+}
+function checkplus() {
+    let opt = {
+        url: `https://api.m.jd.com/api?functionId=user_getUserInfo_v2`,
+		body: 'appid=plus_business&loginType=2&loginWQBiz=&scval=&body=%7B%22contentType%22%3A%221_2_3_4_5_8_9_11_12_16%22%2C%22qids%22%3A%226_2_5_18_1_7_9_11_12_14_16_17_25_38%22%2C%22checkLevel%22%3A1%2C%22signType%22%3A1003%7D',
+        headers: {
+            'User-Agent': $.UA,
+            'Cookie': cookie,
+			'Origin': 'https://plus.m.jd.com'
+        }
+    }
+    return new Promise(async (resolve) => {
+        $.post(opt, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(` API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data)
+                    if (data.code == 1711000) {
+                        $.isPlusVip = data.rs.plusUserBaseInfo.endDays ? true : false;
+						//console.log($.isPlusVip)
+                    } else {
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
             }
         })
     })
