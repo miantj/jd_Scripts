@@ -102,7 +102,7 @@ for (let i in productsArr) {
             } else if (cleancartProductsAll["*"]) {
                 $.cleancartProductsArr = cleancartProductsAll["*"]
             } else $.cleancartProductsArr = false
-            if ($.cleancartProductsArr) console.log($.cleancartProductsArr)
+            if ($.cleancartProductsArr != '') console.log($.cleancartProductsArr)
             await run();
             if ($.out) break
         }
