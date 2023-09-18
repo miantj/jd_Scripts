@@ -102,7 +102,7 @@ for (let i in productsArr) {
             } else if (cleancartProductsAll["*"]) {
                 $.cleancartProductsArr = cleancartProductsAll["*"]
             } else $.cleancartProductsArr = false
-            if ($.cleancartProductsArr) console.log($.cleancartProductsArr)
+            if ($.cleancartProductsArr != '') console.log($.cleancartProductsArr)
             await run();
             if ($.out) break
         }
@@ -121,7 +121,7 @@ async function run() {
     try {
         let msg = ''
         let signBody = `{"homeWishListUserFlag":"1","userType":"0","updateTag":true,"showPlusEntry":"2","hitNewUIStatus":"1","cvhv":"049591","cartuuid":"hjudwgohxzVu96krv/T6Hg==","adid":""}`
-        let body = await dy.getbody('cartClearQuery', signBody)
+        let body = await dy.getbody2('cartClearQuery', signBody)
         if ($.out) return
         if (!body) {
             console.log('获取不到算法')
@@ -169,7 +169,7 @@ async function run() {
                             msg += `清空${operNum}件商品|没有找到要清空的商品\n`
                         } else {
                             let clearBody = `{"homeWishListUserFlag":"1","userType":"0","updateTag":false,"showPlusEntry":"2","hitNewUIStatus":"1","cvhv":"049591","cartuuid":"hjudwgohxzVu96krv/T6Hg==","operations":${$.toStr(operations, operations)},"adid":"","coord_type":"0"}`
-                            clearBody = await dy.getbody('cartClearRemove', clearBody)
+                            clearBody = await dy.getbody2('cartClearRemove', clearBody)
                             if ($.out) return
                             if (!clearBody) {
                                 console.log('获取不到算法')
