@@ -6,19 +6,19 @@
 ### [TG频道](https://t.me/dylan_jdpro)
 
 
-## 拉库指令
+## 拉库
 
 正确配置[参考](https://github.com/6dylan6/jdpro/issues/22)
 
-国内机用下面指令（带代理）：
+国内机（带代理）：
 
 ```
-ql repo https://js.nbplay.site/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://js.jdpro.site/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
 
 ```
 默认代理拉不了，自行找可用代理
 
-国外机（无需代理）用下面指令：
+国外机：
 
 ```
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
@@ -26,7 +26,7 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 ```
 
 
-定时随意，但不要设置为每秒或每分钟
+定时随意，不要设置为每秒或每分钟
 
 
 线报监控类脚本，需要的到 https://github.com/6dylan6/jdm.git
@@ -38,11 +38,13 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 1、青龙部署。
 
-2、登录青龙配置管理config.sh修改，差不多在17行（特别注意，没有修改此配置，任务拉不全，一键部署可忽略此处）；
+2、登录青龙配置管理config.sh修改，差不多在17行（特别注意，没有修改此配置，任务拉不全）；
 
 RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存；
 
-3、新建拉库任务或订阅，并执行，刷新浏览器即可看到添加的任务；
+3、新建拉库任务或订阅并执行；
+
+4、执行依赖安装任务；
 
 4、添加CK环境变量，多CK不要写在一起，每个都新建JD_COOKIE变量；
 
@@ -91,7 +93,6 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 </details>
 
 
-## 互助模式使用说明
 
 如需禁止某些CK参加所有活动或某些活动功能，实现重组CK顺序功能，包括随机、优先、轮换、组队、分段等功能，把[task_before](./docker/task_before.sh)文件内容复制到配置管理task_before.sh保存
 
