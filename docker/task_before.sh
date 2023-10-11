@@ -625,7 +625,7 @@ Recombin_CK_cal(){
                         [[ $interval_time != "0" ]] && echo -e "# 等待 $interval_time 秒后开始进行下一组队任务 ..."
                         sleep $interval_time
                     else
-                        $which_program $local_scr_dir/$local_scr_name &
+                        $which_program $local_scr_dir/$local_scr_name
                         sleep $delay_time
                     fi
                 fi
@@ -795,7 +795,7 @@ Recombin_CK_cal(){
                             [[ $interval_time != "0" ]] && echo -e "# 等待`format_time $interval_time`后开始进行下一段任务 ..."
                              sleep $interval_time
                         else
-                            $which_program $local_scr_dir/$local_scr_name &
+                            $which_program $local_scr_dir/$local_scr_name
                             sleep $delay_time
                         fi
                     fi
@@ -811,7 +811,6 @@ Recombin_CK_cal(){
     ## 末尾Cookie
     combine_bottom(){
         local array_bottom i
-        echo ori_array
         if [[ $Bottom_CK && ! $jdCookie_bottom ]]; then
             bottom_ck="$(def_urldecode $Bottom_CK | perl -pe "{s|,| |g;}")"
             i=0
