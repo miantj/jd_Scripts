@@ -23,7 +23,7 @@ const api = got.extend({
 
 let ShowSuccess = "false",
 CKAlwaysNotify = "false",
-CKAutoEnable = "true",
+CKAutoEnable = "false",
 NoWarnError = "false";
 
 let MessageUserGp2 = "";
