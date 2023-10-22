@@ -1,7 +1,7 @@
 
 /*
 转赚红包,只抽奖提现
-1 1 1 1 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_zzhb_draw.js
+1 1 10 10 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_zzhb_draw.js
 updatetime:2023/10/22
  */
 
