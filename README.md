@@ -106,6 +106,16 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 
 其他用法具体参考[文档](https://docs.qq.com/doc/DTXh6QUVjRXJ1TFdN)
 
+## 通用变量
+
+自定义sign  export SIGN_URL='url'
+
+代理API export DY_PROXY='url'（部分js支持，看日志说明）
+
+代理池 export DP_POOL='url'（全部js支持）
+
+使用代理池白名单（js文件名关键字如fruit），如fruit export PERMIT_JS='fruit'
+
 
 ## 支持的通知方式
 
