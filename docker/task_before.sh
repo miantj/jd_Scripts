@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 
 ## Build 20220831-001-test
-## 6dylan6_0605
+## 6dylan6_1029
 
 name_js=(
   jd_farm_help
-  jd_pet
-  jd_plantBean
-  jd_dreamFactory
-  jd_jdfactory
+  jd_farm_help_new
+  #jd_pet
+  #jd_plantBean
+  #jd_dreamFactory
+  #jd_jdfactory
   #jd_crazy_joy
   #jd_jdzz
-  jd_jxnc
+  #jd_jxnc
   #jd_bookshop
   #jd_cash
-  jd_sgmh
-  jd_cfd
+  #jd_sgmh
+  #jd_cfd
   jd_health
   #jd_carnivalcity
   #jd_city
@@ -24,17 +25,18 @@ name_js=(
 )
 name_config=(
   Fruit
-  Pet
-  Bean
-  DreamFactory
-  JdFactory
+  Fruit_new
+  #Pet
+  #Bean
+  #DreamFactory
+  #JdFactory
   #Joy
   #Jdzz
-  Jxnc
+  #Jxnc
   #BookShop
   #Cash
-  Sgmh
-  Cfd
+  #Sgmh
+  #Cfd
   Health
   #Carni
   #City
@@ -43,17 +45,18 @@ name_config=(
 )
 name_chinese=(
   东东农场
-  东东萌宠
-  京东种豆得豆
-  京喜工厂
-  东东工厂
+  新农场助力
+  #东东萌宠
+  #京东种豆得豆
+  #京喜工厂
+  #东东工厂
   #crazyJoy任务
   #京东赚赚
-  京喜农场
+  #京喜农场
   #口袋书店
   #签到领现金
-  闪购盲盒
-  京喜财富岛
+  #闪购盲盒
+  #京喜财富岛
   东东健康社区
   #京东手机狂欢城
   #城城领现金
@@ -62,17 +65,18 @@ name_chinese=(
 )
 env_name=(
   FRUITSHARECODES                     ## 1、东东农场互助码
-  PETSHARECODES                       ## 2、东东萌宠互助码
-  PLANT_BEAN_SHARECODES               ## 3、种豆得豆互助码
-  DREAM_FACTORY_SHARE_CODES           ## 4、京喜工厂互助码
-  DDFACTORY_SHARECODES                ## 5、东东工厂互助码
+  NEWFRUITSHARECODES                  ## 1、新东东农场互助码  
+  #PETSHARECODES                       ## 2、东东萌宠互助码
+  #PLANT_BEAN_SHARECODES               ## 3、种豆得豆互助码
+  #DREAM_FACTORY_SHARE_CODES           ## 4、京喜工厂互助码
+  #DDFACTORY_SHARECODES                ## 5、东东工厂互助码
   #JDJOY_SHARECODES                    ## 6、疯狂的JOY互助码
   #JDZZ_SHARECODES                     ## 7、京东赚赚互助码
-  JXNC_SHARECODES                     ## 8、京喜农场助力码
+  #JXNC_SHARECODES                     ## 8、京喜农场助力码
   #BOOKSHOP_SHARECODES                 ## 9、口袋书店互助码
   #JD_CASH_SHARECODES                  ## 10、签到领现金互助码
-  JDSGMH_SHARECODES                   ## 11、闪购盲盒互助码
-  JDCFD_SHARECODES                    ## 12、京喜财富岛互助码
+  #JDSGMH_SHARECODES                   ## 11、闪购盲盒互助码
+  #JDCFD_SHARECODES                    ## 12、京喜财富岛互助码
   JDHEALTH_SHARECODES                 ## 13、东东健康社区互助码
   #JD818_SHARECODES                    ## 14、京东手机狂欢城互助码
   #CITY_SHARECODES                     ## 15、城城领现金互助码
@@ -81,21 +85,22 @@ env_name=(
 )
 var_name=(
   ForOtherFruit                       ## 1、东东农场互助规则
-  ForOtherPet                         ## 2、东东萌宠互助规则
-  ForOtherBean                        ## 3、种豆得豆互助规则
-  ForOtherDreamFactory                ## 4、京喜工厂互助规则
-  ForOtherJdFactory                   ## 5、东东工厂互助规则
+  ForOtherFruit_new                       ## 1、东东农场互助规则  
+  #ForOtherPet                         ## 2、东东萌宠互助规则
+  #ForOtherBean                        ## 3、种豆得豆互助规则
+  #ForOtherDreamFactory                ## 4、京喜工厂互助规则
+  #ForOtherJdFactory                   ## 5、东东工厂互助规则
   #ForOtherJoy                         ## 6、疯狂的JOY互助规则
   #ForOtherJdzz                        ## 7、京东赚赚互助规则
-  ForOtherJxnc                        ## 8、京喜农场助力码
+  #ForOtherJxnc                        ## 8、京喜农场助力码
   #ForOtherBookShop                    ## 9、口袋书店互助规则
   #ForOtherCash                        ## 10、签到领现金互助规则
-  ForOtherSgmh                        ## 11、闪购盲盒互助规则
-  ForOtherCfd                         ## 12、京喜财富岛互助规则
+  #ForOtherSgmh                        ## 11、闪购盲盒互助规则
+  #ForOtherCfd                         ## 12、京喜财富岛互助规则
   ForOtherHealth                      ## 13、东东健康社区互助规则
   #ForOtherCarni                       ## 14、京东手机狂欢城互助规则
   #ForOtherCity                        ## 15、城城领现金互助规则
-  ForOtherMoneyTree                   ## 16、摇钱树
+  #ForOtherMoneyTree                   ## 16、摇钱树
   #TokenJxnc                           ## 17、京喜Token(京喜财富岛提现用)
 )
 
