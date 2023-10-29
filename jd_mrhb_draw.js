@@ -1,7 +1,7 @@
 
 /*
 每日红包（抽奖+提现）
-https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_mrhb_draw.js
+8 8 29 10 * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_mrhb_draw.js
  */
 
 const $ = new Env('Jd每日红包_抽奖提现');
