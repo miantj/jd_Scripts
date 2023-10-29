@@ -23,7 +23,7 @@ else
     dir_code=$dir_log/6dylan6_jdpro_main_jd_sharecode
     repo='6dylan6_jdpro_main' 
 fi
-grep '6dylan6_0605' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_0605' /ql/config/task_before.sh > /dev/null 2>&1
+grep '6dylan6_1029' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_1029' /ql/config/task_before.sh > /dev/null 2>&1
 if [[ $? != 0 ]];then
  cp /ql/repo/${repo}/docker/task_before.sh /ql/config/ >/dev/null 2>&1 || cp /ql/data/repo/${repo}/docker/task_before.sh /ql/data/config/
 fi
@@ -107,6 +107,7 @@ UpdateType="1"
 ## 需组合的环境变量列表，env_name需要和var_name一一对应，如何有新活动按照格式添加(不懂勿动)
 env_name=(
   FRUITSHARECODES
+  NEWFRUITSHARECODES  
   #PETSHARECODES
   #PLANT_BEAN_SHARECODES
   #DREAM_FACTORY_SHARE_CODES
@@ -125,6 +126,7 @@ env_name=(
 )
 var_name=(
   ForOtherFruit
+  ForOtherFruit_new
   #ForOtherPet
   #ForOtherBean
   #ForOtherDreamFactory
@@ -147,6 +149,7 @@ var_name=(
 ## name_js、name_config 和 name_chinese 中的三个名称必须一一对应。
 name_js=(
   "$repo"_jd_fruit
+  "$repo"_jd_fruit_new
   #"$repo"_jd_pet
   #"$repo"_jd_plantBean
   #"$repo"_jd_dreamFactory
@@ -167,6 +170,7 @@ name_js=(
 
 name_config=(
   Fruit
+  Fruit_new
   #Pet
   #Bean
   #DreamFactory
@@ -187,6 +191,7 @@ name_config=(
 
 name_chinese=(
   东东农场-任务
+  新农场任务
   #东东萌宠
   #京东种豆得豆
   #京喜工厂

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## Build 20220831-001-test
-## 6dylan6_0605
+## 6dylan6_1029
 
 name_js=(
   jd_farm_help
