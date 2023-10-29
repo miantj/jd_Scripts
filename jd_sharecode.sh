@@ -17,11 +17,11 @@ dir_deps=$dir_root/deps
 dir_log=$dir_root/log
 
 if [[ -z "$(echo "$DIR"|grep 'main')" ]];then
-    dir_code=$dir_log/6dylan6_jdpro_jd_sharecode
-    repo='6dylan6_jdpro' 
+    dir_code=$dir_log/miantj_jd_Scripts_jd_sharecode
+    repo='miantj_jd_Scripts' 
 else
-    dir_code=$dir_log/6dylan6_jdpro_main_jd_sharecode
-    repo='6dylan6_jdpro_main' 
+    dir_code=$dir_log/miantj_jd_Scripts_main_jd_sharecode
+    repo='miantj_jd_Scripts_main' 
 fi
 grep '6dylan6_0605' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_0605' /ql/config/task_before.sh > /dev/null 2>&1
 if [[ $? != 0 ]];then
@@ -35,7 +35,7 @@ fi
 [[ -d $dir_data/deps ]] && dir_deps=$dir_data/deps
 [[ -d $dir_data/log ]] && dir_log=$dir_data/log
 [[ -d `echo /ql/data/log/${repo}*|awk '{print $1}'` ]]  && dir_code=`ls -dt /ql/data/log/${repo}*|awk '{print $1}'|head -1`
-[[ $AUTOCFG == true ]] && cp $dir_repo/6dylan6_jdpro/sendNotify.js $dir_deps/ > /dev/null 2>&1
+[[ $AUTOCFG == true ]] && cp $dir_repo/miantj_jd_Scripts/sendNotify.js $dir_deps/ > /dev/null 2>&1
 ## 预设的仓库及默认调用仓库设置
 ## 将"repo=$repo1"改成repo=$repo2"或其他，以默认调用其他仓库脚本日志
 ## 也可自行搜索本脚本内的"name_js=("和"name_js_only",将"repo"改成"repo2"或其他，用以自由组合调用仓库的脚本日志
