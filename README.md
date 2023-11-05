@@ -8,7 +8,7 @@
 
 ## 拉库
 
-正确配置[参考](https://github.com/6dylan6/jdpro/issues/22)
+
 
 国内机（带代理）：
 
@@ -29,31 +29,31 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 定时随意，不要设置为每秒或每分钟
 
 
-线报监控类脚本，需要的到 https://github.com/6dylan6/jdm.git
+线报监控类脚本，[入口](https://github.com/6dylan6/jdm.git)
 
-带图自动评价（PC版CK）需要的到 https://github.com/6dylan6/auto_comment.git
+带图自动评价（需PC版CK，本库也有简化版可用）[入口](https://github.com/6dylan6/auto_comment.git)
 
 
-## 使用流程
+## 简要流程
 
-1、青龙部署。
+1、部署青龙并登陆。
 
-2、登录青龙配置管理config.sh修改，差不多在17行（特别注意，没有修改此配置，任务拉不全）；
+2、到配置管理config.sh修改，差不多在17行（特别注意，没有修改此配置，sh类型任务拉不下来）；
 
-RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh ts" 保存；
+RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh" 保存；
 
-3、新建拉库任务或订阅并执行；
+3、到订阅管理创建订阅并运行；正确配置[参考](https://github.com/6dylan6/jdpro/issues/22)
 
-4、执行依赖安装任务；
+4、订阅运行完毕，到定时任务搜索依赖安装任务执行；
 
-4、添加CK环境变量，多CK不要写在一起，每个都新建JD_COOKIE变量；
+4、到环境变量，创建变量，名称: JD_COOKIE,值：抓的CK，多个依次创建；
 
-5，通知key变量请添加到配置管理config.sh文件，否则收不到通知；
+5，配置通知，通知的key填写到配置管理config.sh文件；
 
 
 
 <details>
-<summary>使用技巧与问题解答</summary>
+<summary>进阶</summary>
 <pre><code>
 
 1、任务并发和分组
@@ -121,4 +121,4 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 
 server酱，go-cqhttp，pushdeer，Bark App，tg bot，钉钉bot，企业微信bot，企业微信应用消息，飞书，iGot，push plus，WxPusher，gotify
 
-请在配置管理config文件里写变量
+请在配置管理config文件里填写对应key
