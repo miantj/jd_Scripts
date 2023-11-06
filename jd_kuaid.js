@@ -57,6 +57,7 @@ class UserClass extends BasicClass {
             if(code == 1) {
                 for(let task of (result?.content?.taskInfoList||[]).filter(x => x.taskReachNum < x.taskNeedReachNum && x.triggerType==1)) {
                     await this.reachTaskInfo(task);
+					await $.wait(1000);
                     break;
                 }
             } else {
@@ -87,7 +88,8 @@ class UserClass extends BasicClass {
             let {result} = await this.request(options)
             let code = result?.code
             if(code == 1) {
-                this.log(`完成任务[${task.taskTitle}]成功`)
+                this.log(`完成任务[${task.taskTitle}]成功`);
+				await $.wait(1000);
                 await this.queryTaskList();
             } else {
                 let errCode = code || result?.error_response?.code
