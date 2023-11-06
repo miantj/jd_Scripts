@@ -25,7 +25,7 @@ else
 fi
 grep '6dylan6_1029' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_1029' /ql/config/task_before.sh > /dev/null 2>&1
 if [[ $? != 0 ]];then
- cp /ql/repo/${repo}/docker/task_before.sh /ql/config/ >/dev/null 2>&1 || cp /ql/data/repo/${repo}/docker/task_before.sh /ql/data/config/
+ cp /ql/repo/${repo}/docker/task_before.sh /ql/config/ >/dev/null 2>&1 || cp /ql/data/repo/${repo}/docker/task_before.sh /ql/data/config/ > /dev/null 2>&1
 fi
 [[ $QL_DIR == /ql ]] && dir_root=$QL_DIR
 [[ -d $dir_root/data ]] && dir_data=$dir_root/data
@@ -34,8 +34,9 @@ fi
 [[ -d $dir_data/repo ]] && dir_repo=$dir_data/repo
 [[ -d $dir_data/deps ]] && dir_deps=$dir_data/deps
 [[ -d $dir_data/log ]] && dir_log=$dir_data/log
-[[ -d `echo /ql/data/log/${repo}*|awk '{print $1}'` ]]  && dir_code=`ls -dt /ql/data/log/${repo}*|awk '{print $1}'|head -1`
+[[ -d `echo /ql/data/log/${repo}*|awk '{print $1}'` ]]  && dir_code=`ls -dt /ql/data/log/${repo}_jd_sharecode*|awk '{print $1}'|head -1`
 [[ $AUTOCFG == true ]] && cp $dir_repo/miantj_jd_Scripts/sendNotify.js $dir_deps/ > /dev/null 2>&1
+
 ## 预设的仓库及默认调用仓库设置
 ## 将"repo=$repo1"改成repo=$repo2"或其他，以默认调用其他仓库脚本日志
 ## 也可自行搜索本脚本内的"name_js=("和"name_js_only",将"repo"改成"repo2"或其他，用以自由组合调用仓库的脚本日志
@@ -268,12 +269,18 @@ export_codes_sub() {
     local envs=$(eval echo "\$JD_COOKIE")
     local array=($(echo ${envs// /} | sed 's/&/ /g'))
     local user_sum=${#array[*]}
-    if cd $dir_log &>/dev/null && [[ $(ls ./*$task_name*/*.log 2> /dev/null | wc -l) -gt 0 ]]; then
+    local tmp=''
+	if $newflag;then
+		tmp=$(ls ${dir_log}/|grep -E "${task_name}_[0-9]+$")
+	else
+		tmp="${task_name}"
+	fi
+    if cd $dir_log &>/dev/null && [[ $(ls ./$tmp/*.log 2> /dev/null | wc -l) -gt 0 ]]; then
         ## 寻找所有互助码以及对应的pt_pin
         i=0
         pt_pin_in_log=()
         code=()
-        pt_pin_and_code=$(ls -t ./*$task_name*/*.log|head -6| xargs awk -v var="的$chinese_name好友互助码" 'BEGIN{FS="[（ ）】]+"; OFS="&"} $3~var {print $2,$4}')
+        pt_pin_and_code=$(ls -t ./$tmp/*.log|head -6| xargs awk -v var="的$chinese_name好友互助码" 'BEGIN{FS="[（ ）】]+"; OFS="&"} $3~var {print $2,$4}')
         for line in $pt_pin_and_code; do
             pt_pin_in_log[i]=$(echo $line | awk -F "&" '{print $1}')
             code[i]=$(echo $line | awk -F "&" '{print $2}')
@@ -469,7 +476,7 @@ export_codes_sub() {
 ## 汇总输出
 export_all_codes() {
     gen_pt_pin_array
-    #[[ $DEBUG = "1" ]] && echo -e "\n#【`date +%X`】 当前 code.sh 的进程数量：$ps_num"
+    #[[ $DEBUG = "1" ]] && echo -e "\n#【`date +%X`】 当前 sharecode.sh 的进程数量：$ps_num"
     #[[ $DEBUG = "1" ]] && echo -e "\n#【`date +%X`】 预设的 JD_COOKIE 数量：`echo $JD_COOKIE | grep -o 'pt_key' | wc -l`"
     #[[ $DEBUG = "1" ]] && echo -e "\n#【`date +%X`】 预设的 JD_COOKIE 环境变量数量：`echo $JD_COOKIE | sed 's/&/\n/g' | wc -l`"
     [[ $DEBUG = "1" && "$(echo $JD_COOKIE | sed 's/&/\n/g' | wc -l)" = "1" && "$(echo $JD_COOKIE | grep -o 'pt_key' | wc -l)" -gt 1 ]] && echo -e "\n#【`date +%X`】 检测到您将多个 COOKIES 填写到单个环境变量值，请注意将各 COOKIES 采用 & 分隔，否则将无法完整输出互助码及互助规则！"
@@ -501,7 +508,7 @@ export_all_codes() {
     fi
     [[ $BreakHelpType = "1" ]] && echo -e "\n#【`date +%X`】 您已启用屏蔽模式，账号 $BreakHelpNum 将不被助力！"
     if [ "$ps_num" -gt $proc_num ]; then
-        echo -e "\n#【`date +%X`】 检测到 code.sh 的线程过多 ，请稍后再试！"
+        echo -e "\n#【`date +%X`】 检测到 sharecode.sh 的线程过多 ，请稍后再试！"
         exit
     else
         [[ $repo ]] && echo -e "\n#【`date +%X`】 默认查询 $repo 的活动脚本日志，格式化导出互助码，生成互助规则！" || echo -e "\n#【`date +%X`】 遍历活动脚本日志，格式化导出互助码，生成互助规则！"
@@ -526,7 +533,7 @@ local ShareCode_dir="$dir_log/.ShareCode"
 local ShareCode_log="$ShareCode_dir/$config_name.log"
 local i j k
 local anum=`tail -1 $ShareCode_log |awk -F= '{print $1}'|tr -d 'a-zA-z'`
-local bnum=`cat $latest_log_path|grep "^$config_name_my"|wc -l`
+local bnum=`cat $latest_log_path|grep -E "${config_name_for_other}[0-9]+"|wc -l`
 local cnum=$anum
 if [[ $anum -lt $bnum ]];then
     cnum=$bnum
@@ -572,7 +579,7 @@ local ShareCode_dir="$dir_log/.ShareCode"
 local ShareCode_log="$ShareCode_dir/$config_name.log"
 local i j k
 local anum=`tail -1 $ShareCode_log |awk -F= '{print $1}'|tr -d 'a-zA-z'`
-local bnum=`cat $latest_log_path|grep "^$config_name_my"|wc -l`
+local bnum=`cat $latest_log_path|grep -E "${config_name_for_other}[0-9]+"|wc -l`
 local cnum=$anum
 if [[ $anum -lt $bnum ]];then
     cnum=$bnum
@@ -751,8 +758,13 @@ kill_proc(){
 #kill_proc "code.sh" "grep|$$" >/dev/null 2>&1
 #echo $dir_code
 latest_log=$(ls -r $dir_code | head -1)
+if [[ ${dir_code: -1} =~ [0-9] ]]; then
+  newflag=true
+else
+  newflag=false
+fi
 latest_log_path="$dir_code/$latest_log"
-ps_num="$(ps | grep code.sh | grep -v grep | wc -l)"
+ps_num="$(ps | grep sharecode.sh | grep -v grep | wc -l)"
 export_all_codes | perl -pe "{s|京东种豆|种豆|; s|crazyJoy任务|疯狂的JOY|}"
 sleep 1
 update_help

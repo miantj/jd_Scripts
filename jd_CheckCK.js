@@ -136,7 +136,7 @@ if ($.isNode() && process.env.CHECKCK_ALLNOTIFY) {
         });
         return;
     }
-
+	$.log(`\n默认不自动启用CK，开启变量CHECKCK_CKAUTOENABLE='true'`);
     for (let i = 0; i < envs.length; i++) {
         if (envs[i].value) {			
 			var tempid=0;

@@ -221,10 +221,10 @@ function beanDoTask(body, taskType) {
                             }
                         }
                         if (body.actionType === 0) {
-                            if (data.code === "0" && data.data.bizCode === "0") {
+                            if (data.code === "0" && data.data?.bizCode === "0") {
                                 console.log(data.data.bizMsg)
                             } else {
-                                console.log(`完成任务失败：${data}`)
+                                console.log(`完成任务失败：${JSON.stringify(data)}`)
                             }
                         }
                     }
