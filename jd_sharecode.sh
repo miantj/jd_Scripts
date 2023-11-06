@@ -271,7 +271,7 @@ export_codes_sub() {
     local user_sum=${#array[*]}
     local tmp=''
 	if $newflag;then
-		tmp=$(ls ${dir_log}/|grep -E "${task_name}_[0-9]+$")
+		tmp=$(ls ${dir_log}/|grep -E "${task_name}_[0-9]+$"|head -1)
 	else
 		tmp="${task_name}"
 	fi
