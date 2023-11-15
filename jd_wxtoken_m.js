@@ -1,6 +1,6 @@
 /*
 快速获取token
-38 * * * * jd_wxtoken.js
+38 11 11 11 * jd_wxtoken.js
  */
 
 const $ = new Env('快速缓存token');
