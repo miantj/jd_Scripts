@@ -2,9 +2,13 @@
 
 # 此库所有内容仅用于测试学习,自用娱乐，出事概不负责，测试完后请自行删除！！！
 
-## 拉库
+## 拉库订阅
 ```
-ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|ql|gua_|getJDCookie|wskey" "activity|backUp" "^jd[^_]|USER|utils|function|sign|sendNotify|ql|JDJR"
+名称：jd_Scripts
+类型：公开库
+链接：ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_|ql|gua_|getJDCookie|wskey" "activity|backUp" "^jd[^_]|USER|utils|function|sign|sendNotify|ql|JDJR"
+定时：crontab
+定时规则：0 12,23 * * *
 ```
 
 ## 简要流程
