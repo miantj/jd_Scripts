@@ -11,7 +11,9 @@
 定时规则：0 12,23 * * *
 ```
 
-美团脚本需要自行捉包token
+美团脚本需要自行捉包token填到变量 meituanCookie 中, 多账号换行或&或@隔开
+export meituanCookie="AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx#UUID(如需运行小团币)"
+
  - meituanV3: 美团领劵大额和一些领钱任务[大佬的库](https://raw.githubusercontent.com/leafTheFish/DeathNote/main/meituanV3.js)
 
 ## 简要流程
