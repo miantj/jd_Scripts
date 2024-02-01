@@ -419,7 +419,7 @@ if (DisableIndex != -1) {
                 cash(), //特价金币
                 bean(), //京豆查询
                 //jdCash(), //领现金
-                GetJoyRuninginfo(), //汪汪赛跑
+                //GetJoyRuninginfo(), //汪汪赛跑
                 queryScores(),
                 getek()
             ])
