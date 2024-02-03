@@ -42,11 +42,11 @@ RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh" 保存；
 
 4、订阅运行完毕，到定时任务搜索依赖安装任务执行；
 
-4、到环境变量，创建变量，名称: JD_COOKIE,值：抓的CK，多个依次创建；
+4、到环境变量，创建变量，名称: JD_COOKIE,值：抓的CK（要安全就手抓），多个依次创建；
 
 5、配置通知，通知的key填写到配置管理config.sh文件；
 
-6、sendnotify.js文件请拷贝库里的到青龙deps目录下，否则会贝尔自带覆盖
+6、sendnotify.js文件用库里的到青龙deps目录下，否则会被青龙自带覆盖（会出现失效停止问题）
 
 <details>
 <summary>笔记</summary>
