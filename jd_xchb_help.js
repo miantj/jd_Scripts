@@ -1,6 +1,7 @@
 
 /*
 只助力，无抽奖
+1 1 1 1 * jd_xchb_help.js
  */
 
 const $ = new Env('新春红包_助力');
