@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #15 0 * * * jd_sharecode.sh 
-#new Env('搜集农场互助码');
+#new Env('搜集互助码');
 #互助码生成顺序变量HPTYPE='2'随机，HPTOPNUM='10'固定在车头数量,具体看57行注释
 ## update 20231028
 
