@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 ## Build 20220831-001-test
-## 6dylan6_1029
+## 6dylan6_0212
 
 name_js=(
   jd_farm_help
   jd_farm_help_new
   #jd_pet
-  #jd_plantBean
+  jd_plantBean_help
   #jd_dreamFactory
   #jd_jdfactory
   #jd_crazy_joy
@@ -27,7 +27,7 @@ name_config=(
   Fruit
   Fruit_new
   #Pet
-  #Bean
+  Bean
   #DreamFactory
   #JdFactory
   #Joy
@@ -47,7 +47,7 @@ name_chinese=(
   东东农场
   新农场助力
   #东东萌宠
-  #京东种豆得豆
+  种豆得豆助力
   #京喜工厂
   #东东工厂
   #crazyJoy任务
@@ -67,7 +67,7 @@ env_name=(
   FRUITSHARECODES                     ## 1、东东农场互助码
   NEWFRUITSHARECODES                  ## 1、新东东农场互助码  
   #PETSHARECODES                       ## 2、东东萌宠互助码
-  #PLANT_BEAN_SHARECODES               ## 3、种豆得豆互助码
+  PLANT_BEAN_SHARECODES               ## 3、种豆得豆互助码
   #DREAM_FACTORY_SHARE_CODES           ## 4、京喜工厂互助码
   #DDFACTORY_SHARECODES                ## 5、东东工厂互助码
   #JDJOY_SHARECODES                    ## 6、疯狂的JOY互助码
@@ -87,7 +87,7 @@ var_name=(
   ForOtherFruit                       ## 1、东东农场互助规则
   ForOtherFruit_new                       ## 1、东东农场互助规则  
   #ForOtherPet                         ## 2、东东萌宠互助规则
-  #ForOtherBean                        ## 3、种豆得豆互助规则
+  ForOtherBean                        ## 3、种豆得豆互助规则
   #ForOtherDreamFactory                ## 4、京喜工厂互助规则
   #ForOtherJdFactory                   ## 5、东东工厂互助规则
   #ForOtherJoy                         ## 6、疯狂的JOY互助规则
