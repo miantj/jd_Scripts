@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #15 0 * * * jd_sharecode.sh 
-#new Env('搜集农场互助码');
+#new Env('搜集互助码');
 #互助码生成顺序变量HPTYPE='2'随机，HPTOPNUM='10'固定在车头数量,具体看57行注释
 ## update 20231028
 
@@ -23,7 +23,7 @@ else
     dir_code=$dir_log/miantj_jd_Scripts_main_jd_sharecode
     repo='miantj_jd_Scripts_main' 
 fi
-grep '6dylan6_1029' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_1029' /ql/config/task_before.sh > /dev/null 2>&1
+grep '6dylan6_0212' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_0212' /ql/config/task_before.sh > /dev/null 2>&1
 if [[ $? != 0 ]];then
  cp /ql/repo/${repo}/docker/task_before.sh /ql/config/ >/dev/null 2>&1 || cp /ql/data/repo/${repo}/docker/task_before.sh /ql/data/config/ > /dev/null 2>&1
 fi
@@ -110,7 +110,7 @@ env_name=(
   FRUITSHARECODES
   NEWFRUITSHARECODES  
   #PETSHARECODES
-  #PLANT_BEAN_SHARECODES
+  PLANT_BEAN_SHARECODES
   #DREAM_FACTORY_SHARE_CODES
   #DDFACTORY_SHARECODES
   #JDJOY_SHARECODES
@@ -129,7 +129,7 @@ var_name=(
   ForOtherFruit
   ForOtherFruit_new
   #ForOtherPet
-  #ForOtherBean
+  ForOtherBean
   #ForOtherDreamFactory
   #ForOtherJdFactory
   #ForOtherJoy
@@ -152,7 +152,7 @@ name_js=(
   "$repo"_jd_fruit
   "$repo"_jd_fruit_new
   #"$repo"_jd_pet
-  #"$repo"_jd_plantBean
+  "$repo"_jd_plantBean
   #"$repo"_jd_dreamFactory
   #"$repo"_jd_jdfactory
   #"$repo"_jd_crazy_joy
@@ -173,7 +173,7 @@ name_config=(
   Fruit
   Fruit_new
   #Pet
-  #Bean
+  Bean
   #DreamFactory
   #JdFactory
   #Joy
@@ -194,7 +194,7 @@ name_chinese=(
   东东农场-任务
   新农场任务
   #东东萌宠
-  #京东种豆得豆
+  种豆得豆任务
   #京喜工厂
   #东东工厂
   #crazyJoy任务
