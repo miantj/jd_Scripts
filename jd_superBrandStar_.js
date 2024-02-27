@@ -22,6 +22,7 @@ if ($.isNode()) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
+    console.log(`Tips:手动执行，有水在跑！`)
     for (let i = 0; i < cookiesArr.length; i++) {
 
         UA = `jdapp;iPhone;10.0.8;14.6;${randomWord(false, 40, 40)};network/wifi;JDEbook/openapp.jdreader;model/iPhone9,2;addressid/2214222493;appBuild/168841;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16E158;supportJDSHWK/1`;
@@ -50,7 +51,7 @@ async function main() {
     $.runFlag = false;
     $.activityInfo = {};
     await takeRequest('showStarGiftInfo');
-    if($.bizCode == 'MP001'){
+    if ($.bizCode == 'MP001') {
         console.log(`本期活动结束，等待下期。。。`);
         $.flag = true
         return;
@@ -70,7 +71,7 @@ async function main() {
     await $.wait(1000);
     await doTask();
     await $.wait(500)
-	console.log('开始抽奖：')
+    console.log('\n开始抽奖...')
     await await takeRequest('superBrandTaskLottery')
 
 }
@@ -117,7 +118,7 @@ async function doTask() {
                 }
             }
 
-        } else if($.oneTask.assignmentType === 7) {
+        } else if ($.oneTask.assignmentType === 7) {
             let subInfo = $.oneTask.ext.brandMemberList || '';
             console.log(`任务：${$.oneTask.assignmentName},不入会尝试领取`);
             await takeRequest('superBrandDoTask', { "source": "star_gift", "activityId": $.activityId, "encryptProjectId": $.encryptProjectId, "encryptAssignmentId": $.oneTask.encryptAssignmentId, "assignmentType": $.oneTask.assignmentType, "itemId": subInfo[0].itemId, "actionType": 0 });
@@ -187,19 +188,25 @@ function dealReturn(type, data) {
             }
             break;
         case 'superBrandTaskLottery':
-            if (data.code === '0' && data.data.bizCode !== 'TK000') {
-                $.runFlag = false;
-                console.log(`抽奖次数已用完`);
-            } else if (data.code === '0' && data.data.bizCode == 'TK000') {
-                if (data.data?.result?.rewardComponent?.beanList) {
-                    console.log(`获得豆子：${data.data.result.rewardComponent.beanList[0].quantity}`);
-                } else{
-                    console.log(data.data?.result);
+            if (data.code == 0) {
+                if (data.data.bizCode == 'TK103') {
+                    console.log(`已完成抽奖！`);
+                } else if (data.data.bizCode == 'TK000') {
+                    if (data.data?.result?.rewardComponent?.beanList) {
+                        console.log(`获得豆子：${data.data.result.rewardComponent.beanList[0].quantity}`);
+                    } else {
+                        console.log(JSON.stringify(data));
+                    }
+                } else if (data.data.bizCode == '6004') {
+                    console.log(`还有任务未完成，无法抽奖！`);
+                } else {
+                    console.log(`抽奖失败`);
+                    console.log(JSON.stringify(data));
                 }
             } else {
-                $.runFlag = false;
-                console.log(`抽奖失败`);
+                console.log(JSON.stringify(data));
             }
+
             //console.log(JSON.stringify(data));
             break;
         default:
