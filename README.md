@@ -9,7 +9,7 @@
 国内机（带代理）：
 
 ```
-ql repo https://js.jdpro.site/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://js.jdpro.site/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|utils"
 
 ```
 默认代理拉不了，自行找可用代理
@@ -17,7 +17,7 @@ ql repo https://js.jdpro.site/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj
 国外机：
 
 ```
-ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|utils"
 
 ```
 
