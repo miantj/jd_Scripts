@@ -32,7 +32,7 @@ RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh" 保存；
 
 5，配置通知，通知的key填写到配置管理config.sh文件；
 
-6、sendnotify.js文件用库里的到青龙deps目录下，否则会被青龙自带覆盖（会出现失效停止问题）
+6、sendnotify.js文件用库里的到青龙deps目录下，否则会被青龙自带覆盖
 
 <details>
 <summary>进阶</summary>
@@ -92,11 +92,13 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 
 自定义sign  export SIGN_URL='url'
 
-代理API export DY_PROXY='url'（部分js支持，看日志说明）
+代理API export DY_PROXY='url'（部分js支持）
+
+API白名单模式 export PERMIT_API='fruit'
 
 代理池 export DP_POOL='url'（全部js支持）
 
-使用代理池白名单（js文件名关键字如fruit），如fruit export PERMIT_JS='fruit'
+代理池白名单（js文件名关键字如fruit），如fruit export PERMIT_JS='fruit'
 
 
 ## 支持的通知方式
