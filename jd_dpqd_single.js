@@ -9,11 +9,11 @@
 
 此脚本为高并发单一签到本，自动过滤垃圾活动，与另外3个本无任何关联可单独运行
 
-7 7 7 7 *
+7 7 29 2 * jd_dpqd_single
 
 */
 
-const $ = new Env('店铺签到')
+const $ = new Env('单个店铺签到')
 const jdCookie = require('./jdCookie')
 const notify = require('./function/sendJDNotify')
 const common = require('./function/jdCommon')
