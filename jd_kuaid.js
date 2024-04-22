@@ -55,7 +55,8 @@ class UserClass extends BasicClass {
             let {result} = await this.request(options)
             let code = result?.code
             if(code == 1) {
-                for(let task of (result?.content?.taskInfoList||[]).filter(x => x.taskReachNum < x.taskNeedReachNum && x.triggerType==1)) {
+                //console.log(JSON.stringify(result?.content?.taskInfoList))
+                for(let task of (result?.content?.taskInfoList||[]).filter(x => x.taskReachNum < x.taskNeedReachNum && x.triggerType==1 && !x.taskTitle.includes('加购'))) {
                     await this.reachTaskInfo(task);
 					await $.wait(1000);
                     break;
