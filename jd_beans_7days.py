@@ -1,12 +1,12 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Modify : 2022/9/30
+# Modify : 2024/4/21
 # 京豆近7天输出表格统计
 # 用不着每天跑,定时自行设置吧，配合desi可指定账号
 # https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_beans_7days.py
 '''
 new Env('豆子7天统计');
-8 8 30 9 * jd_beans_7days.py
+8 8 29 2 * jd_beans_7days.py
 '''
 
 import requests
@@ -199,6 +199,7 @@ def get_beans_7days(ck):
             else:
                 print("未获取到数据，原因未知！！\n")
                 return {'code': 400, 'data': res}
+            #print(beans_in, beans_out, days)
         return {'code': 200, 'data': [beans_in, beans_out, days]}
     except Exception as e:
         print(str(e))
@@ -208,16 +209,16 @@ def get_beans_7days(ck):
 def get_total_beans(ck):
     try:
         headers = {
-            "Host": "wq.jd.com",
+            "Host": "me-api.jd.com",
             "User-Agent": "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
             "Content-Type": "application/x-www-form-urlencoded;",
             "Cookie": ck,
-            "Referer": 'https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2'
+            #"Referer": 'https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2'
         }
-        jurl = "https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2"
-        resp = requests.post(jurl, headers=headers).text
+        jurl = "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion"
+        resp = requests.get(jurl, headers=headers).text
         res = json.loads(resp)
-        return res['base']['jdNum']
+        return res['data']['assetInfo']['beanNum']
     except Exception as e:
         printf(str(e))
 
