@@ -20,7 +20,7 @@ pnpm install -g
 pnpm install -g ds
 pnpm install -g png-js
 pnpm install -g date-fns
-pnpm install -g axios@0.27.2
+pnpm install -g axios
 pnpm install -g crypto-js
 pnpm install -g ts-md5
 pnpm install -g tslib
