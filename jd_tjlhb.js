@@ -1,7 +1,7 @@
 /*
 天天领红包
 任务+开红包
-3 3 15* * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_tjlhb.js
+3 3,15 * * * https://raw.githubusercontent.com/6dylan6/jdpro/main/jd_tjlhb.js
  */
 
 const $ = new Env('特价版领红包');
