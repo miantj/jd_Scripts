@@ -3,7 +3,7 @@
 ==========================Quantumultx=========================
 [task_local]
 #jd新农场
-10 6,16 * * * jd_fruit_new.js
+10 6,12,17 * * * jd_fruit_new.js
 
 */
 const $ = new Env('新农场任务');
