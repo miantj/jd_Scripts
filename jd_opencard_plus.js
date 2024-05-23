@@ -1,5 +1,5 @@
 /*
-2 2 29 2 * jd_opencard0523.js 
+2 2 29 2 * jd_opencard_plus.js 
 */
 
 const $ = new Env('5.20--5.30 Plus尊享 宠爱驾到');
