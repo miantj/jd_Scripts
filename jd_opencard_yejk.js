@@ -1,5 +1,5 @@
 /*
-2 2 29 2 * jd_opencardyejk.js 
+2 2 29 2 * jd_opencard_yejk.js
 */
 
 const $ = new Env('轻松育儿集卡礼');
