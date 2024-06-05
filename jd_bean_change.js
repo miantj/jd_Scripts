@@ -226,21 +226,6 @@ if (DisableIndex != -1) {
     EnableJdFruit = false;
 }
 
-//特价金币
-let EnableJdSpeed = true;
-DisableIndex = strDisableList.findIndex((item) => item === "极速金币");
-if (DisableIndex != -1) {
-    console.log("检测到设定关闭特价金币查询");
-    EnableJdSpeed = false;
-}
-
-//领现金
-let EnableCash = true;
-DisableIndex = strDisableList.findIndex((item) => item === "领现金");
-if (DisableIndex != -1) {
-    console.log("检测到设定关闭领现金查询");
-    EnableCash = false;
-}
 
 //7天过期京豆
 let EnableOverBean = true;
@@ -264,13 +249,6 @@ if (DisableIndex != -1) {
     RemainMessage = "";
 }
 
-//汪汪赛跑
-let EnableJoyRun = true;
-DisableIndex = strDisableList.findIndex((item) => item === "汪汪赛跑");
-if (DisableIndex != -1) {
-    console.log("检测到设定关闭汪汪赛跑查询");
-    EnableJoyRun = false
-}
 
 //京豆收益查询
 let EnableCheckBean = true;
@@ -338,6 +316,7 @@ if (DisableIndex != -1) {
             $.newfarm_info = '';
             TempBaipiao = "";
             strGuoqi = "";
+            $.wyw_score = '';
 
             console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
             $.UA = require('./USER_AGENTS').UARAM();
@@ -415,16 +394,13 @@ if (DisableIndex != -1) {
                 };
                 TodayCache.push(tempAddCache);
             }
-
             await getjdfruitinfo(); //老农场
             await $.wait(1000);
             await fruitnew();
             //await checkplus();
             await Promise.all([
-                cash(), //特价金币
+                wanyiwan(),
                 bean(), //京豆查询
-                //jdCash(), //领现金
-                //GetJoyRuninginfo(), //汪汪赛跑
                 queryScores(),
                 getek(),
                 newfarm_info()
@@ -866,7 +842,10 @@ async function showMsg() {
         }
         ReturnMessage += `\n`;
     }
-
+    if ($.wyw_score != '' ) {
+        ReturnMessage += `【玩一玩奖票】${$.wyw_score}个`;
+        ReturnMessage += `\n`;
+    }
     if ($.jdCash) {
         ReturnMessage += `【其他信息】`;
 
@@ -1098,49 +1077,6 @@ async function Monthbean() {
 
 }
 
-async function jdCash() {
-    if (!EnableCash)
-        return;
-    let opt = {
-        url: `https://api.m.jd.com`,
-        body: `functionId=cash_exchange_center&body={"version":"1","channel":"app"}&appid=signed_wh5&client=android&clientVersion=11.8.0&t=${Date.now()}`,
-        headers: {
-            'Host': 'api.m.jd.com',
-            'Origin': 'https://h5.m.jd.com',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': $.UA,
-            'Cookie': cookie
-        }
-    }
-    return new Promise((resolve) => {
-        $.post(opt, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`jdCash API请求失败，请检查网路重试`)
-                } else {
-                    if (safeGet(data)) {
-                        data = JSON.parse(data)
-                        if (data.code == 0) {
-                            if (data.data.bizCode == 0) {
-                                $.jdCash = data.data.result.userMoney;
-                            } else {
-                                //console.log(data.data.bizMsg);
-                            }
-                        } else {
-                            //console.log(data.msg)
-                        }
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            }
-            finally {
-                resolve(data);
-            }
-        })
-    })
-}
 
 function apptaskUrl(functionId = "", body = "") {
     return {
@@ -1260,7 +1196,45 @@ function TotalBean2() {
         });
     });
 }
+function wanyiwan() {
+    return new Promise(async (resolve) => {
+        const options = {
+            url: `http://api.m.jd.com/client.action`,
+            body: `functionId=wanyiwan_exchange_page&appid=signed_wh5&body={"version":1}&&networkType=wifi&client=ios&clientVersion=${$.UA.split(';')[2]}&t=${Date.now()}`,
+            headers: {
+                Cookie: cookie,
+                'content-type': `application/x-www-form-urlencoded`,
+                // 'Accept-Encoding': `gzip,compress,br,deflate`,
+                Origin: `https://pro.m.jd.com`,
+                Referer: `https://pro.m.jd.com/`,
+                'User-Agent': $.UA,
+            },
+            timeout: 30000
+        };
+        $.post(options, (err, resp, data) => {
+            try {
+                if (err) {
+                    $.logErr(err);
+                } else {
+                    if (data) {
+                        data = $.toObj(data);
+                        if (data.data.bizCode == 0) {
+                            $.wyw_score = data.data.result.score || 0;
+                        }
 
+                    } else {
+                        $.log('服务器返回空数据');
+                    }
+                }
+            } catch (e) {
+                $.logErr(e);
+            }
+            finally {
+                resolve();
+            }
+        });
+    });
+}
 function isLoginByX1a0He() {
     return new Promise((resolve) => {
         const options = {
@@ -1873,41 +1847,7 @@ function safeGet(data) {
     }
 }
 
-function cash() {
-    if (!EnableJdSpeed)
-        return;
-    return new Promise(resolve => {
-        $.get(taskcashUrl('MyAssetsService.execute', {
-            "method": "userCashRecord",
-            "data": {
-                "channel": 1,
-                "pageNum": 1,
-                "pageSize": 20
-            }
-        }),
-            async (err, resp, data) => {
-                try {
-                    if (err) {
-                        console.log(`${JSON.stringify(err)}`)
-                        console.log(`cash API请求失败，请检查网路重试`)
-                    } else {
-                        if (safeGet(data)) {
-                            data = JSON.parse(data);
-                            if (data.data.goldBalance)
-                                $.JDtotalcash = data.data.goldBalance;
-                            else
-                                console.log(`领现金查询失败，服务器没有返回具体值.`)
-                        }
-                    }
-                } catch (e) {
-                    $.logErr(e, resp)
-                }
-                finally {
-                    resolve(data);
-                }
-            })
-    })
-}
+
 
 function taskcashUrl(functionId, body = {}) {
     const struuid = randomString(16);
@@ -1929,58 +1869,6 @@ function taskcashUrl(functionId, body = {}) {
         },
         timeout: 10000
     }
-}
-
-function GetJoyRuninginfo() {
-    if (!EnableJoyRun)
-        return;
-
-    const headers = {
-        "Accept": "application/json, text/plain, */*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "zh-CN,zh-Hans;q=0.9",
-        "Connection": "keep-alive",
-        "Content-Length": "376",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cookie": cookie,
-        "Host": "api.m.jd.com",
-        "Origin": "https://h5platform.jd.com",
-        "Referer": "https://h5platform.jd.com/",
-        "User-Agent": `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
-    }
-    var DateToday = new Date();
-    const body = {
-        'linkId': 'L-sOanK_5RJCz7I314FpnQ',
-        'isFromJoyPark': true,
-        'joyLinkId': 'LsQNxL7iWDlXUs6cFl-AAg'
-    };
-    const options = {
-        url: `https://api.m.jd.com/?functionId=runningPageHome&body=${encodeURIComponent(JSON.stringify(body))}&t=${DateToday.getTime()}&appid=activities_platform&client=ios&clientVersion=3.9.2`,
-        headers,
-    }
-    return new Promise(resolve => {
-        $.get(options, (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`GetJoyRuninginfo API请求失败，请检查网路重试`)
-                } else {
-                    if (data) {
-                        //console.log(data);
-                        data = JSON.parse(data);
-                        if (data.data.runningHomeInfo.prizeValue) {
-                            $.JoyRunningAmount = data.data.runningHomeInfo.prizeValue * 1;
-                        }
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            }
-            finally {
-                resolve(data)
-            }
-        })
-    })
 }
 
 function randomString(e) {
