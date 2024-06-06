@@ -317,6 +317,7 @@ if (DisableIndex != -1) {
             TempBaipiao = "";
             strGuoqi = "";
             $.wyw_score = '';
+            $.wb_score = '';
 
             console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********`);
             $.UA = require('./USER_AGENTS').UARAM();
@@ -400,6 +401,7 @@ if (DisableIndex != -1) {
             //await checkplus();
             await Promise.all([
                 wanyiwan(),
+                wb_info(),
                 bean(), //京豆查询
                 queryScores(),
                 getek(),
@@ -846,6 +848,10 @@ async function showMsg() {
         ReturnMessage += `【玩一玩奖票】${$.wyw_score}个`;
         ReturnMessage += `\n`;
     }
+    if ($.wb_score != '' ) {
+        ReturnMessage += `【汪贝余额】${$.wb_score}${$.wb_expire!=0?'(近7日将过期'+$.wb_expire+')':''}`;
+        ReturnMessage += `\n`;
+    }    
     if ($.jdCash) {
         ReturnMessage += `【其他信息】`;
 
@@ -1220,6 +1226,48 @@ function wanyiwan() {
                         data = $.toObj(data);
                         if (data.data.bizCode == 0) {
                             $.wyw_score = data.data.result.score || 0;
+                        }
+
+                    } else {
+                        $.log('服务器返回空数据');
+                    }
+                }
+            } catch (e) {
+                $.logErr(e);
+            }
+            finally {
+                resolve();
+            }
+        });
+    });
+}
+function wb_info() {
+    return new Promise(async (resolve) => {
+        const options = {
+            url: `http://api.m.jd.com/functionId=atop_channel_my_score`,
+            body: `appid=jd-super-market&functionId=atop_channel_my_score&client=m&body=%7B%22bizCode%22%3A%22cn_retail_jdsupermarket%22%2C%22scenario%22%3A%22sign%22%2C%22babelChannel%22%3A%22ttt1%22%2C%22isJdApp%22%3A%221%22%2C%22isWx%22%3A%220%22%7D&t=${Date.now()}`,
+            headers: {
+                Cookie: cookie,
+                'content-type': `application/x-www-form-urlencoded`,
+                // 'Accept-Encoding': `gzip,compress,br,deflate`,
+                Origin: `https://pro.m.jd.com`,
+                Referer: `https://pro.m.jd.com/`,
+                'User-Agent': $.UA,
+            },
+            timeout: 30000
+        };
+        $.post(options, (err, resp, data) => {
+            try {
+                if (err) {
+                    $.logErr(err);
+                } else {
+                    if (data) {
+                        data = $.toObj(data);
+                        if (data.success) {
+                            try{
+                               $.wb_score = data.data.floorData.items[0].restScore || 0; 
+                               $.wb_expire = data.data.floorData.items[0].nexp || 0; 
+                            } catch{}
                         }
 
                     } else {
