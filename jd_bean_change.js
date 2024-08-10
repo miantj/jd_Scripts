@@ -1124,7 +1124,7 @@ function TotalBean() {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                    console.log(`TotalBean API请求失败，请检查网路重试`)
                 } else {
                     if (data) {
                         data = JSON.parse(data);
@@ -1133,7 +1133,8 @@ function TotalBean() {
                             return
                         }
                         if (data['retcode'] === 0) {
-                            $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+                            //$.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+							$.nickName = $.UserName;
                             //$.isPlusVip=data['isPlusVip'];
                             $.isRealNameAuth = data['isRealNameAuth'];
                             $.beanCount = (data['base'] && data['base'].jdNum) || 0;
