@@ -159,7 +159,7 @@ def serverJ(title, content):
         "text": title,
         "desp": content.replace("\n", "\n\n")
     }
-    response = requests.post(f"https://sc.ftqq.com/{PUSH_KEY}.send", data=data).json()
+    response = requests.post(f"https://sctapi.ftqq.com/{PUSH_KEY}.send", data=data).json()
     if response['errno'] == 0:
         print('推送成功！')
     else:
