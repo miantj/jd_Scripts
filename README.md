@@ -27,7 +27,6 @@ ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|U
 
 线报监控类，[入口](https://github.com/6dylan6/jdm.git)
 
-带图评价（PC版CK，本库也有简化版可用）[入口](https://github.com/6dylan6/auto_comment.git)
 
 
 ## 简要流程
@@ -40,13 +39,12 @@ RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh" 保存；
 
 3、到订阅管理创建订阅并运行；正确配置[参考](https://github.com/6dylan6/jdpro/issues/22)
 
-4、订阅运行完毕，到定时任务搜索依赖安装任务执行；
+4、订阅运行完毕，到定时任务搜索依赖安装（jd_indeps.sh)任务执行，步骤2未完成会拉不到该任务；
 
-4、到环境变量，创建变量，名称: JD_COOKIE,值：抓的CK（要安全就手抓），多个依次创建；
+4、到环境变量，创建变量，名称: JD_COOKIE,值：抓的CK（要安全就手抓），多个每行建一个，不要写在一个里；
 
 5、配置通知，通知的key填写到配置管理config.sh文件；
 
-6、sendnotify.js文件用库里的到青龙deps目录下，否则会被青龙自带覆盖
 
 <details>
 <summary>笔记</summary>
@@ -82,9 +80,7 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 4、青龙系统通知（新增删除任务、登录等通知），需把通知变量写到config.sh文件，在环境变量里只发脚本运行通知哈。
 
-5、如果通知文件发现和库里的不一致，那是被青龙自带的覆盖了，手动拷贝一份到deps目录下。
-
-6、建议调整任务运行超时时间，青龙默认1小时有些跑不完就被强制结束，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己ck数量调整。
+5、建议调整任务运行超时时间，青龙默认1小时有些跑不完就被强制结束，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己ck数量调整。
 </code></pre>
 </details>
 
@@ -102,7 +98,9 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 
 其他用法具体参考[文档](https://docs.qq.com/doc/DTXh6QUVjRXJ1TFdN)
 
-## 通用变量
+## 通用环境变量（到配置管理-config.sh里添加变量,export xxx=''格式)
+
+AUTOCFG='true' 自动配置sendNotify文件到deps目录 
 
 代理API模式部分支持
 
@@ -119,6 +117,14 @@ DY_PROXY_REDELAY='3' 获取失败重试间隔 单位秒
 DP_POOL='http://xxx' 代理池url
 
 PERMIT_JS='farm&plant&opencard' 需要走代理池的js关键词，多个&分割，必须设置
+
+禁止指定的pin执行任务：
+
+多个任务同pin：BANPIN='任务1|任务2@pin1,pin2'
+
+多个任务不同pin：BANPIN='任务1@pin,pin2&任务2@pin2,pin3'
+
+不指定任务只写pin  全部任务都不执行该pin：BANPIN='pin1,pin2'
 
 
 ## 支持的通知方式
