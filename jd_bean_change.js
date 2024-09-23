@@ -2293,6 +2293,10 @@ function randomNumber(len) {
     return Date.now() + str;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0492e3d580741bbea9553794866ec8e6b6a191dc
 function Env(t, e) {
     "undefined" != typeof process && JSON.stringify(process.env).indexOf("GITHUB") > -1 && process.exit(0);
     class s {
