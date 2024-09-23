@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## Build 20220831-001-test
-## 6dylan6_0212
+## 6dylan6_20240905
 
 name_js=(
   jd_farm_help
@@ -18,6 +18,7 @@ name_js=(
   #jd_sgmh
   #jd_cfd
   jd_health
+  jd_farmshare
   #jd_carnivalcity
   #jd_city
   #jd_moneyTree
@@ -38,6 +39,7 @@ name_config=(
   #Sgmh
   #Cfd
   Health
+  Fruit_new
   #Carni
   #City
   #MoneyTree
@@ -58,6 +60,7 @@ name_chinese=(
   #闪购盲盒
   #京喜财富岛
   东东健康社区
+  农场小程序助力
   #京东手机狂欢城
   #城城领现金
   #摇钱树
@@ -78,6 +81,7 @@ env_name=(
   #JDSGMH_SHARECODES                   ## 11、闪购盲盒互助码
   #JDCFD_SHARECODES                    ## 12、京喜财富岛互助码
   JDHEALTH_SHARECODES                 ## 13、东东健康社区互助码
+  NEWFRUITSHARECODES                  ## 14、新农场小程序 
   #JD818_SHARECODES                    ## 14、京东手机狂欢城互助码
   #CITY_SHARECODES                     ## 15、城城领现金互助码
   #MONEYTREE_SHARECODES                ## 16、摇钱树
@@ -98,6 +102,7 @@ var_name=(
   #ForOtherSgmh                        ## 11、闪购盲盒互助规则
   #ForOtherCfd                         ## 12、京喜财富岛互助规则
   ForOtherHealth                      ## 13、东东健康社区互助规则
+  ForOtherFruit_new                       ## 新农场小程序
   #ForOtherCarni                       ## 14、京东手机狂欢城互助规则
   #ForOtherCity                        ## 15、城城领现金互助规则
   #ForOtherMoneyTree                   ## 16、摇钱树

@@ -13,19 +13,19 @@ def pullfix():
     print('\n开始执行。。。\n')
     dir_path = os.path.dirname(os.path.abspath(__file__))
     if 'main' not in dir_path:
-        if os.path.isdir('/ql/repo/miantj_jd_Scripts'):
-            os.system('rm -rf /ql/repo/miantj_jd_Scripts')
-        elif os.path.isdir('/ql/data/repo/miantj_jd_Scripts'):
-            os.system('rm -rf /ql/data/repo/miantj_jd_Scripts')
+        if os.path.isdir('/ql/repo/6dylan6_jdpro'):
+            os.system('rm -rf /ql/repo/6dylan6_jdpro')
+        elif os.path.isdir('/ql/data/repo/6dylan6_jdpro'):
+            os.system('rm -rf /ql/data/repo/6dylan6_jdpro')
         else:
             print('无需修复，拉不动可能是代理问题')
             # os.system('find /ql -maxdepth 2 -type d')
             return False
     else:
-        if os.path.isdir('/ql/repo/miantj_jd_Scripts_main'):
-            os.system('rm -rf /ql/repo/miantj_jd_Scripts_main')
-        elif os.path.isdir('/ql/data/repo/miantj_jd_Scripts_main'):
-            os.system('rm -rf /ql/data/repo/miantj_jd_Scripts_main')
+        if os.path.isdir('/ql/repo/6dylan6_jdpro_main'):
+            os.system('rm -rf /ql/repo/6dylan6_jdpro_main')
+        elif os.path.isdir('/ql/data/repo/6dylan6_jdpro_main'):
+            os.system('rm -rf /ql/data/repo/6dylan6_jdpro_main')
         else:
             print('无需修复，拉不动可能是代理问题\n')
             # os.system('find /ql -maxdepth 2 -type d')

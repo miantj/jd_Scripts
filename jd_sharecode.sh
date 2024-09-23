@@ -4,7 +4,7 @@
 #互助码生成顺序变量HPTYPE='2'随机，HPTOPNUM='10'固定在车头数量,具体看57行注释
 ## update 20231028
 
-DIR="$( cd "$( dirname $0 )" >/dev/null 2>&1 && pwd )"
+DIR="$( pwd )"
 ## 导入通用变量与函数
 #dir_shell=/ql/shell
 #. $dir_shell/share.sh
