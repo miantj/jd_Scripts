@@ -9,10 +9,10 @@
 国内机（带代理）：
 
 ```
-ql repo https://js.jdpro.site/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|utils"
+ql repo https://js.okyago.com/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|utils"
 
 ```
-默认代理拉不了，自行找可用代理
+
 
 国外机：
 
@@ -20,9 +20,6 @@ ql repo https://js.jdpro.site/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|utils"
 
 ```
-
-
-定时随意
 
 
 线报监控类，[入口](https://github.com/6dylan6/jdm.git)
@@ -98,7 +95,7 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 
 其他用法具体参考[文档](https://docs.qq.com/doc/DTXh6QUVjRXJ1TFdN)
 
-## 通用环境变量（到配置管理-config.sh里添加变量,export xxx=''格式)
+## 通用环境变量（到配置管理-config.sh里添加变量,export xxx='xxx'格式)
 
 AUTOCFG='true' 自动配置sendNotify文件到deps目录 
 
