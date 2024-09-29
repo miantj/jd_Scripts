@@ -44,7 +44,6 @@ pnpm i -g ds@2.0.2
 pnpm i -g png-js@1.0.0
 pnpm i -g date-fns@3.6.0
 pnpm i -g axios@1.7.4
-pnpm i -g sharp@0.32.6
 pnpm i -g crypto-js@4.2.0
 # pnpm install -g ts-md5@1.3.1
 # pnpm install -g tslib@2.6.3
@@ -59,4 +58,5 @@ pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ jieba
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ requests
 rm -rf /usr/local/pnpm-global/5/node_modules/.pnpm/canvas*
 rm -rf /root/.local/share/pnpm/global/5/.pnpm/canvas*
+pnpm i -g sharp@0.32.0
 echo -e "\n所需依赖安装完成，请检查有没有报错，可尝试再次运行"
