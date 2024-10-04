@@ -133,6 +133,7 @@ let strGuoqi = "";
 let TempBaipiao = "";
 let llgeterror = false;
 let time = new Date().getHours();
+let WP_APP_TOKEN_ONE = "";
 if ($.isNode()) {
     if (process.env.WP_APP_TOKEN_ONE) {
         WP_APP_TOKEN_ONE = process.env.WP_APP_TOKEN_ONE;
