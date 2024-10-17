@@ -1,5 +1,5 @@
 /*
-0 0 17 10 * jd_opencard1017_1.js 
+0 0 17 10 * jd_opencard10171.js 
 */
 
 const $ = new Env('10.17-10.25 大牌相惠 好礼抢先go');
