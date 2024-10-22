@@ -1,5 +1,5 @@
 /*
-1 6 * * * jd_cjzzj.js
+11 15 * * * jd_mkt_answer.js
 */
 
 const $ = new Env('超市答题抽奖');
