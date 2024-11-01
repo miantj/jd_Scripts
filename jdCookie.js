@@ -80,7 +80,7 @@ if (process.env.DP_POOL) {
             global.GLOBAL_AGENT.HTTP_PROXY = process.env.DP_POOL;
             if (process.env.NO_PROXY) {
                 global.GLOBAL_AGENT.NO_PROXY = process.env.NO_PROXY;
-            }}
+            }
             console.log(`\n---------------使用代理池模式---------------\n`);
         } catch {
             throw new Error(`请安装global-agent依赖，才能启用代理！`);
