@@ -78,7 +78,7 @@ if (process.env.DP_POOL) {
         try {
             require("global-agent/bootstrap");
             global.GLOBAL_AGENT.HTTP_PROXY = process.env.DP_POOL;
-            global.GLOBAL_AGENT.NO_PROXY = '127.0.0.1,localhost';
+            global.GLOBAL_AGENT.NO_PROXY = process.env.NO_PROXY || '127.0.0.1,localhost';
             console.log(`\n---------------使用代理池模式---------------\n`);
         } catch {
             throw new Error(`请安装global-agent依赖，才能启用代理！`);
