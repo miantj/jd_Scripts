@@ -375,7 +375,7 @@ def getToken(wskey):  # 方法 获取 Wskey转换使用的 Token 由 JD_API 返�
         'accept-encoding': 'br,gzip,deflate',
         'user-agent': genJDUA()
     }  # 设置 HTTP头
-    url = 'https://api.m.jd.com/client.action'  # 设置 URL地址
+    url = 'http://api.m.jd.com/client.action'  # 设置 URL地址
     data = 'body=%7B%22to%22%3A%22https%253a%252f%252fplogin.m.jd.com%252fjd-mlogin%252fstatic%252fhtml%252fappjmp_blank.html%22%7D&'  # 设置 POST 载荷
     try:
         res = requests.post(url=url, params=params, headers=headers, data=data, verify=False,
