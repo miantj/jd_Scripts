@@ -322,7 +322,7 @@ var _0xodG='jsjiami.com.v7';const _0x2b6489=_0x2da6;(function(_0x1c2b4f,_0x496d6
             $.wb_score = '';
             $.sqb_info = '';
 
-            console.log(`*********开始查询【账号${$.index}】${$.nickName || $.UserName}***********`);
+            console.log(`*********开始查询【账号${$.index}】${$.UserName}***********`);
             $.UA = require('./USER_AGENTS').UARAM();
             await getuserinfo_6dy();
             //await TotalBean2();
@@ -345,7 +345,7 @@ var _0xodG='jsjiami.com.v7';const _0x2b6489=_0x2da6;(function(_0x1c2b4f,_0x496d6
                 await isLoginByX1a0He();
             }
             if (!$.isLogin) {
-                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
+                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
                     "open-url": "https://bean.m.jd.com/bean/signIndex.action"
                 });
 
@@ -632,19 +632,19 @@ async function showMsg() {
 
     if (userIndex2 != -1) {
         IndexGp2 += 1;
-        ReturnMessageTitle = `【账号${IndexGp2}🆔】${$.nickName || $.UserName}`;
+        ReturnMessageTitle = `【账号${IndexGp2}🆔】${$.UserName}`;
     }
     if (userIndex3 != -1) {
         IndexGp3 += 1;
-        ReturnMessageTitle = `【账号${IndexGp3}🆔】${$.nickName || $.UserName}`;
+        ReturnMessageTitle = `【账号${IndexGp3}🆔】${$.UserName}`;
     }
     if (userIndex4 != -1) {
         IndexGp4 += 1;
-        ReturnMessageTitle = `【账号${IndexGp4}🆔】${$.nickName || $.UserName}`;
+        ReturnMessageTitle = `【账号${IndexGp4}🆔】${$.UserName}`;
     }
     if (userIndex2 == -1 && userIndex3 == -1 && userIndex4 == -1) {
         IndexAll += 1;
-        ReturnMessageTitle = `【账号${IndexAll}🆔】${$.nickName || $.UserName}`;
+        ReturnMessageTitle = `【账号${IndexAll}🆔】${$.UserName}`;
     }
 
 
@@ -754,16 +754,16 @@ async function showMsg() {
                 ReturnMessage += `【老农场】${$.JdFarmProdName} 可以兑换了!\n`;
                 TempBaipiao += `【老农场】${$.JdFarmProdName} 可以兑换了!\n`;
                 if (userIndex2 != -1) {
-                    ReceiveMessageGp2 += `【账号${IndexGp2} ${$.nickName || $.UserName}】${$.JdFarmProdName} (老农场)\n`;
+                    ReceiveMessageGp2 += `【账号${IndexGp2} ${$.UserName}】${$.JdFarmProdName} (老农场)\n`;
                 }
                 if (userIndex3 != -1) {
-                    ReceiveMessageGp3 += `【账号${IndexGp3} ${$.nickName || $.UserName}】${$.JdFarmProdName} (老农场)\n`;
+                    ReceiveMessageGp3 += `【账号${IndexGp3} ${$.UserName}】${$.JdFarmProdName} (老农场)\n`;
                 }
                 if (userIndex4 != -1) {
-                    ReceiveMessageGp4 += `【账号${IndexGp4} ${$.nickName || $.UserName}】${$.JdFarmProdName} (老农场)\n`;
+                    ReceiveMessageGp4 += `【账号${IndexGp4} ${$.UserName}】${$.JdFarmProdName} (老农场)\n`;
                 }
                 if (userIndex2 == -1 && userIndex3 == -1 && userIndex4 == -1) {
-                    allReceiveMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】${$.JdFarmProdName} (老农场)\n`;
+                    allReceiveMessage += `【账号${IndexAll} ${$.UserName}】${$.JdFarmProdName} (老农场)\n`;
                 }
             } else {
                 //if ($.JdwaterD != 'Infinity' && $.JdwaterD != '-Infinity') {
@@ -778,16 +778,16 @@ async function showMsg() {
                 TempBaipiao += `【老农场】水果领取后未重新种植!\n`;
 
                 if (userIndex2 != -1) {
-                    WarnMessageGp2 += `【账号${IndexGp2} ${$.nickName || $.UserName}】水果领取后未重新种植! (老农场)\n`;
+                    WarnMessageGp2 += `【账号${IndexGp2} ${$.UserName}】水果领取后未重新种植! (老农场)\n`;
                 }
                 if (userIndex3 != -1) {
-                    WarnMessageGp3 += `【账号${IndexGp3} ${$.nickName || $.UserName}】水果领取后未重新种植! (老农场)\n`;
+                    WarnMessageGp3 += `【账号${IndexGp3} ${$.UserName}】水果领取后未重新种植! (老农场)\n`;
                 }
                 if (userIndex4 != -1) {
-                    WarnMessageGp4 += `【账号${IndexGp4} ${$.nickName || $.UserName}】水果领取后未重新种植! (老农场)\n`;
+                    WarnMessageGp4 += `【账号${IndexGp4} ${$.UserName}】水果领取后未重新种植! (老农场)\n`;
                 }
                 if (userIndex2 == -1 && userIndex3 == -1 && userIndex4 == -1) {
-                    allWarnMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】水果领取后未重新种植! (老农场)\n`;
+                    allWarnMessage += `【账号${IndexAll} ${$.UserName}】水果领取后未重新种植! (老农场)\n`;
                 }
 
             } else if ($.treeState === 1) {
@@ -795,16 +795,16 @@ async function showMsg() {
             } else {
                 TempBaipiao += `【老农场】状态异常!\n`;
                 if (userIndex2 != -1) {
-                    WarnMessageGp2 += `【账号${IndexGp2} ${$.nickName || $.UserName}】状态异常! (老农场)\n`;
+                    WarnMessageGp2 += `【账号${IndexGp2} ${$.UserName}】状态异常! (老农场)\n`;
                 }
                 if (userIndex3 != -1) {
-                    WarnMessageGp3 += `【账号${IndexGp3} ${$.nickName || $.UserName}】状态异常! (老农场)\n`;
+                    WarnMessageGp3 += `【账号${IndexGp3} ${$.UserName}】状态异常! (老农场)\n`;
                 }
                 if (userIndex4 != -1) {
-                    WarnMessageGp4 += `【账号${IndexGp4} ${$.nickName || $.UserName}】状态异常! (老农场)\n`;
+                    WarnMessageGp4 += `【账号${IndexGp4} ${$.UserName}】状态异常! (老农场)\n`;
                 }
                 if (userIndex2 == -1 && userIndex3 == -1 && userIndex4 == -1) {
-                    allWarnMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】状态异常! (老农场)\n`;
+                    allWarnMessage += `【账号${IndexAll} ${$.UserName}】状态异常! (老农场)\n`;
                 }
                 //ReturnMessage += `【老农场】${$.JdFarmProdName}状态异常${$.treeState}...\n`;
             }
@@ -815,13 +815,13 @@ async function showMsg() {
         if ($.fruitnewinfo.skuName && $.fruitnewinfo.treeFullStage == 5 ){
             ReturnMessage += `【新农场】种植完成!\n`;
             TempBaipiao += `【新农场】种植完成!\n`;
-            allReceiveMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】种植完成，去领取吧 (新农场)\n`;
+            allReceiveMessage += `【账号${IndexAll} ${$.UserName}】种植完成，去领取吧 (新农场)\n`;
         } else if ($.fruitnewinfo.skuName && $.fruitnewinfo.treeCurrentState === 0){
             ReturnMessage += '【新农场】种植进度' + $.fruitnewinfo.treeFullStage +'/5(' + $.fruitnewinfo.currentProcess+'%)\n';
         } else if ($.fruitnewinfo.treeFullStage === 0){
             ReturnMessage += `【新农场】未种植!\n`;
             //TempBaipiao += `【新农场】未种植!\n`;
-            //allWarnMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】未种植，快去种植吧! (新农场)\n`;
+            //allWarnMessage += `【账号${IndexAll} ${$.UserName}】未种植，快去种植吧! (新农场)\n`;
         } else {
             ReturnMessage += '【新农场】可能枯萎了，请重新种植！\n';
         }
@@ -829,7 +829,7 @@ async function showMsg() {
     if ($.newfarm_info){
             //ReturnMessage += `【新农场】奖品未兑换!\n`;
             TempBaipiao += `【新农场】奖品未兑换!\n`;
-            allReceiveMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】\n ${$.newfarm_info}\n 快去兑换吧 (新农场)\n`;        
+            allReceiveMessage += `【账号${IndexAll} ${$.UserName}】\n ${$.newfarm_info}\n 快去兑换吧 (新农场)\n`;        
     }
 
     let dwscore = await dwappinfo();
@@ -915,17 +915,17 @@ async function showMsg() {
         if ($.JingXiang||1) {
             if ($.isRealNameAuth)
                 if (cookie.includes("app_open"))
-                    ReturnMessage = `【账号名称】${$.nickName || $.UserName}(wskey已实名)\n` + ReturnMessage;
+                    ReturnMessage = `【账号名称】${$.UserName}(wskey已实名)\n` + ReturnMessage;
                 else
-                    ReturnMessage = `【账号名称】${$.nickName || $.UserName}(已实名)\n` + ReturnMessage;
+                    ReturnMessage = `【账号名称】${$.UserName}(已实名)\n` + ReturnMessage;
             else
                 if (cookie.includes("app_open"))
-                    ReturnMessage = `【账号名称】${$.nickName || $.UserName}(wskey未实名)\n` + ReturnMessage;
+                    ReturnMessage = `【账号名称】${$.UserName}(wskey未实名)\n` + ReturnMessage;
                 else
-                    ReturnMessage = `【账号名称】${$.nickName || $.UserName}(未实名)\n` + ReturnMessage;
+                    ReturnMessage = `【账号名称】${$.UserName}(未实名)\n` + ReturnMessage;
 
         } else {
-            ReturnMessage = `【账号名称】${$.nickName || $.UserName}\n` + ReturnMessage;
+            ReturnMessage = `【账号名称】${$.UserName}\n` + ReturnMessage;
         }
         if (TempBaipiao) {
             TempBaipiao = `【⏰商品白嫖活动提醒⏰】\n` + TempBaipiao;
