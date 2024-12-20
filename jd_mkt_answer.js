@@ -5,8 +5,8 @@
 const $ = new Env('超市答题抽奖');
 let answer = {
     '3eefbKLLYztPXQT8qcDdjyioWFLz': '想',
-    '3DxEdA4cLjDdp6YXBR4pQmMAAdNz': '火',
-    '4JsZq969Z9hbMaoRTEhFZBDNj213': '五',
+    '34hzrdrBe4uudnRQyQrxzcWpbJgH': '北斗',
+    '3nAx1Y63uXudopZxjzXdrWV6ZdBb': '五',
     '3iE75s9dPZ9ddH7FBM2JVYz9mFxL': '送分',
 	'39F7JKT8kA7oGUq5xDVbQSKmqJUL': '体育',
 	'FFSTqdfWjpZqvZMU2tkfTVaxHRT': '黑土',
