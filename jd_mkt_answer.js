@@ -7,7 +7,7 @@ let answer = {
     '3eefbKLLYztPXQT8qcDdjyioWFLz': '想',
     '34hzrdrBe4uudnRQyQrxzcWpbJgH': '北斗',
     '3nAx1Y63uXudopZxjzXdrWV6ZdBb': '五',
-    '3iE75s9dPZ9ddH7FBM2JVYz9mFxL': '送分',
+    '3jeq2vHxzkfG3dCQnyDUxCzEwDAA': '小狗',
 	'39F7JKT8kA7oGUq5xDVbQSKmqJUL': '体育',
 	'FFSTqdfWjpZqvZMU2tkfTVaxHRT': '黑土',
     '21nwyKUBiSFkDg3GHY5ZUH1edeor': '萝卜',
