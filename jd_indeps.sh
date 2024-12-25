@@ -40,6 +40,7 @@ echo -e "开始安装............\n"
 #apk add g++ make --no-cache
 pnpm config set registry https://registry.npmmirror.com
 pnpm install -g
+pnpm i -g tough-cookie
 pnpm i -g ds@2.0.2
 pnpm i -g png-js@1.0.0
 pnpm i -g date-fns@3.6.0
