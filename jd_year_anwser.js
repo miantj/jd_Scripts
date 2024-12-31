@@ -8,7 +8,7 @@ let answer = {
     '2SW6p2ho3ZMmLwXG5g1HmdZYxuef': '白',
     '2rtVG4TFLZWBigJcH541aDsXgzrX': '海南',
     '3kjcFrxR5aUHd6kzTpN7NevFwJgF': '棒棒糖',
-    '39F7JKT8kA7oGUq5xDVbQSKmqJUL': '体育',
+    '21pDRjvUJuZLdoW1zytdPUf9hf5X': '王一博',
     'FFSTqdfWjpZqvZMU2tkfTVaxHRT': '黑土',
     '21nwyKUBiSFkDg3GHY5ZUH1edeor': '萝卜',
     'CDuzjqVxJq1ZgfPsCruavjGrzfr': '后来',
