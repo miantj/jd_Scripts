@@ -4,17 +4,17 @@
 
 const $ = new Env('超市答题抽奖');
 let answer = {
-    '3eefbKLLYztPXQT8qcDdjyioWFLz': '想',
-    '34hzrdrBe4uudnRQyQrxzcWpbJgH': '北斗',
+    '2A7iTfDHUytGAqbLMeRSbuvP1Jk9': '7',
+    'NATbwgRxMTixUrqti6vwFaTQErL': '大师兄',
     '3nAx1Y63uXudopZxjzXdrWV6ZdBb': '五',
     '3jeq2vHxzkfG3dCQnyDUxCzEwDAA': '小狗',
 	'37VLusK94NN8bsw8gS662fa79anD': '青花瓷',
 	'4PeFrJRMV5rgcVrUPvWs5fPXJuSE': '兰亭序',
     '4VFwbpg78hjvqkA4MfiCXFSuwZWx': '2',
     '3LxGXJyMFiBxxcHhWj48kDV1TzpN': '35',
-    'xrcB9b7pMMCgvuHiyQxiMZMnUPg':'最长的电影',
-    '27DS8asdweoAoGC8WQfRYusmB6sA':'0.001',
-    '3VjwWcaR1XKuXSRgZbnYWPvNAGhP': '0.2',
+    'nJ2GR6rs24ztBbW23QKjU4mDhPf':'4',
+	'3JpPWUSg2KgkFoNWkhpcXj4qJcbD': '长度单位',
+    '32d5FWDecV91JHQzT61QrHcD7MTm': '星座',
     'LTE2smhV5hfRuXwZNVc6i3D8Goh': '凤凰传奇',
 	'2xZLy8s97QUYCWqsvYt7SxdFVkwr': '蝶',
 	'GdWpC5epKgC7fghCBAuQt2wpBWq': '花',
