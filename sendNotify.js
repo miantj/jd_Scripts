@@ -753,27 +753,27 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
                                     }
                                 }
                             }
-                            if (!$.FoundPin) {
-                                //缓存文件中有没有这个账号，调用京东接口获取别名,并更新缓存文件
-                                console.log($.UserName + "好像是新账号，尝试获取别名.....");
-                                await GetnickName();
-                                if (!$.nickName) {
-                                    console.log("别名获取失败，尝试调用另一个接口获取别名.....");
-                                    await GetnickName2();
-                                }
-                                if ($.nickName) {
-                                    console.log("好像是新账号，从接口获取别名" + $.nickName);
-                                } else {
-                                    console.log($.UserName + "该账号没有别名.....");
-                                }
-                                tempAddCK = {
-                                    "pt_pin": $.UserName,
-                                    "nickName": $.nickName
-                                };
-                                TempCK.push(tempAddCK);
-                                //标识，需要更新缓存文件
-                                boolneedUpdate = true;
-                            }
+                            //if (!$.FoundPin) {
+                            //    //缓存文件中有没有这个账号，调用京东接口获取别名,并更新缓存文件
+                            //    console.log($.UserName + "好像是新账号，尝试获取别名.....");
+                            //    await GetnickName();
+                            //    if (!$.nickName) {
+                            //        console.log("别名获取失败，尝试调用另一个接口获取别名.....");
+                            //        await GetnickName2();
+                            //    }
+                            //    if ($.nickName) {
+                            //        console.log("好像是新账号，从接口获取别名" + $.nickName);
+                            //    } else {
+                            //        console.log($.UserName + "该账号没有别名.....");
+                            //    }
+                            //    tempAddCK = {
+                            //        "pt_pin": $.UserName,
+                            //        "nickName": $.nickName
+                            //    };
+                            //    TempCK.push(tempAddCK);
+                            //    //标识，需要更新缓存文件
+                            //    boolneedUpdate = true;
+                            //}
                         }
 
                         $.nickName = $.nickName || $.UserName;
