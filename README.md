@@ -6,7 +6,7 @@
 ```
 名称：jd_Scripts
 类型：公开库
-链接：ql repo https://github.com/miantj/jd_Scripts.git "jd_|mt_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify"
+链接：ql repo https://github.com/miantj/jd_Scripts.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|utils"
 定时：crontab
 定时规则：0 12,23 * * *
 ```
