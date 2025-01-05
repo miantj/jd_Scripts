@@ -5,7 +5,7 @@
 
 name_js=(
   jd_farm_help
-  jd_farm_help_new
+  jd_farmnew_code_help
   #jd_pet
   jd_plantBean_help
   #jd_dreamFactory
