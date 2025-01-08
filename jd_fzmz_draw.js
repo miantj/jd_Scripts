@@ -1,5 +1,5 @@
 /*
-25 2 * * * jd_fzmz_draw.js
+25 14 * * * jd_fzmz_draw.js
  */
 
 const $ = new Env('服装美妆抽奖');
