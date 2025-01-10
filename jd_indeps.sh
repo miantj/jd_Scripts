@@ -53,6 +53,7 @@ pnpm i -g request@2.88.2
 pnpm i -g jsdom@24.1.1
 pnpm i -g moment@2.30.1
 pnpm i -g cheerio@1.0.0
+pnpm i -g tunnel
 # pnpm install -g tough-cookie@4.1.4
 pnpm i -g https-proxy-agent@7.0.5
 pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ jieba
