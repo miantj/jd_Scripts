@@ -24,9 +24,9 @@ else
     repo='6dylan6_jdpro_main' 
 fi
 grep '6dylan6_20240905' /ql/data/config/task_before.sh >/dev/null 2>&1 || grep '6dylan6_20240905' /ql/config/task_before.sh > /dev/null 2>&1
-if [[ $? != 0 ]];then
+#if [[ $? != 0 ]];then
  #cp /ql/repo/${repo}/docker/task_before.sh /ql/config/ >/dev/null 2>&1 || cp /ql/data/repo/${repo}/docker/task_before.sh /ql/data/config/ > /dev/null 2>&1
-fi
+#fi
 [[ $QL_DIR == /ql ]] && dir_root=$QL_DIR
 [[ -d $dir_root/data ]] && dir_data=$dir_root/data
 [[ -d $dir_data/config ]] && dir_config=$dir_data/config
