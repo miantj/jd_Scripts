@@ -56,8 +56,8 @@ pnpm i -g cheerio@1.0.0
 pnpm i -g tunnel
 # pnpm install -g tough-cookie@4.1.4
 pnpm i -g https-proxy-agent@7.0.5
-pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ jieba
-pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple/ requests
+pip3 install -i https://pypi.doubanio.com/simple/ jieba
+pip3 install -i https://pypi.doubanio.com/simple/ requests
 rm -rf /usr/local/pnpm-global/5/node_modules/.pnpm/canvas*
 rm -rf /root/.local/share/pnpm/global/5/.pnpm/canvas*
 pnpm i -g sharp@0.32.0
