@@ -7,7 +7,7 @@ new Env('重复任务优化');
 import json
 import logging
 import os
-import sys
+import sys,re
 import time
 import traceback
 
@@ -157,20 +157,29 @@ def disable_duplicate_tasks(ids: list) -> None:
 
 
 def get_token() -> str or None:
-    path = '/ql/config/auth.json'  # 设置青龙 auth文件地址
-    global flag1
-    flag1 = True
-    if not os.path.isfile(path):
-        path = '/ql/data/config/auth.json'  # 尝试设置青龙 auth 新版文件地址
-        flag1 = False
+    if os.path.exists("/ql/data/db/keyv.sqlite"):
+        path="/ql/data/db/keyv.sqlite"   
+    elif os.path.exists("/ql/config/auth.json"):
+        path="/ql/config/auth.json"
+    elif os.path.exists("/ql/data/config/auth.json"):
+        path="/ql/data/config/auth.json"
+  
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        if 'keyv' in path:
+            with open(path, "r", encoding="latin1") as file: 
+                auth = file.read()
+                matches = re.search(r'token":"([^"]+)"', auth)
+            token = matches.group(1)     
+        else:
+            with open(path, "r") as file:
+                auth = file.read()     
+            auth = json.loads(auth) 
+            token = auth["token"]              
     except Exception:
         logger.info(f"❌无法获取 token!!!\n{traceback.format_exc()}")
         send("禁用重复任务失败", "无法获取 token!!!")
         exit(1)
-    return data.get("token")
+    return token
 
 
 if __name__ == "__main__":
