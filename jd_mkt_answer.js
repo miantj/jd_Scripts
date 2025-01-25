@@ -4,8 +4,8 @@
 
 const $ = new Env('超市答题抽奖');
 let answer = {
-    'iF3BfLngHFuqe2D9yz5Jm4Tp5Zs': '蝎子',
-    '474EtGyg855gsY3oT3iuKGWHFFVi': '牛夫人',
+    'QnENkExn1qVnY1kVGFdGzmTamAD': '虎',
+    '3uT1wqh9vPiZNPSEX85xr8BL7NZ7': '4',
     '3peFJVJTbutC8bNiwTHGeU4o7z9x': '小甜甜',
     '2PEEot7FEjcsrNavB2oYBJMmSCxU': '浙江',
     '3QDxHD1AwRBvgMnyWFg9W41UNyzn': '2',
