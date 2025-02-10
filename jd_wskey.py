@@ -233,26 +233,25 @@ def get_qltoken(username, password, twoFactorSecret):  # 方法 用于获取青�
 
 # 返回值 Token
 def ql_login() -> str:  # 方法 青龙登录(获取Token 功能同上)
-    path = '/ql/config/auth.json'  # 设置青龙 auth文件地址
+    path_latest = '/ql/data/db/keyv.sqlite'  # 设置青龙 auth文件地址 
+    path = '/ql/data/config/auth.json'
     if not os.path.isfile(path):
-        path = '/ql/data/config/auth.json'  # 尝试设置青龙 auth 新版文件地址
-    if not os.path.isfile(path):
-        path_latest = '/ql/data/db/keyv.sqlite'  # 尝试设置青龙 auth 新版文件地址        
+        path = '/ql/config/auth.json'  # 尝试设置青龙 auth 新版文件地址        
     if os.path.isfile(path) or os.path.isfile(path_latest):  # 进行文件真值判断
 
-        if os.path.isfile(path):
+        if os.path.isfile(path_latest):
+            with open(path_latest, "r", encoding="latin1") as file: 
+                auth = file.read()  # 读取文件
+                matches = re.search(r'token":"([^"]+)"', auth)
+            token = matches.group(1)       
+        else:
             with open(path, "r") as file:  # 上下文管理
                 auth = file.read()  # 读取文件
                 file.close()  # 关闭文件            
             auth = json.loads(auth)  # 使用 json模块读取
             username = auth["username"]  # 提取 username
             password = auth["password"]  # 提取 password
-            token = auth["token"]  # 提取 authkey
-        else:
-            with open(path_latest, "r", encoding="latin1") as file: 
-                auth = file.read()  # 读取文件
-                matches = re.search(r'token":"([^"]+)"', auth)
-            token = matches.group(1)        
+            token = auth["token"]  # 提取 authkey 
 
         try:
             twoFactorSecret = auth["twoFactorSecret"]

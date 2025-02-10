@@ -441,17 +441,15 @@ def main():
     if os.path.exists("/ql/config/auth.json"):
         config="/ql/config/auth.json"
         envtype="ql"
-    if os.path.exists("/ql/data/db/keyv.sqlite"):
-        config="/ql/data/db/keyv.sqlite"
-        envtype="ql_latest"    
     if os.path.exists("/ql/data/config/auth.json"):
         config="/ql/data/config/auth.json"
         envtype="ql"
-
     if os.path.exists("/jd/config/auth.json"):
         config="/jd/config/auth.json"
         envtype="arcadia"
-
+    if os.path.exists("/ql/data/db/keyv.sqlite"):
+        config="/ql/data/db/keyv.sqlite"
+        envtype="ql_latest"    
 
     if os.path.exists("/arcadia/config/auth.json"):
         config="/arcadia/config/auth.json"
