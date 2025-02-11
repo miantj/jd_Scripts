@@ -1,5 +1,5 @@
 /*
-35 0-23/3 * * * jd_wyw_ffl.js
+2 2 29 2 * jd_wyw_ffl_.js
 */
 
 const $ = new Env('玩一玩-翻翻乐');
