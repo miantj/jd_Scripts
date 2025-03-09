@@ -2128,7 +2128,7 @@ require('dotenv').config();
 let Fileexists280 = fs.existsSync('/ql/data/db/keyv.sqlite');
 let Fileexists_ = fs.existsSync('/ql/data/config/auth.json');
 let authFile = "";
-if (Fileexists280)
+if (Fileexists280&&process.env.QL_BRANCH.slice(1,5)>=2.18)
     authFile = "/ql/data/db/keyv.sqlite"
 else if (Fileexists_)
     authFile = "/ql/data/config/auth.json"
