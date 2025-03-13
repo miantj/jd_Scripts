@@ -156,14 +156,26 @@ def disable_duplicate_tasks(ids: list) -> None:
         logger.info("🎉成功禁用重复任务~")
 
 
+
+
+
+def get_latest_file(files):
+    latest_file = None
+    latest_mtime = 0
+    for file in files:
+        try:
+            stats = os.stat(file)
+            mtime = stats.st_mtime
+            if mtime > latest_mtime:
+                latest_mtime = mtime
+                latest_file = file
+        except FileNotFoundError:
+            continue
+    return latest_file
+
 def get_token() -> str or None:
-    if os.path.exists("/ql/data/db/keyv.sqlite"):
-        path="/ql/data/db/keyv.sqlite"   
-    elif os.path.exists("/ql/config/auth.json"):
-        path="/ql/config/auth.json"
-    elif os.path.exists("/ql/data/config/auth.json"):
-        path="/ql/data/config/auth.json"
-  
+    token_file_list = ['/ql/data/db/keyv.sqlite', '/ql/data/config/auth.json', '/ql/config/auth.json']
+    path=get_latest_file(token_file_list)
     try:
         if 'keyv' in path:
             with open(path, "r", encoding="latin1") as file: 
