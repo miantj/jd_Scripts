@@ -55,7 +55,7 @@ if (process.env.BANPIN) {
             let pinarr = banpin.split(',');
             console.log(`已配置全局不执行pin: ${JSON.stringify(pinarr)}`);
             for (let i of pinarr) {
-                j = decodeURIComponent(j);
+                //j = decodeURIComponent(j);
                 CookieJDs = CookieJDs.filter(x => !x.includes(encodeURIComponent(i)));
             }
         }
