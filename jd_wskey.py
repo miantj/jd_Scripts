@@ -251,7 +251,7 @@ def ql_login() -> str:  # 方法 青龙登录(获取Token 功能同上)
         if 'keyv' in path:
             with open(path, "r", encoding="latin1") as file: 
                 auth = file.read()
-                matches = re.search(r'token":"([^"]+)"', auth)
+                matches = re.search(r'"token":"([^"]*)"(?!.*"token":)', auth)
                 token = matches.group(1)     
         else:
             with open(path, "r") as file:

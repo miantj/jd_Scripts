@@ -18,17 +18,17 @@ export meituanCookie="AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx#UUID(如需运�
 
 ## 简要流程
 
-1、部署青龙并登陆。
+1、部署青龙并登陆，版本不用追新，稳定才好，推荐whyour/qinglong:2.17.9镜像部署。
 
-2、到配置管理config.sh修改，差不多在17行（特别注意，没有修改此配置，sh类型任务拉不下来）；
+2、到订阅管理创建订阅并运行；正确配置[参考](https://github.com/6dylan6/jdpro/issues/22)
 
-RepoFileExtensions="js py"修改为 RepoFileExtensions="js py sh" 保存；
+3、订阅执行完，到定时任务搜索依赖安装（jd_indeps.sh)任务执行；
 
 3、到订阅管理创建订阅并运行；正确配置[参考](https://github.com/6dylan6/jdpro/issues/22)
 
 4、订阅运行完毕，到定时任务搜索依赖安装任务执行；
 
-4、到环境变量，创建变量，名称: JD_COOKIE,值：抓的CK（要安全就手抓），多个依次创建；
+4、到环境变量，创建变量，名称: JD_COOKIE,值：抓的CK（要安全就手抓），多个每行建一个，不要全写在一个；
 
 5，配置通知，通知的key填写到配置管理config.sh文件；
 
@@ -76,7 +76,9 @@ export NOTIFY_SHOWNAMETYPE="4"    效果是 :  账号名称：备注
 
 ## 互助模式使用说明
 
-如需禁止某些CK参加所有活动或某些活动功能，实现重组CK顺序功能，包括随机、优先、轮换、组队、分段等功能，把[task_before](./docker/task_before.sh)文件内容复制到配置管理task_before.sh保存
+5、建议调整任务运行超时时间，青龙默认1小时有些跑不完就被强制结束，config.sh里配置。CommandTimeoutTime="3h"  即改为3小时，根据自己ck数量调整。
+
+6、如需禁止某些CK参加所有活动或某些活动功能，实现重组CK顺序功能，包括随机、优先、轮换、组队、分段等功能，把[task_before](./docker/task_before.sh)文件内容复制到配置管理task_before.sh保存
 
 常用变量举例：
 
@@ -87,6 +89,9 @@ Recombin_CK_Mode="2" Recombin_CK_ARG1="15" 假设有100个CK，前15个CK按正�
 Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个CK，希望前5个账号始终保持在前部，剩余95个账号按照轮换模式每天轮换5个
 
 其他用法具体参考[文档](https://docs.qq.com/doc/DTXh6QUVjRXJ1TFdN)
+</code></pre>
+</details>
+
 
 ## 通用变量
 
