@@ -1,4 +1,13 @@
 /*
+变量：CODE258='7位字母'
+export CODE258="xxxxxxx"
+
+每次领取红包次数
+export RedCount="5"
+每个账号之间延时单位毫秒
+export RedTimes="5000"
+代理api
+export DY_PROXY='url'
 cron: 0 0,20 * * *
 */
 
