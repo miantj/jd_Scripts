@@ -5,7 +5,7 @@
 const $ = new Env('超市答题抽奖');
 let answer = {
     'dnC77BBbZp1fC168murwtADUdCi': '外卖',
-    '3uT1wqh9vPiZNPSEX85xr8BL7NZ7': '4',
+    'dnC77BBbZp1fC168murwtADUdCi': '必达',
     '32q2mLdUaW7Ya8UZHDRxyj3oZUzh': '羊皮',
     '389Fe5A2MKZG4zRbScyVUva8UAWp': '桃',
     '3chCbeWUMf7av67vzb1onLkmGcZV': '鞭炮',
