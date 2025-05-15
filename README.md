@@ -14,7 +14,7 @@ ql repo https://js.okyago.com/https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj
 ```
 
 
-国外机：
+国外机（国外ip有限制可能有些任务不能正常运行）：
 
 ```
 ql repo https://github.com/6dylan6/jdpro.git "jd_|jx_|jddj_" "backUp" "^jd[^_]|USER|JD|function|sendNotify|utils"
@@ -96,7 +96,7 @@ AUTOCFG='true' 自动配置sendNotify文件到deps目录
 
 代理API模式部分支持
 
-DY_PROXY='URL1@URL2' 多个@分割
+DY_PROXY='URL1#URL2' 多个#分割
 
 PERMIT_API='test' 需要走API代理的js关键词，多个&分割，可不设置，支持的js都会走
 
