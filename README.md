@@ -104,11 +104,11 @@ DY_PROXY_RENUM='5'  获取IP失败重试次数
 
 DY_PROXY_REDELAY='3' 获取失败重试间隔 单位秒
 
-代理池模式支持全部js脚
+代理池模式支持全部js
 
 DP_POOL='http://xxx' 代理池url
 
-PERMIT_JS='farm&plant&opencard' 需要走代理池的js关键词，多个&分割，必须设置
+PERMIT_JS='farm&plant&opencard' 需要走代理池的js关键词，多个&分割（可不设置，如果不设置就是所有的js都会走）
 
 禁止指定的pin执行任务：
 
