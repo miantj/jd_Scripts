@@ -1,17 +1,12 @@
 version: '2'
 services:
   ql_web:
-    image: whyour/qinglong:2.11.3
+    image: whyour/qinglong:2.17.9
     container_name: ql
     volumes:
-      - ./data/config:/ql/config
-      - ./data/log:/ql/log
-      - ./data/db:/ql/db
-      - ./data/scripts:/ql/scripts
-      - ./data/repo:/ql/repo
+      - ./qinglong/data:/ql/data
+      - ./qinglong/deps/pnpm:/root/.local/share/pnpm
+      - ./qinglong/deps/pip3:/usr/local/lib/python3.11/site-packages
     ports:
-      - "0.0.0.0:5700:5700"
-    environment:
-      - ENABLE_HANGUP=true
-      - ENABLE_WEB_PANEL=true
-    restart: always
+      - "5700:5700"
+    restart: unless-stopped

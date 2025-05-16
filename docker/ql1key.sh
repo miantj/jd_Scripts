@@ -46,25 +46,16 @@ cd $ql_path
 cat > docker-compose.yml <<EOF
 version: '2'
 services:
-  qinglong:
-    image: whyour/qinglong:2.11.3
-    container_name: qinglong
+  ql_web:
+    image: whyour/qinglong:2.17.9
+    container_name: ql
     volumes:
-      - ./data/config:/ql/config
-      - ./data/log:/ql/log
-      - ./data/db:/ql/db
-      - ./data/scripts:/ql/scripts
-      - ./data/repo:/ql/repo
+      - ./qinglong/data:/ql/data
+      - ./qinglong/deps/pnpm:/root/.local/share/pnpm
+      - ./qinglong/deps/pip3:/usr/local/lib/python3.11/site-packages
     ports:
-      - "0.0.0.0:5500:5700"
-    networks:
-      - net
-    environment:
-      - ENABLE_HANGUP=true
-      - ENABLE_WEB_PANEL=true
-    restart: always
-networks:
-    net:
+      - "5700:5700"
+    restart: unless-stopped
 EOF
     docker-compose up -d 
     if [ $? -ne 0 ] ; then
