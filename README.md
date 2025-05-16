@@ -99,7 +99,7 @@ Recombin_CK_Mode="3" Recombin_CK_ARG1="5" Recombin_CK_ARG2="5"  假设有100个C
 
 代理API export DY_PROXY='url'（部分js支持）
 
-API白名单模式 export PERMIT_API='fruit'
+DY_PROXY='URL1#URL2' 多个#分割
 
 代理池 export DP_POOL='url'（全部js支持）
 
