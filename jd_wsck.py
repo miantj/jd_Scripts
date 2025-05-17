@@ -55,9 +55,10 @@ def get_proxy_api(proxy_url, max_retries=5, timeout=60, retry_delay=1):
                 username, password = auth_part.split(':')
                 session.auth = (username, password)
             else:
-                # 只有 token 的情况
+                # 只有 token 的情况，需要 base64 编码
                 token = auth_part
-                session.headers.update({'Authorization': f'Bearer {token}'})
+                token_b64 = base64.b64encode(token.encode()).decode()
+                session.headers.update({'Authorization': f'Basic {token_b64}'})
             
             res = session.get(f"{protocol}://{host}", verify=False, timeout=timeout)
         else:
