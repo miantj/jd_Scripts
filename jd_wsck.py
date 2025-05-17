@@ -47,8 +47,9 @@ def get_proxy_api(proxy_url, max_retries=5, timeout=60, retry_delay=1):
         if '@' in proxy_url:
             # 解析认证信息
             auth_part, url_part = proxy_url.split('@')
-            protocol = url_part.split('://')[0]
-            host = url_part.split('://')[1]
+            protocol = auth_part.split('://')[0]
+            auth_part = auth_part.split('://')[1]
+            host = url_part
             
             # 处理只有 token 的情况
             if ':' in auth_part:
