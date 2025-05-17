@@ -42,8 +42,27 @@ def randomuserAgent():
 
 
 def get_proxy_api(proxy_url, max_retries=5, timeout=60, retry_delay=1):
+    session = requests.Session()
     for retry in range(max_retries):
-        res = get(url=proxy_url)
+        if '@' in proxy_url:
+            # 解析认证信息
+            auth_part, url_part = proxy_url.split('@')
+            protocol = url_part.split('://')[0]
+            host = url_part.split('://')[1]
+            
+            # 处理只有 token 的情况
+            if ':' in auth_part:
+                username, password = auth_part.split(':')
+                session.auth = (username, password)
+            else:
+                # 只有 token 的情况
+                token = auth_part
+                session.headers.update({'Authorization': f'Bearer {token}'})
+            
+            res = session.get(f"{protocol}://{host}", verify=False, timeout=timeout)
+        else:
+            res = session.get(proxy_url, verify=False, timeout=timeout)
+            
         printf(f"本次获取到的代理：{res.text}")
         proxy_ip_port = res.text.strip()
         proxy_address = f"http://{proxy_ip_port}"
