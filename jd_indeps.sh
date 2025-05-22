@@ -27,11 +27,11 @@ else
     echo -e "\n如需自动配置sendNotify.js文件到desp目录下，请配置变量AUTOCFG='true'\n"
 fi
 
-npm_ver=`pnpm -v|awk -F. '{print $1}'`
-if [[ $npm_ver -ge 7 ]];then
-    export PNPM_HOME="/root/.local/share/pnpm"
-    export PATH="$PNPM_HOME:$PATH"
-fi
+#npm_ver=`pnpm -v|awk -F. '{print $1}'`
+#if [[ $npm_ver -ge 7 ]];then
+#    export PNPM_HOME="/root/.local/share/pnpm"
+#    export PATH="$PNPM_HOME:$PATH"
+#fi
 
 echo -e "安装本库所需依赖，不一定一次全部安装成功，完成请检查\n"
 echo -e "开始安装............\n"
@@ -41,6 +41,7 @@ echo -e "开始安装............\n"
 pnpm config set registry https://registry.npmmirror.com
 pnpm install -g
 pnpm i -g tough-cookie
+pnpm i -g got@11
 pnpm i -g ds@2.0.2
 pnpm i -g png-js@1.0.0
 pnpm i -g date-fns@3.6.0
@@ -60,5 +61,5 @@ pip3 install -i https://pypi.doubanio.com/simple/ jieba
 pip3 install -i https://pypi.doubanio.com/simple/ requests
 rm -rf /usr/local/pnpm-global/5/node_modules/.pnpm/canvas*
 rm -rf /root/.local/share/pnpm/global/5/.pnpm/canvas*
-pnpm i -g sharp@0.32.0
+pnpm i -g sharp
 echo -e "\n所需依赖安装完成，请检查有没有报错，可尝试再次运行"
