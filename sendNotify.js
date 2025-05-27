@@ -104,6 +104,7 @@ let PUSH_PLUS_TOKEN = '';
 let PUSH_PLUS_USER = '';
 
 // =======================================smtp 通知设置=======================================
+// 变量SMTP_SERVICE SMTP_EMAI SMTP_TO SMTP_PASSWORD SMTP_NAME
 let SMTP_SERVICE = ''; // 邮箱服务名称，比如 126、163、Gmail、QQ 等，支持列表 https://github.com/nodemailer/nodemailer/blob/master/lib/well-known/services.json
 let SMTP_EMAIL = ''; // SMTP 发件邮箱
 let SMTP_TO = ''; // SMTP 收件邮箱，默认通知将会发给发件邮箱
@@ -676,7 +677,18 @@ async function sendNotify(text, desp, params = {}, author = "\n=================
 			TG_PROXY_PORT = process.env["TG_PROXY_PORT"];		
 		if (process.env["TG_API_HOST"]) 
 			TG_API_HOST = process.env["TG_API_HOST"];
-
+		
+		if (process.env["SMTP_NAME"]) 
+			TG_PROXY_AUTH = process.env["SMTP_NAME"];
+		if (process.env["SMTP_PASSWORD"]) 
+			TG_PROXY_HOST = process.env["SMTP_PASSWORD"];
+		if (process.env["SMTP_TO"]) 
+			TG_PROXY_PORT = process.env["SMTP_TO"];		
+		if (process.env["SMTP_EMAIL"]) 
+			TG_API_HOST = process.env["SMTP_EMAIL"];
+		if (process.env["SMTP_SERVICE"]) 
+			TG_API_HOST = process.env["SMTP_SERVICE"];		
+		
         if (process.env["DD_BOT_TOKEN" + UseGroupNotify] && Use_ddBotNotify) {
             DD_BOT_TOKEN = process.env["DD_BOT_TOKEN" + UseGroupNotify];
             if (process.env["DD_BOT_SECRET" + UseGroupNotify]) {
