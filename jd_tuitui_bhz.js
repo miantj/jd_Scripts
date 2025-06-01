@@ -1,5 +1,5 @@
 /*
-1 6 * * * jd_cjzzj.js
+cron: 1 1 1 1 *
 */
 
 const $ = new Env('推推红包_保护罩任务');
