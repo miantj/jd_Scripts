@@ -1,5 +1,5 @@
 /*
-0 0 23 6 * jd_opencard0623.js 
+0 0 17 6 * jd_opencard0617.js 
 */
 
 const $ = new Env('618狂欢go 大牌好礼享不停_6.23');
