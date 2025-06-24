@@ -408,7 +408,7 @@ var _0xodA='jsjiami.com.v7';function _0x4f5b(_0x4f042a,_0xeb873e){const _0x30374
                 //queryScores(),
                 getek(),
                 newfarm_info(),
-                sqb()
+                //sqb()
 
             ])
 

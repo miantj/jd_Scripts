@@ -103,6 +103,14 @@ let IGOT_PUSH_KEY = '';
 let PUSH_PLUS_TOKEN = '';
 let PUSH_PLUS_USER = '';
 
+// =======================================smtp 通知设置=======================================
+// 变量SMTP_SERVICE SMTP_EMAI SMTP_TO SMTP_PASSWORD SMTP_NAME
+let SMTP_SERVICE = ''; // 邮箱服务名称，比如 126、163、Gmail、QQ 等，支持列表 https://github.com/nodemailer/nodemailer/blob/master/lib/well-known/services.json
+let SMTP_EMAIL = ''; // SMTP 发件邮箱
+let SMTP_TO = ''; // SMTP 收件邮箱，默认通知将会发给发件邮箱
+let SMTP_PASSWORD = ''; // SMTP 登录密码，也可能为特殊口令，视具体邮件服务商说明而定
+let SMTP_NAME = ''; // SMTP 收发件人姓名，可随意填写
+
 // ======================================= WxPusher 通知设置区域 ===========================================
 // 此处填你申请的 appToken. 官方文档：https://wxpusher.zjiecode.com/docs
 // WP_APP_TOKEN 可在管理台查看: https://wxpusher.zjiecode.com/admin/main/app/appToken
@@ -669,7 +677,18 @@ async function sendNotify(text, desp, params = {}, author = "\n\n本通知 By Ly
 			TG_PROXY_PORT = process.env["TG_PROXY_PORT"];		
 		if (process.env["TG_API_HOST"]) 
 			TG_API_HOST = process.env["TG_API_HOST"];
-
+		
+		if (process.env["SMTP_NAME"]) 
+			SMTP_NAME = process.env["SMTP_NAME"];
+		if (process.env["SMTP_PASSWORD"]) 
+			SMTP_PASSWORD = process.env["SMTP_PASSWORD"];
+		if (process.env["SMTP_TO"]) 
+			SMTP_TO = process.env["SMTP_TO"];		
+		if (process.env["SMTP_EMAIL"]) 
+			SMTP_EMAIL = process.env["SMTP_EMAIL"];
+		if (process.env["SMTP_SERVICE"]) 
+			SMTP_SERVICE = process.env["SMTP_SERVICE"];		
+		
         if (process.env["DD_BOT_TOKEN" + UseGroupNotify] && Use_ddBotNotify) {
             DD_BOT_TOKEN = process.env["DD_BOT_TOKEN" + UseGroupNotify];
             if (process.env["DD_BOT_SECRET" + UseGroupNotify]) {
@@ -883,7 +902,8 @@ async function sendNotify(text, desp, params = {}, author = "\n\n本通知 By Ly
         ddBotNotify(text, desp), //钉钉机器人
         qywxBotNotify(text, desp), //企业微信机器人
         qywxamNotify(text, desp, strsummary), //企业微信应用消息推送
-            fsBotNotify(text, desp),   //飞书机器人
+        fsBotNotify(text, desp),   //飞书机器人
+		smtpNotify(text, desp), // SMTP 邮件
         iGotNotify(text, desp, params), //iGot
         gobotNotify(text, desp), //go-cqhttp
         gotifyNotify(text, desp), //gotify
@@ -1530,7 +1550,40 @@ function qywxBotNotify(text, desp) {
         }
     });
 }
+async function smtpNotify(text, desp) {
+  if (![SMTP_EMAIL, SMTP_PASSWORD].every(Boolean) || !SMTP_SERVICE) {
+    return;
+  }
 
+  try {
+    const nodemailer = require('nodemailer');
+    const transporter = nodemailer.createTransport({
+      service: SMTP_SERVICE,
+      auth: {
+        user: SMTP_EMAIL,
+        pass: SMTP_PASSWORD,
+      },
+    });
+
+    const addr = SMTP_NAME ? `"${SMTP_NAME}" <${SMTP_EMAIL}>` : SMTP_EMAIL;
+    const info = await transporter.sendMail({
+      from: addr,
+      to: SMTP_TO ? SMTP_TO.split(';') : addr,
+      subject: text,
+      html: `${desp.replace(/\n/g, '<br/>')}`,
+    });
+
+    transporter.close();
+
+    if (info.messageId) {
+      console.log('SMTP 发送通知消息成功🎉\n');
+      return true;
+    }
+    console.log('SMTP 发送通知消息失败😞\n');
+  } catch (e) {
+    console.log('SMTP 发送通知消息出现异常😞\n', e);
+  }
+}
 function fsBotNotify(text, desp) {
     return new Promise((resolve) => {
         const options = {
